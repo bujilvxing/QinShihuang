@@ -24,7 +24,7 @@ import com.qiniu.storage.persistent.FileRecorder;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import com.zjns.QinShihuang.utils.ErrorCode;
-import com.zjns.QinShihuang.utils.LiuYutianResult;
+import com.zjns.QinShihuang.utils.QinShihuangResult;
 //import com.zjns.LiuYutian.model.ImageItem;
 //import com.zjns.LiuYutian.utils.LogUtils;
 //import com.zjns.LiuYutian.utils.LiuYutianResult;
@@ -228,7 +228,7 @@ public class QinShihuangController {
 			JsonNode filePathObj = body.get("filePath"); 
 			filePath = filePathObj == null ? "" : filePathObj.asText();
 		} else {
-			return LiuYutianResult.unprocessable(ErrorCode.INVALID_ARGUMENTS, body, "文件路径不合法");
+			return QinShihuangResult.unprocessable(ErrorCode.INVALID_ARGUMENTS, body, "文件路径不合法");
 		}
 		
 		try {
@@ -236,9 +236,9 @@ public class QinShihuangController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return LiuYutianResult.unprocessable(ErrorCode.ServerException, body, "上传失败");
+			return QinShihuangResult.unprocessable(ErrorCode.ServerException, body, "上传失败");
 		}
 		download(fileName);
-		return LiuYutianResult.ok(body, null);
+		return QinShihuangResult.ok(body, null);
     }
 }
