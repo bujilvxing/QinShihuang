@@ -1,4 +1,4 @@
-package com.zjns.QinShihuang.controller;
+package com.bjlx.QinShihuang.controller;
 
 import java.io.IOException;
 import java.util.Date;
@@ -23,8 +23,8 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.persistent.FileRecorder;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
-import com.zjns.QinShihuang.utils.ErrorCode;
-import com.zjns.QinShihuang.utils.QinShihuangResult;
+import com.bjlx.QinShihuang.utils.ErrorCode;
+import com.bjlx.QinShihuang.utils.QinShihuangResult;
 //import com.zjns.LiuYutian.model.ImageItem;
 //import com.zjns.LiuYutian.utils.LogUtils;
 //import com.zjns.LiuYutian.utils.LiuYutianResult;
@@ -241,4 +241,5 @@ public class QinShihuangController {
 		download(fileName);
 		return QinShihuangResult.ok(body, null);
     }
+
 }

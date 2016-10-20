@@ -1,4 +1,4 @@
-package com.zjns.QinShihuang.model;
+package com.bjlx.QinShihuang.model;
 
 import java.util.Map;
 

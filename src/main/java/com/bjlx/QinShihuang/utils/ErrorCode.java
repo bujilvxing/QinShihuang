@@ -1,4 +1,4 @@
-package com.zjns.QinShihuang.utils;
+package com.bjlx.QinShihuang.utils;
 
 public enum ErrorCode {
 	OK(0, "Normal"), INVALID_ARGUMENTS(100, "Invalid arguments"), FORBIDDEN(403, "Forbidden"), NOT_FOUND(404, "Resource not found"), ServerException(500, "Server Exception"), ALIPAY_REFUND(901, "Ali pay refund need manual operation"), UNKNOWN(999, "Unknown error");

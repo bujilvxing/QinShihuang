@@ -1,4 +1,4 @@
-package com.zjns.QinShihuang.utils;
+package com.bjlx.QinShihuang.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
