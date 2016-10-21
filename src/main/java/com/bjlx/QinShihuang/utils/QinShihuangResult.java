@@ -42,9 +42,21 @@ public class QinShihuangResult {
 		
 		return content;
 	}
-	
+
+	public static String getResult(ErrorCode errorCode, JsonNode data) {
+		return getResult(errorCode, data, null);
+	}
+
+	public static String getResult(ErrorCode errorCode) {
+		return getResult(errorCode, null, null);
+	}
+
 	public static String ok(JsonNode data, String errorMsg) {
 		return getResult(ErrorCode.OK, data, errorMsg);
+	}
+
+	public static String ok(JsonNode data) {
+		return getResult(ErrorCode.OK, data, null);
 	}
 	
 	public static String notFound(String errorMsg) {
