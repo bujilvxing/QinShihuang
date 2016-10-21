@@ -23,7 +23,7 @@
     http://www.springframework.org/schema/task/spring-task-3.0.xsd">
   
 	<!-- 扫描 controller -->
-	<context:component-scan base-package="com.zjns.QinShihuang.controller" />
+	<context:component-scan base-package="com.bjlx.QinShihuang.controller" />
 	
 	<context:annotation-config />
 	<mvc:annotation-driven />
