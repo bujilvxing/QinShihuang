@@ -32,11 +32,15 @@ public enum ErrorCode {
 	ACCOUNT_FORMAT_1001(100102, "账户格式不正确"),
 	ACTION_NULL_1001(100103, "参数账户为空"),
 	ACTION_LIMIT_1001(100104, "参数action的值不合法"),
-	USER_EXIST_1001(100103, "用户已存在"),
-	REQUEST_TOO_MANY_1001(100104, "请求次数过多"),
+	USER_EXIST_1001(100105, "用户已存在"),
+	REQUEST_TOO_MANY_1001(100106, "请求次数过多"),
 
 	// 检验验证码
-
+	ACCOUNT_NULL_1002(100201, "参数账户为空"),
+	ACCOUNT_FORMAT_1002(100102, "账户格式不正确"),
+	ACTION_NULL_1002(100103, "参数账户为空"),
+	ACTION_LIMIT_1002(100104, "参数action的值不合法"),
+	VALIDATION_FAIL_1002(100105, "验证失败"),
 	;
 
 
