@@ -1,4 +1,4 @@
-package com.bjlx.QinShihuang.mail;
+package com.bjlx.QinShihuang.utils;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -288,10 +288,11 @@ public class OctopusToolBase {
 		return mailer.sendTextMail(mailSubject, mailBody, fromAddress, toAddress, ccAddress);
 	}
 
-	public static void main(String[] args) {
+	public static void sendEmail(String email) {
 		OctopusToolBase instance = new OctopusToolBase();
-		instance.setupMailer("smtp.qq.com", "25", "381364134", "111");
+//		instance.setupMailer("smtp.163.com", "25", "pengyt19890703@163.com", "19890703pyt0422");
+		instance.setupMailer("smtp.exmail.qq.com", "25", "service@bujilvxing.com", "BuJiLvXing168");
 		// bihbohnlzbhccahh
-		instance.sendSimpleEmail("照片test", "内容123", "381364134@qq.com", "pengyt19890703@163.com", "979980738@qq.com");
+		instance.sendSimpleEmail("不羁旅行验证码", "您的验证码为:623309", "service@bujilvxing.com", email, "");
 	}
 }

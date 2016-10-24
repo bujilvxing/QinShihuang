@@ -1,4 +1,4 @@
-package com.bjlx.QinShihuang.mail;
+package com.bjlx.QinShihuang.utils;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -100,15 +100,21 @@ public class OctopusMailer {
 			Address from = GetAddressObj(mail.fromAddress);
 			mailMessage.setFrom(from);
 			String[] toList = mail.toAddress.split(";");
-			String[] ccList = mail.ccAddress.split(";");
 			Address[] to = new InternetAddress[toList.length];
-			Address[] cc = new InternetAddress[ccList.length];
 			for (int i = 0; i < toList.length; i++)
 				to[i] = GetAddressObj(toList[i]);
-			for (int i = 0; i < ccList.length; i++)
-				cc[i] = GetAddressObj(ccList[i]);
 			mailMessage.setRecipients(Message.RecipientType.TO, to);
-			mailMessage.setRecipients(Message.RecipientType.CC, cc);
+			if("".equals(mail.ccAddress) || mail.ccAddress == null) {
+				// 不设置抄送
+			} else {
+				// 设置抄送
+				String[] ccList = mail.ccAddress.split(";");
+				Address[] cc = new InternetAddress[ccList.length];
+				for (int i = 0; i < ccList.length; i++)
+					cc[i] = GetAddressObj(ccList[i]);
+				mailMessage.setRecipients(Message.RecipientType.CC, cc);
+			}
+			
 			mailMessage.setSubject(mail.subject);
 			mailMessage.setSentDate(new Date());
 			String mailContent = mail.content;
