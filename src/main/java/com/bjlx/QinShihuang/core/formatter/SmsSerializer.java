@@ -17,9 +17,10 @@ public class SmsSerializer extends JsonSerializer<Sms> {
     public void serialize(Sms sms, JsonGenerator gen, SerializerProvider serializers) {
         try {
             gen.writeStartObject();
-            gen.writeStringField("id", sms.getId().toString());
-            gen.writeStringField("account", sms.getAccount());
-            gen.writeStringField("validationCode", sms.getValidationCode());
+            gen.writeStringField("id", sms.getId() == null ? "" : sms.getId().toString());
+            gen.writeStringField("account", sms.getAccount() == null ? "" : sms.getAccount());
+            gen.writeStringField("validationCode", sms.getValidationCode() == null ? "" : sms.getValidationCode());
+            gen.writeNumberField("action", sms.getAction() == null ? -1 : sms.getAction());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

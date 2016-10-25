@@ -5,13 +5,10 @@ import com.bjlx.QinShihuang.requestmodel.*;
 import com.bjlx.QinShihuang.utils.CommonUtil;
 import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
-import com.bjlx.QinShihuang.utils.MailerUtil;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 /**
  * 用户账户相关
@@ -44,20 +41,24 @@ public class AccountController {
         }
 
         // 检查action的值的合法性
-        if(Constant.checkValidationAction(validationCode.getAction().intValue())) {
+        if(!Constant.checkValidationAction(validationCode.getAction().intValue())) {
             return QinShihuangResult.getResult(ErrorCode.ACTION_LIMIT_1001);
         }
         JsonNode data = null;
+        
         // account必须手机号或者邮箱号
         if(CommonUtil.isTelLegal(validationCode.getAccount())) {
-            // 发送短信验证码
-            data = AccountAPI.sendValidationCode(validationCode.getAccount(), validationCode.getAction());
+        	/**
+             * 发送短信验证码, isTel参数取值
+             * true表示使用的是手机号
+             * false表示使用的是邮箱
+             */
+            data = AccountAPI.sendValidationCode(validationCode.getAccount(), validationCode.getAction(), true);
             return QinShihuangResult.ok(data);
         }
-
         if(CommonUtil.isEmail(validationCode.getAccount())) {
             // 发送邮件
-        	MailerUtil.sendEmail(validationCode.getAccount(), validationCode.getAction());
+        	data = AccountAPI.sendValidationCode(validationCode.getAccount(), validationCode.getAction(), false);
             return QinShihuangResult.ok(data);
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1001);
@@ -170,7 +171,7 @@ public class AccountController {
     public @ResponseBody String getUserInfo(@PathVariable Long userId) {
 
         // 取得用户的令牌
-        String bjlxToken = null;
+//        String bjlxToken = null;
 
         // 检验令牌
 
@@ -182,11 +183,11 @@ public class AccountController {
      * @param userId 用户id
      * @return 用户信息
      */
-    @RequestMapping(value = "/app/users/{userId +d}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updateUserInfo(@PathVariable Long userId) {
+    @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
+    public @ResponseBody String updateUserInfo(@PathVariable(value="userId") Long userId) {
 
         // 取得用户的令牌
-        String bjlxToken = null;
+//        String bjlxToken = null;
 
         // 检验令牌
 
@@ -201,7 +202,7 @@ public class AccountController {
     public @ResponseBody String logout() {
 
         // 取得用户的令牌
-        String bjlxToken = null;
+//        String bjlxToken = null;
 
         // 检验令牌
 
@@ -218,7 +219,7 @@ public class AccountController {
     public @ResponseBody String bindTel(@RequestBody BindTel bindTel, @PathVariable Long userId) {
 
         // 取得用户的令牌
-        String bjlxToken = null;
+//        String bjlxToken = null;
 
         // 检验令牌
 

@@ -28,6 +28,11 @@ public class Sms {
      * 账户
      */
     private String account;
+    
+    /**
+     * 验证码的用途
+     */
+    private Integer action;
 
     public ObjectId getId() {
         return id;
@@ -53,14 +58,24 @@ public class Sms {
         this.account = account;
     }
 
-    /**
+    
+    public Integer getAction() {
+		return action;
+	}
+
+	public void setAction(Integer action) {
+		this.action = action;
+	}
+
+	/**
      * 构造方法
      * @param validationCode 验证码
      * @param account 账号
      */
-    public Sms(String validationCode, String account) {
+    public Sms(String validationCode, String account, Integer action) {
         this.id = new ObjectId();
         this.validationCode = validationCode;
         this.account = account;
+        this.action = action;
     }
 }

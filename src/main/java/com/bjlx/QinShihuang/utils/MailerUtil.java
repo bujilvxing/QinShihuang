@@ -6,11 +6,6 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.util.ByteArrayDataSource;
 
-import com.bjlx.QinShihuang.core.formatter.SmsFormatter;
-import com.bjlx.QinShihuang.model.Sms;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
@@ -374,22 +369,5 @@ public class MailerUtil {
 		if (mailer == null)
 			throw new RuntimeException("Mailer has not been initialized!");
 		return mailer.sendTextMail(mailSubject, mailBody, fromAddress, toAddress, ccAddress);
-	}
-	
-	public static JsonNode sendEmail(String email, Integer action) {
-		// 存数据库
-		
-
-        // 产生验证码
-        String validationCode = String.format("%d", (int) Math.random() * 1000000);
-        
-		// instance.setupMailer("smtp.163.com", "25", "pengyt19890703@163.com", "19890703pyt0422");
-		// 腾讯邀请码：bihbohnlzbhccahh
-		sendSimpleEmail("不羁旅行验证码", String.format("您的验证码为:%s", validationCode), "service@bujilvxing.com", email, "");
-		
-		Sms sms = new Sms(validationCode, email);
-
-        ObjectMapper mapper = SmsFormatter.getMapper();
-        return mapper.valueToTree(sms);
 	}
 }
