@@ -5,6 +5,7 @@ import com.bjlx.QinShihuang.requestmodel.*;
 import com.bjlx.QinShihuang.utils.CommonUtil;
 import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
+import com.bjlx.QinShihuang.utils.MailerUtil;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,7 @@ public class AccountController {
 
         if(CommonUtil.isEmail(validationCode.getAccount())) {
             // 发送邮件
-
+        	MailerUtil.sendEmail(validationCode.getAccount(), validationCode.getAction());
             return QinShihuangResult.ok(data);
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1001);

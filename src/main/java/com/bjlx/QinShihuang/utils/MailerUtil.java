@@ -5,16 +5,22 @@ import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.util.ByteArrayDataSource;
+
+import com.bjlx.QinShihuang.core.formatter.SmsFormatter;
+import com.bjlx.QinShihuang.model.Sms;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-public class OctopusMailer {
+public class MailerUtil {
 	public String mailServerHost;
 	public String mailServerPort = "25";
 	public String userName;
 	public String password;
 
-	public OctopusMailer(String mailServerHost, String mailServerPort, String userName, String password) {
+	public MailerUtil(String mailServerHost, String mailServerPort, String userName, String password) {
 		super();
 		this.mailServerHost = mailServerHost;
 		this.mailServerPort = mailServerPort;
@@ -22,7 +28,7 @@ public class OctopusMailer {
 		this.password = password;
 	}
 
-	public OctopusMailer(String mailServerHost, String userName, String password) {
+	public MailerUtil(String mailServerHost, String userName, String password) {
 		super();
 		this.mailServerHost = mailServerHost;
 		this.userName = userName;
@@ -361,6 +367,29 @@ public class OctopusMailer {
 		return sendHtmlMail(mail);
 	}
 
-	public static void main(String[] args) {
+	private static MailerUtil mailer = new MailerUtil("smtp.exmail.qq.com", "25", "service@bujilvxing.com", "BuJiLvXing168");
+	
+	public static boolean sendSimpleEmail(String mailSubject, String mailBody, String fromAddress,
+			String toAddress, String ccAddress) {
+		if (mailer == null)
+			throw new RuntimeException("Mailer has not been initialized!");
+		return mailer.sendTextMail(mailSubject, mailBody, fromAddress, toAddress, ccAddress);
+	}
+	
+	public static JsonNode sendEmail(String email, Integer action) {
+		// 存数据库
+		
+
+        // 产生验证码
+        String validationCode = String.format("%d", (int) Math.random() * 1000000);
+        
+		// instance.setupMailer("smtp.163.com", "25", "pengyt19890703@163.com", "19890703pyt0422");
+		// 腾讯邀请码：bihbohnlzbhccahh
+		sendSimpleEmail("不羁旅行验证码", String.format("您的验证码为:%s", validationCode), "service@bujilvxing.com", email, "");
+		
+		Sms sms = new Sms(validationCode, email);
+
+        ObjectMapper mapper = SmsFormatter.getMapper();
+        return mapper.valueToTree(sms);
 	}
 }
