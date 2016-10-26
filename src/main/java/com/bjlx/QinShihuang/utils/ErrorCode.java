@@ -18,10 +18,12 @@ public enum ErrorCode {
 	 */
 	OK(0, "Normal"),
 	INVALID_ARGUMENTS(100, "Invalid arguments"),
-	FORBIDDEN(403, "Forbidden"), NOT_FOUND(404, "Resource not found"),
+	FORBIDDEN(403, "Forbidden"), 
+	NOT_FOUND(404, "Resource not found"),
 	ServerException(500, "Server Exception"),
 	ALIPAY_REFUND(901, "Ali pay refund need manual operation"),
 	UNKNOWN(999, "Unknown error"),
+	NETWORK_ERROR(601, "网络异常"),
 
 	/**
 	 * 验证码
@@ -33,7 +35,8 @@ public enum ErrorCode {
 	ACTION_NULL_1001(100103, "参数账户为空"),
 	ACTION_LIMIT_1001(100104, "参数action的值不合法"),
 	USER_EXIST_1001(100105, "用户已存在"),
-	REQUEST_TOO_MANY_1001(100106, "请求次数过多"),
+	TIME_LIMIT_1001(100106, "请求过于频繁，请稍后再试"),
+	REQUEST_TOO_MANY_1001(100107, "请求次数过多"),
 
 	// 检验验证码
 	ACCOUNT_NULL_1002(100201, "参数账户为空"),

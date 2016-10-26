@@ -4,7 +4,7 @@ package com.bjlx.QinShihuang.requestmodel;
  * 第三方登录用户信息
  * Created by pengyt on 2016/10/23.
  */
-public class OAuthUserInfo {
+public class OAuthUserInfoReq {
 
     /**
      * 第三方平台名称

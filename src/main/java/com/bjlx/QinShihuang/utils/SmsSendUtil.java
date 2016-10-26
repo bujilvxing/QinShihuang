@@ -3,6 +3,7 @@ package com.bjlx.QinShihuang.utils;
 import com.cloopen.rest.sdk.CCPRestSmsSDK;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 发送验证码工具
@@ -54,8 +55,13 @@ public class SmsSendUtil {
 	 * @param mobile 手机号
 	 * @param data 消息数据
 	 */
-	public static int sendMessageByTemplate(String mobile, String[] data) {
-		HashMap<String, Object> result = restAPI.sendTemplateSMS(mobile, templateId, data);
+	public static int sendMessageByTemplate(String mobile, String[] data) throws Exception {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			result = restAPI.sendTemplateSMS(mobile, templateId, data);
+		} catch(Exception e) {
+			throw e;
+		}
 		Object statusCodeObj = result.get("statusCode");
 		if(statusCodeObj == null) {
 			return -1;

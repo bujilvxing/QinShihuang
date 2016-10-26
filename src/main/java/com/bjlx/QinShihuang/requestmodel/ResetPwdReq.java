@@ -4,7 +4,7 @@ package com.bjlx.QinShihuang.requestmodel;
  * 重置密码
  * Created by pengyt on 2016/10/23.
  */
-public class ResetPwd {
+public class ResetPwdReq {
 
     /**
      * 用户账户

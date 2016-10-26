@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.AccountAPI;
+import com.bjlx.QinShihuang.exception.BjlxException;
 import com.bjlx.QinShihuang.requestmodel.*;
 import com.bjlx.QinShihuang.utils.CommonUtil;
 import com.bjlx.QinShihuang.utils.Constant;
@@ -29,7 +30,7 @@ public class AccountController {
      * @return 用户接收验证码的手机号，验证码
      */
     @RequestMapping(value = "/app/validationcodes", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String sendValidationCode(@RequestBody ValidationCode validationCode) {
+    public @ResponseBody String sendValidationCode(@RequestBody ValidationCodeReq validationCode) {
         // 参数校验
         // account必须存在
         if(validationCode.getAccount() == null) {
@@ -48,17 +49,34 @@ public class AccountController {
         
         // account必须手机号或者邮箱号
         if(CommonUtil.isTelLegal(validationCode.getAccount())) {
-        	/**
-             * 发送短信验证码, isTel参数取值
-             * true表示使用的是手机号
-             * false表示使用的是邮箱
-             */
-            data = AccountAPI.sendValidationCode(validationCode.getAccount(), validationCode.getAction(), true);
-            return QinShihuangResult.ok(data);
+        	// 校验是否过了允许下次发送发验证码的时间
+        	if(AccountAPI.isAllowSendValidationCode(validationCode.getAccount(), true)) {
+        		/**
+                 * 发送短信验证码, isTel参数取值
+                 * true表示使用的是手机号
+                 * false表示使用的是邮箱
+                 */
+        		try {
+        			data = AccountAPI.sendValidationCode(validationCode.getAccount(), validationCode.getAction(), true);
+        		} catch(BjlxException e) {
+        			return QinShihuangResult.getResult(e.getErrorCode());
+        		} catch(Exception e1) {
+        			return QinShihuangResult.getResult(ErrorCode.ServerException);
+        		}
+                return QinShihuangResult.ok(data);
+        	} else {
+        		return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
+        	}
         }
         if(CommonUtil.isEmail(validationCode.getAccount())) {
             // 发送邮件
-        	data = AccountAPI.sendValidationCode(validationCode.getAccount(), validationCode.getAction(), false);
+        	try {
+        		data = AccountAPI.sendValidationCode(validationCode.getAccount(), validationCode.getAction(), false);
+    		} catch(BjlxException e) {
+    			return QinShihuangResult.getResult(e.getErrorCode());
+    		} catch(Exception e1) {
+    			return QinShihuangResult.getResult(ErrorCode.ServerException);
+    		}
             return QinShihuangResult.ok(data);
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1001);
@@ -71,7 +89,7 @@ public class AccountController {
      * @return 合法的令牌
      */
     @RequestMapping(value = "/app/tokens", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String checkValidationCode(@RequestBody ValidationCode validationCode) {
+    public @ResponseBody String checkValidationCode(@RequestBody ValidationCodeReq validationCode) {
 
         // 参数校验
         // account必须存在
@@ -102,7 +120,7 @@ public class AccountController {
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String signup(@RequestBody UserInfo userInfo) {
+    public @ResponseBody String signup(@RequestBody UserInfoReq userInfo) {
 
         // 创建密码
 
@@ -115,7 +133,7 @@ public class AccountController {
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users/login", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String login(@RequestBody UserInfo userInfo) {
+    public @ResponseBody String login(@RequestBody UserInfoReq userInfo) {
 
         // 绑定个推的clientId
 
@@ -128,7 +146,7 @@ public class AccountController {
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users/oauthlogin", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String oauthLogin(@RequestBody OAuthUserInfo oAuthUserInfo) {
+    public @ResponseBody String oauthLogin(@RequestBody OAuthUserInfoReq oAuthUserInfo) {
 
         // 绑定个推的clientId
 
@@ -144,7 +162,7 @@ public class AccountController {
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String resetPwd(@RequestBody ResetPwd resetPwd) {
+    public @ResponseBody String resetPwd(@RequestBody ResetPwdReq resetPwd) {
 
 
         return null;
@@ -156,7 +174,7 @@ public class AccountController {
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/{userId +d}/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updatePwd(@RequestBody UpdatePwd updatePwd, @PathVariable Long userId) {
+    public @ResponseBody String updatePwd(@RequestBody UpdatePwdReq updatePwd, @PathVariable Long userId) {
 
 
         return null;
@@ -216,7 +234,7 @@ public class AccountController {
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/{userId}/tel", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String bindTel(@RequestBody BindTel bindTel, @PathVariable Long userId) {
+    public @ResponseBody String bindTel(@RequestBody BindTelReq bindTel, @PathVariable Long userId) {
 
         // 取得用户的令牌
 //        String bjlxToken = null;

@@ -4,7 +4,7 @@ package com.bjlx.QinShihuang.requestmodel;
  * 修改密码
  * Created by pengyt on 2016/10/23.
  */
-public class UpdatePwd {
+public class UpdatePwdReq {
 
     /**
      * 旧密码

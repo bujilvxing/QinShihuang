@@ -7,38 +7,37 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.slf4j.LoggerFactory;
 
-import com.bjlx.QinShihuang.model.Sequence;
-import com.bjlx.QinShihuang.model.Sms;
-//import com.bjlx.core.model.account.Credential;
-//import com.bjlx.core.model.account.Favorite;
-//import com.bjlx.core.model.account.UserInfo;
-//import com.bjlx.core.model.account.Vote;
-//import com.bjlx.core.model.activity.Activity;
-//import com.bjlx.core.model.activity.Ticket;
-//import com.bjlx.core.model.comment.Comment;
-//import com.bjlx.core.model.geo.Locality;
-//import com.bjlx.core.model.guide.Guide;
-//import com.bjlx.core.model.im.Chatgroup;
-//import com.bjlx.core.model.im.Conversation;
-//import com.bjlx.core.model.im.Message;
-//import com.bjlx.core.model.im.Post;
-//import com.bjlx.core.model.im.Relationship;
-//import com.bjlx.core.model.marketplace.Commodity;
-//import com.bjlx.core.model.misc.Card;
-//import com.bjlx.core.model.misc.Column;
-//import com.bjlx.core.model.misc.Feedback;
-//import com.bjlx.core.model.misc.TravelNote;
-//import com.bjlx.core.model.misc.ValidationCode;
-//import com.bjlx.core.model.poi.Hotel;
-//import com.bjlx.core.model.poi.Restaurant;
-//import com.bjlx.core.model.poi.Shopping;
-//import com.bjlx.core.model.poi.Viewspot;
-//import com.bjlx.core.model.quora.Question;
-//import com.bjlx.core.model.specialservice.Car;
-//import com.bjlx.core.model.specialservice.RentCar;
-//import com.bjlx.core.model.timeline.Moment;
-//import com.bjlx.core.model.trace.Trace;
-//import com.bjlx.core.model.tripplan.TripPlan;
+import com.bjlx.QinShihuang.model.misc.Sequence;
+import com.bjlx.QinShihuang.model.account.Credential;
+import com.bjlx.QinShihuang.model.account.Favorite;
+import com.bjlx.QinShihuang.model.account.UserInfo;
+import com.bjlx.QinShihuang.model.account.Vote;
+import com.bjlx.QinShihuang.model.activity.Activity;
+import com.bjlx.QinShihuang.model.activity.Ticket;
+import com.bjlx.QinShihuang.model.comment.Comment;
+import com.bjlx.QinShihuang.model.geo.Locality;
+import com.bjlx.QinShihuang.model.guide.Guide;
+import com.bjlx.QinShihuang.model.im.Chatgroup;
+import com.bjlx.QinShihuang.model.im.Conversation;
+import com.bjlx.QinShihuang.model.im.Message;
+import com.bjlx.QinShihuang.model.im.Post;
+import com.bjlx.QinShihuang.model.im.Relationship;
+import com.bjlx.QinShihuang.model.marketplace.Commodity;
+import com.bjlx.QinShihuang.model.misc.Card;
+import com.bjlx.QinShihuang.model.misc.Column;
+import com.bjlx.QinShihuang.model.misc.Feedback;
+import com.bjlx.QinShihuang.model.misc.TravelNote;
+import com.bjlx.QinShihuang.model.misc.ValidationCode;
+import com.bjlx.QinShihuang.model.poi.Hotel;
+import com.bjlx.QinShihuang.model.poi.Restaurant;
+import com.bjlx.QinShihuang.model.poi.Shopping;
+import com.bjlx.QinShihuang.model.poi.Viewspot;
+import com.bjlx.QinShihuang.model.quora.Question;
+import com.bjlx.QinShihuang.model.specialservice.Car;
+import com.bjlx.QinShihuang.model.specialservice.RentCar;
+import com.bjlx.QinShihuang.model.timeline.Moment;
+import com.bjlx.QinShihuang.model.trace.Trace;
+import com.bjlx.QinShihuang.model.tripplan.TripPlan;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
@@ -75,13 +74,13 @@ public class MorphiaFactory {
      */
     private final Morphia getMorphia() {
     	final Morphia morphia = new Morphia();
-    	morphia.map(Sms.class, Sequence.class);
-//    	morphia.map(UserInfo.class, Credential.class, Favorite.class, Vote.class, Ticket.class, Activity.class, 
-//    			Comment.class, Locality.class, Guide.class, Chatgroup.class, Conversation.class, Message.class,
-//    			Post.class, Relationship.class, Commodity.class, Card.class, Column.class, Feedback.class,
-//    			TravelNote.class, ValidationCode.class, Hotel.class, Restaurant.class, Shopping.class, Viewspot.class,
-//    			Question.class, Car.class, RentCar.class, Moment.class, Trace.class, TripPlan.class, Sms.class, 
-//    			Sequence.class);
+//    	morphia.map(Sms.class, Sequence.class);
+    	morphia.map(UserInfo.class, Credential.class, Favorite.class, Vote.class, Ticket.class, Activity.class, 
+    			Comment.class, Locality.class, Guide.class, Chatgroup.class, Conversation.class, Message.class,
+    			Post.class, Relationship.class, Commodity.class, Card.class, Column.class, Feedback.class,
+    			TravelNote.class, ValidationCode.class, Hotel.class, Restaurant.class, Shopping.class, Viewspot.class,
+    			Question.class, Car.class, RentCar.class, Moment.class, Trace.class, TripPlan.class,  
+    			Sequence.class);
         return morphia;
     }
 

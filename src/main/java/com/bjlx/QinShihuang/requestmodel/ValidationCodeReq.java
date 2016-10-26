@@ -6,7 +6,7 @@ package com.bjlx.QinShihuang.requestmodel;
  *
  * Created by xiaozhi on 2016/10/21.
  */
-public class ValidationCode {
+public class ValidationCodeReq {
 
     /**
      * 登录账户
@@ -16,7 +16,7 @@ public class ValidationCode {
 
     /**
      * 验证码的用途
-     * 1表示新用户注册；2表示用户绑定手机号；3表示用户找回密码
+     * 1表示新用户注册，2表示重置密码，3表示绑定手机号，4表示绑定邮箱
      */
     private Integer action;
 

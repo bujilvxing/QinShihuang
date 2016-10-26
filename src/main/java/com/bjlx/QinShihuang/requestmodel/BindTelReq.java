@@ -3,7 +3,7 @@ package com.bjlx.QinShihuang.requestmodel;
 /**
  * Created by pengyt on 2016/10/24.
  */
-public class BindTel {
+public class BindTelReq {
 
     /**
      * 手机号

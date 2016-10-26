@@ -1,4 +1,4 @@
-package com.bjlx.QinShihuang.model;
+package com.bjlx.QinShihuang.model.misc;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;

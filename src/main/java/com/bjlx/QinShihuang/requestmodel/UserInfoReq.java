@@ -4,7 +4,7 @@ package com.bjlx.QinShihuang.requestmodel;
  * 用户注册信息
  * Created by pengyt on 2016/10/23.
  */
-public class UserInfo {
+public class UserInfoReq {
 
     /**
      * 合法的token
