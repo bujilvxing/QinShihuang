@@ -6,6 +6,6 @@ package com.bjlx.QinShihuang;
  */
 public class Sandbox {
     public static void main(String[] args) {
-
+        System.out.print("goodbye world!");
     }
 }
