@@ -131,7 +131,7 @@ public class AccountAPI {
             		.set(ValidationCode.fd_failCnt, validationCode.getFailCnt());
         	try {
             	result = ds.findAndModify(query, ops, false, true);
-    	     	MailerUtil.sendSimpleEmail("不羁旅行验证码", String.format("您的验证码为:%s", validationCode), "service@bujilvxing.com", account, "");
+    	     	MailerUtil.sendSimpleEmail("不羁旅行验证码", String.format("您的验证码为:%s", code), "service@bujilvxing.com", account, "");
             } catch(Exception e) {
             	throw e;
             }
