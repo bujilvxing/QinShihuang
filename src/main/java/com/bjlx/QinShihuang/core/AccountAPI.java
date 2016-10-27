@@ -5,6 +5,7 @@ import com.bjlx.QinShihuang.exception.BjlxException;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.misc.Sequence;
+import com.bjlx.QinShihuang.model.misc.Token;
 import com.bjlx.QinShihuang.model.misc.ValidationCode;
 import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
@@ -17,6 +18,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -83,14 +88,16 @@ public class AccountAPI {
     	
     	return queryUser.get() != null;
     }
-    
-    /**
-     * 发送验证码
-     * @param tel 手机号
-     * @param action 验证码的用途
-     * @return 发送结果
-     * @throws BjlxException 
-     */
+
+	/**
+	 * 发送验证码
+	 * @param account 用户账户
+	 * @param action 验证码的用途
+	 * @param isTel 是否手机号
+	 * @return 发送结果
+	 * @throws BjlxException 已知异常
+	 * @throws Exception 运行时异常
+	 */
     public static JsonNode sendValidationCode(String account, int action, boolean isTel) throws BjlxException, Exception {
     	
     	// 根据action检查异常情况
@@ -143,6 +150,7 @@ public class AccountAPI {
             try {
             	result = ds.findAndModify(query, ops, false, true);
             } catch(Exception e) {
+				e.printStackTrace();
             	throw e;
             }
 	        // 发送短信
@@ -159,7 +167,10 @@ public class AccountAPI {
 					throw new BjlxException(ErrorCode.UNKNOWN);  
 			}
         } else {
-        	ValidationCode validationCode = new ValidationCode(currentTime, currentTime + 6 * 60 * 1000, code, account, action);
+			// 过期时间设置为6分钟
+			Long expireTime = 6 * 60 * 1000L;
+
+        	ValidationCode validationCode = new ValidationCode(currentTime, currentTime + expireTime, code, account, action);
         	// 存数据库
         	query.field(ValidationCode.fd_email).equal(account);
         	ops.set(ValidationCode.fd_email, validationCode.getEmail())
@@ -175,6 +186,7 @@ public class AccountAPI {
             	result = ds.findAndModify(query, ops, false, true);
     	     	MailerUtil.sendSimpleEmail("不羁旅行验证码", String.format("您的验证码为:%s", code), "service@bujilvxing.com", account, "");
             } catch(Exception e) {
+				e.printStackTrace();
             	throw e;
             }
         }
@@ -182,15 +194,67 @@ public class AccountAPI {
         return mapper.valueToTree(result);
     }
 
-    public static JsonNode sendValidationCode(String tel, int action, String validationCode) {
-        ObjectNode result = mapper.createObjectNode();
-        // 检查是否存在
-        // 检查验证码是否正确
+	/**
+	 * 是否验证码，验证码必须是6位的数字
+	 * @param code 验证码
+	 * @return 是否验证码
+	 * @throws PatternSyntaxException 模式匹配异常
+	 */
+	public static boolean isCode(String code) throws PatternSyntaxException {
+		String regExp = "^\\d{6}$";
+		Pattern p = Pattern.compile(regExp);
+		Matcher m = p.matcher(code);
+		return m.matches();
+	}
 
-        // 生成token
-        String token = String.format("bjlx::token::%s", UUID.randomUUID().toString().replaceAll(",",""));
+	/**
+	 * 检验验证码的合法性，并返回合法的令牌
+	 * @param account 账户
+	 * @param code 验证码
+	 * @param isTel 账户是否手机号
+	 * @return 令牌
+	 * @throws BjlxException 已知异常
+	 * @throws Exception 运行时异常
+	 */
+    public static JsonNode checkValidationCode(String account, String code, boolean isTel) throws BjlxException, Exception {
+		Query<ValidationCode> query = ds.createQuery(ValidationCode.class);
 
-        result.put("token", token);
-        return result;
+		long currentTime = System.currentTimeMillis();
+		/**
+		 * 符合条件的验证码
+		 * 1、没有过期
+		 * 2、没有被使用过
+		 * 3、验证错误次数没有超过10次
+		 * 4、账户和验证码正确
+		 */
+		if(isTel) {
+			query.field(ValidationCode.fd_number).equal(account);
+		} else {
+			query.field(ValidationCode.fd_email).equal(account);
+		}
+		query.field(ValidationCode.fd_expireTime).greaterThanOrEq(currentTime).field(ValidationCode.fd_used).equal(false)
+				.field(ValidationCode.fd_code).equal(code).field(ValidationCode.fd_failCnt).lessThanOrEq(10);
+
+		try {
+			if (query.get() == null) {
+				throw new BjlxException(ErrorCode.VALIDATION_FAIL_1002);
+			} else {
+				// 存入token并返回
+				Token token = new Token();
+				ds.save(token);
+
+				// 将验证码设置为已使用
+				UpdateOperations<ValidationCode> ops = ds.createUpdateOperations(ValidationCode.class).set(ValidationCode.fd_used, true);
+				ds.updateFirst(query, ops);
+
+				ObjectNode result = mapper.createObjectNode();
+				// 检验完后，将使用设置为true
+				result.put("token", token.getToken());
+				return result;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
     }
 }

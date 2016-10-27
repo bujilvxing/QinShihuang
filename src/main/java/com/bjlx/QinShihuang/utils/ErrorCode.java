@@ -43,10 +43,17 @@ public enum ErrorCode {
 
 	// 检验验证码
 	ACCOUNT_NULL_1002(100201, "参数账户为空"),
-	ACCOUNT_FORMAT_1002(100102, "账户格式不正确"),
-	ACTION_NULL_1002(100103, "参数账户为空"),
-	ACTION_LIMIT_1002(100104, "参数action的值不合法"),
-	VALIDATION_FAIL_1002(100105, "验证失败"),
+	ACCOUNT_FORMAT_1002(100202, "账户格式不正确"),
+	CODE_NULL_1002(100203, "验证码为空"),
+	CODE_INVALID_1002(100204, "验证码不合法"),
+	VALIDATION_FAIL_1002(100205, "验证失败"),
+
+	/**
+	 * 用户模块
+	 */
+
+	// 用户注册
+
 	;
 
 

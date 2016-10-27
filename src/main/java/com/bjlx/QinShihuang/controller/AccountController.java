@@ -26,38 +26,38 @@ public class AccountController {
 
     /**
      * 发送验证码, 接口编码1001
-     * @param validationCode 参数
+     * @param validationCodeReq 参数
      * @return 用户接收验证码的手机号，验证码
      */
     @RequestMapping(value = "/app/validationcodes", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String sendValidationCode(@RequestBody ValidationCodeReq validationCode) {
+    public @ResponseBody String sendValidationCode(@RequestBody ValidationCodeReq validationCodeReq) {
         // 参数校验
         // account必须存在
-        if(validationCode.getAccount() == null) {
+        if(validationCodeReq.getAccount() == null) {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_NULL_1001);
         }
         // action必须存在
-        if(validationCode.getAction() == null) {
+        if(validationCodeReq.getAction() == null) {
             return QinShihuangResult.getResult(ErrorCode.ACTION_NULL_1001);
         }
 
         // 检查action的值的合法性
-        if(!Constant.checkValidationAction(validationCode.getAction().intValue())) {
+        if(!Constant.checkValidationAction(validationCodeReq.getAction().intValue())) {
             return QinShihuangResult.getResult(ErrorCode.ACTION_LIMIT_1001);
         }
         JsonNode data = null;
         
         // account必须手机号或者邮箱号
-        if(CommonUtil.isTelLegal(validationCode.getAccount())) {
+        if(CommonUtil.isTelLegal(validationCodeReq.getAccount())) {
         	// 校验是否过了允许下次发送发验证码的时间
-        	if(AccountAPI.isAllowSendValidationCode(validationCode.getAccount(), true)) {
+        	if(AccountAPI.isAllowSendValidationCode(validationCodeReq.getAccount(), true)) {
         		/**
                  * 发送短信验证码, isTel参数取值
                  * true表示使用的是手机号
                  * false表示使用的是邮箱
                  */
         		try {
-        			data = AccountAPI.sendValidationCode(validationCode.getAccount(), validationCode.getAction(), true);
+        			data = AccountAPI.sendValidationCode(validationCodeReq.getAccount(), validationCodeReq.getAction(), true);
         		} catch(BjlxException e) {
         			return QinShihuangResult.getResult(e.getErrorCode());
         		} catch(Exception e1) {
@@ -68,16 +68,22 @@ public class AccountController {
         		return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
         	}
         }
-        if(CommonUtil.isEmail(validationCode.getAccount())) {
-            // 发送邮件
-        	try {
-        		data = AccountAPI.sendValidationCode(validationCode.getAccount(), validationCode.getAction(), false);
-    		} catch(BjlxException e) {
-    			return QinShihuangResult.getResult(e.getErrorCode());
-    		} catch(Exception e1) {
-    			return QinShihuangResult.getResult(ErrorCode.ServerException);
-    		}
-            return QinShihuangResult.ok(data);
+
+        if(CommonUtil.isEmail(validationCodeReq.getAccount())) {
+            // 校验是否过了允许下次发送发验证码的时间
+            if(AccountAPI.isAllowSendValidationCode(validationCodeReq.getAccount(), false)) {
+                // 发送邮件
+                try {
+                    data = AccountAPI.sendValidationCode(validationCodeReq.getAccount(), validationCodeReq.getAction(), false);
+                } catch (BjlxException e) {
+                    return QinShihuangResult.getResult(e.getErrorCode());
+                } catch (Exception e1) {
+                    return QinShihuangResult.getResult(ErrorCode.ServerException);
+                }
+                return QinShihuangResult.ok(data);
+            } else {
+                return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
+            }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1001);
         }
@@ -85,33 +91,52 @@ public class AccountController {
 
     /**
      * 检验验证码，创建一个合法的token, 接口编码1002
-     * @param validationCode 验证码信息
+     * @param validationCodeReq 验证码信息
      * @return 合法的令牌
      */
     @RequestMapping(value = "/app/tokens", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String checkValidationCode(@RequestBody ValidationCodeReq validationCode) {
+    public @ResponseBody String checkValidationCode(@RequestBody ValidationCodeReq validationCodeReq) {
 
         // 参数校验
         // account必须存在
-        if(validationCode.getAccount() == null) {
+        if(validationCodeReq.getAccount() == null) {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_NULL_1002);
         }
-        // action必须存在
-        if(validationCode.getAction() == null) {
-            return QinShihuangResult.getResult(ErrorCode.ACTION_NULL_1002);
-        }
-
-        // 检查action的值的合法性
-        if(Constant.checkValidationAction(validationCode.getAction().intValue())) {
-            return QinShihuangResult.getResult(ErrorCode.ACTION_LIMIT_1002);
+        // code必须存在
+        if(validationCodeReq.getCode() == null) {
+            return QinShihuangResult.getResult(ErrorCode.CODE_NULL_1002);
         }
 
         // 检查验证码是否为六位数字
+        if(!AccountAPI.isCode(validationCodeReq.getCode())) {
+            return QinShihuangResult.getResult(ErrorCode.CODE_INVALID_1002);
+        }
 
+        JsonNode data = null;
+        // account必须手机号或者邮箱号
+        if(CommonUtil.isTelLegal(validationCodeReq.getAccount())) {
+            try {
+                data = AccountAPI.checkValidationCode(validationCodeReq.getAccount(), validationCodeReq.getCode(), true);
+            } catch(BjlxException e) {
+                return QinShihuangResult.getResult(e.getErrorCode());
+            } catch(Exception e1) {
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+            return QinShihuangResult.ok(data);
+        }
 
-
-        // 返回token
-        return null;
+        if(CommonUtil.isEmail(validationCodeReq.getAccount())) {
+            try {
+                data = AccountAPI.checkValidationCode(validationCodeReq.getAccount(), validationCodeReq.getCode(), false);
+            } catch(BjlxException e) {
+                return QinShihuangResult.getResult(e.getErrorCode());
+            } catch(Exception e1) {
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+            return QinShihuangResult.ok(data);
+        } else {
+            return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1002);
+        }
     }
 
     /**

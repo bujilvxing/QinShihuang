@@ -190,6 +190,7 @@ public class ValidationCode {
         this.lastSendTime = createTime;
         this.resendTime = createTime + 60 * 1000L;
         this.action = action;
+        this.failCnt = 0;
     }
     
     public ValidationCode(Long createTime, Long expireTime, String code, PhoneNumber tel, Integer action) {
@@ -201,5 +202,6 @@ public class ValidationCode {
         this.lastSendTime = createTime;
         this.resendTime = createTime + 60 * 1000L;
         this.action = action;
+        this.failCnt = 0;
     }
 }

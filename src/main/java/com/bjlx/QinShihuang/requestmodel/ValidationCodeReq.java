@@ -23,7 +23,7 @@ public class ValidationCodeReq {
     /**
      * 验证码
      */
-    private String validationCode;
+    private String code;
 
     public String getAccount() {
         return account;
@@ -41,11 +41,11 @@ public class ValidationCodeReq {
         this.action = action;
     }
 
-    public String getValidationCode() {
-        return validationCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setValidationCode(String validationCode) {
-        this.validationCode = validationCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 }
