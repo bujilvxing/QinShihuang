@@ -33,6 +33,8 @@ public class Token {
      */
     private Boolean used = false;
 
+    private Long expireTime;
+
     public ObjectId getId() {
         return id;
     }
@@ -57,8 +59,17 @@ public class Token {
         this.used = used;
     }
 
+    public Long getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(Long expireTime) {
+        this.expireTime = expireTime;
+    }
+
     public Token() {
         this.id = new ObjectId();
         this.token = String.format("token::%s", UUID.randomUUID().toString().replaceAll("-", ""));
+        this.expireTime = System.currentTimeMillis() + 6 * 60 * 1000L;
     }
 }

@@ -235,8 +235,12 @@ public class AccountAPI {
 		query.field(ValidationCode.fd_expireTime).greaterThanOrEq(currentTime).field(ValidationCode.fd_used).equal(false)
 				.field(ValidationCode.fd_code).equal(code).field(ValidationCode.fd_failCnt).lessThanOrEq(10);
 
+		UpdateOperations<ValidationCode> ops = ds.createUpdateOperations(ValidationCode.class);
 		try {
 			if (query.get() == null) {
+				// 验证错误次数增加一次
+				ops.inc(ValidationCode.fd_failCnt);
+				ds.updateFirst(query, ops);
 				throw new BjlxException(ErrorCode.VALIDATION_FAIL_1002);
 			} else {
 				// 存入token并返回
@@ -244,7 +248,7 @@ public class AccountAPI {
 				ds.save(token);
 
 				// 将验证码设置为已使用
-				UpdateOperations<ValidationCode> ops = ds.createUpdateOperations(ValidationCode.class).set(ValidationCode.fd_used, true);
+				ops.set(ValidationCode.fd_used, true);
 				ds.updateFirst(query, ops);
 
 				ObjectNode result = mapper.createObjectNode();
