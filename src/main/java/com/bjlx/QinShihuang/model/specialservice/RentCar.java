@@ -3,8 +3,13 @@ package com.bjlx.QinShihuang.model.specialservice;
 import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.Contact;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import org.bson.types.ObjectId;
+import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 /**
  * Created by pengyt on 2016/7/26.
@@ -15,11 +20,14 @@ public class RentCar {
 	/**
 	 * 主键
 	 */
+	@NotBlank
+	@Id
 	private ObjectId id;
 	
     /**
      * 价格
      */
+	@Min(value = 0)
     private Integer price;
 
     /**
@@ -35,6 +43,7 @@ public class RentCar {
     /**
      * 联系人
      */
+    @NotNull
     private Contact contact;
 
     /**
@@ -45,22 +54,24 @@ public class RentCar {
     /**
      * 出租的车辆信息
      */
+    @NotNull
     private Car car;
 
     /**
      * 是否可以买车险
      */
-    private Boolean autoInsurance;
+    private Boolean autoInsurance = true;
 
     /**
      * 车险价格
      */
+    @Min(value = 0)
     private Integer autoInsurancePrice;
 
     /**
      * 是否送车给租客
      */
-    private Boolean pickup;
+    private Boolean pickup = false;
 
     
 	public ObjectId getId() {

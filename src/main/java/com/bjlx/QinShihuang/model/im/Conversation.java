@@ -162,8 +162,24 @@ public class Conversation {
     public void setConversationId(String conversationId) {
         this.conversationId = conversationId;
     }
+    
+    public Integer getUnreadCnt() {
+		return unreadCnt;
+	}
 
-    public Conversation(ObjectId id, String conversationId, String chatType, Long createTime) {
+	public void setUnreadCnt(Integer unreadCnt) {
+		this.unreadCnt = unreadCnt;
+	}
+
+	public String getLastMsgContent() {
+		return lastMsgContent;
+	}
+
+	public void setLastMsgContent(String lastMsgContent) {
+		this.lastMsgContent = lastMsgContent;
+	}
+
+	public Conversation(ObjectId id, String conversationId, String chatType, Long createTime) {
         this.id = id;
         this.conversationId = conversationId;
         this.chatType = chatType;

@@ -1,21 +1,31 @@
 package com.bjlx.QinShihuang.model.im;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 
 @Embedded
 public class Emoticon {
 
-	private String id;
+	/**
+	 * id
+	 */
+	private ObjectId id;
 	
+	/**
+	 * 表情组
+	 */
 	private String group;
 	
+	/**
+	 * 链接地址
+	 */
 	private String url;
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

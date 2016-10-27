@@ -17,7 +17,6 @@ public class Audio {
 	 * 主键
 	 */
 	@NotBlank
-	@Id
 	private ObjectId id;
 	
 	/**

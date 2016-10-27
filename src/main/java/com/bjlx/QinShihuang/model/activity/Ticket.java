@@ -2,7 +2,6 @@ package com.bjlx.QinShihuang.model.activity;
 
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
-import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -11,7 +10,6 @@ import org.mongodb.morphia.annotations.Id;
  * 门票
  */
 @Entity
-@Embedded
 public class Ticket {
 
     /**

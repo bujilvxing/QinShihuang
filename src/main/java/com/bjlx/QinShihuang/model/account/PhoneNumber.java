@@ -20,6 +20,9 @@ public class PhoneNumber {
 	 */
 	private String number;
 
+	public PhoneNumber() {
+		
+	}
 	public PhoneNumber(Integer dialCode, String number) {
 		super();
 		this.dialCode = dialCode;

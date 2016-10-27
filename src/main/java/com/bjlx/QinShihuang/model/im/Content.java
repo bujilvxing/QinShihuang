@@ -45,4 +45,70 @@ public class Content {
 	 * 视频
 	 */
 	private Video video;
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public ImageItem getThumb() {
+		return thumb;
+	}
+
+	public void setThumb(ImageItem thumb) {
+		this.thumb = thumb;
+	}
+
+	public ImageItem getFull() {
+		return full;
+	}
+
+	public void setFull(ImageItem full) {
+		this.full = full;
+	}
+
+	public ImageItem getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(ImageItem origin) {
+		this.origin = origin;
+	}
+
+	public Audio getAudio() {
+		return audio;
+	}
+
+	public void setAudio(Audio audio) {
+		this.audio = audio;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	public Emoticon getEmoticon() {
+		return emoticon;
+	}
+
+	public void setEmoticon(Emoticon emoticon) {
+		this.emoticon = emoticon;
+	}
+
+	public Video getVideo() {
+		return video;
+	}
+
+	public void setVideo(Video video) {
+		this.video = video;
+	}
+	
+	
 }

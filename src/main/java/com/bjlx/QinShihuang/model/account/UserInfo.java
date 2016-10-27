@@ -94,19 +94,16 @@ public class UserInfo {
 	/**
 	 * 登录的状态，是否在线
 	 */
-	@NotNull
 	private boolean loginStatus = false;
 
 	/**
 	 * 登录时间
 	 */
-	@NotNull
 	private Long loginTime = 0L;
 
 	/**
 	 * 登出时间
 	 */
-	@NotNull
 	private Long logoutTime = 0L;
 
 	/**
@@ -117,7 +114,6 @@ public class UserInfo {
 	/**
 	 * 设备版本
 	 */
-	@Version
 	private Long version = 0L;
 
 	/**
@@ -348,14 +344,6 @@ public class UserInfo {
 		this.status = status;
 	}
 
-	public String getPromotionCode() {
-		return promotionCode;
-	}
-
-	public void setPromotionCode(String promotionCode) {
-		this.promotionCode = promotionCode;
-	}
-
 	public boolean isLoginStatus() {
 		return loginStatus;
 	}
@@ -444,6 +432,18 @@ public class UserInfo {
 		this.backGround = backGround;
 	}
 
+	public UserInfo() {
+		this.id = new ObjectId();
+	}
+	
+	/**
+	 * 随机生成邀请码
+	 * @return 邀请码
+	 */
+	private String getPromotionCode() {
+		return "";
+	}
+	
 	public UserInfo(Long userId, PhoneNumber tel, String nickName, ImageItem avatar, String email) {
 		super();
 		this.id = new ObjectId();
@@ -452,5 +452,6 @@ public class UserInfo {
 		this.nickName = nickName;
 		this.avatar = avatar;
 		this.email = email;
+		this.promotionCode = getPromotionCode();
 	}
 }

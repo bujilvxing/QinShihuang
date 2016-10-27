@@ -73,14 +73,14 @@ public class MorphiaFactory {
      * @return
      */
     private final Morphia getMorphia() {
-    	final Morphia morphia = new Morphia();
-//    	morphia.map(Sms.class, Sequence.class);
-    	morphia.map(UserInfo.class, Credential.class, Favorite.class, Vote.class, Ticket.class, Activity.class, 
-    			Comment.class, Locality.class, Guide.class, Chatgroup.class, Conversation.class, Message.class,
-    			Post.class, Relationship.class, Commodity.class, Card.class, Column.class, Feedback.class,
-    			TravelNote.class, ValidationCode.class, Hotel.class, Restaurant.class, Shopping.class, Viewspot.class,
-    			Question.class, Car.class, RentCar.class, Moment.class, Trace.class, TripPlan.class,  
-    			Sequence.class);
+    	final Morphia morphia = new Morphia();    
+    	morphia.map( 
+    			UserInfo.class, Favorite.class, TripPlan.class, Trace.class, Question.class, RentCar.class, Post.class, 
+    			Commodity.class, TravelNote.class, Hotel.class, Restaurant.class, Shopping.class, 
+    			Moment.class, Locality.class, Viewspot.class, Car.class, Feedback.class, Conversation.class, 
+    			Comment.class, Guide.class, Column.class, Card.class, Message.class, Chatgroup.class, 
+    			Vote.class, Ticket.class, Activity.class, Credential.class, Relationship.class, 
+    			ValidationCode.class, Sequence.class);
         return morphia;
     }
 

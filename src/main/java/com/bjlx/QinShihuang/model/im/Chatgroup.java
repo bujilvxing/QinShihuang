@@ -102,7 +102,7 @@ public class Chatgroup {
     /**
      * 群等级
      */
-    private Integer level;
+    private Integer level = 1;
 
     /**
      * 域名称，便于查询，以免输入有误
@@ -215,15 +215,23 @@ public class Chatgroup {
         this.updateTime = updateTime;
     }
 
-    public Boolean isVisible() {
-        return visible;
-    }
+    public Integer getLevel() {
+		return level;
+	}
 
-    public void setVisible(Boolean visible) {
-        this.visible = visible;
-    }
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 
-    public Chatgroup(Long chatGroupId, String name, String avatar, Long creator, List<Long> participants, Integer maxUsers) {
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+	public Chatgroup(Long chatGroupId, String name, String avatar, Long creator, List<Long> participants, Integer maxUsers) {
         this.id = new ObjectId();
         this.chatGroupId = chatGroupId;
         this.name = name;

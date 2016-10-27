@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 
@@ -22,6 +23,8 @@ public class TripPlan {
     /**
      * 主键
      */
+	@Id
+	@NotBlank
     private ObjectId id;
     
     /**

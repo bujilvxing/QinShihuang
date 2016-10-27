@@ -15,10 +15,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class ValidationCode {
 
-    private final Long interval = 60 * 1000L;
-
     public final static String fd_number = "tel.number";
     public final static String fd_dialCode = "tel.dialCode";
+    public final static String fd_tel = "tel";
     public final static String fd_email = "email";
     public final static String fd_id = "id";
     public final static String fd_createTime = "createTime";
@@ -178,6 +177,10 @@ public class ValidationCode {
         this.failCnt = failCnt;
     }
     
+    public ValidationCode() {
+    	
+    }
+    
     public ValidationCode(Long createTime, Long expireTime, String code, String email, Integer action) {
         this.id = new ObjectId();
         this.createTime = createTime;
@@ -185,7 +188,8 @@ public class ValidationCode {
         this.code = code;
         this.email = email;
         this.lastSendTime = createTime;
-        this.resendTime = createTime + interval;
+        this.resendTime = createTime + 60 * 1000L;
+        this.action = action;
     }
     
     public ValidationCode(Long createTime, Long expireTime, String code, PhoneNumber tel, Integer action) {
@@ -195,6 +199,7 @@ public class ValidationCode {
         this.code = code;
         this.tel = tel;
         this.lastSendTime = createTime;
-        this.resendTime = createTime + interval;
+        this.resendTime = createTime + 60 * 1000L;
+        this.action = action;
     }
 }
