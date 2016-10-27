@@ -25,7 +25,9 @@ public class ValidationCodeSerializer extends JsonSerializer<ValidationCode> {
             	gen.writeStringField("number", validationCode.getTel().getNumber() == null ? "" : validationCode.getTel().getNumber());
             	gen.writeEndObject();
             }
-            gen.writeStringField("email", validationCode.getEmail() == null ? "" : validationCode.getEmail());
+            if(validationCode.getEmail() != null) {
+            	gen.writeStringField("email", validationCode.getEmail());
+            }
             gen.writeStringField("code", validationCode.getCode() == null ? "" : validationCode.getCode());
             gen.writeNumberField("action", validationCode.getAction() == null ? -1 : validationCode.getAction());
             gen.writeNumberField("failCnt", validationCode.getFailCnt() == null ? 0 : validationCode.getFailCnt());

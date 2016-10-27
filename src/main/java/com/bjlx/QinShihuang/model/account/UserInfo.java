@@ -24,6 +24,9 @@ import java.util.Map;
 @Entity
 public class UserInfo {
 
+	public final static String fd_number = "tel.number";
+	
+	public final static String fd_email = "email";
 	/**
 	 * 主键
 	 */
