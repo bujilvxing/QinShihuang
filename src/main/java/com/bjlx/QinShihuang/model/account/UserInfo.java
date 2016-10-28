@@ -84,14 +84,15 @@ public class UserInfo {
 
 	/**
 	 * 用户的状态
+	 * 1、表示正常 2、表示已注销
 	 */
-	private Integer status;
+	private Integer status = 1;
 
 	/**
 	 * 邀请码。每个人有全局唯一的一个邀请码，用于分享平台内容时奖励
 	 */
 	@NotBlank
-	@Indexed(unique = true)
+	@Indexed(options = @IndexOptions(unique = true))
 	private String promotionCode;
 
 	/**
@@ -148,7 +149,7 @@ public class UserInfo {
 	/**
 	 * 用户等级
 	 */
-	private Integer level;
+	private Integer level = 1;
 
 	/**
 	 * 用户足迹
@@ -178,22 +179,17 @@ public class UserInfo {
 	/**
 	 * 设置声音提醒
 	 */
-	private boolean soundNotify;
+	private boolean soundNotify = true;
 
 	/**
 	 * 设置振动提醒
 	 */
-	private boolean vibrateNotify;
+	private boolean vibrateNotify = true;
 
 	/**
 	 * 背景图片
 	 */
 	private ImageItem backGround;
-
-	/**
-	 * 动态口令
-	 */
-	private String bjlxToken;
 
 	public Integer getLevel() {
 		return level;
@@ -257,14 +253,6 @@ public class UserInfo {
 
 	public void setVibrateNotify(boolean vibrateNotify) {
 		this.vibrateNotify = vibrateNotify;
-	}
-
-	public String getBjlxToken() {
-		return bjlxToken;
-	}
-
-	public void setBjlxToken(String bjlxToken) {
-		this.bjlxToken = bjlxToken;
 	}
 
 	public ObjectId getId() {
@@ -439,22 +427,25 @@ public class UserInfo {
 		this.id = new ObjectId();
 	}
 	
-	/**
-	 * 随机生成邀请码
-	 * @return 邀请码
-	 */
-	private String getPromotionCode() {
-		return "";
-	}
-	
-	public UserInfo(Long userId, PhoneNumber tel, String nickName, ImageItem avatar, String email) {
+	public UserInfo(Long userId, PhoneNumber tel, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
 		super();
 		this.id = new ObjectId();
 		this.userId = userId;
 		this.tel = tel;
 		this.nickName = nickName;
 		this.avatar = avatar;
+		this.backGround = backGround;
+		this.promotionCode = promotionCode;
+	}
+	
+	public UserInfo(Long userId, String email, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
+		super();
+		this.id = new ObjectId();
+		this.userId = userId;
+		this.nickName = nickName;
+		this.avatar = avatar;
+		this.backGround = backGround;
 		this.email = email;
-		this.promotionCode = getPromotionCode();
+		this.promotionCode = promotionCode;
 	}
 }

@@ -1,8 +1,11 @@
 package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.core.formatter.ValidationCodeFormatter;
+import com.bjlx.QinShihuang.model.account.Credential;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
+import com.bjlx.QinShihuang.model.account.SecretKey;
 import com.bjlx.QinShihuang.model.account.UserInfo;
+import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.Sequence;
 import com.bjlx.QinShihuang.model.misc.Token;
 import com.bjlx.QinShihuang.model.misc.ValidationCode;
@@ -16,10 +19,14 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -39,7 +46,7 @@ public class AccountAPI {
      * 取得下一个userId
      * @return 用户id
      */
-    public long getNextUserId() throws Exception {
+    public static long getNextUserId() throws Exception {
         Query<Sequence> query = ds.createQuery(Sequence.class).field("column").equal(Sequence.fd_userId);
         UpdateOperations<Sequence> ops = ds.createUpdateOperations(Sequence.class).inc("count");
         try {
@@ -270,6 +277,152 @@ public class AccountAPI {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
+		}
+    }
+    
+    /**
+     * 取得数字或者大写字母
+     * @return 数字或者大写字母的字符
+     */
+    private static char getChar() {
+		int r =  (int)(Math.random() * 36);
+		int asciiCode = 0;
+		if (r < 10) 
+			asciiCode = r + 48;
+		else 
+			asciiCode = r - 10 + 65;
+		return (char)asciiCode;
+	}
+	
+    /**
+     * 取得邀请码
+     * @param length 邀请码长度
+     * @return 邀请码
+     */
+	private static String getPromotionCode(int length) {
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < length; i++) {
+			sb.append(getChar());
+		}
+		return sb.toString();
+	}
+    
+	/**
+	 * 检验令牌的合法性
+	 * 6分钟有效期
+	 * 1、令牌未过期
+	 * 2、令牌正确
+	 * @param token 令牌
+	 * @return 是否合法
+	 * @throws Exception 数据库异常
+	 */
+	private static boolean checkTokenValid(String token) throws Exception {
+		long currentTime = System.currentTimeMillis();
+		Query<Token> query = ds.createQuery(Token.class).field(Token.fd_token).equal(token).field(Token.fd_expireTime).greaterThanOrEq(currentTime);
+    	
+    	try {
+    		return query.get() != null;
+        } catch (Exception e) {
+         	throw e;
+        }
+	}
+	
+	/**
+	 * 默认用户头像
+	 */
+	public static ImageItem defaultUserAvatar = new ImageItem("default_user_avatar.jpg", "qiniu-bujilvxing", "http://oe7hx2tam.bkt.clouddn.com/default_user_avatar.jpg", 100, 100, "jpg");
+	
+	/**
+	 * 默认用户背景
+	 */
+	public static ImageItem defaultUserBackGround = new ImageItem("default_user_background.jpg", "qiniu-bujilvxing", "http://oe7hx2tam.bkt.clouddn.com/default_user_background.jpg", 400, 400, "jpg");
+	
+	/**
+	 * 默认群组头像
+	 */
+	public static ImageItem defaultGroupAvatar = new ImageItem("default_group_avatar.jpg", "qiniu-bujilvxing", "http://oe7hx2tam.bkt.clouddn.com/default_group_avatar.jpg", 100, 100, "jpg");
+    
+	private final static String[] strDigits = { "0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+	// 返回形式为数字跟字符串
+    private static String byteToArrayString(byte bByte) {
+        int iRet = bByte;
+        if (iRet < 0) {
+            iRet += 256;
+        }
+        int iD1 = iRet / 16;
+        int iD2 = iRet % 16;
+        return strDigits[iD1] + strDigits[iD2];
+    }
+    
+	private static String bytesToString(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+        	sb.append(byteToArrayString(bytes[i]));
+        }
+        return sb.toString();
+    }
+	
+	  
+	/**
+     * 用户注册
+     * @param account 用户账户
+     * @param token 令牌
+     * @param password 密码明文
+     * @param isTel 是否手机号
+     * @return 用户信息
+     * @throws Exception 异常
+     */
+    public static String signup(String account, String token, String password, boolean isTel, int promotionCodeSize) throws Exception {
+    	try {
+    		// 检验用户是否已存在
+	    	if(checkUserExist(account, isTel)){
+	    		return QinShihuangResult.getResult(ErrorCode.USER_EXIST_1003);
+	    	}
+	    	// 检验token的合法性
+	    	if(!checkTokenValid(token)) {
+	    		return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1003);
+	    	}
+    	} catch(Exception e) {
+    		throw e;
+    	}
+    	// 生成邀请码
+    	String promotionCode = getPromotionCode(promotionCodeSize);
+    	
+    	// 获取用户id
+    	long userId = getNextUserId();
+    	UserInfo userInfo = null;
+    	String nickName = String.format("不羁%d", userId);
+    	
+    	if(isTel) {
+    		PhoneNumber tel = new PhoneNumber(86, account);
+    		userInfo = new UserInfo(userId, tel, nickName, defaultUserAvatar, defaultUserBackGround, promotionCode);
+    	} else 
+    		userInfo = new UserInfo(userId, account, nickName, defaultUserAvatar, defaultUserBackGround, promotionCode);
+    	
+    	// 用户凭证
+    	
+    	Credential credential = null;
+    	// 生成密码
+		try {
+			// 生成64个字节的salt
+			String salt = MessageDigest.getInstance("MD5").digest(String.valueOf(System.currentTimeMillis()).getBytes()).toString();
+			byte[] bytes = MessageDigest.getInstance("SHA-256").digest((salt + password).getBytes());
+			String passwdHash = bytesToString(bytes);
+			SecretKey secretKey = new SecretKey();
+			credential = new Credential(userId, salt, passwdHash, secretKey);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}
+		
+		try {
+			ds.save(userInfo);
+			ds.save(credential);
+			return QinShihuangResult.ok(mapper.valueToTree(userInfo));
+		} catch(Exception e) {
 			throw e;
 		}
     }

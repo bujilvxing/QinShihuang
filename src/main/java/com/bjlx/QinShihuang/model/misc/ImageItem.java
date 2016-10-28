@@ -189,4 +189,19 @@ public class ImageItem {
 	public void setSize(Integer size) {
 		this.size = size;
 	}
+
+	public ImageItem() {
+		
+	}
+	
+	public ImageItem(String key, String bucket, String url, Integer width, Integer height, String fmt) {
+		super();
+		this.key = key;
+		this.bucket = bucket;
+		this.url = url;
+		this.id = new ObjectId();
+		this.width = width;
+		this.height = height;
+		this.fmt = fmt;
+	}
 }

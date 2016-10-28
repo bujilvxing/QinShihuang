@@ -53,7 +53,8 @@ public enum ErrorCode {
 	 */
 
 	// 用户注册
-
+	USER_EXIST_1003(100301, "用户已存在"),
+	TOKEN_INVALID_1003(100301, "用户已存在"),
 	;
 
 

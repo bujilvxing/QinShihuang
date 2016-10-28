@@ -37,7 +37,7 @@ public class Credential {
      */
     @NotNull
     @Min(value = 1)
-    @Indexed(unique = true)
+    @Indexed(options = @IndexOptions(unique = true))
     private Long userId;
 
     /**

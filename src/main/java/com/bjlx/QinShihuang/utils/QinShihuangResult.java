@@ -59,6 +59,10 @@ public class QinShihuangResult {
 		return getResult(ErrorCode.OK, data, null);
 	}
 	
+	public static String ok() {
+		return getResult(ErrorCode.OK, null, null);
+	}
+	
 	public static String notFound(String errorMsg) {
 		return getResult(ErrorCode.NOT_FOUND, null, errorMsg);
 	}

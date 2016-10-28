@@ -21,6 +21,11 @@ public class UserInfoReq {
      */
     private String password;
 
+    /**
+     * 邀请码的长度
+     */
+    private Integer promotionCodeSize;
+    
     public String getToken() {
         return token;
     }
@@ -44,4 +49,13 @@ public class UserInfoReq {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public Integer getPromotionCodeSize() {
+		return promotionCodeSize;
+	}
+
+	public void setPromotionCodeSize(Integer promotionCodeSize) {
+		this.promotionCodeSize = promotionCodeSize;
+	}
+    
 }

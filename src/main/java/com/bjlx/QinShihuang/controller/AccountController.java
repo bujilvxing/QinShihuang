@@ -125,15 +125,22 @@ public class AccountController {
 
     /**
      * 用户注册, 接口编码1003
-     * @param userInfo 用户注册信息
+     * @param userInfoReq 用户注册信息
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String signup(@RequestBody UserInfoReq userInfo) {
-
-        // 创建密码
-
-        return null;
+    public @ResponseBody String signup(@RequestBody UserInfoReq userInfoReq) {
+    	// 校验参数
+    	
+    	// 注册
+    	try {
+			AccountAPI.signup(userInfoReq.getAccount(), userInfoReq.getToken(), userInfoReq.getPassword(), true, userInfoReq.getPromotionCodeSize());
+			return QinShihuangResult.ok();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return QinShihuangResult.getResult(ErrorCode.ACCOUNT_NULL_1001);
+		}
     }
 
     /**

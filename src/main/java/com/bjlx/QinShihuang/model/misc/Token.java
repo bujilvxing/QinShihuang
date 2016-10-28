@@ -15,6 +15,9 @@ import java.util.UUID;
 @Entity
 public class Token {
 
+	public final static String fd_token = "token";
+	
+	public final static String fd_expireTime = "expireTime";
     /**
      * 主键
      */
@@ -33,6 +36,9 @@ public class Token {
      */
     private Boolean used = false;
 
+    /**
+     * 过期时间
+     */
     private Long expireTime;
 
     public ObjectId getId() {

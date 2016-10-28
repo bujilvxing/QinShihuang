@@ -8,6 +8,7 @@ import org.mongodb.morphia.Morphia;
 import org.slf4j.LoggerFactory;
 
 import com.bjlx.QinShihuang.model.misc.Sequence;
+import com.bjlx.QinShihuang.model.misc.Token;
 import com.bjlx.QinShihuang.model.account.Credential;
 import com.bjlx.QinShihuang.model.account.Favorite;
 import com.bjlx.QinShihuang.model.account.UserInfo;
@@ -80,7 +81,7 @@ public class MorphiaFactory {
     			Moment.class, Locality.class, Viewspot.class, Car.class, Feedback.class, Conversation.class, 
     			Comment.class, Guide.class, Column.class, Card.class, Message.class, Chatgroup.class, 
     			Vote.class, Ticket.class, Activity.class, Credential.class, Relationship.class, 
-    			ValidationCode.class, Sequence.class);
+    			ValidationCode.class, Sequence.class, Token.class);
         return morphia;
     }
 
@@ -90,8 +91,8 @@ public class MorphiaFactory {
      */
     private final MongoClient getClient() {
     	// 主机地址
-//    	String host = "192.168.1.128";
-		String host = "127.0.0.1";
+    	String host = "192.168.1.128";
+//		String host = "127.0.0.1";
     	// 端口
     	int port = 27017;
     	// 服务器地址
