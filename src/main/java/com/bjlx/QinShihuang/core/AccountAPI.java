@@ -1,7 +1,6 @@
 package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.core.formatter.ValidationCodeFormatter;
-import com.bjlx.QinShihuang.exception.BjlxException;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.misc.Sequence;
@@ -11,13 +10,12 @@ import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.MailerUtil;
 import com.bjlx.QinShihuang.utils.MorphiaFactory;
+import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import com.bjlx.QinShihuang.utils.SmsSendUtil;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -41,11 +39,15 @@ public class AccountAPI {
      * 取得下一个userId
      * @return 用户id
      */
-    public long getNextUserId() {
+    public long getNextUserId() throws Exception {
         Query<Sequence> query = ds.createQuery(Sequence.class).field("column").equal(Sequence.fd_userId);
         UpdateOperations<Sequence> ops = ds.createUpdateOperations(Sequence.class).inc("count");
-        Sequence ret = ds.findAndModify(query, ops, false, true);
-        return ret.getCount();
+        try {
+	        Sequence ret = ds.findAndModify(query, ops, false, true);
+	        return ret.getCount();
+        } catch (Exception e) {
+        	throw e;
+        }
     }
 	
 	
@@ -60,7 +62,7 @@ public class AccountAPI {
      * @param isTel 是否手机号
      * @return 是否允许
      */
-    public static boolean isAllowSendValidationCode(String account, boolean isTel) {
+    public static boolean isAllowSendValidationCode(String account, boolean isTel)  throws Exception {
     	long currentTime = System.currentTimeMillis();
     	
     	Query<ValidationCode> query = ds.createQuery(ValidationCode.class).field("action").equal(1);
@@ -69,7 +71,11 @@ public class AccountAPI {
     	} else {
     		query.field(ValidationCode.fd_email).equal(account).field(ValidationCode.fd_resendTime).greaterThan(currentTime);
     	}
-    	return query.get() == null;
+    	try {
+    		return query.get() == null;
+        } catch (Exception e) {
+         	throw e;
+        }
     }
     
     /**
@@ -78,15 +84,18 @@ public class AccountAPI {
      * @param isTel 是否手机号
      * @return true表示存在，false表示不存在
      */
-    private static boolean checkUserExist(String account, boolean isTel) {
+    private static boolean checkUserExist(String account, boolean isTel) throws Exception {
     	Query<UserInfo> queryUser = ds.createQuery(UserInfo.class);
     	if(isTel) {
     		queryUser.field(UserInfo.fd_number).equal(account);
     	} else {
     		queryUser.field(UserInfo.fd_email).equal(account);
     	}
-    	
-    	return queryUser.get() != null;
+    	try {
+    		return queryUser.get() != null;
+        } catch (Exception e) {
+         	throw e;
+        }
     }
 
 	/**
@@ -95,33 +104,35 @@ public class AccountAPI {
 	 * @param action 验证码的用途
 	 * @param isTel 是否手机号
 	 * @return 发送结果
-	 * @throws BjlxException 已知异常
 	 * @throws Exception 运行时异常
 	 */
-    public static JsonNode sendValidationCode(String account, int action, boolean isTel) throws BjlxException, Exception {
-    	
+    public static String sendValidationCode(String account, int action, boolean isTel) throws Exception {  	
     	// 根据action检查异常情况
-    	switch(action) {
-	    	case Constant.NEW_USER_SIGNUP_ACTION :
-	    		if(checkUserExist(account, isTel)) {
-	    			throw new BjlxException(ErrorCode.USER_EXIST_1001);
-	    		}
-	    		break;
-	    	case Constant.BIND_TEL_ACTION:
-	    		if(checkUserExist(account, isTel)) {
-	    			throw new BjlxException(ErrorCode.TEL_EXIST_1001);
-	    		}
-	    		break;
-	    	case Constant.RESET_PWD_ACTION:
-	    		if(!checkUserExist(account, isTel)) {
-	    			throw new BjlxException(ErrorCode.USER_NOT_EXIST_1001);
-	    		}
-	    		break;
-	    	case Constant.BIND_EMAIL_ACTION:
-	    		if(checkUserExist(account, isTel)) {
-	    			throw new BjlxException(ErrorCode.EMAIL_EXIST_1001);
-	    		}
-	    		break;
+    	try{
+	    	switch(action) {
+		    	case Constant.NEW_USER_SIGNUP_ACTION :
+		    		if(checkUserExist(account, isTel)) {
+		    			return QinShihuangResult.getResult(ErrorCode.USER_EXIST_1001);
+		    		}
+		    		break;
+		    	case Constant.BIND_TEL_ACTION:
+		    		if(checkUserExist(account, isTel)) {
+		    			return QinShihuangResult.getResult(ErrorCode.TEL_EXIST_1001);
+		    		}
+		    		break;
+		    	case Constant.RESET_PWD_ACTION:
+		    		if(!checkUserExist(account, isTel)) {
+		    			return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1001);
+		    		}
+		    		break;
+		    	case Constant.BIND_EMAIL_ACTION:
+		    		if(checkUserExist(account, isTel)) {
+		    			return QinShihuangResult.getResult(ErrorCode.EMAIL_EXIST_1001);
+		    		}
+		    		break;
+	    	}
+    	} catch(Exception e) {
+    		throw e;
     	}
         // 产生验证码
         String code = String.format("%d", (int) (Math.random() * 1000000));
@@ -147,24 +158,26 @@ public class AccountAPI {
         		.set(ValidationCode.fd_used, validationCode.isUsed())
         		.set(ValidationCode.fd_resendTime, validationCode.getResendTime())
         		.set(ValidationCode.fd_failCnt, validationCode.getFailCnt());
+            int smsResult = 0;
             try {
             	result = ds.findAndModify(query, ops, false, true);
+            	smsResult = SmsSendUtil.sendMessageByTemplate(account, smsdata);
             } catch(Exception e) {
 				e.printStackTrace();
             	throw e;
             }
 	        // 发送短信
-	        int smsResult = SmsSendUtil.sendMessageByTemplate(account, smsdata);
+	       
 	        switch(smsResult) {
-				case -1: throw new BjlxException(ErrorCode.NETWORK_ERROR);
+				case -1: return QinShihuangResult.getResult(ErrorCode.NETWORK_ERROR);
 				case 1:  break;// 成功
-				case 2: throw new BjlxException(ErrorCode.TIME_LIMIT_1001);
+				case 2: return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
 				case 3:
 				case 4: 
 				case 5:
-					throw new BjlxException(ErrorCode.REQUEST_TOO_MANY_1001); 
+					return QinShihuangResult.getResult(ErrorCode.REQUEST_TOO_MANY_1001); 
 				default:
-					throw new BjlxException(ErrorCode.UNKNOWN);  
+					return QinShihuangResult.getResult(ErrorCode.UNKNOWN);  
 			}
         } else {
 			// 过期时间设置为6分钟
@@ -191,7 +204,7 @@ public class AccountAPI {
             }
         }
         ObjectMapper mapper = ValidationCodeFormatter.getMapper();
-        return mapper.valueToTree(result);
+        return QinShihuangResult.ok(mapper.valueToTree(result));
     }
 
 	/**
@@ -213,10 +226,9 @@ public class AccountAPI {
 	 * @param code 验证码
 	 * @param isTel 账户是否手机号
 	 * @return 令牌
-	 * @throws BjlxException 已知异常
 	 * @throws Exception 运行时异常
 	 */
-    public static JsonNode checkValidationCode(String account, String code, boolean isTel) throws BjlxException, Exception {
+    public static String checkValidationCode(String account, String code, boolean isTel) throws Exception {
 		Query<ValidationCode> query = ds.createQuery(ValidationCode.class);
 
 		long currentTime = System.currentTimeMillis();
@@ -241,7 +253,7 @@ public class AccountAPI {
 				// 验证错误次数增加一次
 				ops.inc(ValidationCode.fd_failCnt);
 				ds.updateFirst(query, ops);
-				throw new BjlxException(ErrorCode.VALIDATION_FAIL_1002);
+				return QinShihuangResult.getResult(ErrorCode.VALIDATION_FAIL_1002);
 			} else {
 				// 存入token并返回
 				Token token = new Token();
@@ -254,7 +266,7 @@ public class AccountAPI {
 				ObjectNode result = mapper.createObjectNode();
 				// 检验完后，将使用设置为true
 				result.put("token", token.getToken());
-				return result;
+				return QinShihuangResult.ok(result);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,13 +1,11 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.AccountAPI;
-import com.bjlx.QinShihuang.exception.BjlxException;
 import com.bjlx.QinShihuang.requestmodel.*;
 import com.bjlx.QinShihuang.utils.CommonUtil;
 import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,44 +43,37 @@ public class AccountController {
         if(!Constant.checkValidationAction(validationCodeReq.getAction().intValue())) {
             return QinShihuangResult.getResult(ErrorCode.ACTION_LIMIT_1001);
         }
-        JsonNode data = null;
         
         // account必须手机号或者邮箱号
         if(CommonUtil.isTelLegal(validationCodeReq.getAccount())) {
         	// 校验是否过了允许下次发送发验证码的时间
-        	if(AccountAPI.isAllowSendValidationCode(validationCodeReq.getAccount(), true)) {
-        		/**
-                 * 发送短信验证码, isTel参数取值
-                 * true表示使用的是手机号
-                 * false表示使用的是邮箱
-                 */
-        		try {
-        			data = AccountAPI.sendValidationCode(validationCodeReq.getAccount(), validationCodeReq.getAction(), true);
-        		} catch(BjlxException e) {
-        			return QinShihuangResult.getResult(e.getErrorCode());
-        		} catch(Exception e1) {
-        			return QinShihuangResult.getResult(ErrorCode.ServerException);
-        		}
-                return QinShihuangResult.ok(data);
-        	} else {
-        		return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
-        	}
+        	try {
+	        	if(AccountAPI.isAllowSendValidationCode(validationCodeReq.getAccount(), true)) {
+	        		/**
+	                 * 发送短信验证码, isTel参数取值
+	                 * true表示使用的是手机号
+	                 * false表示使用的是邮箱
+	                 */
+	        		return AccountAPI.sendValidationCode(validationCodeReq.getAccount(), validationCodeReq.getAction(), true);
+	        	} else {
+	        		return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
+	        	}
+        	} catch(Exception e1) {
+    			return QinShihuangResult.getResult(ErrorCode.ServerException);
+    		}
         }
 
         if(CommonUtil.isEmail(validationCodeReq.getAccount())) {
             // 校验是否过了允许下次发送发验证码的时间
-            if(AccountAPI.isAllowSendValidationCode(validationCodeReq.getAccount(), false)) {
-                // 发送邮件
-                try {
-                    data = AccountAPI.sendValidationCode(validationCodeReq.getAccount(), validationCodeReq.getAction(), false);
-                } catch (BjlxException e) {
-                    return QinShihuangResult.getResult(e.getErrorCode());
-                } catch (Exception e1) {
-                    return QinShihuangResult.getResult(ErrorCode.ServerException);
-                }
-                return QinShihuangResult.ok(data);
-            } else {
-                return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
+        	try {
+	            if(AccountAPI.isAllowSendValidationCode(validationCodeReq.getAccount(), false)) {
+	                // 发送邮件
+	                return AccountAPI.sendValidationCode(validationCodeReq.getAccount(), validationCodeReq.getAction(), false);
+	            } else {
+	                return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
+	            }
+        	} catch (Exception e1) {
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1001);
@@ -112,28 +103,21 @@ public class AccountController {
             return QinShihuangResult.getResult(ErrorCode.CODE_INVALID_1002);
         }
 
-        JsonNode data = null;
         // account必须手机号或者邮箱号
         if(CommonUtil.isTelLegal(validationCodeReq.getAccount())) {
             try {
-                data = AccountAPI.checkValidationCode(validationCodeReq.getAccount(), validationCodeReq.getCode(), true);
-            } catch(BjlxException e) {
-                return QinShihuangResult.getResult(e.getErrorCode());
+                return AccountAPI.checkValidationCode(validationCodeReq.getAccount(), validationCodeReq.getCode(), true);
             } catch(Exception e1) {
                 return QinShihuangResult.getResult(ErrorCode.ServerException);
             }
-            return QinShihuangResult.ok(data);
         }
 
         if(CommonUtil.isEmail(validationCodeReq.getAccount())) {
             try {
-                data = AccountAPI.checkValidationCode(validationCodeReq.getAccount(), validationCodeReq.getCode(), false);
-            } catch(BjlxException e) {
-                return QinShihuangResult.getResult(e.getErrorCode());
+                return AccountAPI.checkValidationCode(validationCodeReq.getAccount(), validationCodeReq.getCode(), false);
             } catch(Exception e1) {
                 return QinShihuangResult.getResult(ErrorCode.ServerException);
             }
-            return QinShihuangResult.ok(data);
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1002);
         }
