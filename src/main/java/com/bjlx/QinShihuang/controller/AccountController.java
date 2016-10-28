@@ -131,16 +131,36 @@ public class AccountController {
     @RequestMapping(value = "/app/users", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String signup(@RequestBody UserInfoReq userInfoReq) {
     	// 校验参数
-    	
-    	// 注册
-    	try {
-			AccountAPI.signup(userInfoReq.getAccount(), userInfoReq.getToken(), userInfoReq.getPassword(), true, userInfoReq.getPromotionCodeSize());
-			return QinShihuangResult.ok();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return QinShihuangResult.getResult(ErrorCode.ACCOUNT_NULL_1001);
-		}
+    	if(userInfoReq.getAccount() == null) {
+            return QinShihuangResult.getResult(ErrorCode.ACCOUNT_NULL_1003);
+        }
+        if(userInfoReq.getPassword() == null) {
+            return QinShihuangResult.getResult(ErrorCode.PWD_NULL_1003);
+        }
+        if(userInfoReq.getToken() == null) {
+            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1003);
+        }
+        int promotionCodeSize = userInfoReq.getPromotionCodeSize() == null ? 6 : userInfoReq.getPromotionCodeSize();
+
+        if(CommonUtil.isTelLegal(userInfoReq.getAccount())) {
+            try {
+                return AccountAPI.signup(userInfoReq.getAccount(), userInfoReq.getToken(), userInfoReq.getPassword(), true, promotionCodeSize);
+            } catch(Exception e) {
+                e.printStackTrace();
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+        }
+
+        if(CommonUtil.isEmail(userInfoReq.getAccount())) {
+            try {
+                return AccountAPI.signup(userInfoReq.getAccount(), userInfoReq.getToken(), userInfoReq.getPassword(), false, promotionCodeSize);
+            } catch(Exception e) {
+                e.printStackTrace();
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+        } else {
+            return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1003);
+        }
     }
 
     /**

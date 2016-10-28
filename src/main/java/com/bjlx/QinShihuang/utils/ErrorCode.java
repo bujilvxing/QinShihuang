@@ -53,8 +53,12 @@ public enum ErrorCode {
 	 */
 
 	// 用户注册
-	USER_EXIST_1003(100301, "用户已存在"),
-	TOKEN_INVALID_1003(100301, "用户已存在"),
+	ACCOUNT_NULL_1003(100301, "参数账户为空"),
+	ACCOUNT_FORMAT_1003(100302, "账户格式不正确"),
+	PWD_NULL_1003(100303, "密码为空"),
+	TOKEN_NULL_1003(100304, "令牌为空"),
+	USER_EXIST_1003(100305, "用户已存在"),
+	TOKEN_INVALID_1003(100306, "用户已存在"),
 	;
 
 
