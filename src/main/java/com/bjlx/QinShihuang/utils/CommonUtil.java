@@ -1,5 +1,8 @@
 package com.bjlx.QinShihuang.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -55,5 +58,15 @@ public class CommonUtil {
         Pattern p = Pattern.compile(str);
         Matcher m = p.matcher(email);
         return m.matches();
+    }
+
+    /**
+     * Date 转 String
+     * @param val date类型的值
+     * @return String类型的值
+     */
+    public static String getDate(Date val) {
+        DateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return (val != null) ? dayFormat.format(val) : "";
     }
 }

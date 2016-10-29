@@ -58,7 +58,7 @@ public enum ErrorCode {
 	PWD_NULL_1003(100303, "密码为空"),
 	TOKEN_NULL_1003(100304, "令牌为空"),
 	USER_EXIST_1003(100305, "用户已存在"),
-	TOKEN_INVALID_1003(100306, "用户已存在"),
+	TOKEN_INVALID_1003(100306, "令牌不合法"),
 	;
 
 

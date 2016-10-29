@@ -11,6 +11,8 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class Passport extends IdProof {
 
+	public final static String fd_nation = "nation";
+	public final static String fd_number = "number";
 	/**
 	 * 国籍
 	 */

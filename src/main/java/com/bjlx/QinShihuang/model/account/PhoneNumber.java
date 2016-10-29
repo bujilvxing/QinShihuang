@@ -10,6 +10,9 @@ import org.mongodb.morphia.annotations.Embedded;
 @Embedded
 public class PhoneNumber {
 
+	public final static String fd_dialCode = "dialCode";
+	public final static String fd_number = "number";
+
 	/**
 	 * 国家区域号码
 	 */

@@ -24,9 +24,24 @@ import java.util.Map;
 @Entity
 public class UserInfo {
 
+	public final static String fd_id = "id";
 	public final static String fd_number = "tel.number";
-	
 	public final static String fd_email = "email";
+	public final static String fd_userId = "userId";
+	public final static String fd_nickName = "nickName";
+	public final static String fd_avatar = "avatar";
+	public final static String fd_gender = "gender";
+	public final static String fd_signature = "signature";
+	public final static String fd_travellers = "travellers";
+	public final static String fd_promotionCode = "promotionCode";
+	public final static String fd_backGround = "backGround";
+	public final static String fd_updateTime = "updateTime";
+	public final static String fd_createTime = "createTime";
+	public final static String fd_soundNotify = "soundNotify";
+	public final static String fd_vibrateNotify = "vibrateNotify";
+	public final static String fd_zodiac = "zodiac";
+	
+	
 	/**
 	 * 主键
 	 */
@@ -80,7 +95,7 @@ public class UserInfo {
 	/**
 	 * 旅客信息
 	 */
-	private Map<String, RealNameInfo> travellers;
+	private List<RealNameInfo> travellers;
 
 	/**
 	 * 用户的状态
@@ -190,6 +205,16 @@ public class UserInfo {
 	 * 背景图片
 	 */
 	private ImageItem backGround;
+
+	/**
+	 * 创建时间
+	 */
+	private Long createTime;
+
+	/**
+	 * 更新时间
+	 */
+	private Long updateTime;
 
 	public Integer getLevel() {
 		return level;
@@ -319,11 +344,11 @@ public class UserInfo {
 		this.email = email;
 	}
 
-	public Map<String, RealNameInfo> getTravellers() {
+	public List<RealNameInfo> getTravellers() {
 		return travellers;
 	}
 
-	public void setTravellers(Map<String, RealNameInfo> travellers) {
+	public void setTravellers(List<RealNameInfo> travellers) {
 		this.travellers = travellers;
 	}
 
@@ -421,6 +446,30 @@ public class UserInfo {
 
 	public void setBackGround(ImageItem backGround) {
 		this.backGround = backGround;
+	}
+
+	public String getPromotionCode() {
+		return promotionCode;
+	}
+
+	public void setPromotionCode(String promotionCode) {
+		this.promotionCode = promotionCode;
+	}
+
+	public Long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
+	}
+
+	public Long getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Long updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public UserInfo() {

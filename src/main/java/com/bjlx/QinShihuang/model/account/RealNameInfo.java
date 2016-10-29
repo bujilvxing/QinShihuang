@@ -16,6 +16,13 @@ import java.util.List;
 @Embedded
 public class RealNameInfo {
 
+	public final static String fd_surname = "surname";
+	public final static String fd_givenName = "givenName";
+	public final static String fd_gender = "gender";
+	public final static String fd_birthday = "birthday";
+	public final static String fd_identities = "identities";
+	public final static String fd_tel = "tel";
+	public final static String fd_email = "email";
 	/**
 	 * 姓
 	 */
