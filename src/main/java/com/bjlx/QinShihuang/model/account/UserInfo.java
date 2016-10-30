@@ -40,6 +40,7 @@ public class UserInfo {
 	public final static String fd_soundNotify = "soundNotify";
 	public final static String fd_vibrateNotify = "vibrateNotify";
 	public final static String fd_zodiac = "zodiac";
+	public final static String fd_loginStatus = "loginStatus";
 	
 	
 	/**

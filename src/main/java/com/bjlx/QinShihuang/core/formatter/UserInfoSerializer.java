@@ -68,11 +68,8 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
 
             gen.writeStringField(UserInfo.fd_promotionCode, userInfo.getPromotionCode() == null ? "" : userInfo.getPromotionCode());
 
-//            /**
-//             * 登录的状态，是否在线
-//             */
-//            private boolean loginStatus = false;
-//
+            gen.writeBooleanField(UserInfo.fd_loginStatus, userInfo.isLoginStatus());
+            
 //            /**
 //             * 登录时间
 //             */
