@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.core;
 
+import com.bjlx.QinShihuang.core.formatter.UserInfoFormatter;
 import com.bjlx.QinShihuang.core.formatter.ValidationCodeFormatter;
 import com.bjlx.QinShihuang.model.account.Credential;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
@@ -419,7 +420,7 @@ public class AccountAPI {
 		try {
 			ds.save(userInfo);
 			ds.save(credential);
-			return QinShihuangResult.ok(mapper.valueToTree(userInfo));
+			return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
 		} catch(Exception e) {
 			throw e;
 		}
