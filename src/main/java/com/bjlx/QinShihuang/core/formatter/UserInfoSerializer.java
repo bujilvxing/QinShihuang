@@ -4,6 +4,7 @@ import com.bjlx.QinShihuang.model.account.OAuthInfo;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
 import com.bjlx.QinShihuang.model.account.RealNameInfo;
 import com.bjlx.QinShihuang.model.account.UserInfo;
+import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.TravelNote;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -126,12 +127,18 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
 //             * 用户足迹
 //             */
 //            private List<Trace> traces;
-//
-//            /**
-//             * 用户发布的活动
-//             */
-//            private List<Activity> activities;
-//
+
+
+            List<Activity> activities = userInfo.getActivities();
+            gen.writeFieldName(UserInfo.fd_activities);
+            gen.writeStartArray();
+            if (activities != null && !activities.isEmpty()) {
+                JsonSerializer<Object> ret = serializers.findValueSerializer(Activity.class, null);
+                for (Activity activitie : activities)
+                    ret.serialize(activitie, gen, serializers);
+            }
+            gen.writeEndArray();
+
             List<TravelNote> travelNotes = userInfo.getTravelNotes();
             gen.writeFieldName(UserInfo.fd_travelNotes);
             gen.writeStartArray();

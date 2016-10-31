@@ -1,12 +1,16 @@
 package com.bjlx.QinShihuang.core.formatter;
 
 import com.bjlx.QinShihuang.model.activity.Activity;
+import com.bjlx.QinShihuang.model.activity.Ticket;
 import com.bjlx.QinShihuang.model.misc.Address;
+import com.bjlx.QinShihuang.model.misc.Contact;
+import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 活动序列化
@@ -35,74 +39,72 @@ public class ActivitySerializer extends JsonSerializer<Activity> {
             Address address = activity.getAddress();
             JsonSerializer<Object> retAddress;
             if (address != null) {
+                gen.writeFieldName(Activity.fd_address);
                 retAddress = serializers.findValueSerializer(Address.class, null);
                 retAddress.serialize(address, gen, serializers);
             }
 
+            if(activity.getFavorCnt() != null)
+                gen.writeNumberField(Activity.fd_favorCnt, activity.getFavorCnt());
 
-//            /**
-//             * 收藏次数
-//             */
-//            @Min(value = 0)
-//            private Integer favorCnt = 0;
-//
-//            /**
-//             * 评论次数
-//             */
-//            @Min(value = 0)
-//            private Integer commentCnt = 0;
-//
-//            /**
-//             * 浏览次数
-//             */
-//            @Min(value = 0)
-//            private Integer viewCnt = 0;
-//
-//            /**
-//             * 分享次数
-//             */
-//            @Min(value = 0)
-//            private Integer shareCnt = 0;
-//
-//            /**
-//             * 海报
-//             */
-//            private List<ImageItem> posters;
-//
-//            /**
-//             * 活动主题
-//             */
-//            private String theme;
-//
-//            /**
-//             * 活动分类
-//             */
-//            private String category;
-//
-//            /**
-//             * 活动标签
-//             */
-//            private List<String> tags;
-//
-//            /**
-//             * 活动是否为隐私活动，1表示不可见，2表示可见
-//             */
-//            private Integer visiable = 1;
-//
-//            /**
-//             * 活动详情
-//             */
-//            private String desc;
-//
-//            /**
-//             * 报名人信息
-//             */
-//            private List<Contact> applicantInfos;
-//
-//            /**
-//             * 门票
-//             */
-//            private List<Ticket> tickets;
+            if(activity.getCommentCnt() != null)
+                gen.writeNumberField(Activity.fd_commentCnt, activity.getCommentCnt());
+
+            if(activity.getViewCnt() != null)
+                gen.writeNumberField(Activity.fd_viewCnt, activity.getViewCnt());
+
+            if(activity.getShareCnt() != null)
+                gen.writeNumberField(Activity.fd_shareCnt, activity.getShareCnt());
+
+            List<ImageItem> posters = activity.getPosters();
+            gen.writeFieldName(Activity.fd_posters);
+            gen.writeStartArray();
+            if (posters != null && !posters.isEmpty()) {
+                JsonSerializer<Object> ret = serializers.findValueSerializer(ImageItem.class, null);
+                for (ImageItem poster : posters)
+                    ret.serialize(poster, gen, serializers);
+            }
+            gen.writeEndArray();
+
+            gen.writeStringField(Activity.fd_theme, activity.getTheme() == null ? "" : activity.getTheme());
+            gen.writeStringField(Activity.fd_category, activity.getCategory() == null ? "" : activity.getCategory());
+
+            List<String> tags = activity.getTags();
+            gen.writeFieldName(Activity.fd_tags);
+            gen.writeStartArray();
+            if (tags != null && (!tags.isEmpty())) {
+                for (String tag : tags)
+                    gen.writeString(tag == null ? "" : tag);
+            }
+            gen.writeEndArray();
+
+            if(activity.getVisiable() != null)
+                gen.writeNumberField(Activity.fd_visiable, activity.getVisiable());
+
+            if(activity.getDesc() != null)
+                gen.writeStringField(Activity.fd_desc, activity.getDesc());
+
+            List<Contact> applicantInfos = activity.getApplicantInfos();
+            gen.writeFieldName(Activity.fd_applicantInfos);
+            gen.writeStartArray();
+            if (applicantInfos != null && !applicantInfos.isEmpty()) {
+                JsonSerializer<Object> ret = serializers.findValueSerializer(Contact.class, null);
+                for (Contact applicantInfo : applicantInfos)
+                    ret.serialize(applicantInfo, gen, serializers);
+            }
+            gen.writeEndArray();
+
+
+            List<Ticket> tickets = activity.getTickets();
+            gen.writeFieldName(Activity.fd_tickets);
+            gen.writeStartArray();
+            if (tickets != null && !tickets.isEmpty()) {
+                JsonSerializer<Object> ret = serializers.findValueSerializer(Ticket.class, null);
+                for (Ticket ticket : tickets)
+                    ret.serialize(ticket, gen, serializers);
+            }
+            gen.writeEndArray();
+
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

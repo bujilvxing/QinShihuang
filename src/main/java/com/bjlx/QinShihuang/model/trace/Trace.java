@@ -26,6 +26,35 @@ import java.util.List;
 @Entity
 public class Trace {
 
+	public final static String fd_id = "id";
+	public final static String fd_userId = "userId";
+	public final static String fd_nickName = "nickName";
+	public final static String fd_avatar = "avatar";
+	public final static String fd_createTime= "createTime";
+	public final static String fd_traceTime = "traceTime";
+	public final static String fd_updateTime = "updateTime";
+	public final static String fd_cover = "cover";
+	public final static String fd_images = "images";
+	public final static String fd_audio = "audio";
+	public final static String fd_title = "title";
+	public final static String fd_desc = "desc";
+	public final static String fd_status = "status";
+	public final static String fd_activity = "activity";
+	public final static String fd_viewspot = "viewspot";
+	public final static String fd_restaurant = "restaurant";
+	public final static String fd_shopping = "shopping";
+	public final static String fd_hotel = "hotel";
+	public final static String fd_favorCnt = "favorCnt";
+	public final static String fd_commentCnt = "commentCnt";
+	public final static String fd_viewCnt = "viewCnt";
+	public final static String fd_shareCnt = "shareCnt";
+	public final static String fd_originId = "originId";
+	public final static String fd_originUserId = "originUserId";
+	public final static String fd_originNickName = "originNickName";
+	public final static String fd_originAvatar = "originAvatar";
+	public final static String fd_lat = "lat";
+	public final static String fd_lng = "lng";
+
 	/**
 	 * 主键
 	 */
