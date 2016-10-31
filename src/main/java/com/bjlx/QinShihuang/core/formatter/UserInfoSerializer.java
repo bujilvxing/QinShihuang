@@ -69,31 +69,36 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
             gen.writeStringField(UserInfo.fd_promotionCode, userInfo.getPromotionCode() == null ? "" : userInfo.getPromotionCode());
 
             gen.writeBooleanField(UserInfo.fd_loginStatus, userInfo.isLoginStatus());
-            
-//            /**
-//             * 登录时间
-//             */
-//            private Long loginTime = 0L;
-//
-//            /**
-//             * 登出时间
-//             */
-//            private Long logoutTime = 0L;
-//
-//            /**
-//             * 登录设备来源
-//             */
-//            private List<String> loginSource = null;
-//
-//            /**
-//             * 设备版本
-//             */
-//            private Long version = 0L;
-//
+            if(userInfo.getLoginTime() != null)
+                gen.writeNumberField(UserInfo.fd_loginTime, userInfo.getLoginTime());
+            if(userInfo.getLogoutTime() != null)
+                gen.writeNumberField(UserInfo.fd_logoutTime, userInfo.getLogoutTime());
+
+            List<String> loginSource = userInfo.getLoginSource();
+            gen.writeFieldName(UserInfo.fd_loginSource);
+            gen.writeStartArray();
+            if (loginSource != null && (!loginSource.isEmpty())) {
+                for (String e : loginSource)
+                    gen.writeString(e == null ? "" : e);
+            }
+            gen.writeEndArray();
+
+            if(userInfo.getVersion() != null)
+                gen.writeNumberField(UserInfo.fd_version, userInfo.getVersion());
+
+            List<Integer> roles = userInfo.getRoles();
+            gen.writeFieldName(UserInfo.fd_roles);
+            gen.writeStartArray();
+            if (roles != null && (!roles.isEmpty())) {
+                for (Integer role : roles)
+                    gen.writeNumber(role);
+            }
+            gen.writeEndArray();
+
 //            /**
 //             * 用户角色。普通用户，商家等等
 //             */
-//            private List<Integer> roles = null;
+//            private List<Integer>  = null;
 //
 //            /**
 //             * 用户备注。此字段为Transient，是不存入数据库的，但是取用户数据的时候，可以将给此字段赋值，为了返回用户信息的

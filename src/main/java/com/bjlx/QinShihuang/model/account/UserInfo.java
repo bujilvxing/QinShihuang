@@ -41,8 +41,13 @@ public class UserInfo {
 	public final static String fd_vibrateNotify = "vibrateNotify";
 	public final static String fd_zodiac = "zodiac";
 	public final static String fd_loginStatus = "loginStatus";
-	
-	
+	public final static String fd_loginTime = "loginTime";
+	public final static String fd_logoutTime = "logoutTime";
+	public final static String fd_loginSource = "loginSource";
+	public final static String fd_version = "version";
+	public final static String fd_roles = "roles";
+
+
 	/**
 	 * 主键
 	 */
