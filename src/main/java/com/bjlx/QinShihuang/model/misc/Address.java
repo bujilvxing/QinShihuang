@@ -3,10 +3,17 @@ package com.bjlx.QinShihuang.model.misc;
 import org.mongodb.morphia.annotations.Embedded;
 
 /**
+ * 联系地址序列化
  * Created by pengyt on 2016/7/22.
  */
 @Embedded
 public class Address {
+
+    public final static String fd_province = "province";
+    public final static String fd_city = "city";
+    public final static String fd_district = "district";
+    public final static String fd_detail = "detail";
+    public final static String fd_zipCode = "zipCode";
 
     /**
      * 省份

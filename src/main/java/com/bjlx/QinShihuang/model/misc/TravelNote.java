@@ -8,12 +8,29 @@ import org.mongodb.morphia.annotations.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Entity
 public class TravelNote {
+
+	public final static String fd_id = "id";
+	public final static String fd_cover = "cover";
+	public final static String fd_images = "images";
+	public final static String fd_rating = "rating";
+	public final static String fd_hotness = "hotness";
+	public final static String fd_title = "title";
+	public final static String fd_publishTime = "publishTime";
+	public final static String fd_favorCnt = "favorCnt";
+	public final static String fd_commentCnt = "commentCnt";
+	public final static String fd_viewCnt = "viewCnt";
+	public final static String fd_shareCnt = "shareCnt";
+	public final static String fd_travelTime = "travelTime";
+	public final static String fd_summary = "summary";
+	public final static String fd_contents = "contents";
+	public final static String fd_source = "source";
+	public final static String fd_essence = "essence";
+
 
 	/**
 	 * 主键
@@ -37,10 +54,10 @@ public class TravelNote {
 	 */
 	@Max(value = 1)
 	@Min(value = 0)
-	Double rating = 0.0;
+	private Double rating = 0.0;
 	
 	@Min(value = 0)
-	Double hotness = 0.0;
+	private Double hotness = 0.0;
 
 	/**
 	 * 游记标题
@@ -52,7 +69,7 @@ public class TravelNote {
 	 * 发表时间
 	 */
 	@NotNull
-	private Date publishTime;
+	private Long publishTime;
 
 	/**
 	 * 收藏次数
@@ -82,13 +99,13 @@ public class TravelNote {
 	 * 出游的时间
 	 */
 	@NotNull
-	Long travelTime;
+	private Long travelTime;
 
 	/**
 	 * 游记摘要
 	 */
 	@NotBlank
-	String summary;
+	private String summary;
 
 	/**
 	 * 游记正文
@@ -153,11 +170,11 @@ public class TravelNote {
 		this.title = title;
 	}
 
-	public Date getPublishTime() {
+	public Long getPublishTime() {
 		return publishTime;
 	}
 
-	public void setPublishTime(Date publishTime) {
+	public void setPublishTime(Long publishTime) {
 		this.publishTime = publishTime;
 	}
 
@@ -234,8 +251,8 @@ public class TravelNote {
 	}
 
 	public TravelNote(ObjectId id, ImageItem cover, List<ImageItem> images, Double hotness, String title,
-			Date publishTime, Integer commentCnt, Long travelTime, String summary, List<Map<String, String>> contents,
-			String source, Boolean essence) {
+					  Long publishTime, Integer commentCnt, Long travelTime, String summary, List<Map<String, String>> contents,
+					  String source, Boolean essence) {
 		super();
 		this.id = id;
 		this.cover = cover;

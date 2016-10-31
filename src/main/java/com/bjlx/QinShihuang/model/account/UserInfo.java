@@ -14,7 +14,6 @@ import org.mongodb.morphia.annotations.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 用户数据
@@ -26,6 +25,7 @@ public class UserInfo {
 
 	public final static String fd_id = "id";
 	public final static String fd_number = "tel.number";
+	public final static String fd_tel = "tel";
 	public final static String fd_email = "email";
 	public final static String fd_userId = "userId";
 	public final static String fd_nickName = "nickName";
@@ -46,6 +46,15 @@ public class UserInfo {
 	public final static String fd_loginSource = "loginSource";
 	public final static String fd_version = "version";
 	public final static String fd_roles = "roles";
+	public final static String fd_memo = "memo";
+	public final static String fd_residence = "residence";
+	public final static String fd_birthday = "birthday";
+	public final static String fd_oauthInfoList = "oauthInfoList";
+	public final static String fd_level = "level";
+	public final static String fd_travelNotes = "travelNotes";
+	public final static String fd_traces = "traces";
+	public final static String fd_tripPlans = "tripPlans";
+	public final static String fd_activities = "activities";
 
 
 	/**

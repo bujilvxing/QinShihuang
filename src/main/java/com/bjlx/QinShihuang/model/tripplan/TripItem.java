@@ -14,6 +14,15 @@ import org.mongodb.morphia.annotations.Embedded;
 @Embedded
 public class TripItem {
 
+    public final static String fd_tripTime = "tripTime";
+    public final static String fd_createTime = "createTime";
+    public final static String fd_desc = "desc";
+    public final static String fd_restaurant = "restaurant";
+    public final static String fd_hotel = "hotel";
+    public final static String fd_viewspot = "viewspot";
+    public final static String fd_activity = "activity";
+    public final static String fd_shopping = "shopping";
+
     /**
      * 行程项时间
      */

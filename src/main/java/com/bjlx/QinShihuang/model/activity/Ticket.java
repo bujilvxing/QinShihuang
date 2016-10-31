@@ -12,6 +12,15 @@ import org.mongodb.morphia.annotations.Id;
 @Entity
 public class Ticket {
 
+    public final static String fd_id = "id";
+    public final static String fd_price = "price";
+    public final static String fd_marketPrice = "marketPrice";
+    public final static String fd_free = "free";
+    public final static String fd_refundWay = "refundWay";
+    public final static String fd_refundDesc = "refundDesc";
+    public final static String fd_desc = "desc";
+    public final static String fd_maxNum = "maxNum";
+
     /**
      * 主键
      */
@@ -25,6 +34,11 @@ public class Ticket {
     private Double price;
 
     /**
+     * 原价
+     */
+    private Double marketPrice;
+
+    /**
      * 是否免费
      */
     private Boolean free;
@@ -32,7 +46,7 @@ public class Ticket {
     /**
      * 退款方式，1表示退款到平台公共账号，2表示原路返回，3表示不接受退款
      */
-    private Integer refundWay;
+    private Integer refundWay = 2;
 
     /**
      * 委托平台说明
@@ -47,7 +61,7 @@ public class Ticket {
     /**
      * 最大数量
      */
-    private String maxNum;
+    private Integer maxNum;
 
     public ObjectId getId() {
         return id;
@@ -97,15 +111,23 @@ public class Ticket {
         this.desc = desc;
     }
 
-    public String getMaxNum() {
+    public Integer getMaxNum() {
         return maxNum;
     }
 
-    public void setMaxNum(String maxNum) {
+    public void setMaxNum(Integer maxNum) {
         this.maxNum = maxNum;
     }
 
-    public Ticket(Boolean free, String maxNum) {
+    public Double getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(Double marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    public Ticket(Boolean free, Integer maxNum) {
         this.id = new ObjectId();
         this.free = free;
         this.maxNum = maxNum;

@@ -1,12 +1,21 @@
 package com.bjlx.QinShihuang.model.misc;
 
-import java.util.List;
-
 import org.hibernate.validator.constraints.Email;
 import org.mongodb.morphia.annotations.Embedded;
 
+import java.util.List;
+
 @Embedded
 public class Contact {
+
+	public final static String fd_phoneList = "phoneList";
+	public final static String fd_cellphoneList = "cellphoneList";
+	public final static String fd_qq = "qq";
+	public final static String fd_weixin = "weixin";
+	public final static String fd_sina = "sina";
+	public final static String fd_fax = "fax";
+	public final static String fd_email = "email";
+	public final static String fd_website = "website";
 
 	/**
 	 * 电话号码列表: 010-83671111

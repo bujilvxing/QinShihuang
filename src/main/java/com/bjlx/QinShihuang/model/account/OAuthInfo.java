@@ -10,7 +10,12 @@ import javax.validation.constraints.NotNull;
  */
 @Embedded
 public class OAuthInfo {
-	
+
+	public final static String fd_provider = "provider";
+	public final static String fd_oauthId = "oauthId";
+	public final static String fd_nickName = "nickName";
+	public final static String fd_avatar = "avatar";
+	public final static String fd_token = "token";
 	/**
      * 第三方账号体系的名称。比如：weixin表示这是微信账号
      */

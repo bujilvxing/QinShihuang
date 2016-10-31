@@ -1,16 +1,17 @@
 package com.bjlx.QinShihuang.core.formatter;
 
+import com.bjlx.QinShihuang.model.account.OAuthInfo;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
 import com.bjlx.QinShihuang.model.account.RealNameInfo;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
+import com.bjlx.QinShihuang.model.misc.TravelNote;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 用户信息
@@ -25,6 +26,7 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
 
             gen.writeStringField(UserInfo.fd_id, userInfo.getId() == null ? "" : userInfo.getId().toString());
 
+            gen.writeFieldName(UserInfo.fd_tel);
             PhoneNumber tel = userInfo.getTel();
             JsonSerializer<Object> retTel;
             if (tel != null) {
@@ -95,36 +97,30 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
             }
             gen.writeEndArray();
 
-//            /**
-//             * 用户角色。普通用户，商家等等
-//             */
-//            private List<Integer>  = null;
-//
-//            /**
-//             * 用户备注。此字段为Transient，是不存入数据库的，但是取用户数据的时候，可以将给此字段赋值，为了返回用户信息的
-//             */
-//            @Transient
-//            private String memo = null;
-//
-//            /**
-//             * 用户的居住地
-//             */
-//            private String residence = null;
-//
-//            /**
-//             * 用户的生日
-//             */
-//            private String birthday  = null;
-//
-//            /**
-//             * 第三方账号的信息
-//             */
-//            private List<OAuthInfo> oauthInfoList = null;
-//
-//            /**
-//             * 用户等级
-//             */
-//            private Integer level = 1;
+            if(userInfo.getMemo() != null)
+                gen.writeStringField(UserInfo.fd_memo, userInfo.getMemo());
+
+            if(userInfo.getResidence() != null)
+                gen.writeStringField(UserInfo.fd_residence, userInfo.getResidence());
+
+            if(userInfo.getResidence() != null)
+                gen.writeStringField(UserInfo.fd_residence, userInfo.getResidence());
+
+            if(userInfo.getBirthday() != null)
+                gen.writeStringField(UserInfo.fd_birthday, userInfo.getBirthday());
+
+            List<OAuthInfo> oauthInfoList = userInfo.getOauthInfoList();
+            gen.writeFieldName(UserInfo.fd_oauthInfoList);
+            gen.writeStartArray();
+            if (oauthInfoList != null && !oauthInfoList.isEmpty()) {
+                JsonSerializer<Object> ret = serializers.findValueSerializer(OAuthInfo.class, null);
+                for (OAuthInfo oauthInfo : oauthInfoList)
+                    ret.serialize(oauthInfo, gen, serializers);
+            }
+            gen.writeEndArray();
+            if(userInfo.getLevel() != null)
+                gen.writeNumberField(UserInfo.fd_level, userInfo.getLevel());
+
 //
 //            /**
 //             * 用户足迹
@@ -136,10 +132,16 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
 //             */
 //            private List<Activity> activities;
 //
-//            /**
-//             * 用户发表的游记
-//             */
-//            private List<TravelNote> travelNotes;
+            List<TravelNote> travelNotes = userInfo.getTravelNotes();
+            gen.writeFieldName(UserInfo.fd_travelNotes);
+            gen.writeStartArray();
+            if (travelNotes != null && !travelNotes.isEmpty()) {
+                JsonSerializer<Object> ret = serializers.findValueSerializer(TravelNote.class, null);
+                for (TravelNote travelNote : travelNotes)
+                    ret.serialize(travelNote, gen, serializers);
+            }
+            gen.writeEndArray();
+
 //
 //            /**
 //             * 用户发布的行程规划

@@ -19,6 +19,26 @@ import java.util.List;
 @Entity
 public class Activity {
 
+    public final static String fd_id = "id";
+    public final static String fd_title = "title";
+    public final static String fd_maxNum = "maxNum";
+    public final static String fd_joinNum = "joinNum";
+    public final static String fd_startTime = "startTime";
+    public final static String fd_endTime = "endTime";
+    public final static String fd_address = "address";
+    public final static String fd_favorCnt = "favorCnt";
+    public final static String fd_commentCnt = "commentCnt";
+    public final static String fd_viewCnt = "viewCnt";
+    public final static String fd_shareCnt = "shareCnt";
+    public final static String fd_posters = "posters";
+    public final static String fd_theme = "theme";
+    public final static String fd_category = "category";
+    public final static String fd_tags = "tags";
+    public final static String fd_visiable = "visiable";
+    public final static String fd_desc = "desc";
+    public final static String fd_applicantInfos = "applicantInfos";
+    public final static String fd_tickets = "tickets";
+
     /**
      * 主键
      */
@@ -35,12 +55,12 @@ public class Activity {
     /**
      * 最大允许人数
      */
-    private int maxNum;
+    private Integer maxNum;
 
     /**
      * 报名人数
      */
-    private int joinNum;
+    private Integer joinNum;
 
     /**
      * 开始时间
@@ -137,19 +157,19 @@ public class Activity {
         this.title = title;
     }
 
-    public int getMaxNum() {
+    public Integer getMaxNum() {
         return maxNum;
     }
 
-    public void setMaxNum(int maxNum) {
+    public void setMaxNum(Integer maxNum) {
         this.maxNum = maxNum;
     }
 
-    public int getJoinNum() {
+    public Integer getJoinNum() {
         return joinNum;
     }
 
-    public void setJoinNum(int joinNum) {
+    public void setJoinNum(Integer joinNum) {
         this.joinNum = joinNum;
     }
 
@@ -177,35 +197,35 @@ public class Activity {
         this.address = address;
     }
 
-    public int getFavorCnt() {
+    public Integer getFavorCnt() {
         return favorCnt;
     }
 
-    public void setFavorCnt(int favorCnt) {
+    public void setFavorCnt(Integer favorCnt) {
         this.favorCnt = favorCnt;
     }
 
-    public int getCommentCnt() {
+    public Integer getCommentCnt() {
         return commentCnt;
     }
 
-    public void setCommentCnt(int commentCnt) {
+    public void setCommentCnt(Integer commentCnt) {
         this.commentCnt = commentCnt;
     }
 
-    public int getViewCnt() {
+    public Integer getViewCnt() {
         return viewCnt;
     }
 
-    public void setViewCnt(int viewCnt) {
+    public void setViewCnt(Integer viewCnt) {
         this.viewCnt = viewCnt;
     }
 
-    public int getShareCnt() {
+    public Integer getShareCnt() {
         return shareCnt;
     }
 
-    public void setShareCnt(int shareCnt) {
+    public void setShareCnt(Integer shareCnt) {
         this.shareCnt = shareCnt;
     }
 
@@ -241,11 +261,11 @@ public class Activity {
         this.tags = tags;
     }
 
-    public int getVisiable() {
+    public Integer getVisiable() {
         return visiable;
     }
 
-    public void setVisiable(int visiable) {
+    public void setVisiable(Integer visiable) {
         this.visiable = visiable;
     }
 
@@ -273,7 +293,7 @@ public class Activity {
         this.tickets = tickets;
     }
 
-    public Activity(String title, int maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
+    public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
         this.id = new ObjectId();
         this.title = title;
         this.maxNum = maxNum;
