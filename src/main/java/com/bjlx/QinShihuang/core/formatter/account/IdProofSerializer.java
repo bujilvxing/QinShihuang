@@ -36,4 +36,3 @@ public class IdProofSerializer extends JsonSerializer<IdProof> {
 
     }
 }
-

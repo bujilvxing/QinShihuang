@@ -13,6 +13,18 @@ import java.util.List;
 @Entity
 public class Comment {
 
+	public final static String fd_id = "id";
+	public final static String fd_rating = "rating";
+	public final static String fd_userId = "userId";
+	public final static String fd_avatar = "avatar";
+	public final static String fd_nickName = "nickName";
+	public final static String fd_contents = "contents";
+	public final static String fd_publishTime = "publishTime";
+	public final static String fd_updateTime = "updateTime";
+	public final static String fd_commentType = "commentType";
+	public final static String fd_itemId = "itemId";
+	public final static String fd_images = "images";
+	
 	/**
 	 * 主键
 	 */
@@ -41,7 +53,7 @@ public class Comment {
 	/**
 	 * 用户昵称
 	 */
-	private String name;
+	private String nickName;
 
 	/**
 	 * 评价的详情
@@ -140,12 +152,12 @@ public class Comment {
 		this.avatar = avatar;
 	}
 
-	public String getName() {
-		return name;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getContents() {

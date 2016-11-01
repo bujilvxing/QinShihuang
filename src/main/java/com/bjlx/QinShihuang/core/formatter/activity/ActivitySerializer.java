@@ -51,6 +51,16 @@ public class ActivitySerializer extends JsonSerializer<Activity> {
 
             gen.writeNumberField(Activity.fd_shareCnt, activity.getShareCnt() == null ? 0 : activity.getShareCnt());
 
+            gen.writeFieldName(Activity.fd_cover);
+            ImageItem cover = activity.getCover();
+            if (cover != null) {
+                JsonSerializer<Object> retCover = serializers.findValueSerializer(ImageItem.class, null);
+                retCover.serialize(cover, gen, serializers);
+            } else {
+                gen.writeStartObject();
+                gen.writeEndObject();
+            }
+            
             List<ImageItem> posters = activity.getPosters();
             gen.writeFieldName(Activity.fd_posters);
             gen.writeStartArray();
@@ -80,26 +90,25 @@ public class ActivitySerializer extends JsonSerializer<Activity> {
                 gen.writeStringField(Activity.fd_desc, activity.getDesc());
 
             List<Contact> applicantInfos = activity.getApplicantInfos();
-            gen.writeFieldName(Activity.fd_applicantInfos);
-            gen.writeStartArray();
             if (applicantInfos != null && !applicantInfos.isEmpty()) {
+            	gen.writeFieldName(Activity.fd_applicantInfos);
+                gen.writeStartArray();
                 JsonSerializer<Object> ret = serializers.findValueSerializer(Contact.class, null);
                 for (Contact applicantInfo : applicantInfos)
                     ret.serialize(applicantInfo, gen, serializers);
+                gen.writeEndArray();
             }
-            gen.writeEndArray();
-
-
+            
             List<Ticket> tickets = activity.getTickets();
-            gen.writeFieldName(Activity.fd_tickets);
-            gen.writeStartArray();
             if (tickets != null && !tickets.isEmpty()) {
+            	gen.writeFieldName(Activity.fd_tickets);
+                gen.writeStartArray();
                 JsonSerializer<Object> ret = serializers.findValueSerializer(Ticket.class, null);
                 for (Ticket ticket : tickets)
                     ret.serialize(ticket, gen, serializers);
+                gen.writeEndArray();
             }
-            gen.writeEndArray();
-
+            gen.writeBooleanField(Activity.fd_isFree, activity.getIsFree() == null ? true : activity.getIsFree());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

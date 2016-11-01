@@ -13,8 +13,12 @@ import org.mongodb.morphia.annotations.Embedded;
  * Created by pengyt on 2015/10/19.
  */
 @Embedded
-class DetailsEntry {
+public class DetailsEntry {
 
+	public final static String fd_cover = "cover";
+	public final static String fd_images = "images";
+	public final static String fd_title = "title";
+	public final static String fd_desc = "desc";
 	/**
 	 * 封面图
 	 */

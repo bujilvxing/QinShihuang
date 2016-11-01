@@ -7,6 +7,8 @@ import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.TravelNote;
+import com.bjlx.QinShihuang.model.trace.Trace;
+import com.bjlx.QinShihuang.model.tripplan.TripPlan;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -127,12 +129,16 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
             if(userInfo.getLevel() != null)
                 gen.writeNumberField(UserInfo.fd_level, userInfo.getLevel());
 
-//
-//            /**
-//             * 用户足迹
-//             */
-//            private List<Trace> traces;
-
+            List<Trace> traces = userInfo.getTraces();
+            
+            if (traces != null && !traces.isEmpty()) {
+            	gen.writeFieldName(UserInfo.fd_activities);
+                gen.writeStartArray();
+                JsonSerializer<Object> ret = serializers.findValueSerializer(Trace.class, null);
+                for (Trace trace : traces)
+                    ret.serialize(trace, gen, serializers);
+                gen.writeEndArray();
+            }
 
             List<Activity> activities = userInfo.getActivities();
             
@@ -158,11 +164,16 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
             }
             
 
-//
-//            /**
-//             * 用户发布的行程规划
-//             */
-//            private List<TripPlan> tripPlans;
+            List<TripPlan> tripPlans = userInfo.getTripPlans();
+            
+            if (tripPlans != null && !tripPlans.isEmpty()) {
+            	gen.writeFieldName(UserInfo.fd_travelNotes);
+                gen.writeStartArray();
+                JsonSerializer<Object> ret = serializers.findValueSerializer(TripPlan.class, null);
+                for (TripPlan tripPlan : tripPlans)
+                    ret.serialize(tripPlan, gen, serializers);
+                gen.writeEndArray();
+            }
 
             if(userInfo.getZodiac() != null) {
                 gen.writeNumberField(UserInfo.fd_zodiac, userInfo.getZodiac());

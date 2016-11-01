@@ -30,6 +30,7 @@ public class Activity {
     public final static String fd_commentCnt = "commentCnt";
     public final static String fd_viewCnt = "viewCnt";
     public final static String fd_shareCnt = "shareCnt";
+    public final static String fd_cover = "cover";
     public final static String fd_posters = "posters";
     public final static String fd_theme = "theme";
     public final static String fd_category = "category";
@@ -38,6 +39,7 @@ public class Activity {
     public final static String fd_desc = "desc";
     public final static String fd_applicantInfos = "applicantInfos";
     public final static String fd_tickets = "tickets";
+    public final static String fd_isFree = "isFree";
 
     /**
      * 主键
@@ -102,6 +104,11 @@ public class Activity {
     private Integer shareCnt = 0;
 
     /**
+     * 封面图
+     */
+    private ImageItem cover;
+    
+    /**
      * 海报
      */
     private List<ImageItem> posters;
@@ -140,6 +147,11 @@ public class Activity {
      * 门票
      */
     private List<Ticket> tickets;
+    
+    /**
+     * 是否免费
+     */
+    private Boolean isFree = true;
 
     public ObjectId getId() {
         return id;
@@ -229,7 +241,15 @@ public class Activity {
         this.shareCnt = shareCnt;
     }
 
-    public List<ImageItem> getPosters() {
+    public ImageItem getCover() {
+		return cover;
+	}
+
+	public void setCover(ImageItem cover) {
+		this.cover = cover;
+	}
+
+	public List<ImageItem> getPosters() {
         return posters;
     }
 
@@ -292,8 +312,16 @@ public class Activity {
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
+    
+    public Boolean getIsFree() {
+		return isFree;
+	}
 
-    public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
+	public void setIsFree(Boolean isFree) {
+		this.isFree = isFree;
+	}
+
+	public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
         this.id = new ObjectId();
         this.title = title;
         this.maxNum = maxNum;
