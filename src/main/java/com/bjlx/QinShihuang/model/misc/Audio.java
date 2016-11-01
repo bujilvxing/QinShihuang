@@ -1,7 +1,5 @@
 package com.bjlx.QinShihuang.model.misc;
 
-import org.bson.types.ObjectId;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.mongodb.morphia.annotations.Embedded;
 
@@ -11,12 +9,12 @@ import java.util.Date;
 
 @Embedded
 public class Audio {
-
-	/**
-	 * 主键
-	 */
-	@NotBlank
-	private ObjectId id;
+	
+	public final static String fd_length = "length";
+	public final static String fd_createTime = "createTime";
+	public final static String fd_fileName = "fileName";
+	public final static String fd_url = "url";
+	public final static String fd_key = "key";
 	
 	/**
 	 * 时长，单位为秒，不能超过60秒
@@ -28,7 +26,7 @@ public class Audio {
 	/**
 	 * 创建时间
 	 */
-	private Date createTime;
+	private Long createTime;
 	
 	/**
 	 * 文件名
@@ -46,14 +44,6 @@ public class Audio {
 	 */
 	private String key;
 
-	public ObjectId getId() {
-		return id;
-	}
-
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
-
 	public Integer getLength() {
 		return length;
 	}
@@ -62,11 +52,11 @@ public class Audio {
 		this.length = length;
 	}
 
-	public Date getCreateTime() {
+	public Long getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
 

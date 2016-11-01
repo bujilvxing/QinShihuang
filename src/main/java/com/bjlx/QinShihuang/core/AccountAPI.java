@@ -1,7 +1,8 @@
 package com.bjlx.QinShihuang.core;
 
-import com.bjlx.QinShihuang.core.formatter.UserInfoFormatter;
-import com.bjlx.QinShihuang.core.formatter.ValidationCodeFormatter;
+
+import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
+import com.bjlx.QinShihuang.core.formatter.misc.ValidationCodeFormatter;
 import com.bjlx.QinShihuang.model.account.Credential;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
 import com.bjlx.QinShihuang.model.account.SecretKey;

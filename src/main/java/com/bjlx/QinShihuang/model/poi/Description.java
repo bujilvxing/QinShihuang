@@ -4,6 +4,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Description {
 
+	public final static String fd_desc = "desc";
+	public final static String fd_details = "details";
+	public final static String fd_tips = "tips";
+	public final static String fd_traffic = "traffic";
 	/**
 	 * 简略描述
 	 */

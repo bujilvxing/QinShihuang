@@ -1,0 +1,8 @@
+package com.bjlx.QinShihuang.core.formatter.quora;
+
+/**
+ * 景点序列化
+ * Created by xiaozhi on 2016/10/31.
+ */
+public class ViewspotSerializer {
+}
