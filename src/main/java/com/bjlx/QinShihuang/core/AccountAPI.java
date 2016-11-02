@@ -142,7 +142,7 @@ public class AccountAPI {
     		throw e;
     	}
         // 产生验证码
-        String code = String.format("%d", (int) (Math.random() * 1000000));
+        String code = String.format("%d", (int) (100000 + Math.random() * 900000));
         // 短信内容
         String[] smsdata = new String[1];
         smsdata[0] = code;
@@ -426,4 +426,6 @@ public class AccountAPI {
 			throw e;
 		}
     }
+
+
 }

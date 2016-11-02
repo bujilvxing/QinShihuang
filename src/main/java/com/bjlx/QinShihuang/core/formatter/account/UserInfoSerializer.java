@@ -57,7 +57,7 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
                 gen.writeNumberField(UserInfo.fd_gender, userInfo.getGender());
             }
 
-            if(userInfo.getSignature() == null) {
+            if(userInfo.getSignature() != null) {
                 gen.writeStringField(UserInfo.fd_signature, userInfo.getSignature());
             }
 

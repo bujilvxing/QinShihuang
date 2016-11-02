@@ -172,6 +172,7 @@ public class AccountController {
     public @ResponseBody String login(@RequestBody UserInfoReq userInfo) {
 
         // 绑定个推的clientId
+        // 授权码
 
         return null;
     }
