@@ -20,6 +20,36 @@ import java.util.Set;
 @Entity
 public class Locality {
 
+	public final static String fd_id = "id";
+	public final static String fd_zhName = "zhName";
+	public final static String fd_enName = "enName";
+	public final static String fd_cover = "cover";
+	public final static String fd_images = "images";
+	public final static String fd_lat = "lat";
+	public final static String fd_lng = "lng";
+	public final static String fd_rank = "rank";
+	public final static String fd_remoteTraffic = "remoteTraffic";
+	public final static String fd_localTraffic = "localTraffic";
+	public final static String fd_shoppingIntro = "shoppingIntro";
+	public final static String fd_diningIntro = "diningIntro";
+	public final static String fd_cuisines = "cuisines";
+	public final static String fd_activities = "activities";
+	public final static String fd_tips = "tips";
+	public final static String fd_geoHistory = "geoHistory";
+	public final static String fd_specials = "specials";
+	public final static String fd_alias = "alias";
+	public final static String fd_visitCnt = "visitCnt";
+	public final static String fd_commentCnt = "commentCnt";
+	public final static String fd_favorCnt = "favorCnt";
+	public final static String fd_hotness = "hotness";
+	public final static String fd_rating = "rating";
+	public final static String fd_superAdm = "superAdm";
+	public final static String fd_tags = "tags";
+	public final static String fd_desc = "desc";
+	public final static String fd_travelMonth = "travelMonth";
+	public final static String fd_timeCostDesc = "timeCostDesc";
+	public final static String fd_timeCost = "timeCost";
+	
 	/**
 	 * 主键
 	 */
@@ -86,7 +116,7 @@ public class Locality {
 	 * 美食综述，HTML格式
 	 */
 	private String diningIntro;
-
+	
 	/**
 	 * 特色菜式
 	 */
@@ -122,7 +152,7 @@ public class Locality {
 	 */
 	@Min(value = 0)
 	private Integer visitCnt = 0;
-
+	
 	/**
 	 * 评论条数
 	 */
@@ -161,7 +191,7 @@ public class Locality {
 	 * 简介
 	 */
 	private String desc;
-
+	
 	/**
 	 * 最佳旅行时间
 	 */
@@ -409,10 +439,4 @@ public class Locality {
 	public void setTimeCost(Integer timeCost) {
 		this.timeCost = timeCost;
 	}
-
-	/**
-	 * 目的地商品列表
-	 */
-	
-	
 }

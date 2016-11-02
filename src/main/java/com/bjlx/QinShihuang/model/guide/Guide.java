@@ -23,6 +23,25 @@ import javax.validation.constraints.Min;
 @Entity
 public class Guide {
 
+	public final static String fd_id = "id";
+	public final static String fd_cover = "cover";
+	public final static String fd_images = "images";
+	public final static String fd_updateTime = "updateTime";
+	public final static String fd_title = "title";
+	public final static String fd_desc = "desc";
+	public final static String fd_bestTripTime = "bestTripTime";
+	public final static String fd_tips = "tips";
+	public final static String fd_hotels = "hotels";
+	public final static String fd_shoppings = "shoppings";
+	public final static String fd_restaurants = "restaurants";
+	public final static String fd_viewspots = "viewspots";
+	public final static String fd_tripPlans = "tripPlans";
+	public final static String fd_activities = "activities";
+	public final static String fd_summary = "summary";
+	public final static String fd_detailUrl = "detailUrl";
+	public final static String fd_viewCnt = "viewCnt";
+	public final static String fd_shareCnt = "shareCnt";
+	
 	/**
 	 * 主键
 	 */
@@ -70,7 +89,7 @@ public class Guide {
 	 * 攻略中去的poi
 	 */
 	private List<Hotel> hotels;
-
+	
 	/**
 	 * 攻略中的购物
 	 */
@@ -84,7 +103,7 @@ public class Guide {
 	/**
 	 * 攻略中的景点
 	 */
-	private List<Viewspot> Viewspots;
+	private List<Viewspot> viewspots;
 
 	/**
 	 * 攻略中的行程规划
@@ -143,11 +162,11 @@ public class Guide {
 	}
 
 	public List<Viewspot> getViewspots() {
-		return Viewspots;
+		return viewspots;
 	}
 
 	public void setViewspots(List<Viewspot> viewspots) {
-		Viewspots = viewspots;
+		this.viewspots = viewspots;
 	}
 
 	public List<TripPlan> getTripPlans() {
