@@ -6,9 +6,26 @@ import com.bjlx.QinShihuang.model.misc.Audio;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.Position;
 
+/**
+ * im 消息内容
+ * @author xiaozhi
+ *
+ */
 @Embedded
 public class Content {
 
+	public final static String fd_text = "text";
+	public final static String fd_thumb = "thumb";
+	public final static String fd_full = "full";
+	public final static String fd_origin = "origin";
+	public final static String fd_audio = "audio";
+	public final static String fd_position = "position";
+	public final static String fd_emoticon = "emoticon";
+	public final static String fd_video = "video";
+	
+	/**
+	 * 文本
+	 */
 	private String text;
 	
 	/**

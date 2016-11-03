@@ -7,6 +7,8 @@ import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
 import org.mongodb.morphia.annotations.Transient;
 
+import com.bjlx.QinShihuang.model.misc.ImageItem;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -17,6 +19,20 @@ import java.util.List;
 @Entity
 public class Message {
 
+	public final static String fd_id = "id";
+	public final static String fd_convId = "convId";
+	public final static String fd_msgId = "msgId";
+	public final static String fd_content = "content";
+	public final static String fd_senderId = "senderId";
+	public final static String fd_senderNickName = "senderNickName";
+	public final static String fd_senderAvatar = "senderAvatar";
+	public final static String fd_receiverId = "receiverId";
+	public final static String fd_msgType = "msgType";
+	public final static String fd_abbrev = "abbrev";
+	public final static String fd_timestamp = "timestamp";
+	public final static String fd_receiverIdList = "receiverIdList";
+	public final static String fd_chatType = "chatType";
+	
     /**
      * 主键
      */
@@ -28,7 +44,7 @@ public class Message {
      * 所属会话的id
      */
     @Indexed
-    private ObjectId conversation = new ObjectId();
+    private ObjectId convId = new ObjectId();
 
     /**
      * 消息id
@@ -60,7 +76,7 @@ public class Message {
     /**
      * 发送者头像
      */
-    private String senderAvatar;
+    private ImageItem senderAvatar;
 
     /**
      * 消息类型
@@ -72,7 +88,7 @@ public class Message {
      */
     @Transient
     private String abbrev;
-
+    
     /**
      * 消息创建时间
      */
@@ -83,6 +99,9 @@ public class Message {
      */
     private List<Long> receiverIdList;
 
+    /**
+     * 聊天类型
+     */
     private Integer chatType;
 
     public ObjectId getId() {
@@ -93,12 +112,12 @@ public class Message {
         this.id = id;
     }
 
-    public ObjectId getConversation() {
-        return conversation;
+    public ObjectId getConvId() {
+        return convId;
     }
 
-    public void setConversation(ObjectId conversation) {
-        this.conversation = conversation;
+    public void setConvId(ObjectId convId) {
+        this.convId = convId;
     }
 
     public Long getMsgId() {
@@ -141,11 +160,11 @@ public class Message {
         this.senderNickName = senderNickName;
     }
 
-    public String getSenderAvatar() {
+    public ImageItem getSenderAvatar() {
         return senderAvatar;
     }
 
-    public void setSenderAvatar(String senderAvatar) {
+    public void setSenderAvatar(ImageItem senderAvatar) {
         this.senderAvatar = senderAvatar;
     }
 

@@ -17,6 +17,28 @@ import java.util.List;
 @Entity
 public class Post {
 
+	public final static String fd_id = "id";
+	public final static String fd_title = "title";
+	public final static String fd_cover = "cover";
+	public final static String fd_images = "images";
+	public final static String fd_publishTime = "publishTime";
+	public final static String fd_updateTime = "updateTime";
+	public final static String fd_favorCnt = "favorCnt";
+	public final static String fd_commentCnt = "commentCnt";
+	public final static String fd_viewCnt = "viewCnt";
+	public final static String fd_shareCnt = "shareCnt";
+	public final static String fd_summary = "summary";
+	public final static String fd_content = "content";
+	public final static String fd_rank = "rank";
+	public final static String fd_hotness = "hotness";
+	public final static String fd_rating = "rating";
+	public final static String fd_authorId = "authorId";
+	public final static String fd_authorNickName = "authorNickName";
+	public final static String fd_authorAvatar = "authorAvatar";
+	
+	/**
+	 * 主键
+	 */
     @NotBlank
     @Id
     private ObjectId id;
@@ -65,18 +87,18 @@ public class Post {
      */
     @Min(value = 0)
     private Integer viewCnt = 0;
-
+    
     /**
      * 分享次数
      */
     @Min(value = 0)
     private Integer shareCnt = 0;
-
+    
     /**
      * 帖子摘要
      */
     @NotBlank
-    String summary;
+    private String summary;
 
     /**
      * 帖子详情
@@ -88,7 +110,7 @@ public class Post {
      */
     @Min(value = 1)
     private Integer rank;
-
+    
     /**
      * 热门程度
      */
@@ -105,7 +127,7 @@ public class Post {
      * 作者的用户id
      */
     private Long authorId;
-
+    
     /**
      * 作者昵称
      */
