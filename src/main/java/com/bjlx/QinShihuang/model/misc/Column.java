@@ -20,6 +20,14 @@ import java.util.List;
 @Entity
 public class Column {
 
+	public final static String fd_id = "id";
+	public final static String fd_rank = "rank";
+	public final static String fd_columnType = "columnType";
+	public final static String fd_title = "title";
+	public final static String fd_link = "link";
+	public final static String fd_images = "images";
+	public final static String fd_status = "status";
+	
 	/**
 	 * 主键
 	 */

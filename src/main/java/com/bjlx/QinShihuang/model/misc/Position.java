@@ -13,6 +13,11 @@ import org.mongodb.morphia.annotations.Embedded;
 @Embedded
 public class Position {
 
+	public final static String fd_name = "name";
+	public final static String fd_lat = "lat";
+	public final static String fd_lng = "lng";
+	public final static String fd_desc = "desc";
+	
 	/**
 	 * 名称
 	 */

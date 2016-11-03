@@ -12,6 +12,13 @@ import org.mongodb.morphia.annotations.Id;
 @Entity
 public class Card {
 
+	public final static String fd_id = "id";
+	public final static String fd_title = "title";
+	public final static String fd_summary = "summary";
+	public final static String fd_cover = "cover";
+	public final static String fd_thumb = "thumb";
+	public final static String fd_detailUrl = "detailUrl";
+	
     /**
      * 主键
      */
