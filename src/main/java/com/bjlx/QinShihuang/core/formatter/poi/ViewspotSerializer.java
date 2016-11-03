@@ -8,29 +8,29 @@ import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.poi.Description;
-import com.bjlx.QinShihuang.model.poi.Shopping;
+import com.bjlx.QinShihuang.model.poi.Viewspot;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 /**
- * 购物序列化
+ * 景点序列化
  * Created by xiaozhi on 2016/10/31.
  */
-public class ShoppingSerializer extends JsonSerializer<Shopping> {
+public class ViewspotSerializer extends JsonSerializer<Viewspot> {
 
     @Override
-    public void serialize(Shopping shopping, JsonGenerator gen, SerializerProvider serializers) {
+    public void serialize(Viewspot viewspot, JsonGenerator gen, SerializerProvider serializers) {
 	    try {
 	        gen.writeStartObject();
-	        gen.writeStringField(Shopping.fd_id, shopping.getId() == null ? "" : shopping.getId().toString());
-	        if(shopping.getLat() != null)
-	        	gen.writeNumberField(Shopping.fd_lat, shopping.getLat());
-	        if(shopping.getLng() != null)
-	        	gen.writeNumberField(Shopping.fd_lng, shopping.getLng());
+	        gen.writeStringField(Viewspot.fd_id, viewspot.getId() == null ? "" : viewspot.getId().toString());
+	        if(viewspot.getLat() != null)
+	        	gen.writeNumberField(Viewspot.fd_lat, viewspot.getLat());
+	        if(viewspot.getLng() != null)
+	        	gen.writeNumberField(Viewspot.fd_lng, viewspot.getLng());
 
-	        gen.writeFieldName(Shopping.fd_cover);
-            ImageItem cover = shopping.getCover();
+	        gen.writeFieldName(Viewspot.fd_cover);
+            ImageItem cover = viewspot.getCover();
             if (cover != null) {
                 JsonSerializer<Object> retCover = serializers.findValueSerializer(ImageItem.class, null);
                 retCover.serialize(cover, gen, serializers);
@@ -39,8 +39,8 @@ public class ShoppingSerializer extends JsonSerializer<Shopping> {
                 gen.writeEndObject();
             }
 
-            List<ImageItem> images = shopping.getImages();
-            gen.writeFieldName(Shopping.fd_images);
+            List<ImageItem> images = viewspot.getImages();
+            gen.writeFieldName(Viewspot.fd_images);
             gen.writeStartArray();
             if (images != null && !images.isEmpty()) {
                 JsonSerializer<Object> ret = serializers.findValueSerializer(ImageItem.class, null);
@@ -49,96 +49,95 @@ public class ShoppingSerializer extends JsonSerializer<Shopping> {
             }
             gen.writeEndArray();
             
-            if(shopping.getRank() != null)
-                gen.writeNumberField(Shopping.fd_rank, shopping.getRank());
+            if(viewspot.getRank() != null)
+                gen.writeNumberField(Viewspot.fd_rank, viewspot.getRank());
             
-            if(shopping.getRating() != null)
-                gen.writeNumberField(Shopping.fd_rating, shopping.getRating());
+            if(viewspot.getRating() != null)
+                gen.writeNumberField(Viewspot.fd_rating, viewspot.getRating());
 
-            if(shopping.getHotness() != null)
-                gen.writeNumberField(Shopping.fd_hotness, shopping.getHotness());
+            if(viewspot.getHotness() != null)
+                gen.writeNumberField(Viewspot.fd_hotness, viewspot.getHotness());
 
             
-            Contact contact = shopping.getContact();
+            Contact contact = viewspot.getContact();
             if (contact != null) {
-            	gen.writeFieldName(Shopping.fd_contact);
+            	gen.writeFieldName(Viewspot.fd_contact);
                 JsonSerializer<Object> retContact = serializers.findValueSerializer(Contact.class, null);
                 retContact.serialize(contact, gen, serializers);
             }
             
-            gen.writeStringField(Shopping.fd_zhName, shopping.getZhName() == null ? "" : shopping.getZhName());
-            gen.writeStringField(Shopping.fd_enName, shopping.getEnName() == null ? "" : shopping.getEnName());
-            gen.writeStringField(Shopping.fd_url, shopping.getUrl() == null ? "" : shopping.getUrl());
-            gen.writeNumberField(Shopping.fd_marketPrice, shopping.getMarketPrice() == null ? 0.0 : shopping.getMarketPrice());
-            gen.writeNumberField(Shopping.fd_price, shopping.getPrice() == null ? 0.0 : shopping.getPrice());
-            if(shopping.getPriceDesc() != null)
-            	gen.writeStringField(Shopping.fd_priceDesc, shopping.getPriceDesc());
+            gen.writeStringField(Viewspot.fd_zhName, viewspot.getZhName() == null ? "" : viewspot.getZhName());
+            gen.writeStringField(Viewspot.fd_enName, viewspot.getEnName() == null ? "" : viewspot.getEnName());
+            gen.writeStringField(Viewspot.fd_url, viewspot.getUrl() == null ? "" : viewspot.getUrl());
+            gen.writeNumberField(Viewspot.fd_marketPrice, viewspot.getMarketPrice() == null ? 0.0 : viewspot.getMarketPrice());
+            gen.writeNumberField(Viewspot.fd_price, viewspot.getPrice() == null ? 0.0 : viewspot.getPrice());
+            if(viewspot.getPriceDesc() != null)
+            	gen.writeStringField(Viewspot.fd_priceDesc, viewspot.getPriceDesc());
             
-            if(shopping.getOpenTime() != null)
-            	gen.writeStringField(Shopping.fd_openTime, shopping.getOpenTime());
+            if(viewspot.getOpenTime() != null)
+            	gen.writeStringField(Viewspot.fd_openTime, viewspot.getOpenTime());
 
-            Description description = shopping.getDescription();
+            Description description = viewspot.getDescription();
             if (description != null) {
-            	gen.writeFieldName(Shopping.fd_description);
+            	gen.writeFieldName(Viewspot.fd_description);
                 JsonSerializer<Object> retDescription = serializers.findValueSerializer(Description.class, null);
                 retDescription.serialize(description, gen, serializers);
             }
-            List<String> tags = shopping.getTags();
+            List<String> tags = viewspot.getTags();
             if (tags != null && (!tags.isEmpty())) {
-            	gen.writeFieldName(Shopping.fd_tags);
+            	gen.writeFieldName(Viewspot.fd_tags);
                 gen.writeStartArray();
                 for (String tag : tags)
                     gen.writeString(tag == null ? "" : tag);
                 gen.writeEndArray();
             }
 
-            List<String> alias = shopping.getAlias();
+            List<String> alias = viewspot.getAlias();
             if (alias != null && (!alias.isEmpty())) {
-            	gen.writeFieldName(Shopping.fd_alias);
+            	gen.writeFieldName(Viewspot.fd_alias);
                 gen.writeStartArray();
                 for (String alia : alias)
                     gen.writeString(alia == null ? "" : alia);
                 gen.writeEndArray();
             }
             
-            List<String> targets = shopping.getTargets();
+            List<String> targets = viewspot.getTargets();
             if (targets != null && (!targets.isEmpty())) {
-            	gen.writeFieldName(Shopping.fd_targets);
+            	gen.writeFieldName(Viewspot.fd_targets);
                 gen.writeStartArray();
                 for (String target : targets)
                     gen.writeString(target == null ? "" : target);
                 gen.writeEndArray();
             }
 
-            if(shopping.getSource() != null)
-            	gen.writeStringField(Shopping.fd_source, shopping.getSource());
+            if(viewspot.getSource() != null)
+            	gen.writeStringField(Viewspot.fd_source, viewspot.getSource());
 
-            if(shopping.getGuideUrl() != null)
-            	gen.writeStringField(Shopping.fd_guideUrl, shopping.getGuideUrl());
+            if(viewspot.getGuideUrl() != null)
+            	gen.writeStringField(Viewspot.fd_guideUrl, viewspot.getGuideUrl());
 
-            Address address = shopping.getAddress();
+            Address address = viewspot.getAddress();
             if (address != null) {
-            	gen.writeFieldName(Shopping.fd_address);
+            	gen.writeFieldName(Viewspot.fd_address);
                 JsonSerializer<Object> retAddress = serializers.findValueSerializer(Address.class, null);
                 retAddress.serialize(address, gen, serializers);
             }
 
-            List<Locality> locList = shopping.getLocList();
+            List<Locality> locList = viewspot.getLocList();
             if (locList != null && !locList.isEmpty()) {
-            	gen.writeFieldName(Shopping.fd_locList);
+            	gen.writeFieldName(Viewspot.fd_locList);
                 gen.writeStartArray();
                 JsonSerializer<Object> ret = serializers.findValueSerializer(Locality.class, null);
                 for (Locality loc : locList)
                     ret.serialize(loc, gen, serializers);
                 gen.writeEndArray();
             }
-            gen.writeNumberField(Shopping.fd_saleVolume, shopping.getSaleVolume() == null ? 0 : shopping.getSaleVolume());
-            if(shopping.getDiscount() != null)
-            	gen.writeNumberField(Shopping.fd_discount, shopping.getDiscount());
-            
-            Locality locality = shopping.getLocality();
+            gen.writeNumberField(Viewspot.fd_saleVolume, viewspot.getSaleVolume() == null ? 0 : viewspot.getSaleVolume());
+            if(viewspot.getDiscount() != null)
+            	gen.writeNumberField(Viewspot.fd_discount, viewspot.getDiscount());
+            Locality locality = viewspot.getLocality();
             if (locality != null) {
-            	gen.writeFieldName(Shopping.fd_locality);
+            	gen.writeFieldName(Viewspot.fd_locality);
                 JsonSerializer<Object> retLocality = serializers.findValueSerializer(Locality.class, null);
                 retLocality.serialize(locality, gen, serializers);
             }

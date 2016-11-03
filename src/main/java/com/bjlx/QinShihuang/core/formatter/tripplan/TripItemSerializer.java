@@ -70,7 +70,6 @@ public class TripItemSerializer extends JsonSerializer<TripItem> {
                 retShopping.serialize(shopping, gen, serializers);
             }
 
-
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

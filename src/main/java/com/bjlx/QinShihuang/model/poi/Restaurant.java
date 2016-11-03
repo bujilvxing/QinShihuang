@@ -15,7 +15,33 @@ import java.util.List;
 
 @Entity
 public class Restaurant {
-
+	public final static String fd_id = "id";
+	public final static String fd_lat = "lat";
+	public final static String fd_lng = "lng";
+	public final static String fd_cover = "cover";
+	public final static String fd_images = "images";
+	public final static String fd_rank = "rank";
+	public final static String fd_hotness = "hotness";
+	public final static String fd_rating = "rating";
+	public final static String fd_contact = "contact";
+	public final static String fd_zhName = "zhName";
+	public final static String fd_enName = "enName";
+	public final static String fd_url = "url";
+	public final static String fd_marketPrice = "marketPrice";
+	public final static String fd_priceDesc = "priceDesc";
+	public final static String fd_openTime = "openTime";
+	public final static String fd_description = "description";
+	public final static String fd_tags = "tags";
+	public final static String fd_alias = "alias";
+	public final static String fd_targets = "targets";
+	public final static String fd_price = "price";
+	public final static String fd_source = "source";
+	public final static String fd_guideUrl = "guideUrl";
+	public final static String fd_address = "address";
+	public final static String fd_locList = "locList";
+	public final static String fd_saleVolume = "saleVolume";
+	public final static String fd_locality = "locality";
+	
 	/**
 	 * 主键
 	 */
@@ -69,7 +95,7 @@ public class Restaurant {
 	 * POI联系信息
 	 */
 	private Contact contact;
-
+	
 	/**
 	 * POI中文名
 	 */
@@ -93,6 +119,12 @@ public class Restaurant {
 	 */
 	@NotBlank
 	private Double price = 0.0;
+	
+	/**
+	 * POI价格
+	 */
+	@NotBlank
+	private Double marketPrice = 0.0;
 	
 	/**
 	 * POI价格描述
@@ -357,4 +389,13 @@ public class Restaurant {
 	public void setSaleVolume(Integer saleVolume) {
 		this.saleVolume = saleVolume;
 	}
+
+	public Double getMarketPrice() {
+		return marketPrice;
+	}
+
+	public void setMarketPrice(Double marketPrice) {
+		this.marketPrice = marketPrice;
+	}
+	
 }

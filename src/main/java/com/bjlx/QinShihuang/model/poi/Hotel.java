@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.model.poi;
 
 import com.bjlx.QinShihuang.model.geo.Locality;
+import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.specialservice.RentCar;
@@ -176,7 +177,7 @@ public class Hotel {
 	 * POI地址
 	 */
 	@NotBlank
-	private String address;
+	private Address address;
 	
 	/**
 	 * 从属行政关系
@@ -416,11 +417,11 @@ public class Hotel {
 		this.guideUrl = guideUrl;
 	}
 
-	public String getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 
