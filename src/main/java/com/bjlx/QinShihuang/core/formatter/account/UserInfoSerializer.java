@@ -30,10 +30,9 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
             gen.writeStringField(UserInfo.fd_id, userInfo.getId() == null ? "" : userInfo.getId().toString());
 
             PhoneNumber tel = userInfo.getTel();
-            JsonSerializer<Object> retTel;
             if (tel != null) {
             	gen.writeFieldName(UserInfo.fd_tel);
-                retTel = serializers.findValueSerializer(PhoneNumber.class, null);
+                JsonSerializer<Object> retTel = serializers.findValueSerializer(PhoneNumber.class, null);
                 retTel.serialize(tel, gen, serializers);
             }
 
@@ -109,9 +108,6 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
             if(userInfo.getResidence() != null)
                 gen.writeStringField(UserInfo.fd_residence, userInfo.getResidence());
 
-            if(userInfo.getResidence() != null)
-                gen.writeStringField(UserInfo.fd_residence, userInfo.getResidence());
-
             if(userInfo.getBirthday() != null)
                 gen.writeStringField(UserInfo.fd_birthday, userInfo.getBirthday());
 
@@ -132,7 +128,7 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
             List<Trace> traces = userInfo.getTraces();
             
             if (traces != null && !traces.isEmpty()) {
-            	gen.writeFieldName(UserInfo.fd_activities);
+            	gen.writeFieldName(UserInfo.fd_traces);
                 gen.writeStartArray();
                 JsonSerializer<Object> ret = serializers.findValueSerializer(Trace.class, null);
                 for (Trace trace : traces)
@@ -167,7 +163,7 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
             List<TripPlan> tripPlans = userInfo.getTripPlans();
             
             if (tripPlans != null && !tripPlans.isEmpty()) {
-            	gen.writeFieldName(UserInfo.fd_travelNotes);
+            	gen.writeFieldName(UserInfo.fd_tripPlans);
                 gen.writeStartArray();
                 JsonSerializer<Object> ret = serializers.findValueSerializer(TripPlan.class, null);
                 for (TripPlan tripPlan : tripPlans)

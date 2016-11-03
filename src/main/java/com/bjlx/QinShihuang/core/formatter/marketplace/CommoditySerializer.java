@@ -35,7 +35,7 @@ public class CommoditySerializer extends JsonSerializer<Commodity> {
                 retLocality.serialize(locality, gen, serializers);
             }
             
-            if(locality.getDesc() != null) 
+            if(commodity.getDesc() != null)
             	gen.writeStringField(Commodity.fd_desc, commodity.getDesc());
             
             gen.writeFieldName(Commodity.fd_cover);
