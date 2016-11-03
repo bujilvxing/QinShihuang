@@ -1,7 +1,12 @@
 package com.bjlx.QinShihuang.core.formatter.trace;
 
+import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.misc.Audio;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
+import com.bjlx.QinShihuang.model.poi.Hotel;
+import com.bjlx.QinShihuang.model.poi.Restaurant;
+import com.bjlx.QinShihuang.model.poi.Shopping;
+import com.bjlx.QinShihuang.model.poi.Viewspot;
 import com.bjlx.QinShihuang.model.trace.Trace;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -58,118 +63,80 @@ public class TraceSerializer extends JsonSerializer<Trace> {
             }
             gen.writeEndArray();
 
-            gen.writeFieldName(Trace.fd_audio);
             Audio audio = trace.getAudio();
             if (avatar != null) {
+            	gen.writeFieldName(Trace.fd_audio);
                 JsonSerializer<Object> retAudio = serializers.findValueSerializer(Audio.class, null);
                 retAudio.serialize(audio, gen, serializers);
-            } else {
-                gen.writeStartObject();
-                gen.writeEndObject();
+            }
+            
+            gen.writeStringField(Trace.fd_title, trace.getTitle() == null ? "" : trace.getTitle());
+            if(trace.getDesc() != null)
+            	gen.writeStringField(Trace.fd_desc, trace.getDesc());
+            gen.writeNumberField(Trace.fd_status, trace.getStatus() == null ? 1 : trace.getStatus());
+            
+            Activity activity = trace.getActivity();
+            if (activity != null) {
+            	gen.writeFieldName(Trace.fd_activity);
+                JsonSerializer<Object> retActivity = serializers.findValueSerializer(Activity.class, null);
+                retActivity.serialize(activity, gen, serializers);
+            }
+            
+            Viewspot viewspot = trace.getViewspot();
+            if (viewspot != null) {
+            	gen.writeFieldName(Trace.fd_viewspot);
+                JsonSerializer<Object> retViewspot = serializers.findValueSerializer(Viewspot.class, null);
+                retViewspot.serialize(viewspot, gen, serializers);
+            }
+            
+            Restaurant restaurant = trace.getRestaurant();
+            if (restaurant != null) {
+            	gen.writeFieldName(Trace.fd_restaurant);
+                JsonSerializer<Object> retRestaurant = serializers.findValueSerializer(Restaurant.class, null);
+                retRestaurant.serialize(restaurant, gen, serializers);
+            }
+            
+            Shopping shopping = trace.getShopping();
+            if (shopping != null) {
+            	gen.writeFieldName(Trace.fd_shopping);
+                JsonSerializer<Object> retShopping = serializers.findValueSerializer(Shopping.class, null);
+                retShopping.serialize(shopping, gen, serializers);
+            }
+            
+            Hotel hotel = trace.getHotel();
+            if (hotel != null) {
+            	gen.writeFieldName(Trace.fd_hotel);
+                JsonSerializer<Object> retHotel = serializers.findValueSerializer(Hotel.class, null);
+                retHotel.serialize(hotel, gen, serializers);
             }
 
-//            /**
-//             * 语音描述
-//             */
-//            private Audio audio;
-//
-//            /**
-//             * 标题
-//             */
-//            private String title;
-//
-//            /**
-//             * 文字描述
-//             */
-//            private String desc;
-//
-//            /**
-//             * 状态，1表示私密可不见，2表示好友可见，3表示所有人可见
-//             */
-//            private Integer status = 1;
-//
-//            /**
-//             * 足迹所参加的活动
-//             */
-//            private Activity activity;
-//
-//            /**
-//             * 足迹所在的景点
-//             */
-//            private Viewspot viewspot;
-//
-//            /**
-//             * 足迹所在的餐馆
-//             */
-//            private Restaurant restaurant;
-//
-//            /**
-//             * 足迹所在的购物
-//             */
-//            private Shopping shopping;
-//
-//            /**
-//             * 足迹所在的酒店
-//             */
-//            private Hotel hotel;
-//
-//            /**
-//             * 收藏次数
-//             */
-//            @Min(value = 0)
-//            private Integer favorCnt = 0;
-//
-//            /**
-//             * 评论次数
-//             */
-//            @Min(value = 0)
-//            private Integer commentCnt = 0;
-//
-//            /**
-//             * 浏览次数
-//             */
-//            @Min(value = 0)
-//            private Integer viewCnt = 0;
-//
-//            /**
-//             * 转发次数
-//             */
-//            @Min(value = 0)
-//            private Integer shareCnt = 0;
-//
-//            /**
-//             * 源足迹id
-//             */
-//            private ObjectId originId;
-//
-//            /**
-//             * 足迹原创用户id
-//             */
-//            private Long originUserId;
-//
-//            /**
-//             * 足迹原创用户昵称
-//             */
-//            private String originNickName;
-//
-//            /**
-//             * 足迹原创用户头像
-//             */
-//            private ImageItem originAvatar;
-//
-//            /**
-//             * 经度
-//             */
-//            @Min(value = -90)
-//            @Max(value = 90)
-//            private Double lat;
-//
-//            /**
-//             * 纬度
-//             */
-//            @Min(value = -180)
-//            @Max(value = 180)
-//            private Double lng;
+            gen.writeNumberField(Trace.fd_favorCnt, trace.getFavorCnt() == null ? 0 : trace.getFavorCnt());
+            gen.writeNumberField(Trace.fd_commentCnt, trace.getCommentCnt() == null ? 0 : trace.getCommentCnt());
+            gen.writeNumberField(Trace.fd_viewCnt, trace.getViewCnt() == null ? 0 : trace.getViewCnt());
+            gen.writeNumberField(Trace.fd_shareCnt, trace.getShareCnt() == null ? 0 : trace.getShareCnt());
+
+            if(trace.getOriginId() != null)
+            	gen.writeStringField(Trace.fd_originId, trace.getOriginId().toString());
+            
+            if(trace.getOriginUserId() != null)
+            	gen.writeNumberField(Trace.fd_originUserId, trace.getOriginUserId());
+
+            if(trace.getOriginNickName() != null)
+            	gen.writeStringField(Trace.fd_originNickName, trace.getOriginNickName());
+            
+            
+            ImageItem originAvatar = trace.getOriginAvatar();
+            if (originAvatar != null) {
+            	gen.writeFieldName(Trace.fd_originAvatar);
+                JsonSerializer<Object> retOriginAvatar = serializers.findValueSerializer(ImageItem.class, null);
+                retOriginAvatar.serialize(originAvatar, gen, serializers);
+            }
+            
+            if(trace.getLat() != null)
+            	gen.writeNumberField(Trace.fd_lat, trace.getLat());
+            if(trace.getLng() != null)
+            	gen.writeNumberField(Trace.fd_lng, trace.getLng());
+
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();
