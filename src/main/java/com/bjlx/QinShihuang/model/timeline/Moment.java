@@ -17,6 +17,20 @@ import java.util.List;
 @Entity
 public class Moment {
 
+    public final static String fd_id = "id";
+    public final static String fd_publishTime = "publishTime";
+    public final static String fd_userId = "userId";
+    public final static String fd_nickName = "nickName";
+    public final static String fd_avatar = "avatar";
+    public final static String fd_originId = "originId";
+    public final static String fd_originUserId = "originUserId";
+    public final static String fd_originNickName = "originNickName";
+    public final static String fd_originAvatar = "originAvatar";
+    public final static String fd_text = "text";
+    public final static String fd_images = "images";
+    public final static String fd_comment = "comment";
+    public final static String fd_card = "card";
+
     /**
      * 主键
      */

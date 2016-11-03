@@ -12,10 +12,22 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 /**
+ * 租车
  * Created by pengyt on 2016/7/26.
  */
 @Entity
 public class RentCar {
+
+	public final static String fd_id = "id";
+	public final static String fd_price = "price";
+	public final static String fd_pickupAddr = "pickupAddr";
+	public final static String fd_returnAddr = "returnAddr";
+	public final static String fd_contact = "contact";
+	public final static String fd_minRentDay = "minRentDay";
+	public final static String fd_car = "car";
+	public final static String fd_autoInsurance = "autoInsurance";
+	public final static String fd_autoInsurancePrice = "autoInsurancePrice";
+	public final static String fd_pickup = "pickup";
 
 	/**
 	 * 主键

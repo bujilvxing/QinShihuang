@@ -13,6 +13,25 @@ import org.mongodb.morphia.annotations.Id;
 @Entity
 public class Car {
 
+    public final static String fd_id = "id";
+    public final static String fd_carId = "carId";
+    public final static String fd_transmission = "transmission";
+    public final static String fd_vehicleType = "vehicleType";
+    public final static String fd_brand = "brand";
+    public final static String fd_carOwner = "carOwner";
+    public final static String fd_displacement = "displacement";
+    public final static String fd_seatNum = "seatNum";
+    public final static String fd_name = "name";
+    public final static String fd_fuelType = "fuelType";
+    public final static String fd_gasolineType = "gasolineType";
+    public final static String fd_actuationType = "actuationType";
+    public final static String fd_dormer = "dormer";
+    public final static String fd_gps = "gps";
+    public final static String fd_seatType = "seatType";
+    public final static String fd_airbagNum = "airbagNum";
+    public final static String fd_gearboxType = "gearboxType";
+    public final static String fd_airConditioner = "airConditioner";
+
     /**
      * 主键
      */

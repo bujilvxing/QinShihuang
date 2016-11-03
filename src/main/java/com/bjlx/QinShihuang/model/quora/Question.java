@@ -16,6 +16,14 @@ import java.util.List;
 @Entity
 public class Question extends AbstractQuoraEntry {
 
+	public final static String fd_id = "id";
+	public final static String fd_source = "source";
+	public final static String fd_topics = "topics";
+	public final static String fd_tags = "tags";
+	public final static String fd_viewCnt = "viewCnt";
+	public final static String fd_answerCnt = "answerCnt";
+	public final static String fd_maxVoteCnt = "maxVoteCnt";
+
 	/**
 	 * 主键
 	 */

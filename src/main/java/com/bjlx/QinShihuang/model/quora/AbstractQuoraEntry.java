@@ -12,6 +12,11 @@ import javax.validation.constraints.NotNull;
  */
 public abstract class AbstractQuoraEntry {
 
+	public final static String fd_author = "author";
+	public final static String fd_publishTime = "publishTime";
+	public final static String fd_title = "title";
+	public final static String fd_contents = "contents";
+
 	/**
 	 * 作者信息
 	 */
