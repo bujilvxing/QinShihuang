@@ -20,7 +20,26 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class TripPlan {
 
-    /**
+	public final static String fd_id = "id";
+	public final static String fd_userId = "userId";
+	public final static String fd_nickName = "nickName";
+	public final static String fd_createTime = "createTime";
+	public final static String fd_updateTime = "updateTime";
+	public final static String fd_title = "title";
+	public final static String fd_desc = "desc";
+	public final static String fd_cover = "cover";
+	public final static String fd_tripItems = "tripItems";
+	public final static String fd_favorCnt = "favorCnt";
+	public final static String fd_commentCnt = "commentCnt";
+	public final static String fd_viewCnt = "viewCnt";
+	public final static String fd_shareCnt = "shareCnt";
+	public final static String fd_originId = "originId";
+	public final static String fd_originUserId = "originUserId";
+	public final static String fd_originNickName = "originNickName";
+	public final static String fd_originAvatar = "originAvatar";
+	public final static String fd_hotness = "hotness";
+
+	/**
      * 主键
      */
 	@Id
