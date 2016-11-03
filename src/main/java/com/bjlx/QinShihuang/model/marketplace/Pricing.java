@@ -13,6 +13,10 @@ import java.util.List;
  */
 @Embedded
 public class Pricing {
+	
+	public final static String fd_price = "price";
+	public final static String fd_timeRange = "timeRange";
+	
     /**
      * 商品价格
      */

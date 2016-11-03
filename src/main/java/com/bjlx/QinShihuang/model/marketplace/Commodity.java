@@ -16,6 +16,24 @@ import java.util.List;
 @Entity
 public class Commodity {
 
+	public final static String fd_id = "id";
+	public final static String fd_category = "category";
+	public final static String fd_title = "title";
+	public final static String fd_locality = "locality";
+	public final static String fd_desc = "desc";
+	public final static String fd_cover = "cover";
+	public final static String fd_images = "images";
+	public final static String fd_price = "price";
+	public final static String fd_marketPrice = "marketPrice";
+    public final static String fd_status = "status";
+    public final static String fd_plans = "plans";
+    public final static String fd_salesVolume = "salesVolume";
+    public final static String fd_createTime = "createTime";
+    public final static String fd_updateTime = "updateTime";
+    public final static String fd_rating = "rating";
+    public final static String fd_version = "version";
+    public final static String fd_commodityType = "commodityType";
+    
     /**
      * 主键
      */
@@ -57,16 +75,16 @@ public class Commodity {
      * 售价
      */
     private Double price;
-
+    
     /**
      * 市场价
      */
     private Double marketPrice;
 
     /**
-     * 状态。审核中,已发布
+     * 状态。1、审核中(待审核), 2、审核不通过  3、审核通过  4、下架 5、上架
      */
-    private Integer status;
+    private Integer status = 1;
 
     /**
      * 套餐
@@ -76,7 +94,7 @@ public class Commodity {
     /**
      * 销量
      */
-    private Integer salesVolume;
+    private Integer salesVolume = 0;
 
     /**
      * 创建时间
@@ -87,7 +105,7 @@ public class Commodity {
      * 更新时间
      */
     private Long updateTime;
-
+    
     /**
      * 排名
      */

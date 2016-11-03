@@ -16,6 +16,10 @@ import java.util.List;
 @Embedded
 public class StockInfo {
 
+	public final static String fd_status = "status";
+	public final static String fd_quantity = "quantity";
+	public final static String fd_timeRange = "timeRange";
+	
     /**
      * 库存状态。可选值：empty, nonempty, plenty。如果为nonempty，后面的quantity字段将生效
      */
