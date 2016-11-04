@@ -1,12 +1,17 @@
 package com.bjlx.QinShihuang.model.poi;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.mongodb.morphia.annotations.Transient;
 
 public class Description {
 
+	@Transient
 	public final static String fd_desc = "desc";
+	@Transient
 	public final static String fd_details = "details";
+	@Transient
 	public final static String fd_tips = "tips";
+	@Transient
 	public final static String fd_traffic = "traffic";
 	/**
 	 * 简略描述

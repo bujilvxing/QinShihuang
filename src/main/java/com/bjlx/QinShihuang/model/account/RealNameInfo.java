@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 import java.util.Date;
 import java.util.List;
@@ -16,13 +17,21 @@ import java.util.List;
 @Embedded
 public class RealNameInfo {
 
+	@Transient
 	public final static String fd_surname = "surname";
+	@Transient
 	public final static String fd_givenName = "givenName";
+	@Transient
 	public final static String fd_gender = "gender";
+	@Transient
 	public final static String fd_birthday = "birthday";
+	@Transient
 	public final static String fd_identities = "identities";
+	@Transient
 	public final static String fd_tel = "tel";
+	@Transient
 	public final static String fd_email = "email";
+	
 	/**
 	 * 姓
 	 */

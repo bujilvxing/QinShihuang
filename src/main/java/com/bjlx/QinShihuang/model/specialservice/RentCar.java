@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * 租车
@@ -18,15 +19,25 @@ import org.mongodb.morphia.annotations.Id;
 @Entity
 public class RentCar {
 
+	@Transient
 	public final static String fd_id = "id";
+	@Transient
 	public final static String fd_price = "price";
+	@Transient
 	public final static String fd_pickupAddr = "pickupAddr";
+	@Transient
 	public final static String fd_returnAddr = "returnAddr";
+	@Transient
 	public final static String fd_contact = "contact";
+	@Transient
 	public final static String fd_minRentDay = "minRentDay";
+	@Transient
 	public final static String fd_car = "car";
+	@Transient
 	public final static String fd_autoInsurance = "autoInsurance";
+	@Transient
 	public final static String fd_autoInsurancePrice = "autoInsurancePrice";
+	@Transient
 	public final static String fd_pickup = "pickup";
 
 	/**

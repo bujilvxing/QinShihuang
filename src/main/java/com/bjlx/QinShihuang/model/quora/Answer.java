@@ -3,6 +3,8 @@ package com.bjlx.QinShihuang.model.quora;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.mongodb.morphia.annotations.Transient;
+
 /**
  * 回答
  * @author xiaozhi
@@ -10,8 +12,11 @@ import javax.validation.constraints.NotNull;
  */
 public class Answer extends AbstractQuoraEntry {
 
+	@Transient
 	public final static String fd_question = "question";
+	@Transient
 	public final static String fd_voteCnt = "voteCnt";
+	@Transient
 	public final static String fd_accepted = "accepted";
 
 	/**

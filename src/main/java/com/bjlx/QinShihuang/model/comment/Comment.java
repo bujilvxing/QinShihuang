@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -13,16 +14,27 @@ import java.util.List;
 @Entity
 public class Comment {
 
+	@Transient
 	public final static String fd_id = "id";
+	@Transient
 	public final static String fd_rating = "rating";
+	@Transient
 	public final static String fd_userId = "userId";
+	@Transient
 	public final static String fd_avatar = "avatar";
+	@Transient
 	public final static String fd_nickName = "nickName";
+	@Transient
 	public final static String fd_contents = "contents";
+	@Transient
 	public final static String fd_publishTime = "publishTime";
+	@Transient
 	public final static String fd_updateTime = "updateTime";
+	@Transient
 	public final static String fd_commentType = "commentType";
+	@Transient
 	public final static String fd_itemId = "itemId";
+	@Transient
 	public final static String fd_images = "images";
 	
 	/**

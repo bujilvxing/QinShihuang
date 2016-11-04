@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.model.poi;
 
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * Created by pengyt on 2016/7/26.
@@ -9,8 +10,11 @@ import org.mongodb.morphia.annotations.Embedded;
 @Embedded
 public class AvailableDay {
 
+	@Transient
 	public final static String fd_bookTime = "bookTime";
+	@Transient
 	public final static String fd_available = "available";
+	@Transient
 	public final static String fd_price = "price";
 	
 	/**

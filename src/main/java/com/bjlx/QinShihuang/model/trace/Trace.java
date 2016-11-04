@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -26,33 +27,61 @@ import java.util.List;
 @Entity
 public class Trace {
 
+	@Transient
 	public final static String fd_id = "id";
+	@Transient
 	public final static String fd_userId = "userId";
+	@Transient
 	public final static String fd_nickName = "nickName";
+	@Transient
 	public final static String fd_avatar = "avatar";
+	@Transient
 	public final static String fd_createTime= "createTime";
+	@Transient
 	public final static String fd_traceTime = "traceTime";
+	@Transient
 	public final static String fd_updateTime = "updateTime";
+	@Transient
 	public final static String fd_cover = "cover";
+	@Transient
 	public final static String fd_images = "images";
+	@Transient
 	public final static String fd_audio = "audio";
+	@Transient
 	public final static String fd_title = "title";
+	@Transient
 	public final static String fd_desc = "desc";
+	@Transient
 	public final static String fd_status = "status";
+	@Transient
 	public final static String fd_activity = "activity";
+	@Transient
 	public final static String fd_viewspot = "viewspot";
+	@Transient
 	public final static String fd_restaurant = "restaurant";
+	@Transient
 	public final static String fd_shopping = "shopping";
+	@Transient
 	public final static String fd_hotel = "hotel";
+	@Transient
 	public final static String fd_favorCnt = "favorCnt";
+	@Transient
 	public final static String fd_commentCnt = "commentCnt";
+	@Transient
 	public final static String fd_viewCnt = "viewCnt";
+	@Transient
 	public final static String fd_shareCnt = "shareCnt";
+	@Transient
 	public final static String fd_originId = "originId";
+	@Transient
 	public final static String fd_originUserId = "originUserId";
+	@Transient
 	public final static String fd_originNickName = "originNickName";
+	@Transient
 	public final static String fd_originAvatar = "originAvatar";
+	@Transient
 	public final static String fd_lat = "lat";
+	@Transient
 	public final static String fd_lng = "lng";
 
 	/**

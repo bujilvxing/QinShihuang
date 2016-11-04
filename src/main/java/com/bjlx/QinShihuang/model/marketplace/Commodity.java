@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import java.util.List;
 
@@ -16,22 +17,39 @@ import java.util.List;
 @Entity
 public class Commodity {
 
+	@Transient
 	public final static String fd_id = "id";
+	@Transient
 	public final static String fd_category = "category";
+	@Transient
 	public final static String fd_title = "title";
+	@Transient
 	public final static String fd_locality = "locality";
+	@Transient
 	public final static String fd_desc = "desc";
+	@Transient
 	public final static String fd_cover = "cover";
+	@Transient
 	public final static String fd_images = "images";
+	@Transient
 	public final static String fd_price = "price";
+	@Transient
 	public final static String fd_marketPrice = "marketPrice";
+	@Transient
     public final static String fd_status = "status";
+	@Transient
     public final static String fd_plans = "plans";
+	@Transient
     public final static String fd_salesVolume = "salesVolume";
+	@Transient
     public final static String fd_createTime = "createTime";
+	@Transient
     public final static String fd_updateTime = "updateTime";
+	@Transient
     public final static String fd_rating = "rating";
+	@Transient
     public final static String fd_version = "version";
+	@Transient
     public final static String fd_commodityType = "commodityType";
     
     /**

@@ -1,11 +1,13 @@
 package com.bjlx.QinShihuang.model.im;
 
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 @Embedded
 public class Emoticon {
-	
+	@Transient
 	public final static String fd_group = "group";
+	@Transient
 	public final static String fd_url = "url";
 	/**
 	 * 表情组

@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Embedded;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -26,12 +25,12 @@ public class SecretKey {
      * key的生成时间
      */
     @NotNull
-    private Date timestamp;
+    private Long timestamp;
 
     /**
      * key的过期时间
      */
-    private Date expire;
+    private Long expire;
 
     public String getKey() {
         return key;
@@ -41,24 +40,24 @@ public class SecretKey {
         this.key = key;
     }
 
-    public Date getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 
-    public Date getExpire() {
+    public Long getExpire() {
         return expire;
     }
 
-    public void setExpire(Date expire) {
+    public void setExpire(Long expire) {
         this.expire = expire;
     }
 
     public SecretKey() {
         this.key = org.apache.commons.codec.digest.DigestUtils.sha256Hex(UUID.randomUUID().toString());
-        this.timestamp = new Date();
+        this.timestamp = System.currentTimeMillis();
     }
 }

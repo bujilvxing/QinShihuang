@@ -140,7 +140,7 @@ public class AccountController {
         if(userInfoReq.getToken() == null) {
             return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1003);
         }
-        int promotionCodeSize = userInfoReq.getPromotionCodeSize() == null ? 6 : userInfoReq.getPromotionCodeSize();
+        int promotionCodeSize = userInfoReq.getPromotionCodeSize() == null ? Constant.DEFAULT_PROMOTIONCODE_SIZE : userInfoReq.getPromotionCodeSize();
 
         if(CommonUtil.isTelLegal(userInfoReq.getAccount())) {
             try {
@@ -168,13 +168,37 @@ public class AccountController {
      * @param userInfo 用户登录信息
      * @return 用户信息
      */
-    @RequestMapping(value = "/app/users/login", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String login(@RequestBody UserInfoReq userInfo) {
+    @RequestMapping(value = "/app/login", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String login(@RequestBody LoginReq loginReq) {
+    	// 检验参数
+    	if(loginReq.getAccount() == null) {
+            return QinShihuangResult.getResult(ErrorCode.ACCOUNT_NULL_1004);
+        }
+        if(loginReq.getPassword() == null) {
+            return QinShihuangResult.getResult(ErrorCode.PWD_NULL_1004);
+        }
+        if(loginReq.getClientId() == null) {
+            return QinShihuangResult.getResult(ErrorCode.CLIENTID_NULL_1004);
+        }
+        if(CommonUtil.isTelLegal(loginReq.getAccount())) {
+            try {
+                return AccountAPI.login(loginReq.getAccount(), loginReq.getPassword(), loginReq.getClientId(), true);
+            } catch(Exception e) {
+                e.printStackTrace();
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+        }
 
-        // 绑定个推的clientId
-        // 授权码
-
-        return null;
+        if(CommonUtil.isEmail(loginReq.getAccount())) {
+            try {
+                return AccountAPI.login(loginReq.getAccount(), loginReq.getPassword(), loginReq.getClientId(), false);
+            } catch(Exception e) {
+                e.printStackTrace();
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+        } else {
+            return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1004);
+        }
     }
 
     /**

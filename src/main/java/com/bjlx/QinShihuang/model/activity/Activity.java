@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -19,26 +20,47 @@ import java.util.List;
 @Entity
 public class Activity {
 
+	@Transient
     public final static String fd_id = "id";
+	@Transient
     public final static String fd_title = "title";
+	@Transient
     public final static String fd_maxNum = "maxNum";
+	@Transient
     public final static String fd_joinNum = "joinNum";
+	@Transient
     public final static String fd_startTime = "startTime";
+	@Transient
     public final static String fd_endTime = "endTime";
+	@Transient
     public final static String fd_address = "address";
+	@Transient
     public final static String fd_favorCnt = "favorCnt";
+	@Transient
     public final static String fd_commentCnt = "commentCnt";
+	@Transient
     public final static String fd_viewCnt = "viewCnt";
+	@Transient
     public final static String fd_shareCnt = "shareCnt";
+	@Transient
     public final static String fd_cover = "cover";
+	@Transient
     public final static String fd_posters = "posters";
+	@Transient
     public final static String fd_theme = "theme";
+	@Transient
     public final static String fd_category = "category";
+	@Transient
     public final static String fd_tags = "tags";
+	@Transient
     public final static String fd_visiable = "visiable";
+	@Transient
     public final static String fd_desc = "desc";
+	@Transient
     public final static String fd_applicantInfos = "applicantInfos";
+	@Transient
     public final static String fd_tickets = "tickets";
+	@Transient
     public final static String fd_isFree = "isFree";
 
     /**

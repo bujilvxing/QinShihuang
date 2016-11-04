@@ -44,7 +44,7 @@ public enum ErrorCode {
 	// 检验验证码
 	ACCOUNT_NULL_1002(100201, "参数账户为空"),
 	ACCOUNT_FORMAT_1002(100202, "账户格式不正确"),
-	CODE_NULL_1002(100203, "验证码为空"),
+	CODE_NULL_1002(100203, "参数验证码为空"),
 	CODE_INVALID_1002(100204, "验证码不合法"),
 	VALIDATION_FAIL_1002(100205, "验证失败"),
 
@@ -55,10 +55,20 @@ public enum ErrorCode {
 	// 用户注册
 	ACCOUNT_NULL_1003(100301, "参数账户为空"),
 	ACCOUNT_FORMAT_1003(100302, "账户格式不正确"),
-	PWD_NULL_1003(100303, "密码为空"),
-	TOKEN_NULL_1003(100304, "令牌为空"),
+	PWD_NULL_1003(100303, "参数密码为空"),
+	TOKEN_NULL_1003(100304, "参数令牌为空"),
 	USER_EXIST_1003(100305, "用户已存在"),
 	TOKEN_INVALID_1003(100306, "令牌不合法"),
+	
+	// 用户登录
+	ACCOUNT_NULL_1004(100401, "参数账户为空"),
+	PWD_NULL_1004(100402, "参数密码为空"),
+	CLIENTID_NULL_1004(100403, "参数clientId为空"),
+	ACCOUNT_FORMAT_1004(100404, "账户格式不正确"),
+	PWD_INVALID_1004(100405, "密码不正确"),
+	USER_NOT_EXIST_1004(100406, "用户不存在"),
+	
+	// 
 	;
 
 

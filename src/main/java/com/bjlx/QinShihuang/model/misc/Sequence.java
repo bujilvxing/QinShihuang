@@ -3,6 +3,7 @@ package com.bjlx.QinShihuang.model.misc;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * 自增长序列化器
@@ -11,8 +12,11 @@ import org.mongodb.morphia.annotations.Id;
 @Entity
 public class Sequence {
 
+	@Transient
     public static final String fd_userId = "userId";
+	@Transient
     public static final String fd_chatGroupId = "chatGroupId";
+	@Transient
     public static final String fd_msgId = "msgId";
 
     @Id

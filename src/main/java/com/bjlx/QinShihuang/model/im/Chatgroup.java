@@ -11,6 +11,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.IndexOptions;
 import org.mongodb.morphia.annotations.Indexed;
+import org.mongodb.morphia.annotations.Transient;
 
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 
@@ -31,19 +32,33 @@ public class Chatgroup {
 	/**
      * 域名称，便于查询，以免输入有误
      */
+	@Transient
     public final static String fd_id = "id";
+	@Transient
     public final static String fd_chatGroupId = "chatGroupId";
+	@Transient
     public final static String fd_name = "name";
+	@Transient
     public final static String fd_groupDesc = "groupDesc";
+	@Transient
     public final static String fd_avatar = "avatar";
+	@Transient
     public final static String fd_tags = "tags";
+	@Transient
     public final static String fd_creator = "creator";
+	@Transient
     public final static String fd_admins = "admins";
+	@Transient
     public final static String fd_maxUsers = "maxUsers";
+	@Transient
     public final static String fd_visible = "visible";
+	@Transient
     public final static String fd_participants = "participants";
+	@Transient
     public final static String fd_level = "level";
+	@Transient
     public final static String fd_createTime = "createTime";
+	@Transient
     public final static String fd_updateTime = "updateTime";
     
     /**

@@ -2,6 +2,7 @@ package com.bjlx.QinShihuang.model.misc;
 
 import org.hibernate.validator.constraints.URL;
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -9,10 +10,15 @@ import javax.validation.constraints.Min;
 @Embedded
 public class Audio {
 	
+	@Transient
 	public final static String fd_length = "length";
+	@Transient
 	public final static String fd_createTime = "createTime";
+	@Transient
 	public final static String fd_fileName = "fileName";
+	@Transient
 	public final static String fd_url = "url";
+	@Transient
 	public final static String fd_key = "key";
 	
 	/**

@@ -2,19 +2,28 @@ package com.bjlx.QinShihuang.model.misc;
 
 import org.hibernate.validator.constraints.Email;
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 import java.util.List;
 
 @Embedded
 public class Contact {
 
+	@Transient
 	public final static String fd_phoneList = "phoneList";
+	@Transient
 	public final static String fd_cellphoneList = "cellphoneList";
+	@Transient
 	public final static String fd_qq = "qq";
+	@Transient
 	public final static String fd_weixin = "weixin";
+	@Transient
 	public final static String fd_sina = "sina";
+	@Transient
 	public final static String fd_fax = "fax";
+	@Transient
 	public final static String fd_email = "email";
+	@Transient
 	public final static String fd_website = "website";
 
 	/**

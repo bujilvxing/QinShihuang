@@ -2,6 +2,7 @@ package com.bjlx.QinShihuang.model.account;
 
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Indexed;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,10 +12,15 @@ import javax.validation.constraints.NotNull;
 @Embedded
 public class OAuthInfo {
 
+	@Transient
 	public final static String fd_provider = "provider";
+	@Transient
 	public final static String fd_oauthId = "oauthId";
+	@Transient
 	public final static String fd_nickName = "nickName";
+	@Transient
 	public final static String fd_avatar = "avatar";
+	@Transient
 	public final static String fd_token = "token";
 	/**
      * 第三方账号体系的名称。比如：weixin表示这是微信账号

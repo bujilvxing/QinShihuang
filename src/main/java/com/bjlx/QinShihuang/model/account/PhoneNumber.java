@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.model.account;
 
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * 电话号码数据
@@ -10,7 +11,9 @@ import org.mongodb.morphia.annotations.Embedded;
 @Embedded
 public class PhoneNumber {
 
+	@Transient
 	public final static String fd_dialCode = "dialCode";
+	@Transient
 	public final static String fd_number = "number";
 
 	/**

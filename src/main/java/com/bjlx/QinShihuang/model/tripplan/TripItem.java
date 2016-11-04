@@ -6,6 +6,7 @@ import com.bjlx.QinShihuang.model.poi.Restaurant;
 import com.bjlx.QinShihuang.model.poi.Shopping;
 import com.bjlx.QinShihuang.model.poi.Viewspot;
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * Created by pengyt on 2016/7/24.
@@ -14,13 +15,21 @@ import org.mongodb.morphia.annotations.Embedded;
 @Embedded
 public class TripItem {
 
+	@Transient
     public final static String fd_tripTime = "tripTime";
+	@Transient
     public final static String fd_createTime = "createTime";
+	@Transient
     public final static String fd_desc = "desc";
+	@Transient
     public final static String fd_restaurant = "restaurant";
+	@Transient
     public final static String fd_hotel = "hotel";
+	@Transient
     public final static String fd_viewspot = "viewspot";
+	@Transient
     public final static String fd_activity = "activity";
+	@Transient
     public final static String fd_shopping = "shopping";
 
     /**

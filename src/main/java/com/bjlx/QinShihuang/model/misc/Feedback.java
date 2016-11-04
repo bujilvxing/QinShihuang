@@ -4,16 +4,22 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 
 @Entity
 public class Feedback {
 
+	@Transient
 	public final static String fd_id = "id";
+	@Transient
 	public final static String fd_userId = "userId";
+	@Transient
 	public final static String fd_content = "content";
+	@Transient
 	public final static String fd_time = "time";
+	@Transient
 	public final static String fd_origin = "origin";
 	
 	/**

@@ -19,18 +19,31 @@ import java.util.List;
 @Entity
 public class Message {
 
+	@Transient
 	public final static String fd_id = "id";
+	@Transient
 	public final static String fd_convId = "convId";
+	@Transient
 	public final static String fd_msgId = "msgId";
+	@Transient
 	public final static String fd_content = "content";
+	@Transient
 	public final static String fd_senderId = "senderId";
+	@Transient
 	public final static String fd_senderNickName = "senderNickName";
+	@Transient
 	public final static String fd_senderAvatar = "senderAvatar";
+	@Transient
 	public final static String fd_receiverId = "receiverId";
+	@Transient
 	public final static String fd_msgType = "msgType";
+	@Transient
 	public final static String fd_abbrev = "abbrev";
+	@Transient
 	public final static String fd_timestamp = "timestamp";
+	@Transient
 	public final static String fd_receiverIdList = "receiverIdList";
+	@Transient
 	public final static String fd_chatType = "chatType";
 	
     /**

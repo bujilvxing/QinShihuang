@@ -15,18 +15,32 @@ import java.util.List;
  */
 @Entity
 public class Conversation {
+	
+	@Transient
 	public final static String fd_id = "id";
+	@Transient
 	public final static String fd_chatType = "chatType";
+	@Transient
 	public final static String fd_msgCounter = "msgCounter";
+	@Transient
 	public final static String fd_conversationId = "conversationId";
+	@Transient
 	public final static String fd_createTime = "createTime";
+	@Transient
 	public final static String fd_updateTime = "updateTime";
+	@Transient
 	public final static String fd_unreadCnt = "unreadCnt";
+	@Transient
 	public final static String fd_lastMsgContent = "lastMsgContent";
+	@Transient
 	public final static String fd_muteNotif = "muteNotif";
+	@Transient
 	public final static String fd_muted = "muted";
+	@Transient
 	public final static String fd_pinned = "pinned";
+	@Transient
 	public final static String fd_targetId = "targetId";
+	@Transient
 	public final static String fd_pinList = "pinList";
 	
     /**

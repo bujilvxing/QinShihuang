@@ -94,9 +94,9 @@ public class AccountAPI {
     private static boolean checkUserExist(String account, boolean isTel) throws Exception {
     	Query<UserInfo> queryUser = ds.createQuery(UserInfo.class);
     	if(isTel) {
-    		queryUser.field(UserInfo.fd_number).equal(account);
+    		queryUser.field(UserInfo.fd_number).equal(account).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
     	} else {
-    		queryUser.field(UserInfo.fd_email).equal(account);
+    		queryUser.field(UserInfo.fd_email).equal(account).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
     	}
     	try {
     		return queryUser.get() != null;
@@ -427,5 +427,63 @@ public class AccountAPI {
 		}
     }
 
+    /**
+     * 用户登录
+     * @param account 用户账户
+     * @param password 密码
+     * @param clientId 个推的clientId
+     * @param isTel 是否电话号码
+     * @return 用户信息
+     * @throws Exception 异常
+     */
+    public static String login(String account, String password, String clientId, boolean isTel) throws Exception {
+    	// 查询用户信息
+    	Query<UserInfo> query = ds.createQuery(UserInfo.class);
+    	if(isTel)
+    		query.field(UserInfo.fd_number).equal(account).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+    	else
+    		query.field(UserInfo.fd_email).equal(account).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+    	UserInfo userInfo = null;
+    	try {
+    		userInfo = query.get();
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    		throw e;
+    	}
+    	if(userInfo == null) {
+    		return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1004);
+    	} else {
+    		long userId = userInfo.getUserId();
+    		Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId);
+    		
+    		try {
+    			Credential credential = queryCredential.get();
+    			
+    			byte[] bytes = MessageDigest.getInstance("SHA-256").digest((credential.getSalt() + password).getBytes());
+    			String passwdHash = bytesToString(bytes);
+    			// 检验用户密码
+    			if(credential.getPasswdHash().equals(passwdHash)) {
+    				UpdateOperations<Credential> opsCredential = ds.createUpdateOperations(Credential.class);
+    				SecretKey secretKey = new SecretKey();
+    				opsCredential.set(Credential.fd_secretKey, secretKey);
+    				// 更新授权码
+    				ds.updateFirst(queryCredential, opsCredential);
+    				// 更新用户登录状态以及绑定个推的clientId
+    				UpdateOperations<UserInfo> opsUser = ds.createUpdateOperations(UserInfo.class)
+    						.set(UserInfo.fd_loginStatus, true).set(UserInfo.fd_loginTime, System.currentTimeMillis())
+    						.set(UserInfo.fd_clientId, clientId);
+    				ds.updateFirst(query, opsUser);
+    				userInfo.setKey(secretKey.getKey());
+    				return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
+    			} else {
+    				return QinShihuangResult.getResult(ErrorCode.PWD_INVALID_1004);
+    			}
+    		} catch (NoSuchAlgorithmException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			throw e;
+    		}
+    	}
+    }
 
 }

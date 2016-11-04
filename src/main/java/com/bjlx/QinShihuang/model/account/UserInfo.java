@@ -5,6 +5,7 @@ import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.TravelNote;
 import com.bjlx.QinShihuang.model.trace.Trace;
 import com.bjlx.QinShihuang.model.tripplan.TripPlan;
+
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -23,39 +24,82 @@ import java.util.List;
 @Entity
 public class UserInfo {
 
+	@Transient
 	public final static String fd_id = "id";
+	@Transient
 	public final static String fd_number = "tel.number";
+	@Transient
 	public final static String fd_tel = "tel";
+	@Transient
 	public final static String fd_email = "email";
+	@Transient
 	public final static String fd_userId = "userId";
+	@Transient
 	public final static String fd_nickName = "nickName";
+	@Transient
 	public final static String fd_avatar = "avatar";
+	@Transient
 	public final static String fd_gender = "gender";
+	@Transient
 	public final static String fd_signature = "signature";
+	@Transient
 	public final static String fd_travellers = "travellers";
+	@Transient
 	public final static String fd_promotionCode = "promotionCode";
+	@Transient
 	public final static String fd_backGround = "backGround";
+	@Transient
 	public final static String fd_updateTime = "updateTime";
+	@Transient
 	public final static String fd_createTime = "createTime";
+	@Transient
 	public final static String fd_soundNotify = "soundNotify";
+	@Transient
 	public final static String fd_vibrateNotify = "vibrateNotify";
+	@Transient
 	public final static String fd_zodiac = "zodiac";
+	@Transient
 	public final static String fd_loginStatus = "loginStatus";
+	@Transient
 	public final static String fd_loginTime = "loginTime";
+	@Transient
 	public final static String fd_logoutTime = "logoutTime";
+	@Transient
 	public final static String fd_loginSource = "loginSource";
+	@Transient
 	public final static String fd_version = "version";
+	@Transient
 	public final static String fd_roles = "roles";
+	@Transient
 	public final static String fd_memo = "memo";
+	@Transient
 	public final static String fd_residence = "residence";
+	@Transient
 	public final static String fd_birthday = "birthday";
+	@Transient
 	public final static String fd_oauthInfoList = "oauthInfoList";
+	@Transient
 	public final static String fd_level = "level";
+	@Transient
 	public final static String fd_travelNotes = "travelNotes";
+	@Transient
 	public final static String fd_traces = "traces";
+	@Transient
 	public final static String fd_tripPlans = "tripPlans";
+	@Transient
 	public final static String fd_activities = "activities";
+	@Transient
+	public final static String fd_status = "status";
+	@Transient
+	public final static String fd_clientId = "clientId";
+	@Transient
+	public final static String fd_key = "key";
 
+	/**
+	 * 授权码
+	 */
+	@Transient
+	private String key;
 
 	/**
 	 * 主键
@@ -128,7 +172,7 @@ public class UserInfo {
 	/**
 	 * 登录的状态，是否在线
 	 */
-	private boolean loginStatus = false;
+	private Boolean loginStatus = false;
 
 	/**
 	 * 登录时间
@@ -209,12 +253,12 @@ public class UserInfo {
 	/**
 	 * 设置声音提醒
 	 */
-	private boolean soundNotify = true;
+	private Boolean soundNotify = true;
 
 	/**
 	 * 设置振动提醒
 	 */
-	private boolean vibrateNotify = true;
+	private Boolean vibrateNotify = true;
 
 	/**
 	 * 背景图片
@@ -231,6 +275,11 @@ public class UserInfo {
 	 */
 	private Long updateTime;
 
+	/**
+	 * 个推的clientId
+	 */
+	private String clientId;
+	
 	public Integer getLevel() {
 		return level;
 	}
@@ -279,19 +328,19 @@ public class UserInfo {
 		this.zodiac = zodiac;
 	}
 
-	public boolean isSoundNotify() {
+	public Boolean getSoundNotify() {
 		return soundNotify;
 	}
 
-	public void setSoundNotify(boolean soundNotify) {
+	public void setSoundNotify(Boolean soundNotify) {
 		this.soundNotify = soundNotify;
 	}
 
-	public boolean isVibrateNotify() {
+	public Boolean getVibrateNotify() {
 		return vibrateNotify;
 	}
 
-	public void setVibrateNotify(boolean vibrateNotify) {
+	public void setVibrateNotify(Boolean vibrateNotify) {
 		this.vibrateNotify = vibrateNotify;
 	}
 
@@ -375,11 +424,11 @@ public class UserInfo {
 		this.status = status;
 	}
 
-	public boolean isLoginStatus() {
+	public Boolean getLoginStatus() {
 		return loginStatus;
 	}
 
-	public void setLoginStatus(boolean loginStatus) {
+	public void setLoginStatus(Boolean loginStatus) {
 		this.loginStatus = loginStatus;
 	}
 
@@ -486,6 +535,22 @@ public class UserInfo {
 	public void setUpdateTime(Long updateTime) {
 		this.updateTime = updateTime;
 	}
+	
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
 
 	public UserInfo() {
 		this.id = new ObjectId();
@@ -500,6 +565,9 @@ public class UserInfo {
 		this.avatar = avatar;
 		this.backGround = backGround;
 		this.promotionCode = promotionCode;
+		Long currentTime = System.currentTimeMillis();
+		this.createTime = currentTime;
+		this.updateTime = currentTime;
 	}
 	
 	public UserInfo(Long userId, String email, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
@@ -511,5 +579,8 @@ public class UserInfo {
 		this.backGround = backGround;
 		this.email = email;
 		this.promotionCode = promotionCode;
+		Long currentTime = System.currentTimeMillis();
+		this.createTime = currentTime;
+		this.updateTime = currentTime;
 	}
 }

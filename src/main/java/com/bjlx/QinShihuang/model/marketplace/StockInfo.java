@@ -2,6 +2,7 @@ package com.bjlx.QinShihuang.model.marketplace;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -16,8 +17,11 @@ import java.util.List;
 @Embedded
 public class StockInfo {
 
+	@Transient
 	public final static String fd_status = "status";
+	@Transient
 	public final static String fd_quantity = "quantity";
+	@Transient
 	public final static String fd_timeRange = "timeRange";
 	
     /**

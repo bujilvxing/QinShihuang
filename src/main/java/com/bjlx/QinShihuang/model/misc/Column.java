@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -20,12 +21,19 @@ import java.util.List;
 @Entity
 public class Column {
 
+	@Transient
 	public final static String fd_id = "id";
+	@Transient
 	public final static String fd_rank = "rank";
+	@Transient
 	public final static String fd_columnType = "columnType";
+	@Transient
 	public final static String fd_title = "title";
+	@Transient
 	public final static String fd_link = "link";
+	@Transient
 	public final static String fd_images = "images";
+	@Transient
 	public final static String fd_status = "status";
 	
 	/**

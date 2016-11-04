@@ -19,6 +19,13 @@ public class Constant {
     }
 
     /**
-     *
+     * 用户状态
      */
+    public final static int USER_NORMAL = 1;
+    public final static int USER_UNENABLE = 2;
+    
+    /**
+     * 默认邀请码长度
+     */
+    public final static int DEFAULT_PROMOTIONCODE_SIZE = 8;
 }

@@ -74,7 +74,7 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
 
             gen.writeStringField(UserInfo.fd_promotionCode, userInfo.getPromotionCode() == null ? "" : userInfo.getPromotionCode());
 
-            gen.writeBooleanField(UserInfo.fd_loginStatus, userInfo.isLoginStatus());
+            gen.writeBooleanField(UserInfo.fd_loginStatus, userInfo.getLoginStatus());
             if(userInfo.getLoginTime() != null)
                 gen.writeNumberField(UserInfo.fd_loginTime, userInfo.getLoginTime());
             if(userInfo.getLogoutTime() != null)
@@ -175,8 +175,8 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
                 gen.writeNumberField(UserInfo.fd_zodiac, userInfo.getZodiac());
             }
 
-            gen.writeBooleanField(UserInfo.fd_soundNotify, userInfo.isSoundNotify());
-            gen.writeBooleanField(UserInfo.fd_vibrateNotify, userInfo.isVibrateNotify());
+            gen.writeBooleanField(UserInfo.fd_soundNotify, userInfo.getSoundNotify());
+            gen.writeBooleanField(UserInfo.fd_vibrateNotify, userInfo.getVibrateNotify());
 
             gen.writeFieldName(UserInfo.fd_backGround);
             ImageItem backGround = userInfo.getBackGround();
@@ -190,7 +190,8 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
 
             gen.writeNumberField(UserInfo.fd_createTime, userInfo.getCreateTime() == null ? 0 : userInfo.getCreateTime());
             gen.writeNumberField(UserInfo.fd_updateTime, userInfo.getUpdateTime() == null ? 0 : userInfo.getUpdateTime());
-
+            if(userInfo.getKey() != null)
+            	gen.writeStringField(UserInfo.fd_key, userInfo.getKey());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();
