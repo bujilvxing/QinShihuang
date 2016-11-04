@@ -1,6 +1,10 @@
 package com.bjlx.QinShihuang.model.specialservice;
 
 import com.bjlx.QinShihuang.model.account.RealNameInfo;
+import com.bjlx.QinShihuang.model.misc.ImageItem;
+
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
@@ -31,6 +35,8 @@ public class Car {
     public final static String fd_airbagNum = "airbagNum";
     public final static String fd_gearboxType = "gearboxType";
     public final static String fd_airConditioner = "airConditioner";
+    public final static String fd_cover = "cover";
+    public final static String fd_images = "images";
 
     /**
      * 主键
@@ -124,6 +130,13 @@ public class Car {
      */
     private Boolean airConditioner;
 
+    private ImageItem cover;
+    
+    /**
+     * 图片列表
+     */
+    private List<ImageItem> images;
+    
     public ObjectId getId() {
         return id;
     }
@@ -279,6 +292,21 @@ public class Car {
 	public Boolean getAirConditioner() {
 		return airConditioner;
 	}
-    
+
+	public ImageItem getCover() {
+		return cover;
+	}
+
+	public void setCover(ImageItem cover) {
+		this.cover = cover;
+	}
+
+	public List<ImageItem> getImages() {
+		return images;
+	}
+
+	public void setImages(List<ImageItem> images) {
+		this.images = images;
+	}
     
 }

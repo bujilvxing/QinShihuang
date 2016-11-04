@@ -1,12 +1,14 @@
 package com.bjlx.QinShihuang.core.formatter.specialservice;
 
 import com.bjlx.QinShihuang.model.account.RealNameInfo;
+import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.specialservice.Car;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CarSerializer extends JsonSerializer<Car> {
 
@@ -64,6 +66,25 @@ public class CarSerializer extends JsonSerializer<Car> {
             if(car.getAirConditioner() != null)
                 gen.writeBooleanField(Car.fd_airConditioner, car.getAirConditioner());
 
+            gen.writeFieldName(Car.fd_cover);
+            ImageItem cover = car.getCover();
+            if (cover != null) {
+                JsonSerializer<Object> retCover = serializers.findValueSerializer(ImageItem.class, null);
+                retCover.serialize(cover, gen, serializers);
+            } else {
+                gen.writeStartObject();
+                gen.writeEndObject();
+            }
+
+            List<ImageItem> images = car.getImages();
+            gen.writeFieldName(Car.fd_images);
+            gen.writeStartArray();
+            if (images != null && !images.isEmpty()) {
+                JsonSerializer<Object> ret = serializers.findValueSerializer(ImageItem.class, null);
+                for (ImageItem image : images)
+                    ret.serialize(image, gen, serializers);
+            }
+            gen.writeEndArray();
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();
