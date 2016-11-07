@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.utils;
 
 /**
+ * 常量列表
  * Created by xiaozhi on 2016/10/21.
  */
 public class Constant {

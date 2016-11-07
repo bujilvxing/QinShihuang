@@ -75,6 +75,7 @@ public enum ErrorCode {
 	CLIENTID_NULL_1005(100504, "参数clientId为空"),
 
 	// 登出
+	UNLOGIN_1006(100601, "用户未登录"),
 
 	/**
 	 * 用户模块

@@ -28,6 +28,9 @@ public class Credential {
     
     @Transient
     public final static String fd_secretKey = "secretKey";
+
+    @Transient
+    public final static String fd_key = "secretKey.key";
     
     /**
      * 主键

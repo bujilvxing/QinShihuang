@@ -234,17 +234,15 @@ public class AccountController {
      * 退出登录, 接口编码1006
      * @return 结果信息
      */
-    @RequestMapping(value = "/app/users/logout", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String logout() {
+    @RequestMapping(value = "/app/logout", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String logout(@RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
 
-        // 取得用户的令牌
-//        String bjlxToken = null;
-
-        // 检验令牌
-
-        // 解绑定
-
-        return null;
+        try {
+            return AccountAPI.logout(userId, key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
     }
     /**
      * 重置密码, 接口编码1007

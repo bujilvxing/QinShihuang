@@ -503,6 +503,48 @@ public class AccountAPI {
 
 		return null;
 	}
+
+	/**
+	 * 不羁旅行令牌是否合法
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @return 是否合法
+	 * @throws Exception 异常
+	 */
+	public static boolean delKey(Long userId, String key) throws Exception {
+		Query<Credential> query = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId).field(Credential.fd_key).equal(key);
+		UpdateOperations<Credential> ops = ds.createUpdateOperations(Credential.class)
+				.unset(Credential.fd_secretKey);
+		try {
+			return ds.findAndModify(query, ops, true) != null;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 登出
+	 * @param key 不羁旅行令牌
+	 * @return 结果
+	 */
+	public static String logout(Long userId, String key) throws Exception {
+		try {
+			if(delKey(userId, key)) {
+				// 解除个推客户端的绑定
+				Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
+				UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class)
+						.set(UserInfo.fd_logoutTime, System.currentTimeMillis())
+						.unset(UserInfo.fd_clientId);
+				ds.updateFirst(query, ops);
+				return QinShihuangResult.ok();
+			} else {
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1006);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 	
     /**
      * 重置密码
@@ -609,13 +651,14 @@ public class AccountAPI {
 	 * @throws Exception 异常
 	 */
 	public static boolean checkKeyValid(Long userId, String key) throws Exception {
-		Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId).field(Credential.fd_secretKey).equal(key);
+		Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId).field(Credential.fd_key).equal(key);
 		try {
-			return queryCredential.get() == null;
+			return queryCredential.get() != null;
 		} catch (Exception e) {
 			throw e;
 		}
 	}
+
 	/**
 	 * 根据用户id取得用户信息
 	 * @param userId 用户id
