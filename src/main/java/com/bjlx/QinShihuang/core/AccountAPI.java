@@ -11,25 +11,19 @@ import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.Sequence;
 import com.bjlx.QinShihuang.model.misc.Token;
 import com.bjlx.QinShihuang.model.misc.ValidationCode;
-import com.bjlx.QinShihuang.utils.Constant;
-import com.bjlx.QinShihuang.utils.ErrorCode;
-import com.bjlx.QinShihuang.utils.MailerUtil;
-import com.bjlx.QinShihuang.utils.MorphiaFactory;
-import com.bjlx.QinShihuang.utils.QinShihuangResult;
-import com.bjlx.QinShihuang.utils.SmsSendUtil;
+import com.bjlx.QinShihuang.utils.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
 
 /**
  * 账户核心实现
@@ -562,7 +556,7 @@ public class AccountAPI {
     		} else {
     			// 用户是否登录
     			if(!credential.getSecretKey().getKey().equals(key))
-    				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_NULL_1008);
+    				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1008);
     			String salt = credential.getSalt();
     			byte[] bytes = MessageDigest.getInstance("SHA-256").digest((salt + oldPwd).getBytes());
     			String oldPwdHash = bytesToString(bytes);
@@ -582,4 +576,45 @@ public class AccountAPI {
     		throw e;
     	}
     }
+
+	/**
+	 * 不羁旅行令牌是否合法
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @return 是否合法
+	 * @throws Exception 异常
+	 */
+	public static boolean checkKeyValid(Long userId, String key) throws Exception {
+		Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId).field(Credential.fd_secretKey).equal(key);
+		try {
+			return queryCredential.get() == null;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	/**
+	 * 根据用户id取得用户信息
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @return 用户信息
+	 * @throws Exception 异常
+	 */
+	public static String getUserInfoById(Long userId, String key) throws Exception {
+		try {
+			if(checkKeyValid(userId, key)) {
+				Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
+				UserInfo userInfo = query.get();
+				if(userInfo == null) {
+					return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1009);
+				} else {
+					return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
+				}
+			} else {
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1009);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 }

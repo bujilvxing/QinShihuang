@@ -81,12 +81,13 @@ public enum ErrorCode {
 	// 修改密码
 	OLD_PWD_NULL_1008(100801, "参数旧密码为空"),
 	NEW_PWD_NULL_1008(100802, "参数新密码为空"),
-	USERID_NULL_1008(100803, "参数userId为空"),
-	UNLOGIN_NULL_1008(100804, "用户未登录"),
-	OLD_PWD_INVALID_1008(100805, "旧密码不正确"),
-	USER_NOT_EXIST_1008(100806, "用户不存在"),
+	UNLOGIN_1008(100803, "用户未登录"),
+	OLD_PWD_INVALID_1008(100804, "旧密码不正确"),
+	USER_NOT_EXIST_1008(100805, "用户不存在"),
 	
-	
+	// 根据用户id取得用户信息
+	UNLOGIN_1009(100901, "用户未登录"),
+	USER_NOT_EXIST_1009(100902, "用户不存在"),
 	;
 
 

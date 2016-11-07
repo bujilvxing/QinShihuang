@@ -165,7 +165,7 @@ public class AccountController {
 
     /**
      * 用户登录, 接口编码1004
-     * @param userInfo 用户登录信息
+     * @param loginReq 用户登录信息
      * @return 用户信息
      */
     @RequestMapping(value = "/app/login", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
@@ -285,10 +285,6 @@ public class AccountController {
         if(updatePwd.getNewPassword() == null) {
             return QinShihuangResult.getResult(ErrorCode.NEW_PWD_NULL_1008);
         }
-
-        if(userId == null) {
-        	return QinShihuangResult.getResult(ErrorCode.USERID_NULL_1008);
-        }
         
         try {
             return AccountAPI.updatePwd(updatePwd.getOldPassword(), updatePwd.getNewPassword(), userId, key);
@@ -304,14 +300,13 @@ public class AccountController {
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getUserInfo(@PathVariable Long userId) {
-
-        // 取得用户的令牌
-//        String bjlxToken = null;
-
-        // 检验令牌
-
-        return null;
+    public @ResponseBody String getUserInfo(@PathVariable Long userId, @RequestHeader("key") String key) {
+        try {
+            return AccountAPI.getUserInfoById(userId, key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
     }
 
     /**
