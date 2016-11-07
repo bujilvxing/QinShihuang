@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 
@@ -20,7 +21,44 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class TripPlan {
 
-    /**
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_userId = "userId";
+	@Transient
+	public final static String fd_nickName = "nickName";
+	@Transient
+	public final static String fd_createTime = "createTime";
+	@Transient
+	public final static String fd_updateTime = "updateTime";
+	@Transient
+	public final static String fd_title = "title";
+	@Transient
+	public final static String fd_desc = "desc";
+	@Transient
+	public final static String fd_cover = "cover";
+	@Transient
+	public final static String fd_tripItems = "tripItems";
+	@Transient
+	public final static String fd_favorCnt = "favorCnt";
+	@Transient
+	public final static String fd_commentCnt = "commentCnt";
+	@Transient
+	public final static String fd_viewCnt = "viewCnt";
+	@Transient
+	public final static String fd_shareCnt = "shareCnt";
+	@Transient
+	public final static String fd_originId = "originId";
+	@Transient
+	public final static String fd_originUserId = "originUserId";
+	@Transient
+	public final static String fd_originNickName = "originNickName";
+	@Transient
+	public final static String fd_originAvatar = "originAvatar";
+	@Transient
+	public final static String fd_hotness = "hotness";
+
+	/**
      * 主键
      */
 	@Id

@@ -14,18 +14,18 @@ import javax.validation.constraints.Min;
 public class ImageItem {
 
 	@Transient
-    public static final String FD_URL = "url";
+    public static final String fd_url = "url";
 
     @Transient
-    public static final String FD_CROP_HINT = "cropHint";
+    public static final String fd_cropHint = "cropHint";
 
     @Transient
-    public static final String FD_WIDTH = "w";
+    public static final String fd_width = "width";
 
     @Transient
-    public static final String FD_HEIGHT = "h";
+    public static final String fd_height = "height";
     @Transient
-    public static final String FD_CAPTION = "caption";
+    public static final String fd_caption = "caption";
 
     /**
      * 图像的说明

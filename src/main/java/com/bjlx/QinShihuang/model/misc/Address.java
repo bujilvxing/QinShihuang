@@ -1,12 +1,25 @@
 package com.bjlx.QinShihuang.model.misc;
 
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
+ * 联系地址序列化
  * Created by pengyt on 2016/7/22.
  */
 @Embedded
 public class Address {
+
+	@Transient
+    public final static String fd_province = "province";
+	@Transient
+    public final static String fd_city = "city";
+	@Transient
+    public final static String fd_district = "district";
+	@Transient
+    public final static String fd_detail = "detail";
+	@Transient
+    public final static String fd_zipCode = "zipCode";
 
     /**
      * 省份

@@ -1,16 +1,14 @@
 package com.bjlx.QinShihuang.model.im;
 
-import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 @Embedded
 public class Emoticon {
-
-	/**
-	 * id
-	 */
-	private ObjectId id;
-	
+	@Transient
+	public final static String fd_group = "group";
+	@Transient
+	public final static String fd_url = "url";
 	/**
 	 * 表情组
 	 */
@@ -20,14 +18,6 @@ public class Emoticon {
 	 * 链接地址
 	 */
 	private String url;
-
-	public ObjectId getId() {
-		return id;
-	}
-
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
 
 	public String getGroup() {
 		return group;

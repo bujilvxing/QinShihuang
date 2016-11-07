@@ -3,6 +3,7 @@ package com.bjlx.QinShihuang.model.account;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * 护照
@@ -11,7 +12,9 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class Passport extends IdProof {
 
+	@Transient
 	public final static String fd_nation = "nation";
+	@Transient
 	public final static String fd_number = "number";
 	/**
 	 * 国籍

@@ -1,7 +1,7 @@
 package com.bjlx.QinShihuang.utils;
 
-import java.util.Arrays;
-import java.util.List;
+//import java.util.Arrays;
+//import java.util.List;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -41,9 +41,13 @@ import com.bjlx.QinShihuang.model.trace.Trace;
 import com.bjlx.QinShihuang.model.tripplan.TripPlan;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoCredential;
+//import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 
+/**
+ * 单例实现数据库实例工厂
+ * 懒加载
+ */
 public class MorphiaFactory {
 
 	/**
@@ -62,18 +66,18 @@ public class MorphiaFactory {
 
 	/**
 	 * 取得数据库
-	 * @return
+	 * @return 数据库实例
 	 */
-	public static final Datastore getInstance() {
+	public static Datastore getInstance() {
 		return MorphiaFactoryHolder.morphiaFactory.getDatastore();
 	}
 
 
     /**
      * 取得Morphia
-     * @return
+     * @return Morphia实例
      */
-    private final Morphia getMorphia() {
+    private Morphia getMorphia() {
     	final Morphia morphia = new Morphia();    
     	morphia.map( 
     			UserInfo.class, Favorite.class, TripPlan.class, Trace.class, Question.class, RentCar.class, Post.class, 
@@ -87,16 +91,16 @@ public class MorphiaFactory {
 
     /**
      * 取得Mongo客户端
-     * @return
+     * @return mongo客户端
      */
-    private final MongoClient getClient() {
+    private MongoClient getClient() {
     	// 主机地址
 //    	String host = "192.168.1.128";
 		String host = "127.0.0.1";
     	// 端口
     	int port = 27017;
     	// 服务器地址
-    	ServerAddress serverAddress = null;
+    	ServerAddress serverAddress;
     	serverAddress = new ServerAddress(host, port);
     	// 数据库名称
     	String db_name = "QinShihuang";
@@ -105,7 +109,7 @@ public class MorphiaFactory {
 //    	// 密码
 //    	String password = "iloveyou";
     	// 建立凭证
-    	List<MongoCredential> credentials = Arrays.asList();
+//    	List<MongoCredential> credentials = Arrays.asList();
     	//MongoCredential.createCredential(username, db_name, password.toCharArray()));
 
     	// 打印日志
@@ -113,17 +117,17 @@ public class MorphiaFactory {
     	MongoClientOptions mongoClientOptions = new MongoClientOptions.Builder().connectTimeout(60000).socketTimeout(10000).connectionsPerHost(50).threadsAllowedToBlockForConnectionMultiplier(50).build();
 
     	// 构建mongo客户端
-    	if(credentials.isEmpty())
+//    	if(credentials.isEmpty())
     		return new MongoClient(serverAddress, mongoClientOptions);
-    	else
-    		return new MongoClient(serverAddress, credentials, mongoClientOptions);
+//    	else
+//    		return new MongoClient(serverAddress, credentials, mongoClientOptions);
     }
 
     /**
      * 取得数据库
-     * @return
+     * @return 数据库实例
      */
-    private final Datastore getDatastore() {
+    private Datastore getDatastore() {
     	String db_name = "QinShihuang";
     	final Datastore datastore = getMorphia().createDatastore(getClient(), db_name);
     	datastore.ensureIndexes();

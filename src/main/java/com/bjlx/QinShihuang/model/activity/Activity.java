@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,49 @@ import java.util.List;
  */
 @Entity
 public class Activity {
+
+	@Transient
+    public final static String fd_id = "id";
+	@Transient
+    public final static String fd_title = "title";
+	@Transient
+    public final static String fd_maxNum = "maxNum";
+	@Transient
+    public final static String fd_joinNum = "joinNum";
+	@Transient
+    public final static String fd_startTime = "startTime";
+	@Transient
+    public final static String fd_endTime = "endTime";
+	@Transient
+    public final static String fd_address = "address";
+	@Transient
+    public final static String fd_favorCnt = "favorCnt";
+	@Transient
+    public final static String fd_commentCnt = "commentCnt";
+	@Transient
+    public final static String fd_viewCnt = "viewCnt";
+	@Transient
+    public final static String fd_shareCnt = "shareCnt";
+	@Transient
+    public final static String fd_cover = "cover";
+	@Transient
+    public final static String fd_posters = "posters";
+	@Transient
+    public final static String fd_theme = "theme";
+	@Transient
+    public final static String fd_category = "category";
+	@Transient
+    public final static String fd_tags = "tags";
+	@Transient
+    public final static String fd_visiable = "visiable";
+	@Transient
+    public final static String fd_desc = "desc";
+	@Transient
+    public final static String fd_applicantInfos = "applicantInfos";
+	@Transient
+    public final static String fd_tickets = "tickets";
+	@Transient
+    public final static String fd_isFree = "isFree";
 
     /**
      * 主键
@@ -35,12 +79,12 @@ public class Activity {
     /**
      * 最大允许人数
      */
-    private int maxNum;
+    private Integer maxNum;
 
     /**
      * 报名人数
      */
-    private int joinNum;
+    private Integer joinNum;
 
     /**
      * 开始时间
@@ -82,6 +126,11 @@ public class Activity {
     private Integer shareCnt = 0;
 
     /**
+     * 封面图
+     */
+    private ImageItem cover;
+    
+    /**
      * 海报
      */
     private List<ImageItem> posters;
@@ -120,6 +169,11 @@ public class Activity {
      * 门票
      */
     private List<Ticket> tickets;
+    
+    /**
+     * 是否免费
+     */
+    private Boolean isFree = true;
 
     public ObjectId getId() {
         return id;
@@ -137,19 +191,19 @@ public class Activity {
         this.title = title;
     }
 
-    public int getMaxNum() {
+    public Integer getMaxNum() {
         return maxNum;
     }
 
-    public void setMaxNum(int maxNum) {
+    public void setMaxNum(Integer maxNum) {
         this.maxNum = maxNum;
     }
 
-    public int getJoinNum() {
+    public Integer getJoinNum() {
         return joinNum;
     }
 
-    public void setJoinNum(int joinNum) {
+    public void setJoinNum(Integer joinNum) {
         this.joinNum = joinNum;
     }
 
@@ -177,39 +231,47 @@ public class Activity {
         this.address = address;
     }
 
-    public int getFavorCnt() {
+    public Integer getFavorCnt() {
         return favorCnt;
     }
 
-    public void setFavorCnt(int favorCnt) {
+    public void setFavorCnt(Integer favorCnt) {
         this.favorCnt = favorCnt;
     }
 
-    public int getCommentCnt() {
+    public Integer getCommentCnt() {
         return commentCnt;
     }
 
-    public void setCommentCnt(int commentCnt) {
+    public void setCommentCnt(Integer commentCnt) {
         this.commentCnt = commentCnt;
     }
 
-    public int getViewCnt() {
+    public Integer getViewCnt() {
         return viewCnt;
     }
 
-    public void setViewCnt(int viewCnt) {
+    public void setViewCnt(Integer viewCnt) {
         this.viewCnt = viewCnt;
     }
 
-    public int getShareCnt() {
+    public Integer getShareCnt() {
         return shareCnt;
     }
 
-    public void setShareCnt(int shareCnt) {
+    public void setShareCnt(Integer shareCnt) {
         this.shareCnt = shareCnt;
     }
 
-    public List<ImageItem> getPosters() {
+    public ImageItem getCover() {
+		return cover;
+	}
+
+	public void setCover(ImageItem cover) {
+		this.cover = cover;
+	}
+
+	public List<ImageItem> getPosters() {
         return posters;
     }
 
@@ -241,11 +303,11 @@ public class Activity {
         this.tags = tags;
     }
 
-    public int getVisiable() {
+    public Integer getVisiable() {
         return visiable;
     }
 
-    public void setVisiable(int visiable) {
+    public void setVisiable(Integer visiable) {
         this.visiable = visiable;
     }
 
@@ -272,8 +334,16 @@ public class Activity {
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
+    
+    public Boolean getIsFree() {
+		return isFree;
+	}
 
-    public Activity(String title, int maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
+	public void setIsFree(Boolean isFree) {
+		this.isFree = isFree;
+	}
+
+	public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
         this.id = new ObjectId();
         this.title = title;
         this.maxNum = maxNum;

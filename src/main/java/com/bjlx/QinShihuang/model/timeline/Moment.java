@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -16,6 +17,33 @@ import java.util.List;
  */
 @Entity
 public class Moment {
+
+	@Transient
+    public final static String fd_id = "id";
+	@Transient
+    public final static String fd_publishTime = "publishTime";
+	@Transient
+    public final static String fd_userId = "userId";
+	@Transient
+    public final static String fd_nickName = "nickName";
+	@Transient
+    public final static String fd_avatar = "avatar";
+	@Transient
+    public final static String fd_originId = "originId";
+	@Transient
+    public final static String fd_originUserId = "originUserId";
+	@Transient
+    public final static String fd_originNickName = "originNickName";
+	@Transient
+    public final static String fd_originAvatar = "originAvatar";
+	@Transient
+    public final static String fd_text = "text";
+	@Transient
+    public final static String fd_images = "images";
+	@Transient
+    public final static String fd_comment = "comment";
+	@Transient
+    public final static String fd_card = "card";
 
     /**
      * 主键

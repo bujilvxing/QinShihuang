@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.NotNull;
 
@@ -15,18 +16,31 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class ValidationCode {
 
+	@Transient
     public final static String fd_number = "tel.number";
+	@Transient
     public final static String fd_dialCode = "tel.dialCode";
+	@Transient
     public final static String fd_tel = "tel";
+	@Transient
     public final static String fd_email = "email";
+	@Transient
     public final static String fd_id = "id";
+	@Transient
     public final static String fd_createTime = "createTime";
+	@Transient
     public final static String fd_expireTime = "expireTime";
+	@Transient
     public final static String fd_action = "action";
+	@Transient
     public final static String fd_code = "code";
+	@Transient
     public final static String fd_lastSendTime = "lastSendTime";
+	@Transient
     public final static String fd_used = "used";
+	@Transient
     public final static String fd_resendTime = "resendTime";
+	@Transient
     public final static String fd_failCnt = "failCnt";
     
     /**

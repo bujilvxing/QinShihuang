@@ -1,4 +1,4 @@
-package com.bjlx.QinShihuang.core.formatter;
+package com.bjlx.QinShihuang.core.formatter.account;
 
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
 import com.fasterxml.jackson.core.JsonGenerator;

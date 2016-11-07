@@ -1,4 +1,4 @@
-package com.bjlx.QinShihuang.core.formatter;
+package com.bjlx.QinShihuang.core.formatter.misc;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;

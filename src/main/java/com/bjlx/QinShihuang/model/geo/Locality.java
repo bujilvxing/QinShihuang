@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -20,6 +21,65 @@ import java.util.Set;
 @Entity
 public class Locality {
 
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_zhName = "zhName";
+	@Transient
+	public final static String fd_enName = "enName";
+	@Transient
+	public final static String fd_cover = "cover";
+	@Transient
+	public final static String fd_images = "images";
+	@Transient
+	public final static String fd_lat = "lat";
+	@Transient
+	public final static String fd_lng = "lng";
+	@Transient
+	public final static String fd_rank = "rank";
+	@Transient
+	public final static String fd_remoteTraffic = "remoteTraffic";
+	@Transient
+	public final static String fd_localTraffic = "localTraffic";
+	@Transient
+	public final static String fd_shoppingIntro = "shoppingIntro";
+	@Transient
+	public final static String fd_diningIntro = "diningIntro";
+	@Transient
+	public final static String fd_cuisines = "cuisines";
+	@Transient
+	public final static String fd_activities = "activities";
+	@Transient
+	public final static String fd_tips = "tips";
+	@Transient
+	public final static String fd_geoHistory = "geoHistory";
+	@Transient
+	public final static String fd_specials = "specials";
+	@Transient
+	public final static String fd_alias = "alias";
+	@Transient
+	public final static String fd_visitCnt = "visitCnt";
+	@Transient
+	public final static String fd_commentCnt = "commentCnt";
+	@Transient
+	public final static String fd_favorCnt = "favorCnt";
+	@Transient
+	public final static String fd_hotness = "hotness";
+	@Transient
+	public final static String fd_rating = "rating";
+	@Transient
+	public final static String fd_superAdm = "superAdm";
+	@Transient
+	public final static String fd_tags = "tags";
+	@Transient
+	public final static String fd_desc = "desc";
+	@Transient
+	public final static String fd_travelMonth = "travelMonth";
+	@Transient
+	public final static String fd_timeCostDesc = "timeCostDesc";
+	@Transient
+	public final static String fd_timeCost = "timeCost";
+	
 	/**
 	 * 主键
 	 */
@@ -86,7 +146,7 @@ public class Locality {
 	 * 美食综述，HTML格式
 	 */
 	private String diningIntro;
-
+	
 	/**
 	 * 特色菜式
 	 */
@@ -122,7 +182,7 @@ public class Locality {
 	 */
 	@Min(value = 0)
 	private Integer visitCnt = 0;
-
+	
 	/**
 	 * 评论条数
 	 */
@@ -161,7 +221,7 @@ public class Locality {
 	 * 简介
 	 */
 	private String desc;
-
+	
 	/**
 	 * 最佳旅行时间
 	 */
@@ -409,10 +469,4 @@ public class Locality {
 	public void setTimeCost(Integer timeCost) {
 		this.timeCost = timeCost;
 	}
-
-	/**
-	 * 目的地商品列表
-	 */
-	
-	
 }

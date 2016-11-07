@@ -1,8 +1,7 @@
 package com.bjlx.QinShihuang.model.poi;
 
 import org.mongodb.morphia.annotations.Embedded;
-
-import java.util.Date;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * Created by pengyt on 2016/7/26.
@@ -11,29 +10,45 @@ import java.util.Date;
 @Embedded
 public class AvailableDay {
 
-    private Date bookTime;
+	@Transient
+	public final static String fd_bookTime = "bookTime";
+	@Transient
+	public final static String fd_available = "available";
+	@Transient
+	public final static String fd_price = "price";
+	
+	/**
+	 * 预订时间
+	 */
+    private Long bookTime;
 
+    /**
+     * 是否可利用
+     */
     private Boolean available;
 
+    /**
+     * 价格
+     */
     private Double price;
 
-    public Date getBookTime() {
+    public Long getBookTime() {
         return bookTime;
     }
 
-    public void setBookTime(Date bookTime) {
+    public void setBookTime(Long bookTime) {
         this.bookTime = bookTime;
     }
+    
+    public Boolean getAvailable() {
+		return available;
+	}
 
-    public Boolean isAvailable() {
-        return available;
-    }
+	public void setAvailable(Boolean available) {
+		this.available = available;
+	}
 
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
-
-    public Double getPrice() {
+	public Double getPrice() {
         return price;
     }
 

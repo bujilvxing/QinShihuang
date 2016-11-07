@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,46 @@ import java.util.List;
 @Entity
 public class Post {
 
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_title = "title";
+	@Transient
+	public final static String fd_cover = "cover";
+	@Transient
+	public final static String fd_images = "images";
+	@Transient
+	public final static String fd_publishTime = "publishTime";
+	@Transient
+	public final static String fd_updateTime = "updateTime";
+	@Transient
+	public final static String fd_favorCnt = "favorCnt";
+	@Transient
+	public final static String fd_commentCnt = "commentCnt";
+	@Transient
+	public final static String fd_viewCnt = "viewCnt";
+	@Transient
+	public final static String fd_shareCnt = "shareCnt";
+	@Transient
+	public final static String fd_summary = "summary";
+	@Transient
+	public final static String fd_content = "content";
+	@Transient
+	public final static String fd_rank = "rank";
+	@Transient
+	public final static String fd_hotness = "hotness";
+	@Transient
+	public final static String fd_rating = "rating";
+	@Transient
+	public final static String fd_authorId = "authorId";
+	@Transient
+	public final static String fd_authorNickName = "authorNickName";
+	@Transient
+	public final static String fd_authorAvatar = "authorAvatar";
+	
+	/**
+	 * 主键
+	 */
     @NotBlank
     @Id
     private ObjectId id;
@@ -65,18 +106,18 @@ public class Post {
      */
     @Min(value = 0)
     private Integer viewCnt = 0;
-
+    
     /**
      * 分享次数
      */
     @Min(value = 0)
     private Integer shareCnt = 0;
-
+    
     /**
      * 帖子摘要
      */
     @NotBlank
-    String summary;
+    private String summary;
 
     /**
      * 帖子详情
@@ -88,7 +129,7 @@ public class Post {
      */
     @Min(value = 1)
     private Integer rank;
-
+    
     /**
      * 热门程度
      */
@@ -105,7 +146,7 @@ public class Post {
      * 作者的用户id
      */
     private Long authorId;
-
+    
     /**
      * 作者昵称
      */

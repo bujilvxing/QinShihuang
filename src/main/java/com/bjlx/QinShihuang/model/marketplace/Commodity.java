@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import java.util.List;
 
@@ -16,6 +17,41 @@ import java.util.List;
 @Entity
 public class Commodity {
 
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_category = "category";
+	@Transient
+	public final static String fd_title = "title";
+	@Transient
+	public final static String fd_locality = "locality";
+	@Transient
+	public final static String fd_desc = "desc";
+	@Transient
+	public final static String fd_cover = "cover";
+	@Transient
+	public final static String fd_images = "images";
+	@Transient
+	public final static String fd_price = "price";
+	@Transient
+	public final static String fd_marketPrice = "marketPrice";
+	@Transient
+    public final static String fd_status = "status";
+	@Transient
+    public final static String fd_plans = "plans";
+	@Transient
+    public final static String fd_salesVolume = "salesVolume";
+	@Transient
+    public final static String fd_createTime = "createTime";
+	@Transient
+    public final static String fd_updateTime = "updateTime";
+	@Transient
+    public final static String fd_rating = "rating";
+	@Transient
+    public final static String fd_version = "version";
+	@Transient
+    public final static String fd_commodityType = "commodityType";
+    
     /**
      * 主键
      */
@@ -57,16 +93,16 @@ public class Commodity {
      * 售价
      */
     private Double price;
-
+    
     /**
      * 市场价
      */
     private Double marketPrice;
 
     /**
-     * 状态。审核中,已发布
+     * 状态。1、审核中(待审核), 2、审核不通过  3、审核通过  4、下架 5、上架
      */
-    private Integer status;
+    private Integer status = 1;
 
     /**
      * 套餐
@@ -76,7 +112,7 @@ public class Commodity {
     /**
      * 销量
      */
-    private Integer salesVolume;
+    private Integer salesVolume = 0;
 
     /**
      * 创建时间
@@ -87,7 +123,7 @@ public class Commodity {
      * 更新时间
      */
     private Long updateTime;
-
+    
     /**
      * 排名
      */

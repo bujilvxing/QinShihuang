@@ -1,4 +1,4 @@
-package com.bjlx.QinShihuang.core.formatter;
+package com.bjlx.QinShihuang.core.formatter.misc;
 
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -21,8 +21,8 @@ public class ImageItemSerializer extends JsonSerializer<ImageItem> {
             gen.writeStringField("id", imageItem.getId() == null ? "" : imageItem.getId().toString());
             if(imageItem.getCaption() != null)
                 gen.writeStringField("caption", imageItem.getCaption());
-            gen.writeStringField("key", imageItem.getKey() == null ? "" : imageItem.getKey());
-            gen.writeStringField("bucket", imageItem.getBucket() == null ? "" : imageItem.getBucket());
+//            gen.writeStringField("key", imageItem.getKey() == null ? "" : imageItem.getKey());
+//            gen.writeStringField("bucket", imageItem.getBucket() == null ? "" : imageItem.getBucket());
             gen.writeStringField("url", imageItem.getUrl() == null ? "" : imageItem.getUrl());
             gen.writeNumberField("width", imageItem.getWidth() == null ? 0 : imageItem.getWidth());
             gen.writeNumberField("height", imageItem.getHeight() == null ? 0 : imageItem.getHeight());
@@ -30,9 +30,9 @@ public class ImageItemSerializer extends JsonSerializer<ImageItem> {
             if(imageItem.getCm() != null) {
                 gen.writeStringField("cm", imageItem.getCm());
             }
-            if(imageItem.getHash() != null) {
-                gen.writeStringField("hash", imageItem.getHash());
-            }
+//            if(imageItem.getHash() != null) {
+//                gen.writeStringField("hash", imageItem.getHash());
+//            }
             if(imageItem.getSize() != null) {
                 gen.writeNumberField("size", imageItem.getSize());
             }

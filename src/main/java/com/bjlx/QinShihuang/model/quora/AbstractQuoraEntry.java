@@ -2,6 +2,7 @@ package com.bjlx.QinShihuang.model.quora;
 
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import org.hibernate.validator.constraints.NotBlank;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,6 +12,15 @@ import javax.validation.constraints.NotNull;
  *
  */
 public abstract class AbstractQuoraEntry {
+
+	@Transient
+	public final static String fd_author = "author";
+	@Transient
+	public final static String fd_publishTime = "publishTime";
+	@Transient
+	public final static String fd_title = "title";
+	@Transient
+	public final static String fd_contents = "contents";
 
 	/**
 	 * 作者信息

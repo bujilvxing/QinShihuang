@@ -5,7 +5,8 @@ package com.bjlx.QinShihuang;
  * Created by xiaozhi on 2016/10/21.
  */
 public class Sandbox {
+	
     public static void main(String[] args) {
-        System.out.print("goodbye world!");
+    	
     }
 }

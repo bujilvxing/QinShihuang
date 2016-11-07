@@ -1,22 +1,18 @@
-package com.bjlx.QinShihuang.core.formatter;
+package com.bjlx.QinShihuang.core.formatter.activity;
 
-import com.bjlx.QinShihuang.model.misc.ValidationCode;
+import com.bjlx.QinShihuang.model.activity.Ticket;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 /**
- * 短信
- *
- * Created by pengyt on 2016/10/23.
+ * Created by pengyt on 2016/11/4.
  */
-public class ValidationCodeFormatter {
-
+public class TicketFormatter {
     public static ObjectMapper getMapper() {
         ObjectMapper mapper = new ObjectMapper();
 
         SimpleModule module = new SimpleModule();
-        module.addSerializer(ValidationCode.class, new ValidationCodeSerializer());
-
+        module.addSerializer(Ticket.class, new TicketSerializer());
         mapper.registerModule(module);
         return mapper;
     }

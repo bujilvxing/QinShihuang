@@ -11,6 +11,9 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.IndexOptions;
 import org.mongodb.morphia.annotations.Indexed;
+import org.mongodb.morphia.annotations.Transient;
+
+import com.bjlx.QinShihuang.model.misc.ImageItem;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -18,9 +21,46 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+/**
+ * 群组
+ * @author xiaozhi
+ *
+ */
 @Entity
 public class Chatgroup {
 
+	/**
+     * 域名称，便于查询，以免输入有误
+     */
+	@Transient
+    public final static String fd_id = "id";
+	@Transient
+    public final static String fd_chatGroupId = "chatGroupId";
+	@Transient
+    public final static String fd_name = "name";
+	@Transient
+    public final static String fd_groupDesc = "groupDesc";
+	@Transient
+    public final static String fd_avatar = "avatar";
+	@Transient
+    public final static String fd_tags = "tags";
+	@Transient
+    public final static String fd_creator = "creator";
+	@Transient
+    public final static String fd_admins = "admins";
+	@Transient
+    public final static String fd_maxUsers = "maxUsers";
+	@Transient
+    public final static String fd_visible = "visible";
+	@Transient
+    public final static String fd_participants = "participants";
+	@Transient
+    public final static String fd_level = "level";
+	@Transient
+    public final static String fd_createTime = "createTime";
+	@Transient
+    public final static String fd_updateTime = "updateTime";
+    
     /**
      * 主键
      */
@@ -33,25 +73,24 @@ public class Chatgroup {
     @NotNull
     @Indexed(options = @IndexOptions(unique = true))
     private Long chatGroupId = 0L;
-
+    
     /**
      * 名称
      */
     @NotBlank
     @Size(min = 2, max = 32)
-    private String name = "";
+    private String name = "不羁旅行群组";
 
     /**
      * 描述
      */
     @Size(min = 0, max = 1024)
-    private String groupDesc = "";
+    private String groupDesc = "畅聊旅行话题";
 
     /**
      * 头像
      */
-    @Size(min = 0, max = 128)
-    private String avatar = "";
+    private ImageItem avatar;
 
     /**
      * 讨论组标签
@@ -63,7 +102,7 @@ public class Chatgroup {
      */
     @NotNull
     private Long creator;
-
+    
     /**
      * 管理员用户id
      */
@@ -81,7 +120,7 @@ public class Chatgroup {
     @Min(value = 1)
     @Max(value = 2000)
     private Integer maxUsers = 250;
-
+    
     /**
      * 创建时间
      */
@@ -93,7 +132,7 @@ public class Chatgroup {
      */
     @NotNull
     private Long updateTime = 0L;
-
+    
     /**
      * 是否公开
      */
@@ -105,20 +144,6 @@ public class Chatgroup {
      */
     private Integer level = 1;
 
-    /**
-     * 域名称，便于查询，以免输入有误
-     */
-    public final static String fd_id = "id";
-    public final static String fd_chatGroupId = "chatGroupId";
-    public final static String fd_name = "name";
-    public final static String fd_groupDesc = "groupDesc";
-    public final static String fd_avatar = "avatar";
-    public final static String fd_tags = "tags";
-    public final static String fd_creator = "creator";
-    public final static String fd_admins = "admins";
-    public final static String fd_maxUsers = "maxUsers";
-    public final static String fd_visible = "visible";
-    public final static String fd_participants = "participants";
 
     public ObjectId getId() {
         return id;
@@ -152,11 +177,11 @@ public class Chatgroup {
         this.groupDesc = groupDesc;
     }
 
-    public String getAvatar() {
+    public ImageItem getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(ImageItem avatar) {
         this.avatar = avatar;
     }
 
@@ -232,7 +257,7 @@ public class Chatgroup {
 		this.visible = visible;
 	}
 
-	public Chatgroup(Long chatGroupId, String name, String avatar, Long creator, List<Long> participants, Integer maxUsers) {
+	public Chatgroup(Long chatGroupId, String name, ImageItem avatar, Long creator, List<Long> participants, Integer maxUsers) {
         this.id = new ObjectId();
         this.chatGroupId = chatGroupId;
         this.name = name;

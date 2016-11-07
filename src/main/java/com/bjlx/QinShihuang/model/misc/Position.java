@@ -4,6 +4,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * 位置信息
@@ -13,6 +14,15 @@ import org.mongodb.morphia.annotations.Embedded;
 @Embedded
 public class Position {
 
+	@Transient
+	public final static String fd_name = "name";
+	@Transient
+	public final static String fd_lat = "lat";
+	@Transient
+	public final static String fd_lng = "lng";
+	@Transient
+	public final static String fd_desc = "desc";
+	
 	/**
 	 * 名称
 	 */

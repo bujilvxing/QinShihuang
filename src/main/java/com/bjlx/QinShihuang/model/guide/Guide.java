@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import java.util.List;
 
@@ -23,6 +24,43 @@ import javax.validation.constraints.Min;
 @Entity
 public class Guide {
 
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_cover = "cover";
+	@Transient
+	public final static String fd_images = "images";
+	@Transient
+	public final static String fd_updateTime = "updateTime";
+	@Transient
+	public final static String fd_title = "title";
+	@Transient
+	public final static String fd_desc = "desc";
+	@Transient
+	public final static String fd_bestTripTime = "bestTripTime";
+	@Transient
+	public final static String fd_tips = "tips";
+	@Transient
+	public final static String fd_hotels = "hotels";
+	@Transient
+	public final static String fd_shoppings = "shoppings";
+	@Transient
+	public final static String fd_restaurants = "restaurants";
+	@Transient
+	public final static String fd_viewspots = "viewspots";
+	@Transient
+	public final static String fd_tripPlans = "tripPlans";
+	@Transient
+	public final static String fd_activities = "activities";
+	@Transient
+	public final static String fd_summary = "summary";
+	@Transient
+	public final static String fd_detailUrl = "detailUrl";
+	@Transient
+	public final static String fd_viewCnt = "viewCnt";
+	@Transient
+	public final static String fd_shareCnt = "shareCnt";
+	
 	/**
 	 * 主键
 	 */
@@ -70,7 +108,7 @@ public class Guide {
 	 * 攻略中去的poi
 	 */
 	private List<Hotel> hotels;
-
+	
 	/**
 	 * 攻略中的购物
 	 */
@@ -84,7 +122,7 @@ public class Guide {
 	/**
 	 * 攻略中的景点
 	 */
-	private List<Viewspot> Viewspots;
+	private List<Viewspot> viewspots;
 
 	/**
 	 * 攻略中的行程规划
@@ -143,11 +181,11 @@ public class Guide {
 	}
 
 	public List<Viewspot> getViewspots() {
-		return Viewspots;
+		return viewspots;
 	}
 
 	public void setViewspots(List<Viewspot> viewspots) {
-		Viewspots = viewspots;
+		this.viewspots = viewspots;
 	}
 
 	public List<TripPlan> getTripPlans() {

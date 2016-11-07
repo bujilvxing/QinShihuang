@@ -1,14 +1,40 @@
 package com.bjlx.QinShihuang.model.im;
 
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 import com.bjlx.QinShihuang.model.misc.Audio;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.Position;
 
+/**
+ * im 消息内容
+ * @author xiaozhi
+ *
+ */
 @Embedded
 public class Content {
 
+	@Transient
+	public final static String fd_text = "text";
+	@Transient
+	public final static String fd_thumb = "thumb";
+	@Transient
+	public final static String fd_full = "full";
+	@Transient
+	public final static String fd_origin = "origin";
+	@Transient
+	public final static String fd_audio = "audio";
+	@Transient
+	public final static String fd_position = "position";
+	@Transient
+	public final static String fd_emoticon = "emoticon";
+	@Transient
+	public final static String fd_video = "video";
+	
+	/**
+	 * 文本
+	 */
 	private String text;
 	
 	/**

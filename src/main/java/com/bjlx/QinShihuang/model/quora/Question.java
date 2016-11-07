@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import java.util.List;
@@ -15,6 +16,21 @@ import java.util.List;
  */
 @Entity
 public class Question extends AbstractQuoraEntry {
+
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_source = "source";
+	@Transient
+	public final static String fd_topics = "topics";
+	@Transient
+	public final static String fd_tags = "tags";
+	@Transient
+	public final static String fd_viewCnt = "viewCnt";
+	@Transient
+	public final static String fd_answerCnt = "answerCnt";
+	@Transient
+	public final static String fd_maxVoteCnt = "maxVoteCnt";
 
 	/**
 	 * 主键

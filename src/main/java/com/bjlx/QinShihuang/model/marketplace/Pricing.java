@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.model.marketplace;
 
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,12 @@ import java.util.List;
  */
 @Embedded
 public class Pricing {
+	
+	@Transient
+	public final static String fd_price = "price";
+	@Transient
+	public final static String fd_timeRange = "timeRange";
+	
     /**
      * 商品价格
      */

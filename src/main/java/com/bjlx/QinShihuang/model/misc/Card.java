@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * Created by pengyt on 2016/8/9.
@@ -12,6 +13,19 @@ import org.mongodb.morphia.annotations.Id;
 @Entity
 public class Card {
 
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_title = "title";
+	@Transient
+	public final static String fd_summary = "summary";
+	@Transient
+	public final static String fd_cover = "cover";
+	@Transient
+	public final static String fd_thumb = "thumb";
+	@Transient
+	public final static String fd_detailUrl = "detailUrl";
+	
     /**
      * 主键
      */

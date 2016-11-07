@@ -2,6 +2,7 @@ package com.bjlx.QinShihuang.model.marketplace;
 
 import org.hibernate.validator.constraints.Length;
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,23 @@ import java.util.List;
 @Embedded
 public class CommodityPlan {
 
+	@Transient
+	public final static String fd_planId = "planId";
+	@Transient
+	public final static String fd_title = "title";
+	@Transient
+	public final static String fd_desc = "desc";
+	@Transient
+	public final static String fd_pricings = "pricings";
+	@Transient
+	public final static String fd_marketPrice = "marketPrice";
+	@Transient
+	public final static String fd_price = "price";
+	@Transient
+	public final static String fd_stockInfos = "stockInfos";
+	@Transient
+	public final static String fd_timeRequired = "timeRequired";
+	
     /**
      * 某套餐的唯一识别号码
      */
@@ -39,7 +57,7 @@ public class CommodityPlan {
      */
     @NotNull
     @Size(min = 1)
-    private List<Pricing> pricing;
+    private List<Pricing> pricings;
 
     /**
      * 市场价
@@ -56,7 +74,7 @@ public class CommodityPlan {
     /**
      * 库存信息
      */
-    private List<StockInfo> stockInfo;
+    private List<StockInfo> stockInfos;
 
     /**
      * 是否有时间要求
@@ -87,12 +105,12 @@ public class CommodityPlan {
         this.desc = desc;
     }
 
-    public List<Pricing> getPricing() {
-        return pricing;
+    public List<Pricing> getPricings() {
+        return pricings;
     }
 
-    public void setPricing(List<Pricing> pricing) {
-        this.pricing = pricing;
+    public void setPricings(List<Pricing> pricings) {
+        this.pricings = pricings;
     }
 
     public Integer getMarketPrice() {
@@ -111,15 +129,15 @@ public class CommodityPlan {
         this.price = price;
     }
 
-    public List<StockInfo> getStockInfo() {
-        return stockInfo;
+    public List<StockInfo> getStockInfos() {
+        return stockInfos;
     }
 
-    public void setStockInfo(List<StockInfo> stockInfo) {
-        this.stockInfo = stockInfo;
+    public void setStockInfos(List<StockInfo> stockInfos) {
+        this.stockInfos = stockInfos;
     }
 
-    public Boolean isTimeRequired() {
+    public Boolean getTimeRequired() {
         return timeRequired;
     }
 

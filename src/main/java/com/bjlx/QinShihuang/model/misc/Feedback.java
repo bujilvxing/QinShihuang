@@ -4,13 +4,24 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
-import java.util.Date;
 
 @Entity
 public class Feedback {
 
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_userId = "userId";
+	@Transient
+	public final static String fd_content = "content";
+	@Transient
+	public final static String fd_time = "time";
+	@Transient
+	public final static String fd_origin = "origin";
+	
 	/**
 	 * 主键
 	 */
@@ -23,22 +34,22 @@ public class Feedback {
 	 */
 	@NotBlank
 	@Min(value = 1)
-	Long userId;
+	private Long userId;
 
 	/**
 	 * 反馈内容
 	 */
-	String body;
+	private String content;
 
 	/**
 	 * 反馈时间
 	 */
-	Date time;
+	private Long time;
 
 	/**
 	 * 从哪个App反馈过来的, 例如：不羁旅行
 	 */
-	String origin;
+	private String origin;
 
 	public ObjectId getId() {
 		return id;
@@ -56,19 +67,19 @@ public class Feedback {
 		this.userId = userId;
 	}
 
-	public String getBody() {
-		return body;
+	public String getContent() {
+		return content;
 	}
 
-	public void setBody(String body) {
-		this.body = body;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public Date getTime() {
+	public Long getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(Long time) {
 		this.time = time;
 	}
 
@@ -80,11 +91,11 @@ public class Feedback {
 		this.origin = origin;
 	}
 
-	public Feedback(Long userId, String body, Date time, String origin) {
+	public Feedback(Long userId, String content, Long time, String origin) {
 		super();
 		this.id = new ObjectId();
 		this.userId = userId;
-		this.body = body;
+		this.content = content;
 		this.time = time;
 		this.origin = origin;
 	}

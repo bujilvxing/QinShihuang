@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.model.poi;
 
 import com.bjlx.QinShihuang.model.geo.Locality;
+import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.specialservice.RentCar;
@@ -8,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -16,6 +18,65 @@ import java.util.List;
 @Entity
 public class Hotel {
 
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_lat = "lat";
+	@Transient
+	public final static String fd_lng = "lng";
+	@Transient
+	public final static String fd_cover = "cover";
+	@Transient
+	public final static String fd_images = "images";
+	@Transient
+	public final static String fd_rank = "rank";
+	@Transient
+	public final static String fd_hotness = "hotness";
+	@Transient
+	public final static String fd_rating = "rating";
+	@Transient
+	public final static String fd_contact = "contact";
+	@Transient
+	public final static String fd_zhName = "zhName";
+	@Transient
+	public final static String fd_enName = "enName";
+	@Transient
+	public final static String fd_url = "url";
+	@Transient
+	public final static String fd_marketPrice = "marketPrice";
+	@Transient
+	public final static String fd_priceDesc = "priceDesc";
+	@Transient
+	public final static String fd_openTime = "openTime";
+	@Transient
+	public final static String fd_description = "description";
+	@Transient
+	public final static String fd_tags = "tags";
+	@Transient
+	public final static String fd_alias = "alias";
+	@Transient
+	public final static String fd_targets = "targets";
+	@Transient
+	public final static String fd_price = "price";
+	@Transient
+	public final static String fd_source = "source";
+	@Transient
+	public final static String fd_guideUrl = "guideUrl";
+	@Transient
+	public final static String fd_address = "address";
+	@Transient
+	public final static String fd_locList = "locList";
+	@Transient
+	public final static String fd_saleVolume = "saleVolume";
+	@Transient
+	public final static String fd_discount = "discount";
+	@Transient
+	public final static String fd_rentCar = "rentCar";
+	@Transient
+	public final static String fd_locality = "locality";
+	@Transient
+	public final static String fd_availableDays = "availableDays";
+	
 	/**
 	 * 主键
 	 */
@@ -146,13 +207,13 @@ public class Hotel {
 	 * POI地址
 	 */
 	@NotBlank
-	private String address;
+	private Address address;
 	
 	/**
 	 * 从属行政关系
 	 */
 	private List<Locality> locList;
-
+	
 	/**
 	 * 销售量
 	 */
@@ -162,7 +223,7 @@ public class Hotel {
 	 * 折扣
 	 */
 	private Float discount;
-
+	
 	/**
 	 * 租车
 	 */
@@ -386,11 +447,11 @@ public class Hotel {
 		this.guideUrl = guideUrl;
 	}
 
-	public String getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 

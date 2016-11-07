@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.model.account;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Pattern;
 
@@ -10,8 +11,10 @@ import javax.validation.constraints.Pattern;
  *
  */
 public class ChineseID extends IdProof {
-
+	
+	@Transient
 	public final static String fd_number = "number";
+	
 	/**
 	 * 身份证号码（15位或者18位）
 	 */

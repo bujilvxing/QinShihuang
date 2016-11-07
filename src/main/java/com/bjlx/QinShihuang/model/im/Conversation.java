@@ -15,7 +15,34 @@ import java.util.List;
  */
 @Entity
 public class Conversation {
-
+	
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_chatType = "chatType";
+	@Transient
+	public final static String fd_msgCounter = "msgCounter";
+	@Transient
+	public final static String fd_conversationId = "conversationId";
+	@Transient
+	public final static String fd_createTime = "createTime";
+	@Transient
+	public final static String fd_updateTime = "updateTime";
+	@Transient
+	public final static String fd_unreadCnt = "unreadCnt";
+	@Transient
+	public final static String fd_lastMsgContent = "lastMsgContent";
+	@Transient
+	public final static String fd_muteNotif = "muteNotif";
+	@Transient
+	public final static String fd_muted = "muted";
+	@Transient
+	public final static String fd_pinned = "pinned";
+	@Transient
+	public final static String fd_targetId = "targetId";
+	@Transient
+	public final static String fd_pinList = "pinList";
+	
     /**
      * 主键
      */
@@ -66,16 +93,21 @@ public class Conversation {
     private List<Long> muteNotif = null;
 
     /**
+     * 置顶列表。这个list保存了那些设置置顶的用户的ID
+     */
+    private List<Long> pinList = null;
+    
+    /**
      * 是否免打扰。注意：这个值不会保存在数据库中，而是通过muteNotif计算而来。以不同的用户视角观察这个值，结果是不同的。
      */
     @Transient
-    private boolean muted = false;
+    private Boolean muted = false;
 
     /**
      * 是否置顶。和muted字段类似
      */
     @Transient
-    private boolean pinned = false;
+    private Boolean pinned = false;
 
     /**
      * 非空conversation所对应的用户id
@@ -131,19 +163,19 @@ public class Conversation {
         this.muteNotif = muteNotif;
     }
 
-    public boolean isMuted() {
+    public Boolean getMuted() {
         return muted;
     }
 
-    public void setMuted(boolean muted) {
+    public void setMuted(Boolean muted) {
         this.muted = muted;
     }
 
-    public boolean isPinned() {
+    public Boolean getPinned() {
         return pinned;
     }
 
-    public void setPinned(boolean pinned) {
+    public void setPinned(Boolean pinned) {
         this.pinned = pinned;
     }
 
@@ -177,6 +209,14 @@ public class Conversation {
 
 	public void setLastMsgContent(String lastMsgContent) {
 		this.lastMsgContent = lastMsgContent;
+	}
+
+	public List<Long> getPinList() {
+		return pinList;
+	}
+
+	public void setPinList(List<Long> pinList) {
+		this.pinList = pinList;
 	}
 
 	public Conversation(ObjectId id, String conversationId, String chatType, Long createTime) {

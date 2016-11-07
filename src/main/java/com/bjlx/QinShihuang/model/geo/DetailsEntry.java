@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * 详情介绍，包含标题、描述和图集
@@ -13,8 +14,16 @@ import org.mongodb.morphia.annotations.Embedded;
  * Created by pengyt on 2015/10/19.
  */
 @Embedded
-class DetailsEntry {
+public class DetailsEntry {
 
+	@Transient
+	public final static String fd_cover = "cover";
+	@Transient
+	public final static String fd_images = "images";
+	@Transient
+	public final static String fd_title = "title";
+	@Transient
+	public final static String fd_desc = "desc";
 	/**
 	 * 封面图
 	 */

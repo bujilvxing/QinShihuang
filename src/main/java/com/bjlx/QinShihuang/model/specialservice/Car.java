@@ -1,10 +1,15 @@
 package com.bjlx.QinShihuang.model.specialservice;
 
 import com.bjlx.QinShihuang.model.account.RealNameInfo;
+import com.bjlx.QinShihuang.model.misc.ImageItem;
+
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * Created by pengyt on 2016/7/25.
@@ -12,6 +17,47 @@ import org.mongodb.morphia.annotations.Id;
  */
 @Entity
 public class Car {
+
+	@Transient
+    public final static String fd_id = "id";
+	@Transient
+    public final static String fd_carId = "carId";
+	@Transient
+    public final static String fd_transmission = "transmission";
+	@Transient
+    public final static String fd_vehicleType = "vehicleType";
+	@Transient
+    public final static String fd_brand = "brand";
+	@Transient
+    public final static String fd_carOwner = "carOwner";
+	@Transient
+    public final static String fd_displacement = "displacement";
+	@Transient
+    public final static String fd_seatNum = "seatNum";
+	@Transient
+    public final static String fd_name = "name";
+	@Transient
+    public final static String fd_fuelType = "fuelType";
+	@Transient
+    public final static String fd_gasolineType = "gasolineType";
+	@Transient
+    public final static String fd_actuationType = "actuationType";
+	@Transient
+    public final static String fd_dormer = "dormer";
+	@Transient
+    public final static String fd_gps = "gps";
+	@Transient
+    public final static String fd_seatType = "seatType";
+	@Transient
+    public final static String fd_airbagNum = "airbagNum";
+	@Transient
+    public final static String fd_gearboxType = "gearboxType";
+	@Transient
+    public final static String fd_airConditioner = "airConditioner";
+	@Transient
+    public final static String fd_cover = "cover";
+	@Transient
+    public final static String fd_images = "images";
 
     /**
      * 主键
@@ -105,6 +151,13 @@ public class Car {
      */
     private Boolean airConditioner;
 
+    private ImageItem cover;
+    
+    /**
+     * 图片列表
+     */
+    private List<ImageItem> images;
+    
     public ObjectId getId() {
         return id;
     }
@@ -260,6 +313,21 @@ public class Car {
 	public Boolean getAirConditioner() {
 		return airConditioner;
 	}
-    
+
+	public ImageItem getCover() {
+		return cover;
+	}
+
+	public void setCover(ImageItem cover) {
+		this.cover = cover;
+	}
+
+	public List<ImageItem> getImages() {
+		return images;
+	}
+
+	public void setImages(List<ImageItem> images) {
+		this.images = images;
+	}
     
 }

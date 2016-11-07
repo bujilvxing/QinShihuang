@@ -3,12 +3,21 @@ package com.bjlx.QinShihuang.model.quora;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.mongodb.morphia.annotations.Transient;
+
 /**
  * 回答
  * @author xiaozhi
  *
  */
 public class Answer extends AbstractQuoraEntry {
+
+	@Transient
+	public final static String fd_question = "question";
+	@Transient
+	public final static String fd_voteCnt = "voteCnt";
+	@Transient
+	public final static String fd_accepted = "accepted";
 
 	/**
 	 * 对应的问题
@@ -25,9 +34,9 @@ public class Answer extends AbstractQuoraEntry {
 	/**
 	 * 该回答是否被采纳
 	 */
-	boolean accepted = false;
+	Boolean accepted = false;
 
-	public Answer(Question question, Integer voteCnt, boolean accepted) {
+	public Answer(Question question, Integer voteCnt, Boolean accepted) {
 		super();
 		this.question = question;
 		this.voteCnt = voteCnt;
@@ -50,11 +59,11 @@ public class Answer extends AbstractQuoraEntry {
 		this.voteCnt = voteCnt;
 	}
 
-	public boolean isAccepted() {
+	public Boolean getAccepted() {
 		return accepted;
 	}
 
-	public void setAccepted(boolean accepted) {
+	public void setAccepted(Boolean accepted) {
 		this.accepted = accepted;
 	}
 }

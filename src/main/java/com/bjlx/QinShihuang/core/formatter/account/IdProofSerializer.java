@@ -1,9 +1,8 @@
-package com.bjlx.QinShihuang.core.formatter;
+package com.bjlx.QinShihuang.core.formatter.account;
 
 import com.bjlx.QinShihuang.model.account.ChineseID;
 import com.bjlx.QinShihuang.model.account.IdProof;
 import com.bjlx.QinShihuang.model.account.Passport;
-import com.bjlx.QinShihuang.utils.CommonUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -11,6 +10,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 
 /**
+ * 身份信息序列化
  * Created by pengyt on 2016/10/30.
  */
 public class IdProofSerializer extends JsonSerializer<IdProof> {
@@ -36,4 +36,3 @@ public class IdProofSerializer extends JsonSerializer<IdProof> {
 
     }
 }
-

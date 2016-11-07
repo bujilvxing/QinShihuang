@@ -1,4 +1,4 @@
-package com.bjlx.QinShihuang.core.formatter;
+package com.bjlx.QinShihuang.core.formatter.account;
 
 import com.bjlx.QinShihuang.model.account.IdProof;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
@@ -28,25 +28,27 @@ public class RealNameInfoSerializer extends JsonSerializer<RealNameInfo> {
             if (realNameInfo.getBirthday() == null)
                 gen.writeStringField(RealNameInfo.fd_birthday, CommonUtil.getDate(realNameInfo.getBirthday()));
 
-            gen.writeFieldName(RealNameInfo.fd_identities);
             List<IdProof> identities = realNameInfo.getIdentities();
-            gen.writeStartArray();
+            
             if (identities != null && !identities.isEmpty()) {
+            	gen.writeFieldName(RealNameInfo.fd_identities);
+            	gen.writeStartArray();
                 JsonSerializer<Object> ret = serializers.findValueSerializer(IdProof.class, null);
                 for (IdProof idProof : identities)
                     ret.serialize(idProof, gen, serializers);
+                gen.writeEndArray();
             }
 
             PhoneNumber tel = realNameInfo.getTel();
             if (tel != null) {
+            	gen.writeFieldName(RealNameInfo.fd_tel);
                 JsonSerializer<Object> retTel = serializers.findValueSerializer(PhoneNumber.class, null);
                 retTel.serialize(tel, gen, serializers);
             }
 
             if (realNameInfo.getEmail() == null)
                 gen.writeStringField(RealNameInfo.fd_email, realNameInfo.getEmail());
-            gen.writeEndArray();
-
+            
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

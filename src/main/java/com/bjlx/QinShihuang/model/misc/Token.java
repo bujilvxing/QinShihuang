@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -15,8 +16,9 @@ import java.util.UUID;
 @Entity
 public class Token {
 
+	@Transient
 	public final static String fd_token = "token";
-	
+	@Transient
 	public final static String fd_expireTime = "expireTime";
     /**
      * 主键

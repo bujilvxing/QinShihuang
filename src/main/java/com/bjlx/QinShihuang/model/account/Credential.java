@@ -25,7 +25,10 @@ public class Credential {
 
     @Transient
     public final static String fd_passwdHash = "passwdHash";
-
+    
+    @Transient
+    public final static String fd_secretKey = "secretKey";
+    
     /**
      * 主键
      */
@@ -111,6 +114,9 @@ public class Credential {
 
     public void setSecretKey(SecretKey secretKey) {
         this.secretKey = secretKey;
+    }
+    public Credential() {
+    	
     }
 
     public Credential(Long userId, String salt, String passwdHash, SecretKey secretKey) {
