@@ -15,7 +15,7 @@ public class Constant {
     public final static int BIND_EMAIL_ACTION = 4;
 
     public static boolean checkValidationAction(Integer action) {
-        return action >= NEW_USER_SIGNUP_ACTION && NEW_USER_SIGNUP_ACTION <= RESET_PWD_ACTION;
+        return action >= NEW_USER_SIGNUP_ACTION && action <= BIND_EMAIL_ACTION;
     }
 
     /**
