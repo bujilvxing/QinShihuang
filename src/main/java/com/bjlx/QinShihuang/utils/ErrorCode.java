@@ -69,6 +69,24 @@ public enum ErrorCode {
 	USER_NOT_EXIST_1004(100406, "用户不存在"),
 	
 	// 
+	
+	// 重置密码
+	ACCOUNT_NULL_1007(100701, "参数账户为空"),
+	NEW_PWD_NULL_1007(100702, "参数新密码为空"),
+	TOKEN_NULL_1007(100703, "参数令牌为空"),
+	ACCOUNT_FORMAT_1007(100704, "账户格式不正确"),
+	USER_NOT_EXIST_1007(100705, "用户不存在"),
+	TOKEN_INVALID_1007(100706, "参数令牌为空"),
+	
+	// 修改密码
+	OLD_PWD_NULL_1008(100801, "参数旧密码为空"),
+	NEW_PWD_NULL_1008(100802, "参数新密码为空"),
+	USERID_NULL_1008(100803, "参数userId为空"),
+	UNLOGIN_NULL_1008(100804, "用户未登录"),
+	OLD_PWD_INVALID_1008(100805, "旧密码不正确"),
+	USER_NOT_EXIST_1008(100806, "用户不存在"),
+	
+	
 	;
 
 

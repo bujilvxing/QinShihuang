@@ -486,4 +486,100 @@ public class AccountAPI {
     	}
     }
 
+    /**
+     * 重置密码
+     * @param account 账户
+     * @param newPassword 新密码
+     * @param token 令牌
+     * @param isTel 是否手机号
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String resetPwd(String account, String newPassword, String token, boolean isTel) throws Exception {
+    	// 检查令牌是否合法
+    	try {
+	    	// 检验token的合法性
+	    	if(!checkTokenValid(token)) {
+	    		return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1007);
+	    	}
+    	} catch(Exception e) {
+    		throw e;
+    	}
+    	Query<UserInfo> query = ds.createQuery(UserInfo.class);
+    	if(isTel)
+    		query.field(UserInfo.fd_number).equal(account).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+    	else
+    		query.field(UserInfo.fd_email).equal(account).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+    	UserInfo userInfo = null;
+    	try {
+    		userInfo = query.get();
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    		throw e;
+    	}
+    	if(userInfo == null) {
+    		return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1007);
+    	} else {
+    		long userId = userInfo.getUserId();
+    		Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId);
+    		
+        	// 生成密码
+    		try {
+    			// 生成64个字节的salt
+    			String salt = MessageDigest.getInstance("MD5").digest(String.valueOf(System.currentTimeMillis()).getBytes()).toString();
+    			byte[] bytes = MessageDigest.getInstance("SHA-256").digest((salt + newPassword).getBytes());
+    			String passwdHash = bytesToString(bytes);
+    			SecretKey secretKey = new SecretKey();
+    			UpdateOperations<Credential> opsCredential = ds.createUpdateOperations(Credential.class)
+    					.set(Credential.fd_salt, salt).set(Credential.fd_passwdHash, passwdHash)
+    					.set(Credential.fd_secretKey, secretKey);
+    			ds.updateFirst(queryCredential, opsCredential);
+    			return QinShihuangResult.ok();
+    		} catch (NoSuchAlgorithmException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			throw e;
+    		}
+    	}
+    }
+
+    /**
+     * 修改密码
+     * @param oldPwd 旧密码
+     * @param newPwd 新密码
+     * @param userId 用户id
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String updatePwd(String oldPwd, String newPwd, Long userId, String key) throws Exception {
+    	// 检验用户是否存在
+    	Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId);
+    	Credential credential = null;
+    	try {
+    		credential = queryCredential.get();
+    		if(credential == null) {
+    			return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1008);
+    		} else {
+    			// 用户是否登录
+    			if(!credential.getSecretKey().getKey().equals(key))
+    				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_NULL_1008);
+    			String salt = credential.getSalt();
+    			byte[] bytes = MessageDigest.getInstance("SHA-256").digest((salt + oldPwd).getBytes());
+    			String oldPwdHash = bytesToString(bytes);
+    			if(oldPwdHash.equals(credential.getPasswdHash())) {
+    				bytes = MessageDigest.getInstance("SHA-256").digest((salt + newPwd).getBytes());
+        			String newPwdHash = bytesToString(bytes);
+        			UpdateOperations<Credential> opsCredential = ds.createUpdateOperations(Credential.class)
+        					.set(Credential.fd_passwdHash, newPwdHash);
+        			ds.updateFirst(queryCredential, opsCredential);
+        			return QinShihuangResult.ok();
+    			} else {
+    				return QinShihuangResult.getResult(ErrorCode.OLD_PWD_INVALID_1008);
+    			}
+    		}
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    		throw e;
+    	}
+    }
 }

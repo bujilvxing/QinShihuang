@@ -218,63 +218,7 @@ public class AccountController {
     }
 
     /**
-     * 重置密码, 接口编码1006
-     * @param resetPwd 参数信息
-     * @return 结果信息
-     */
-    @RequestMapping(value = "/app/users/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String resetPwd(@RequestBody ResetPwdReq resetPwd) {
-
-
-        return null;
-    }
-
-    /**
-     * 修改密码, 接口编码1007
-     * @param updatePwd 参数信息
-     * @return 结果信息
-     */
-    @RequestMapping(value = "/app/users/{userId +d}/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updatePwd(@RequestBody UpdatePwdReq updatePwd, @PathVariable Long userId) {
-
-
-        return null;
-    }
-
-    /**
-     * 根据用户id取得用户信息, 接口编码1008
-     * @param userId 用户id
-     * @return 用户信息
-     */
-    @RequestMapping(value = "/app/users/{userId +d}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getUserInfo(@PathVariable Long userId) {
-
-        // 取得用户的令牌
-//        String bjlxToken = null;
-
-        // 检验令牌
-
-        return null;
-    }
-
-    /**
-     * 修改用户信息, 接口编码1009
-     * @param userId 用户id
-     * @return 用户信息
-     */
-    @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updateUserInfo(@PathVariable(value="userId") Long userId) {
-
-        // 取得用户的令牌
-//        String bjlxToken = null;
-
-        // 检验令牌
-
-        return null;
-    }
-
-    /**
-     * 退出登录, 接口编码1010
+     * 退出登录, 接口编码1006
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/logout", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
@@ -289,12 +233,110 @@ public class AccountController {
 
         return null;
     }
+    /**
+     * 重置密码, 接口编码1007
+     * @param resetPwdReq 参数信息
+     * @return 结果信息
+     */
+    @RequestMapping(value = "/app/users/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String resetPwd(@RequestBody ResetPwdReq resetPwdReq) {
+    	// 检验参数
+    	if(resetPwdReq.getAccount() == null) {
+            return QinShihuangResult.getResult(ErrorCode.ACCOUNT_NULL_1007);
+        }
+        if(resetPwdReq.getNewPassword() == null) {
+            return QinShihuangResult.getResult(ErrorCode.NEW_PWD_NULL_1007);
+        }
+        if(resetPwdReq.getToken() == null) {
+            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1007);
+        }
+        if(CommonUtil.isTelLegal(resetPwdReq.getAccount())) {
+            try {
+                return AccountAPI.resetPwd(resetPwdReq.getAccount(), resetPwdReq.getNewPassword(), resetPwdReq.getToken(), true);
+            } catch(Exception e) {
+                e.printStackTrace();
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+        }
+
+        if(CommonUtil.isEmail(resetPwdReq.getAccount())) {
+            try {
+                return AccountAPI.resetPwd(resetPwdReq.getAccount(), resetPwdReq.getNewPassword(), resetPwdReq.getToken(), false);
+            } catch(Exception e) {
+                e.printStackTrace();
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+        } else {
+            return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1007);
+        }
+    }
+
+    /**
+     * 修改密码, 接口编码1008
+     * @param updatePwd 参数信息
+     * @return 结果信息
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String updatePwd(@RequestBody UpdatePwdReq updatePwd, @PathVariable Long userId, @RequestHeader("key") String key) {
+    	// 检验参数
+    	if(updatePwd.getOldPassword() == null) {
+            return QinShihuangResult.getResult(ErrorCode.OLD_PWD_NULL_1008);
+        }
+        if(updatePwd.getNewPassword() == null) {
+            return QinShihuangResult.getResult(ErrorCode.NEW_PWD_NULL_1008);
+        }
+
+        if(userId == null) {
+        	return QinShihuangResult.getResult(ErrorCode.USERID_NULL_1008);
+        }
+        
+        try {
+            return AccountAPI.updatePwd(updatePwd.getOldPassword(), updatePwd.getNewPassword(), userId, key);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     * 根据用户id取得用户信息, 接口编码1009
+     * @param userId 用户id
+     * @return 用户信息
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getUserInfo(@PathVariable Long userId) {
+
+        // 取得用户的令牌
+//        String bjlxToken = null;
+
+        // 检验令牌
+
+        return null;
+    }
+
+    /**
+     * 修改用户信息, 接口编码1010
+     * @param userId 用户id
+     * @return 用户信息
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
+    public @ResponseBody String updateUserInfo(@PathVariable(value="userId") Long userId) {
+
+        // 取得用户的令牌
+//        String bjlxToken = null;
+
+        // 检验令牌
+
+        return null;
+    }
+
+    
 
     /**
      * 绑定手机号, 接口编码1011
      * @return 结果信息
      */
-    @RequestMapping(value = "/app/users/{userId}/tel", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/users/{userId:\\d+}/tel", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
     public @ResponseBody String bindTel(@RequestBody BindTelReq bindTel, @PathVariable Long userId) {
 
         // 取得用户的令牌
