@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.AccountAPI;
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.requestmodel.*;
 import com.bjlx.QinShihuang.utils.CommonUtil;
 import com.bjlx.QinShihuang.utils.Constant;
@@ -203,18 +204,30 @@ public class AccountController {
 
     /**
      * 第三方登录, 接口编码1005
-     * @param oAuthUserInfo 用户第三方信息
+     * @param oauthUserInfo 用户第三方信息
      * @return 用户信息
      */
-    @RequestMapping(value = "/app/users/oauthlogin", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String oauthLogin(@RequestBody OAuthUserInfoReq oAuthUserInfo) {
+    @RequestMapping(value = "/app/oauthlogin", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String oauthLogin(@RequestBody OAuthUserInfoReq oauthUserInfo) {
 
-        // 绑定个推的clientId
+        if(oauthUserInfo.getProvider() == null) {
+            return QinShihuangResult.getResult(ErrorCode.PROVIDER_NULL_1005);
+        }
+        if(oauthUserInfo.getOauthId() == null) {
+            return QinShihuangResult.getResult(ErrorCode.OAUTHID_NULL_1005);
+        }
+        if(oauthUserInfo.getToken() == null) {
+            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1005);
+        }
+        if(oauthUserInfo.getClientId() == null) {
+            return QinShihuangResult.getResult(ErrorCode.CLIENTID_NULL_1005);
+        }
 
-        // 首次登录，创建新用户
-
-        // 非首次登录，直接登录
-        return null;
+        try {
+            return AccountAPI.oauthlogin(oauthUserInfo.getProvider(), oauthUserInfo.getOauthId(), oauthUserInfo.getNickName(), oauthUserInfo.getAvatar(), oauthUserInfo.getToken(), oauthUserInfo.getClientId());
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
     }
 
     /**

@@ -480,6 +480,30 @@ public class AccountAPI {
     	}
     }
 
+	/**
+	 * 第三方登录
+	 * @param provider 第三方平台名称
+	 * @param oauthId 第三方平台的用户id
+	 * @param nickName 第三方平台的用户昵称
+	 * @param avatar 第三方平台的用户头像
+	 * @param token 第三方平台的用户令牌
+	 * @param clientId 个推客户端id
+	 * @return 用户信息
+	 */
+	public static String oauthlogin(String provider, String oauthId, String nickName, String avatar, String token, String clientId) {
+		// 查询用户是否存在
+
+//		Query<>
+
+		// 绑定个推的clientId
+
+		// 首次登录，创建新用户
+
+		// 非首次登录，直接登录
+
+		return null;
+	}
+	
     /**
      * 重置密码
      * @param account 账户
@@ -616,5 +640,6 @@ public class AccountAPI {
 			throw e;
 		}
 	}
+
 
 }

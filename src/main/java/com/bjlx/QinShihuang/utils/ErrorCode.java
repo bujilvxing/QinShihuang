@@ -49,7 +49,7 @@ public enum ErrorCode {
 	VALIDATION_FAIL_1002(100205, "验证失败"),
 
 	/**
-	 * 用户模块
+	 * 注册登录
 	 */
 
 	// 用户注册
@@ -67,9 +67,18 @@ public enum ErrorCode {
 	ACCOUNT_FORMAT_1004(100404, "账户格式不正确"),
 	PWD_INVALID_1004(100405, "密码不正确"),
 	USER_NOT_EXIST_1004(100406, "用户不存在"),
-	
-	// 
-	
+
+	// 用户第三方登录
+	PROVIDER_NULL_1005(100501, "参数provider为空"),
+	OAUTHID_NULL_1005(100502, "参数oauthId为空"),
+	TOKEN_NULL_1005(100503, "参数token为空"),
+	CLIENTID_NULL_1005(100504, "参数clientId为空"),
+
+	// 登出
+
+	/**
+	 * 用户模块
+	 */
 	// 重置密码
 	ACCOUNT_NULL_1007(100701, "参数账户为空"),
 	NEW_PWD_NULL_1007(100702, "参数新密码为空"),
@@ -88,6 +97,20 @@ public enum ErrorCode {
 	// 根据用户id取得用户信息
 	UNLOGIN_1009(100901, "用户未登录"),
 	USER_NOT_EXIST_1009(100902, "用户不存在"),
+
+	// 修改用户信息
+
+	// 绑定手机号
+
+
+
+	/**
+	 * 其他模块
+	 */
+	// 申请商家
+
+	// 用户反馈
+
 	;
 
 

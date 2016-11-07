@@ -31,6 +31,11 @@ public class OAuthUserInfoReq {
      */
     private String token;
 
+    /**
+     * 个推客户端id
+     */
+    private String clientId;
+
     public String getProvider() {
         return provider;
     }
@@ -69,5 +74,13 @@ public class OAuthUserInfoReq {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 }
