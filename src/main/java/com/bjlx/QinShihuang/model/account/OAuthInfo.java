@@ -92,6 +92,10 @@ public class OAuthInfo {
 		this.token = token;
 	}
 
+	public OAuthInfo() {
+
+	}
+
 	public OAuthInfo(String provider, String oauthId, String nickName, String avatar, String token) {
 		this.provider = provider;
 		this.oauthId = oauthId;

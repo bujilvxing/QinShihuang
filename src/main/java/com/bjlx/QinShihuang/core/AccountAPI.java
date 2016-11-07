@@ -3,10 +3,7 @@ package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
 import com.bjlx.QinShihuang.core.formatter.misc.ValidationCodeFormatter;
-import com.bjlx.QinShihuang.model.account.Credential;
-import com.bjlx.QinShihuang.model.account.PhoneNumber;
-import com.bjlx.QinShihuang.model.account.SecretKey;
-import com.bjlx.QinShihuang.model.account.UserInfo;
+import com.bjlx.QinShihuang.model.account.*;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.Sequence;
 import com.bjlx.QinShihuang.model.misc.Token;
@@ -15,6 +12,7 @@ import com.bjlx.QinShihuang.utils.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -406,18 +404,16 @@ public class AccountAPI {
 			String passwdHash = bytesToString(bytes);
 			SecretKey secretKey = new SecretKey();
 			credential = new Credential(userId, salt, passwdHash, secretKey);
+			ds.save(userInfo);
+			ds.save(credential);
+			return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw e;
-		}
-		
-		try {
-			ds.save(userInfo);
-			ds.save(credential);
-			return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
-		} catch(Exception e) {
-			throw e;
+		} catch(Exception e1) {
+			e1.printStackTrace();
+			throw e1;
 		}
     }
 
@@ -490,18 +486,76 @@ public class AccountAPI {
 	 * @param clientId 个推客户端id
 	 * @return 用户信息
 	 */
-	public static String oauthlogin(String provider, String oauthId, String nickName, String avatar, String token, String clientId) {
+	public static String oauthlogin(String provider, String oauthId, String nickName, String avatar, String token, String clientId) throws Exception {
 		// 查询用户是否存在
+		Query<UserInfo> query = ds.createQuery(UserInfo.class);
+		switch (provider) {
+			case UserInfo.fd_weixin: query.field(UserInfo.fd_weixin_provider).equal(provider).field(UserInfo.fd_weixin_oauthId).equal(oauthId);break;
+			case UserInfo.fd_sina:query.field(UserInfo.fd_sina_provider).equal(provider).field(UserInfo.fd_sina_oauthId).equal(oauthId);break;
+			case UserInfo.fd_qq:query.field(UserInfo.fd_qq_provider).equal(provider).field(UserInfo.fd_qq_oauthId).equal(oauthId);break;
+			default: return QinShihuangResult.getResult(ErrorCode.PROVIDER_INVALID_1005);
+		}
 
-//		Query<>
+		try {
+			UserInfo userInfo = query.get();
+			if(userInfo == null) {
+				/**
+				 * 创建新用户
+ 				 */
+				// 生成邀请码
+				String promotionCode = getPromotionCode(Constant.DEFAULT_PROMOTIONCODE_SIZE);
 
-		// 绑定个推的clientId
+				// 获取用户id
+				long userId = getNextUserId();
 
-		// 首次登录，创建新用户
+				ImageItem defaultAvatar = new ImageItem();
+				defaultAvatar.setUrl(avatar);
+				userInfo = new UserInfo(userId, nickName, defaultAvatar, defaultUserBackGround, promotionCode);
+				switch (provider) {
+					case UserInfo.fd_weixin:
+						userInfo.setWeixin(new OAuthInfo(provider, oauthId, nickName == null ? String.format("不羁%d", userId) : nickName, avatar  == null ? defaultUserAvatar.getUrl() : avatar, token)); break;
+					case UserInfo.fd_sina:
+						userInfo.setSina(new OAuthInfo(provider, oauthId, nickName == null ? String.format("不羁%d", userId) : nickName, avatar  == null ? defaultUserAvatar.getUrl() : avatar, token));break;
+					case UserInfo.fd_qq:
+						userInfo.setQq(new OAuthInfo(provider, oauthId, nickName == null ? String.format("不羁%d", userId) : nickName, avatar  == null ? defaultUserAvatar.getUrl() : avatar, token));break;
+				}
+				// 用户凭证
+				String password = new ObjectId().toString();
+				// 生成64个字节的salt
+				String salt = MessageDigest.getInstance("MD5").digest(String.valueOf(System.currentTimeMillis()).getBytes()).toString();
+				byte[] bytes = MessageDigest.getInstance("SHA-256").digest((salt + password).getBytes());
+				String passwdHash = bytesToString(bytes);
+				SecretKey secretKey = new SecretKey();
+				Credential credential = new Credential(userId, salt, passwdHash, secretKey);
 
-		// 非首次登录，直接登录
+				// 绑定个推客户端
+				userInfo.setClientId(clientId);
+				ds.save(userInfo);
+				ds.save(credential);
 
-		return null;
+				// 授权码
+				userInfo.setKey(secretKey.getKey());
+			} else {
+				// 绑定个推客户端
+				UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class).set(UserInfo.fd_clientId, clientId);
+				ds.updateFirst(query, ops);
+				// 授权码
+				Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userInfo.getUserId());
+				SecretKey secretKey = new SecretKey();
+				UpdateOperations<Credential> opsCredential = ds.createUpdateOperations(Credential.class).set(Credential.fd_secretKey, secretKey);
+				ds.updateFirst(queryCredential, opsCredential);
+				userInfo.setKey(secretKey.getKey());
+			}
+
+			return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		} catch(Exception e1) {
+			e1.printStackTrace();
+			throw e1;
+		}
 	}
 
 	/**

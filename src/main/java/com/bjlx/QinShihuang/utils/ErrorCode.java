@@ -73,6 +73,7 @@ public enum ErrorCode {
 	OAUTHID_NULL_1005(100502, "参数oauthId为空"),
 	TOKEN_NULL_1005(100503, "参数token为空"),
 	CLIENTID_NULL_1005(100504, "参数clientId为空"),
+	PROVIDER_INVALID_1005(100505, "参数provider不合法"),
 
 	// 登出
 	UNLOGIN_1006(100601, "用户未登录"),
