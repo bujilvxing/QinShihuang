@@ -44,4 +44,24 @@ public class Constant {
      * 图片正确
      */
     public final static String IMAGE_NORMAL = "ok";
+
+    /**
+     * 星座
+     */
+    public final static int AQUARIUS = 1;
+    public final static int PISCES = 2;
+    public final static int ARIES = 3;
+    public final static int TAURUS = 4;
+    public final static int GEMINI = 5;
+    public final static int CANCER = 6;
+    public final static int LEO = 7;
+    public final static int VIRGO = 8;
+    public final static int LIBRA = 9;
+    public final static int SCORPIO = 10;
+    public final static int SAGITTARIUS = 11;
+    public final static int CAPRICORN = 12;
+    public static boolean checkZodiac(Integer zodiac) {
+        return zodiac >= AQUARIUS && zodiac <= CAPRICORN;
+    }
+
 }

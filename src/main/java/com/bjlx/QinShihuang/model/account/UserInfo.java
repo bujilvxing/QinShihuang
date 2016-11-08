@@ -272,7 +272,7 @@ public class UserInfo {
 	private List<TripPlan> tripPlans;
 
 	/**
-	 * 星座
+	 * 星座。1 水瓶 2 双鱼 3 白羊 4 金牛 5 双子 6 巨蟹 7 狮子 8 处女 9 天秤 10 天蝎 11 射手 12 魔杰
 	 */
 	private Integer zodiac;
 

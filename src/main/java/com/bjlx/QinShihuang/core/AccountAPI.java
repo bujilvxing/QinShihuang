@@ -800,11 +800,10 @@ public class AccountAPI {
 						return ret;
 				}
 				if(updateUserInfoReq.getGender() != null) {
-					if(Constant.checkGender(updateUserInfoReq.getGender())) {
+					if(Constant.checkGender(updateUserInfoReq.getGender()))
 						ops.set(UserInfo.fd_gender, updateUserInfoReq.getGender());
-					} else {
+					else
 						return QinShihuangResult.getResult(ErrorCode.GENDER_INVALID_1010);
-					}
 				}
 				if(updateUserInfoReq.getBirthday() != null)
 					ops.set(UserInfo.fd_birthday, updateUserInfoReq.getBirthday());
@@ -820,8 +819,12 @@ public class AccountAPI {
 					ops.set(UserInfo.fd_signature, updateUserInfoReq.getSignature());
 				if(updateUserInfoReq.getVibrateNotify() != null)
 					ops.set(UserInfo.fd_vibrateNotify, updateUserInfoReq.getVibrateNotify());
-				if(updateUserInfoReq.getZodiac() != null)
-					ops.set(UserInfo.fd_zodiac, updateUserInfoReq.getZodiac());
+				if(updateUserInfoReq.getZodiac() != null) {
+					if(Constant.checkZodiac(updateUserInfoReq.getZodiac()))
+						ops.set(UserInfo.fd_zodiac, updateUserInfoReq.getZodiac());
+					else
+						return QinShihuangResult.getResult(ErrorCode.ZODIAC_INVALID_1010);
+				}
 				ops.set(UserInfo.fd_updateTime, System.currentTimeMillis());
 				UserInfo userInfo = ds.findAndModify(query, ops, false);
 				return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));

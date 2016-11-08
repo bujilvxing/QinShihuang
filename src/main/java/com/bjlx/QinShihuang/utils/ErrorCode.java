@@ -112,6 +112,7 @@ public enum ErrorCode {
 	// 修改用户信息
 	UNLOGIN_1010(101001, "用户未登录"),
 	GENDER_INVALID_1010(101002, "性别不合法"),
+	ZODIAC_INVALID_1010(101003, "星座不合法"),
 
 	// 绑定手机号
 
