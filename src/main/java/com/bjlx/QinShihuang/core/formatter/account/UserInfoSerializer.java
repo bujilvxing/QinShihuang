@@ -109,7 +109,7 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
                 gen.writeStringField(UserInfo.fd_residence, userInfo.getResidence());
 
             if(userInfo.getBirthday() != null)
-                gen.writeStringField(UserInfo.fd_birthday, userInfo.getBirthday());
+                gen.writeNumberField(UserInfo.fd_birthday, userInfo.getBirthday());
 
             OAuthInfo weixin = userInfo.getWeixin();
             if (weixin != null) {

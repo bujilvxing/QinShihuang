@@ -8,6 +8,7 @@ import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.Sequence;
 import com.bjlx.QinShihuang.model.misc.Token;
 import com.bjlx.QinShihuang.model.misc.ValidationCode;
+import com.bjlx.QinShihuang.requestmodel.UpdateUserInfoReq;
 import com.bjlx.QinShihuang.utils.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -738,5 +739,97 @@ public class AccountAPI {
 		}
 	}
 
+	/**
+	 * 校验图片的合法性
+	 * @param image 图片信息
+	 * @return 是否合法
+	 */
+	public static String checkImageItem(ImageItem image) {
+		if(image.getKey() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_KEY_NULL);
 
+		if(image.getBucket() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_BUCKET_NULL);
+
+		if(image.getUrl() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_URL_NULL);
+
+		if(image.getWidth() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_WIDTH_NULL);
+
+		if(image.getHeight() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_HEIGHT_NULL);
+
+		if(image.getFmt() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_FMT_NULL);
+
+		if(image.getHash() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_HASH_NULL);
+
+		if(image.getSize() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_SIZE_NULL);
+
+		return Constant.IMAGE_NORMAL;
+	}
+	/**
+	 * 更新用户信息
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @param updateUserInfoReq 待更新用户信息
+	 * @return 用户信息
+	 * @throws Exception 异常
+	 */
+	public static String updateUserInfo(Long userId, String key, UpdateUserInfoReq updateUserInfoReq) throws Exception {
+		Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
+		UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class);
+		try {
+			if(checkKeyValid(userId, key)) {
+				String ret = null;
+				if(updateUserInfoReq.getAvatar() != null) {
+					ret = checkImageItem(updateUserInfoReq.getAvatar());
+					if (ret.equals(Constant.IMAGE_NORMAL))
+						ops.set(UserInfo.fd_avatar, updateUserInfoReq.getAvatar());
+					else
+						return ret;
+				}
+				if(updateUserInfoReq.getBackGround() != null) {
+					ret = checkImageItem(updateUserInfoReq.getBackGround());
+					if (ret.equals(Constant.IMAGE_NORMAL))
+						ops.set(UserInfo.fd_backGround, updateUserInfoReq.getBackGround());
+					else
+						return ret;
+				}
+				if(updateUserInfoReq.getGender() != null) {
+					if(Constant.checkGender(updateUserInfoReq.getGender())) {
+						ops.set(UserInfo.fd_gender, updateUserInfoReq.getGender());
+					} else {
+						return QinShihuangResult.getResult(ErrorCode.GENDER_INVALID_1010);
+					}
+				}
+				if(updateUserInfoReq.getBirthday() != null)
+					ops.set(UserInfo.fd_birthday, updateUserInfoReq.getBirthday());
+				if(updateUserInfoReq.getLevel() != null)
+					ops.set(UserInfo.fd_level, updateUserInfoReq.getLevel());
+				if(updateUserInfoReq.getNickName() != null)
+					ops.set(UserInfo.fd_nickName, updateUserInfoReq.getNickName());
+				if(updateUserInfoReq.getResidence() != null)
+					ops.set(UserInfo.fd_residence, updateUserInfoReq.getResidence());
+				if(updateUserInfoReq.getSoundNotify() != null)
+					ops.set(UserInfo.fd_soundNotify, updateUserInfoReq.getSoundNotify());
+				if(updateUserInfoReq.getSignature() != null)
+					ops.set(UserInfo.fd_signature, updateUserInfoReq.getSignature());
+				if(updateUserInfoReq.getVibrateNotify() != null)
+					ops.set(UserInfo.fd_vibrateNotify, updateUserInfoReq.getVibrateNotify());
+				if(updateUserInfoReq.getZodiac() != null)
+					ops.set(UserInfo.fd_zodiac, updateUserInfoReq.getZodiac());
+				UserInfo userInfo = ds.findAndModify(query, ops, false);
+				return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
+			} else {
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1010);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 }

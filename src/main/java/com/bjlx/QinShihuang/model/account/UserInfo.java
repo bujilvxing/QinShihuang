@@ -229,7 +229,7 @@ public class UserInfo {
 	/**
 	 * 用户的生日
 	 */
-	private String birthday  = null;
+	private Long birthday  = null;
 
 	/**
 	 * 第三方账号微信的信息
@@ -514,11 +514,11 @@ public class UserInfo {
 		this.residence = residence;
 	}
 
-	public String getBirthday() {
+	public Long getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Long birthday) {
 		this.birthday = birthday;
 	}
 

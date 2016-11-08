@@ -29,4 +29,19 @@ public class Constant {
      * 默认邀请码长度
      */
     public final static int DEFAULT_PROMOTIONCODE_SIZE = 8;
+
+    /**
+     * 性别
+     */
+    public final static int UNKNOW_GENDER = 1;
+    public final static int MALE = 2;
+    public final static int FEMALE = 3;
+    public static boolean checkGender(Integer gender) {
+        return gender >= UNKNOW_GENDER && gender <= FEMALE;
+    }
+
+    /**
+     * 图片正确
+     */
+    public final static String IMAGE_NORMAL = "ok";
 }

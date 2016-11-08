@@ -24,6 +24,15 @@ public enum ErrorCode {
 	ALIPAY_REFUND(901, "Ali pay refund need manual operation"),
 	UNKNOWN(999, "Unknown error"),
 	NETWORK_ERROR(601, "网络异常"),
+	// 图片
+	IMAGE_KEY_NULL(100001, "图片key为空"),
+	IMAGE_BUCKET_NULL(100002, "图片bucket为空"),
+	IMAGE_URL_NULL(100003, "图片url为空"),
+	IMAGE_WIDTH_NULL(100004, "图片width为空"),
+	IMAGE_HEIGHT_NULL(100005, "图片height为空"),
+	IMAGE_FMT_NULL(100006, "图片fmt为空"),
+	IMAGE_HASH_NULL(100007, "图片hash为空"),
+	IMAGE_SIZE_NULL(100008, "图片size为空"),
 
 	/**
 	 * 验证码
@@ -101,6 +110,8 @@ public enum ErrorCode {
 	USER_NOT_EXIST_1009(100902, "用户不存在"),
 
 	// 修改用户信息
+	UNLOGIN_1010(101001, "用户未登录"),
+	GENDER_INVALID_1010(101002, "性别不合法"),
 
 	// 绑定手机号
 

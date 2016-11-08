@@ -17,8 +17,6 @@ public class ImageItemSerializer extends JsonSerializer<ImageItem> {
         public void serialize(ImageItem imageItem, JsonGenerator gen, SerializerProvider serializers) {
         try {
             gen.writeStartObject();
-
-            gen.writeStringField("id", imageItem.getId() == null ? "" : imageItem.getId().toString());
             if(imageItem.getCaption() != null)
                 gen.writeStringField("caption", imageItem.getCaption());
 //            gen.writeStringField("key", imageItem.getKey() == null ? "" : imageItem.getKey());

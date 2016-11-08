@@ -1,7 +1,6 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.AccountAPI;
-import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.requestmodel.*;
 import com.bjlx.QinShihuang.utils.CommonUtil;
 import com.bjlx.QinShihuang.utils.Constant;
@@ -326,14 +325,13 @@ public class AccountController {
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updateUserInfo(@PathVariable(value="userId") Long userId) {
-
-        // 取得用户的令牌
-//        String bjlxToken = null;
-
-        // 检验令牌
-
-        return null;
+    public @ResponseBody String updateUserInfo(@PathVariable(value="userId") Long userId, @RequestHeader("key") String key, @RequestBody UpdateUserInfoReq updateUserInfoReq) {
+        try {
+            return AccountAPI.updateUserInfo(userId, key, updateUserInfoReq);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
     }
 
     
