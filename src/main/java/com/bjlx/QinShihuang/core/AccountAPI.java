@@ -822,6 +822,7 @@ public class AccountAPI {
 					ops.set(UserInfo.fd_vibrateNotify, updateUserInfoReq.getVibrateNotify());
 				if(updateUserInfoReq.getZodiac() != null)
 					ops.set(UserInfo.fd_zodiac, updateUserInfoReq.getZodiac());
+				ops.set(UserInfo.fd_updateTime, System.currentTimeMillis());
 				UserInfo userInfo = ds.findAndModify(query, ops, false);
 				return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
 			} else {
