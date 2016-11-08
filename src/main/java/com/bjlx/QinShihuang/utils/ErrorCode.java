@@ -142,6 +142,16 @@ public enum ErrorCode {
 	CONTENT_NULL_1013(101301, "参数content为空"),
 	UNLOGIN_1013(101302, "用户未登录"),
 
+	/**
+	 * 社交
+	 */
+	// 关注用户
+	FOLLOWINGID_NULL_1055(105501, "参数followingId不可为空"),
+	UNLOGIN_1055(105502, "用户未登录"),
+
+	// 取消关注用户
+	FOLLOWINGID_NULL_1056(105601, "参数followingId不可为空"),
+	UNLOGIN_1056(105602, "用户未登录"),
 
 	;
 

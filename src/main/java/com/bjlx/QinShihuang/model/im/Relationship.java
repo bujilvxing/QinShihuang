@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.NotNull;
 
@@ -14,6 +15,21 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Relationship {
 
+    @Transient
+    public final static String fd_userId = "userId";
+
+    @Transient
+    public final static String fd_followingId = "followingId";
+
+    @Transient
+    public final static String fd_follow = "follow";
+
+    @Transient
+    public final static String fd_block = "block";
+
+    @Transient
+    public final static String fd_memo = "memo";
+
     /**
      * 主键
      */
@@ -22,29 +38,29 @@ public class Relationship {
     private ObjectId id;
 
     /**
-     * 用户A的用户id
+     * 用户id
      */
     @NotNull
-    private Long userA;
+    private Long userId;
 
     /**
-     * 用户B的用户id
+     * 被关注的用户id
      */
     @NotNull
-    private Long userB;
+    private Long followingId;
 
     /**
-     * 用户A关注用户B
+     * 是否关注
      */
-    private Integer follow;
+    private Boolean follow;
 
     /**
-     * 用户A将用户B拉黑
+     * 是否拉黑
      */
-    private Integer block;
+    private Boolean block;
 
     /**
-     * 用户A备注用户B
+     * 备注
      */
     private String memo;
 
@@ -56,35 +72,35 @@ public class Relationship {
         this.id = id;
     }
 
-    public Long getUserA() {
-        return userA;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserA(Long userA) {
-        this.userA = userA;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Long getUserB() {
-        return userB;
+    public Long getFollowingId() {
+        return followingId;
     }
 
-    public void setUserB(Long userB) {
-        this.userB = userB;
+    public void setFollowingId(Long followingId) {
+        this.followingId = followingId;
     }
 
-    public Integer getFollow() {
+    public Boolean isFollow() {
         return follow;
     }
 
-    public void setFollow(Integer follow) {
+    public void setFollow(Boolean follow) {
         this.follow = follow;
     }
 
-    public Integer getBlock() {
+    public Boolean getBlock() {
         return block;
     }
 
-    public void setBlock(Integer block) {
+    public void setBlock(Boolean block) {
         this.block = block;
     }
 
@@ -96,9 +112,13 @@ public class Relationship {
         this.memo = memo;
     }
 
-    public Relationship(Long userA, Long userB) {
+    public Relationship() {
+
+    }
+
+    public Relationship(Long userId, Long followingId) {
         this.id = new ObjectId();
-        this.userA = userA;
-        this.userB = userB;
+        this.userId = userId;
+        this.followingId = followingId;
     }
 }

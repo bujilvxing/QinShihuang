@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class MiscController {
 
     /**
-     * 申请商家
+     * 申请商家1012
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param applySellerReq 申请参数
@@ -39,7 +39,13 @@ public class MiscController {
         }
     }
 
-
+    /**
+     * 用户反馈1013
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param feedbackReq 反馈参数信息
+     * @return 结果
+     */
     @RequestMapping(value = "/app/misc/feedback", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String feedback(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody FeedbackReq feedbackReq) {
         if(feedbackReq.getContent() == null) {
