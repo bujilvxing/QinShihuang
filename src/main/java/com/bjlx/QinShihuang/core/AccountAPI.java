@@ -771,6 +771,7 @@ public class AccountAPI {
 
 		return Constant.IMAGE_NORMAL;
 	}
+
 	/**
 	 * 更新用户信息
 	 * @param userId 用户id
@@ -831,6 +832,67 @@ public class AccountAPI {
 			} else {
 				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1010);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	/**
+	 * 绑定手机号
+	 * @param tel 手机号
+	 * @param token 验证码令牌
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @return 结果
+	 * @throws Exception 异常
+	 */
+	public static String bindTel(String tel, String token, Long userId, String key) throws Exception {
+		try {
+			if (!checkKeyValid(userId, key)) {
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1011);
+			}
+			if(!checkTokenValid(token)) {
+				return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1011);
+			}
+			if(checkUserExist(tel, true)) {
+				return QinShihuangResult.getResult(ErrorCode.TEL_EXIST_1011);
+			}
+			Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
+			PhoneNumber phoneNumber = new PhoneNumber(86, tel);
+			UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class).set(UserInfo.fd_tel, phoneNumber);
+			ds.update(query, ops);
+			return QinShihuangResult.ok();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	/**
+	 * 绑定邮箱号
+	 * @param email 邮箱号
+	 * @param token 验证码令牌
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @return 结果
+	 * @throws Exception 异常
+	 */
+	public static String bindEmail(String email, String token, Long userId, String key) throws Exception {
+		try {
+			if (!checkKeyValid(userId, key)) {
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1103);
+			}
+			if(!checkTokenValid(token)) {
+				return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1103);
+			}
+			if(checkUserExist(email, false)) {
+				return QinShihuangResult.getResult(ErrorCode.EMAIL_EXIST_1103);
+			}
+			Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
+			UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class).set(UserInfo.fd_email, email);
+			ds.updateFirst(query, ops);
+			return QinShihuangResult.ok();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

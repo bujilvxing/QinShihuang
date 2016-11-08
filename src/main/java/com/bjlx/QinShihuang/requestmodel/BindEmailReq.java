@@ -1,27 +1,26 @@
 package com.bjlx.QinShihuang.requestmodel;
 
 /**
- * 绑定手机号参数
- * Created by pengyt on 2016/10/24.
+ * 绑定邮箱参数
+ * Created by xiaozhi on 2016/11/8.
  */
-public class BindTelReq {
-
+public class BindEmailReq {
     /**
-     * 手机号
+     * 邮箱号
      */
-    private String tel;
+    private String email;
 
     /**
      * 令牌
      */
     private String token;
 
-    public String getTel() {
-        return tel;
+    public String getEmail() {
+        return email;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getToken() {
