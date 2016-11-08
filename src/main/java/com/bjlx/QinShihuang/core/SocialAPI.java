@@ -66,4 +66,23 @@ public class SocialAPI {
             throw e;
         }
     }
+
+
+    /**
+     * 取得好友列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param offset 从第offset个文档开始取
+     * @param limit 取limit个文档
+     * @return 好友信息列表
+     * @throws Exception 异常
+     */
+    public static String getContacts(Long userId, String key, Integer offset, Integer limit) throws Exception {
+        // 校验用户登录
+        // 好友id列表
+        // 用户不存在
+        //
+
+        return null;
+    }
 }

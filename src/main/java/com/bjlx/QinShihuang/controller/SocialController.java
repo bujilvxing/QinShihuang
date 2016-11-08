@@ -55,4 +55,23 @@ public class SocialController {
             return QinShihuangResult.getResult(ErrorCode.ServerException);
         }
     }
+
+    /**
+     * 取得好友列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param offset 从第offset个文档开始取
+     * @param limit 取limit个文档
+     * @return 好友信息列表
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/contacts", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getContacts(@PathVariable Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
+        Integer defaultOffset = 0;
+        Integer defaultLimit = 1000;
+        try {
+            return SocialAPI.getContacts(userId, key, offset == null ? defaultOffset : offset, limit == null ? defaultLimit : limit);
+        } catch(Exception e1) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
 }
