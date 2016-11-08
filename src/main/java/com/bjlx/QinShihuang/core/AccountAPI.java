@@ -698,21 +698,7 @@ public class AccountAPI {
     	}
     }
 
-	/**
-	 * 不羁旅行令牌是否合法
-	 * @param userId 用户id
-	 * @param key 不羁旅行令牌
-	 * @return 是否合法
-	 * @throws Exception 异常
-	 */
-	public static boolean checkKeyValid(Long userId, String key) throws Exception {
-		Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId).field(Credential.fd_key).equal(key);
-		try {
-			return queryCredential.get() != null;
-		} catch (Exception e) {
-			throw e;
-		}
-	}
+
 
 	/**
 	 * 根据用户id取得用户信息
@@ -723,7 +709,7 @@ public class AccountAPI {
 	 */
 	public static String getUserInfoById(Long userId, String key) throws Exception {
 		try {
-			if(checkKeyValid(userId, key)) {
+			if(CommonAPI.checkKeyValid(userId, key)) {
 				Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
 				UserInfo userInfo = query.get();
 				if(userInfo == null) {
@@ -784,7 +770,7 @@ public class AccountAPI {
 		Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
 		UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class);
 		try {
-			if(checkKeyValid(userId, key)) {
+			if(CommonAPI.checkKeyValid(userId, key)) {
 				String ret = null;
 				if(updateUserInfoReq.getAvatar() != null) {
 					ret = checkImageItem(updateUserInfoReq.getAvatar());
@@ -849,7 +835,7 @@ public class AccountAPI {
 	 */
 	public static String bindTel(String tel, String token, Long userId, String key) throws Exception {
 		try {
-			if (!checkKeyValid(userId, key)) {
+			if (!CommonAPI.checkKeyValid(userId, key)) {
 				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1011);
 			}
 			if(!checkTokenValid(token)) {
@@ -880,7 +866,7 @@ public class AccountAPI {
 	 */
 	public static String bindEmail(String email, String token, Long userId, String key) throws Exception {
 		try {
-			if (!checkKeyValid(userId, key)) {
+			if (!CommonAPI.checkKeyValid(userId, key)) {
 				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1103);
 			}
 			if(!checkTokenValid(token)) {

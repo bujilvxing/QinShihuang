@@ -3,12 +3,6 @@ package com.bjlx.QinShihuang.utils;
 //import java.util.Arrays;
 //import java.util.List;
 
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
-import org.slf4j.LoggerFactory;
-
-import com.bjlx.QinShihuang.model.misc.Sequence;
-import com.bjlx.QinShihuang.model.misc.Token;
 import com.bjlx.QinShihuang.model.account.Credential;
 import com.bjlx.QinShihuang.model.account.Favorite;
 import com.bjlx.QinShihuang.model.account.UserInfo;
@@ -18,17 +12,9 @@ import com.bjlx.QinShihuang.model.activity.Ticket;
 import com.bjlx.QinShihuang.model.comment.Comment;
 import com.bjlx.QinShihuang.model.geo.Locality;
 import com.bjlx.QinShihuang.model.guide.Guide;
-import com.bjlx.QinShihuang.model.im.Chatgroup;
-import com.bjlx.QinShihuang.model.im.Conversation;
-import com.bjlx.QinShihuang.model.im.Message;
-import com.bjlx.QinShihuang.model.im.Post;
-import com.bjlx.QinShihuang.model.im.Relationship;
+import com.bjlx.QinShihuang.model.im.*;
 import com.bjlx.QinShihuang.model.marketplace.Commodity;
-import com.bjlx.QinShihuang.model.misc.Card;
-import com.bjlx.QinShihuang.model.misc.Column;
-import com.bjlx.QinShihuang.model.misc.Feedback;
-import com.bjlx.QinShihuang.model.misc.TravelNote;
-import com.bjlx.QinShihuang.model.misc.ValidationCode;
+import com.bjlx.QinShihuang.model.misc.*;
 import com.bjlx.QinShihuang.model.poi.Hotel;
 import com.bjlx.QinShihuang.model.poi.Restaurant;
 import com.bjlx.QinShihuang.model.poi.Shopping;
@@ -41,8 +27,12 @@ import com.bjlx.QinShihuang.model.trace.Trace;
 import com.bjlx.QinShihuang.model.tripplan.TripPlan;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
-//import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
+import org.slf4j.LoggerFactory;
+
+//import com.mongodb.MongoCredential;
 
 /**
  * 单例实现数据库实例工厂
@@ -85,7 +75,7 @@ public class MorphiaFactory {
     			Moment.class, Locality.class, Viewspot.class, Car.class, Feedback.class, Conversation.class, 
     			Comment.class, Guide.class, Column.class, Card.class, Message.class, Chatgroup.class, 
     			Vote.class, Ticket.class, Activity.class, Credential.class, Relationship.class, 
-    			ValidationCode.class, Sequence.class, Token.class);
+    			ValidationCode.class, Sequence.class, Token.class, Application.class);
         return morphia;
     }
 
@@ -95,8 +85,8 @@ public class MorphiaFactory {
      */
     private MongoClient getClient() {
     	// 主机地址
-//    	String host = "192.168.1.128";
-		String host = "127.0.0.1";
+    	String host = "192.168.1.128";
+//		String host = "127.0.0.1";
     	// 端口
     	int port = 27017;
     	// 服务器地址

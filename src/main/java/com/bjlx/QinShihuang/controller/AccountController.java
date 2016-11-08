@@ -396,5 +396,4 @@ public class AccountController {
             return QinShihuangResult.getResult(ErrorCode.EMAIL_FORMAT_1103);
         }
     }
-
 }
