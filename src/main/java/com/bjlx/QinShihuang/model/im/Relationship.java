@@ -16,19 +16,28 @@ import javax.validation.constraints.NotNull;
 public class Relationship {
 
     @Transient
-    public final static String fd_userId = "userId";
+    public final static String fd_userA = "userA";
 
     @Transient
-    public final static String fd_followingId = "followingId";
+    public final static String fd_userB = "userB";
 
     @Transient
-    public final static String fd_follow = "follow";
+    public final static String fd_followingA = "followingA";
 
     @Transient
-    public final static String fd_block = "block";
+    public final static String fd_followingB = "followingB";
 
     @Transient
-    public final static String fd_memo = "memo";
+    public final static String fd_blockA = "blockA";
+
+    @Transient
+    public final static String fd_blockB = "blockB";
+
+    @Transient
+    public final static String fd_memoA = "memoA";
+
+    @Transient
+    public final static String fd_memoB = "memoB";
 
     /**
      * 主键
@@ -38,31 +47,46 @@ public class Relationship {
     private ObjectId id;
 
     /**
-     * 用户id
+     * 用户A
      */
     @NotNull
-    private Long userId;
+    private Long userA;
 
     /**
-     * 被关注的用户id
+     * 用户B
      */
     @NotNull
-    private Long followingId;
+    private Long userB;
 
     /**
-     * 是否关注
+     * B关注A
      */
-    private Boolean follow;
+    private Boolean followingA;
 
     /**
-     * 是否拉黑
+     * A关注B
      */
-    private Boolean block;
+    private Boolean followingB;
 
     /**
-     * 备注
+     * B拉黑A
      */
-    private String memo;
+    private Boolean blockA;
+
+    /**
+     * A拉黑B
+     */
+    private Boolean blockB;
+
+    /**
+     * B备注A
+     */
+    private String memoA;
+
+    /**
+     * A备注B
+     */
+    private String memoB;
 
     public ObjectId getId() {
         return id;
@@ -72,53 +96,77 @@ public class Relationship {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUserA() {
+        return userA;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserA(Long userA) {
+        this.userA = userA;
     }
 
-    public Long getFollowingId() {
-        return followingId;
+    public Long getUserB() {
+        return userB;
     }
 
-    public void setFollowingId(Long followingId) {
-        this.followingId = followingId;
+    public void setUserB(Long userB) {
+        this.userB = userB;
     }
 
-    public Boolean isFollow() {
-        return follow;
+    public Boolean isFollowingA() {
+        return followingA;
     }
 
-    public void setFollow(Boolean follow) {
-        this.follow = follow;
+    public void setFollowingA(Boolean followingA) {
+        this.followingA = followingA;
     }
 
-    public Boolean getBlock() {
-        return block;
+    public Boolean isFollowingB() {
+        return followingB;
     }
 
-    public void setBlock(Boolean block) {
-        this.block = block;
+    public void setFollowingB(Boolean followingB) {
+        this.followingB = followingB;
     }
 
-    public String getMemo() {
-        return memo;
+    public Boolean isBlockA() {
+        return blockA;
     }
 
-    public void setMemo(String memo) {
-        this.memo = memo;
+    public void setBlockA(Boolean blockA) {
+        this.blockA = blockA;
+    }
+
+    public Boolean isBlockB() {
+        return blockB;
+    }
+
+    public void setBlockB(Boolean blockB) {
+        this.blockB = blockB;
+    }
+
+    public String getMemoA() {
+        return memoA;
+    }
+
+    public void setMemoA(String memoA) {
+        this.memoA = memoA;
+    }
+
+    public String getMemoB() {
+        return memoB;
+    }
+
+    public void setMemoB(String memoB) {
+        this.memoB = memoB;
     }
 
     public Relationship() {
 
     }
 
-    public Relationship(Long userId, Long followingId) {
+    public Relationship(Long userA, Long userB) {
         this.id = new ObjectId();
-        this.userId = userId;
-        this.followingId = followingId;
+        this.userA = userA;
+        this.userB = userB;
     }
 }

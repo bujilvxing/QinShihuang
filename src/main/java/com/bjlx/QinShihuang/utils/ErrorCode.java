@@ -153,6 +153,9 @@ public enum ErrorCode {
 	FOLLOWINGID_NULL_1056(105601, "参数followingId不可为空"),
 	UNLOGIN_1056(105602, "用户未登录"),
 
+	// 取得好友列表
+	UNLOGIN_1057(105701, "用户未登录"),
+
 	;
 
 

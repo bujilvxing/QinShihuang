@@ -67,7 +67,7 @@ public class SocialController {
     @RequestMapping(value = "/app/users/{userId:\\d+}/contacts", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getContacts(@PathVariable Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
         Integer defaultOffset = 0;
-        Integer defaultLimit = 1000;
+        Integer defaultLimit = 200;
         try {
             return SocialAPI.getContacts(userId, key, offset == null ? defaultOffset : offset, limit == null ? defaultLimit : limit);
         } catch(Exception e1) {
