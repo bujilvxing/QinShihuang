@@ -85,8 +85,8 @@ public class MorphiaFactory {
      */
     private MongoClient getClient() {
     	// 主机地址
-    	String host = "192.168.1.128";
-//		String host = "127.0.0.1";
+//    	String host = "192.168.1.128";
+		String host = "127.0.0.1";
     	// 端口
     	int port = 27017;
     	// 服务器地址

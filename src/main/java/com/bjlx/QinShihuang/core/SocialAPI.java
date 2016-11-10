@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.core;
 
+import com.bjlx.QinShihuang.core.formatter.account.UserInfoBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.im.Relationship;
@@ -100,7 +101,7 @@ public class SocialAPI {
             Query<UserInfo> query = ds.createQuery(UserInfo.class);
             int size = userIds.size();
             switch (size) {
-                case 1 : query.field(UserInfo.fd_userId).equal(userIds.iterator().next());
+                case 1 : query.field(UserInfo.fd_userId).equal(userIds.iterator().next()); break;
                 default: query.field(UserInfo.fd_userId).in(userIds);
             }
 
@@ -182,16 +183,16 @@ public class SocialAPI {
             if(relationship.getUserA() == userId) {
                 if(relationship.getMemoB() != null) {
                     userInfoMap.get(relationship.getUserB()).setMemo(relationship.getMemoB());
-                    userInfos.add(userInfoMap.get(relationship.getUserB()));
                 }
+                userInfos.add(userInfoMap.get(relationship.getUserB()));
             } else {
                 if(relationship.getMemoA() != null) {
                     userInfoMap.get(relationship.getUserA()).setMemo(relationship.getMemoA());
-                    userInfos.add(userInfoMap.get(relationship.getUserA()));
                 }
+                userInfos.add(userInfoMap.get(relationship.getUserA()));
             }
         }
 
-        return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfos));
+        return QinShihuangResult.ok(UserInfoBasicFormatter.getMapper().valueToTree(userInfos));
     }
 }
