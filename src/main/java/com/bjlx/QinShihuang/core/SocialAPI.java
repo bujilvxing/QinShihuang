@@ -273,4 +273,44 @@ public class SocialAPI {
             throw e;
         }
     }
+
+    /**
+     * 更新黑名单
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param blockId 待添加(移除)屏蔽用户id
+     * @param isAdd true表示添加，false表示移除
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String updateBlackList(Long userId, String key, Long blockId, Boolean isAdd) throws Exception {
+        try {
+            // 校验用户登录
+            if(!CommonAPI.checkKeyValid(userId, key)) {
+                if(isAdd)
+                    return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1060);
+                else
+                    return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1061);
+            }
+
+            if(!CommonAPI.checkUserExistById(blockId)) {
+                if(isAdd)
+                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1060);
+                else
+                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1061);
+            }
+            // 更新黑名单
+            Long userA = userId < blockId ? userId : blockId;
+            Long userB = userId >= blockId ? userId : blockId;
+            Query<Relationship> queryRel = ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userA)
+                    .field(Relationship.fd_userB).equal(userB);
+            String field = userId < blockId ? Relationship.fd_blockB : Relationship.fd_blockA;
+            UpdateOperations<Relationship> ops = ds.createUpdateOperations(Relationship.class).set(Relationship.fd_userA, userA).set(Relationship.fd_userB, userB).set(field, isAdd);
+            ds.updateFirst(queryRel, ops, true);
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }

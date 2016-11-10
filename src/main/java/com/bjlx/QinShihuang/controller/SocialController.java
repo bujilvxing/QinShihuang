@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.SocialAPI;
+import com.bjlx.QinShihuang.requestmodel.BlockReq;
 import com.bjlx.QinShihuang.requestmodel.FollowingReq;
 import com.bjlx.QinShihuang.requestmodel.MemoReq;
 import com.bjlx.QinShihuang.utils.ErrorCode;
@@ -107,6 +108,41 @@ public class SocialController {
         }
         try {
             return SocialAPI.updateMemo(userId, contactId, key, memoReq.getMemo());
+        } catch(Exception e1) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     * 添加黑名单1060
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param blockReq 屏蔽信息
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/blacklist", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addBlackList(@PathVariable Long userId, @RequestHeader("key") String key, @RequestBody BlockReq blockReq) {
+        if(blockReq.getBlockId() == null) {
+            return QinShihuangResult.getResult(ErrorCode.BLOCKID_NULL_1060);
+        }
+        try {
+            return SocialAPI.updateBlackList(userId, key, blockReq.getBlockId(), true);
+        } catch(Exception e1) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     * 移除黑名单1061
+     * @param userId 用户id
+     * @param blockId 待移除黑名单用户id
+     * @param key 不羁旅行令牌
+     * @return
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/blacklist/{blockId:\\d+}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String removeBlackList(@PathVariable Long userId, @PathVariable Long blockId, @RequestHeader("key") String key) {
+        try {
+            return SocialAPI.updateBlackList(userId, key, blockId, false);
         } catch(Exception e1) {
             return QinShihuangResult.getResult(ErrorCode.ServerException);
         }
