@@ -4,6 +4,7 @@ import com.bjlx.QinShihuang.core.formatter.account.UserInfoBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.im.Relationship;
+import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.MorphiaFactory;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
@@ -39,18 +40,23 @@ public class SocialAPI {
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1055);
-            Long userA = userId < followingId ? userId : followingId;
-            Long userB = userId >= followingId ? userId : followingId;
-            Query<Relationship> query = ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userA)
-                    .field(Relationship.fd_userB).equal(userB);
-            UpdateOperations<Relationship> ops = ds.createUpdateOperations(Relationship.class).set(Relationship.fd_userA, userA)
-                    .set(Relationship.fd_userB, userB);
-            if(userId < followingId)
-                ops.set(Relationship.fd_followingB, true);
-            else
-                ops.set(Relationship.fd_followingA, true);
-            ds.updateFirst(query, ops, true);
-            return QinShihuangResult.ok();
+            // 校验用户是否存在
+            if(CommonAPI.checkUserExistById(followingId)) {
+                Long userA = userId < followingId ? userId : followingId;
+                Long userB = userId >= followingId ? userId : followingId;
+                Query<Relationship> query = ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userA)
+                        .field(Relationship.fd_userB).equal(userB);
+                UpdateOperations<Relationship> ops = ds.createUpdateOperations(Relationship.class).set(Relationship.fd_userA, userA)
+                        .set(Relationship.fd_userB, userB);
+                if (userId < followingId)
+                    ops.set(Relationship.fd_followingB, true);
+                else
+                    ops.set(Relationship.fd_followingA, true);
+                ds.updateFirst(query, ops, true);
+                return QinShihuangResult.ok();
+            } else {
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1055);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -98,7 +104,7 @@ public class SocialAPI {
         if (userIds == null || userIds.isEmpty()) {
             return new HashMap<Long, UserInfo>();
         } else {
-            Query<UserInfo> query = ds.createQuery(UserInfo.class);
+            Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
             int size = userIds.size();
             switch (size) {
                 case 1 : query.field(UserInfo.fd_userId).equal(userIds.iterator().next()); break;
@@ -194,5 +200,77 @@ public class SocialAPI {
         }
 
         return QinShihuangResult.ok(UserInfoBasicFormatter.getMapper().valueToTree(userInfos));
+    }
+
+    /**
+     * 取得好友(关注人)信息
+     * @param userId 用户id
+     * @param contactId 好友(关注人)id
+     * @param key 不羁旅行令牌
+     * @return 好友(关注人)信息
+     */
+    public static String getContactInfo(Long userId, Long contactId, String key) throws Exception {
+        try {
+            // 校验用户登录
+            if(!CommonAPI.checkKeyValid(userId, key))
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1058);
+            Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+            UserInfo userInfo = query.get();
+            if(userInfo == null) {
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1058);
+            } else {
+                // 备注
+                Long userA = userId < contactId ? userId : contactId;
+                Long userB = userId >= contactId ? userId : contactId;
+                Query<Relationship> queryRel = ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userA)
+                        .field(Relationship.fd_userB).equal(userB);
+                Relationship relationship = queryRel.get();
+                if(relationship != null) {
+                    String memo = userId < contactId ? relationship.getMemoB() : relationship.getMemoA();
+                    if(memo != null)
+                        userInfo.setMemo(memo);
+                }
+                return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 更新备注
+     * @param userId 用户id
+     * @param contactId 好友(关注人)id
+     * @param key 不羁旅行令牌
+     * @param memo 备注
+     * @return 好友(关注人)信息
+     * @throws Exception 异常
+     */
+    public static String updateMemo(Long userId, Long contactId, String key, String memo) throws Exception {
+        try {
+            // 校验用户登录
+            if(!CommonAPI.checkKeyValid(userId, key))
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1059);
+            Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+            UserInfo userInfo = query.get();
+            if(userInfo == null) {
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1059);
+            } else {
+                // 备注
+                Long userA = userId < contactId ? userId : contactId;
+                Long userB = userId >= contactId ? userId : contactId;
+                Query<Relationship> queryRel = ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userA)
+                        .field(Relationship.fd_userB).equal(userB);
+                String field = userId < contactId ? Relationship.fd_memoB : Relationship.fd_memoA;
+                UpdateOperations<Relationship> ops = ds.createUpdateOperations(Relationship.class).set(Relationship.fd_userA, userA).set(Relationship.fd_userB, userB).set(field, memo);
+                Relationship relationship = ds.findAndModify(queryRel, ops, false, true);
+                userInfo.setMemo(userId < contactId ? relationship.getMemoB() : relationship.getMemoA());
+                return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

@@ -84,7 +84,7 @@ public class AccountAPI {
      * @param isTel 是否手机号
      * @return true表示存在，false表示不存在
      */
-    private static boolean checkUserExist(String account, boolean isTel) throws Exception {
+    public static boolean checkUserExist(String account, boolean isTel) throws Exception {
     	Query<UserInfo> queryUser = ds.createQuery(UserInfo.class);
     	if(isTel) {
     		queryUser.field(UserInfo.fd_number).equal(account).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
@@ -348,7 +348,7 @@ public class AccountAPI {
         int iD2 = iRet % 16;
         return strDigits[iD1] + strDigits[iD2];
     }
-    
+
 	private static String bytesToString(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
@@ -491,9 +491,9 @@ public class AccountAPI {
 		// 查询用户是否存在
 		Query<UserInfo> query = ds.createQuery(UserInfo.class);
 		switch (provider) {
-			case UserInfo.fd_weixin: query.field(UserInfo.fd_weixin_provider).equal(provider).field(UserInfo.fd_weixin_oauthId).equal(oauthId);break;
-			case UserInfo.fd_sina:query.field(UserInfo.fd_sina_provider).equal(provider).field(UserInfo.fd_sina_oauthId).equal(oauthId);break;
-			case UserInfo.fd_qq:query.field(UserInfo.fd_qq_provider).equal(provider).field(UserInfo.fd_qq_oauthId).equal(oauthId);break;
+			case UserInfo.fd_weixin : query.field(UserInfo.fd_weixin_provider).equal(provider).field(UserInfo.fd_weixin_oauthId).equal(oauthId);break;
+			case UserInfo.fd_sina : query.field(UserInfo.fd_sina_provider).equal(provider).field(UserInfo.fd_sina_oauthId).equal(oauthId);break;
+			case UserInfo.fd_qq : query.field(UserInfo.fd_qq_provider).equal(provider).field(UserInfo.fd_qq_oauthId).equal(oauthId);break;
 			default: return QinShihuangResult.getResult(ErrorCode.PROVIDER_INVALID_1005);
 		}
 
@@ -710,7 +710,7 @@ public class AccountAPI {
 	public static String getUserInfoById(Long userId, String key) throws Exception {
 		try {
 			if(CommonAPI.checkKeyValid(userId, key)) {
-				Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
+				Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
 				UserInfo userInfo = query.get();
 				if(userInfo == null) {
 					return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1009);
@@ -767,7 +767,7 @@ public class AccountAPI {
 	 * @throws Exception 异常
 	 */
 	public static String updateUserInfo(Long userId, String key, UpdateUserInfoReq updateUserInfoReq) throws Exception {
-		Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
+		Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
 		UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class);
 		try {
 			if(CommonAPI.checkKeyValid(userId, key)) {
@@ -814,7 +814,10 @@ public class AccountAPI {
 				}
 				ops.set(UserInfo.fd_updateTime, System.currentTimeMillis());
 				UserInfo userInfo = ds.findAndModify(query, ops, false);
-				return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
+				if(userInfo == null)
+					return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1010);
+				else
+					return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
 			} else {
 				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1010);
 			}

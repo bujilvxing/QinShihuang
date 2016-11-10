@@ -1,6 +1,8 @@
 package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.model.account.Credential;
+import com.bjlx.QinShihuang.model.account.UserInfo;
+import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.MorphiaFactory;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
@@ -27,6 +29,21 @@ public class CommonAPI {
         Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId).field(Credential.fd_key).equal(key);
         try {
             return queryCredential.get() != null;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * 检查单个用户是否存在
+     * @param userId 用户id
+     * @return 是否存在
+     * @throws Exception 异常
+     */
+    public static boolean checkUserExistById(Long userId) throws Exception {
+        Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL).retrievedFields(true, UserInfo.fd_id);
+        try {
+            return query.get() != null;
         } catch (Exception e) {
             throw e;
         }

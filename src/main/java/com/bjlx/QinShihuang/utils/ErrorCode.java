@@ -113,6 +113,7 @@ public enum ErrorCode {
 	UNLOGIN_1010(101001, "用户未登录"),
 	GENDER_INVALID_1010(101002, "性别不合法"),
 	ZODIAC_INVALID_1010(101003, "星座不合法"),
+	USER_NOT_EXIST_1010(101004, "用户不存在"),
 
 	// 绑定手机号
 	TEL_NULL_1011(101101, "参数tel为空"),
@@ -148,6 +149,7 @@ public enum ErrorCode {
 	// 关注用户
 	FOLLOWINGID_NULL_1055(105501, "参数followingId不可为空"),
 	UNLOGIN_1055(105502, "用户未登录"),
+	USER_NOT_EXIST_1055(105503, "用户不存在"),
 
 	// 取消关注用户
 	FOLLOWINGID_NULL_1056(105601, "参数followingId不可为空"),
@@ -156,6 +158,14 @@ public enum ErrorCode {
 	// 取得好友列表
 	UNLOGIN_1057(105701, "用户未登录"),
 
+	// 取得好友(关注人)信息
+	UNLOGIN_1058(105801, "用户未登录"),
+	USER_NOT_EXIST_1058(105802, "用户不存在"),
+
+	// 修改备注
+	MEMO_NULL_1059(105901, "备注不可为空或者或字符串"),
+	UNLOGIN_1059(105902, "用户未登录"),
+	USER_NOT_EXIST_1059(105903, "用户不存在"),
 	;
 
 
