@@ -1,12 +1,12 @@
 package com.bjlx.QinShihuang.core.formatter.account;
 
-import java.io.IOException;
-
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
 
 public class UserInfoBasicSerializer extends JsonSerializer<UserInfo> {
 
@@ -28,6 +28,8 @@ public class UserInfoBasicSerializer extends JsonSerializer<UserInfo> {
                 gen.writeStartObject();
                 gen.writeEndObject();
             }
+            if(userInfo.getMemo() != null)
+                gen.writeStringField(UserInfo.fd_memo, userInfo.getMemo());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

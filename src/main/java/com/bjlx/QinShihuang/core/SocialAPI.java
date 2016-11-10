@@ -1,12 +1,13 @@
 package com.bjlx.QinShihuang.core;
 
+import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.im.Relationship;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.MorphiaFactory;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Criteria;
+import org.mongodb.morphia.query.CriteriaContainerImpl;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
@@ -37,11 +38,17 @@ public class SocialAPI {
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1055);
-//            Query<Relationship> query = ds.createQuery(Relationship.class).field(Relationship.fd_userId).equal(userId)
-//                    .field(Relationship.fd_followingId).equal(followingId);
-//            UpdateOperations<Relationship> ops = ds.createUpdateOperations(Relationship.class).set(Relationship.fd_userId, userId)
-//                    .set(Relationship.fd_followingId, followingId).set(Relationship.fd_follow, true);
-//            ds.updateFirst(query, ops, true);
+            Long userA = userId < followingId ? userId : followingId;
+            Long userB = userId >= followingId ? userId : followingId;
+            Query<Relationship> query = ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userA)
+                    .field(Relationship.fd_userB).equal(userB);
+            UpdateOperations<Relationship> ops = ds.createUpdateOperations(Relationship.class).set(Relationship.fd_userA, userA)
+                    .set(Relationship.fd_userB, userB);
+            if(userId < followingId)
+                ops.set(Relationship.fd_followingB, true);
+            else
+                ops.set(Relationship.fd_followingA, true);
+            ds.updateFirst(query, ops, true);
             return QinShihuangResult.ok();
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,11 +68,17 @@ public class SocialAPI {
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1056);
-//            Query<Relationship> query = ds.createQuery(Relationship.class).field(Relationship.fd_userId).equal(userId)
-//                    .field(Relationship.fd_followingId).equal(followingId);
-//            UpdateOperations<Relationship> ops = ds.createUpdateOperations(Relationship.class).set(Relationship.fd_userId, userId)
-//                    .set(Relationship.fd_followingId, followingId).set(Relationship.fd_follow, false);
-//            ds.updateFirst(query, ops, true);
+            Long userA = userId < followingId ? userId : followingId;
+            Long userB = userId >= followingId ? userId : followingId;
+            Query<Relationship> query = ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userA)
+                    .field(Relationship.fd_userB).equal(userB);
+            UpdateOperations<Relationship> ops = ds.createUpdateOperations(Relationship.class).set(Relationship.fd_userA, userA)
+                    .set(Relationship.fd_userB, userB);
+            if(userId < followingId)
+                ops.set(Relationship.fd_followingB, false);
+            else
+                ops.set(Relationship.fd_followingA, false);
+            ds.updateFirst(query, ops, true);
             return QinShihuangResult.ok();
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,25 +142,56 @@ public class SocialAPI {
             e.printStackTrace();
             throw e;
         }
-        // 好友id列表
-        Criteria criteria1 = ds.createQuery(Relationship.class).criteria(Relationship.fd_userA).equal(userId);
-        Criteria criteria2 = ds.createQuery(Relationship.class).criteria(Relationship.fd_userB).equal(userId);
-        Query<Relationship> query = ds.createQuery(Relationship.class).field(Relationship.fd_followingA).equal(true).field(Relationship.fd_followingB).equal(true);
-        query.or(criteria1);
-        query.or(criteria2);
-        // 获得好友的userId
-//        val contactIds = futurePool {
-//            queryRel.offset(offset.getOrElse(defaultOffset)).limit(count.getOrElse(defaultCount))
-//            val result = for {
-//                rel <- queryRel.asList().toSeq
-//                userIds <- Seq(rel.getUserA, rel.getUserB)
-//            } yield userIds
-//
-//            result.toSet.toSeq filter (_ != userId)
-//        }
-        // 用户不存在
-        //
 
-        return null;
+        List<CriteriaContainerImpl> criterias = new ArrayList<>();
+        criterias.add(ds.createQuery(Relationship.class).criteria(Relationship.fd_userA).equal(userId));
+        criterias.add(ds.createQuery(Relationship.class).criteria(Relationship.fd_userB).equal(userId));
+        Query<Relationship> query = ds.createQuery(Relationship.class).field(Relationship.fd_followingA).equal(true).field(Relationship.fd_followingB).equal(true);
+        query.or(criterias.toArray(new CriteriaContainerImpl[criterias.size()]));
+        query.offset(offset).limit(limit);
+        List<Relationship> relationships = null;
+        try {
+            relationships = query.asList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        if(relationships == null) {
+            return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(new ArrayList<UserInfo>()));
+        }
+        // 好友id集合
+        Set<Long> contactIds = new HashSet<Long>();
+        for(Relationship relationship : relationships) {
+            contactIds.add(relationship.getUserA());
+            contactIds.add(relationship.getUserB());
+        }
+        contactIds.remove(userId);
+
+        Set<String> retrievedFieldsSet = new HashSet<String>();
+        retrievedFieldsSet.add(UserInfo.fd_nickName);
+        retrievedFieldsSet.add(UserInfo.fd_avatar);
+        Map<Long, UserInfo> userInfoMap = null;
+        try {
+            userInfoMap = getUsersByIdList(contactIds, retrievedFieldsSet);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        List<UserInfo> userInfos = new ArrayList<UserInfo>();
+        for(Relationship relationship : relationships) {
+            if(relationship.getUserA() == userId) {
+                if(relationship.getMemoB() != null) {
+                    userInfoMap.get(relationship.getUserB()).setMemo(relationship.getMemoB());
+                    userInfos.add(userInfoMap.get(relationship.getUserB()));
+                }
+            } else {
+                if(relationship.getMemoA() != null) {
+                    userInfoMap.get(relationship.getUserA()).setMemo(relationship.getMemoA());
+                    userInfos.add(userInfoMap.get(relationship.getUserA()));
+                }
+            }
+        }
+
+        return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfos));
     }
 }
