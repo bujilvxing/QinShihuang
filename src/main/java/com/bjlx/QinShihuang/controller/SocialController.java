@@ -137,13 +137,59 @@ public class SocialController {
      * @param userId 用户id
      * @param blockId 待移除黑名单用户id
      * @param key 不羁旅行令牌
-     * @return
+     * @return 结果
      */
-    @RequestMapping(value = "/app/users/{userId:\\d+}/blacklist/{blockId:\\d+}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/users/{userId:\\d+}/followings/{blockId:\\d+}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String removeBlackList(@PathVariable Long userId, @PathVariable Long blockId, @RequestHeader("key") String key) {
         try {
             return SocialAPI.updateBlackList(userId, key, blockId, false);
         } catch(Exception e1) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     *
+     * @param userId
+     * @param key
+     * @return
+     */
+    /**
+     * 取得用户关注列表1062
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param offset 从第几个开始返回
+     * @param limit 最多返回多少个
+     * @return 用户关注列表
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/followings", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getFollowings(@PathVariable Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
+        Integer defaultOffset = 0;
+        Integer defaultLimit = 200;
+
+        try {
+            return SocialAPI.getFollowings(userId, key, offset == null ? defaultOffset : offset, limit == null ? defaultLimit : limit);
+        } catch(Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     * 取得用户粉丝列表1063
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param offset 从第几个开始返回
+     * @param limit 最多返回多少个
+     * @return 用户粉丝列表
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/follows", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getFollows(@PathVariable Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
+        Integer defaultOffset = 0;
+        Integer defaultLimit = 200;
+
+        try {
+            return SocialAPI.getFollows(userId, key, offset == null ? defaultOffset : offset, limit == null ? defaultLimit : limit);
+        } catch(Exception e) {
             return QinShihuangResult.getResult(ErrorCode.ServerException);
         }
     }

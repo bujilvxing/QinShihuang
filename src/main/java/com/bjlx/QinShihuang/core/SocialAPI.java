@@ -313,4 +313,148 @@ public class SocialAPI {
             throw e;
         }
     }
+
+    /**
+     * 取得用户关注列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param offset 从第几个开始返回
+     * @param limit 最多返回多少个
+     * @return 用户关注列表
+     * @throws Exception 异常
+     */
+    public static String getFollowings(Long userId, String key, Integer offset, Integer limit) throws Exception {
+        // 校验用户登录
+        try {
+            if(!CommonAPI.checkKeyValid(userId, key))
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1062);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        List<CriteriaContainerImpl> criterias = new ArrayList<>();
+        criterias.add(ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userId).criteria(Relationship.fd_followingB).equal(true));
+        criterias.add(ds.createQuery(Relationship.class).field(Relationship.fd_userB).equal(userId).criteria(Relationship.fd_followingA).equal(true));
+        Query<Relationship> query = ds.createQuery(Relationship.class);
+
+        query.or(criterias.toArray(new CriteriaContainerImpl[criterias.size()]));
+        query.offset(offset).limit(limit);
+        List<Relationship> relationships = null;
+        try {
+            relationships = query.asList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        if(relationships == null) {
+            return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(new ArrayList<UserInfo>()));
+        }
+        // 好友id集合
+        Set<Long> contactIds = new HashSet<Long>();
+        for(Relationship relationship : relationships) {
+            contactIds.add(relationship.getUserA());
+            contactIds.add(relationship.getUserB());
+        }
+        contactIds.remove(userId);
+
+        Set<String> retrievedFieldsSet = new HashSet<String>();
+        retrievedFieldsSet.add(UserInfo.fd_nickName);
+        retrievedFieldsSet.add(UserInfo.fd_avatar);
+        Map<Long, UserInfo> userInfoMap = null;
+        try {
+            userInfoMap = getUsersByIdList(contactIds, retrievedFieldsSet);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        List<UserInfo> userInfos = new ArrayList<UserInfo>();
+        for(Relationship relationship : relationships) {
+            if(relationship.getUserA() == userId) {
+                if(relationship.getMemoB() != null) {
+                    userInfoMap.get(relationship.getUserB()).setMemo(relationship.getMemoB());
+                }
+                userInfos.add(userInfoMap.get(relationship.getUserB()));
+            } else {
+                if(relationship.getMemoA() != null) {
+                    userInfoMap.get(relationship.getUserA()).setMemo(relationship.getMemoA());
+                }
+                userInfos.add(userInfoMap.get(relationship.getUserA()));
+            }
+        }
+
+        return QinShihuangResult.ok(UserInfoBasicFormatter.getMapper().valueToTree(userInfos));
+    }
+
+    /**
+     * 取得用户粉丝列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param offset 从第几个开始返回
+     * @param limit 最多返回多少个
+     * @return 用户粉丝列表
+     * @throws Exception 异常
+     */
+    public static String getFollows(Long userId, String key, Integer offset, Integer limit) throws Exception {
+        // 校验用户登录
+        try {
+            if(!CommonAPI.checkKeyValid(userId, key))
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1063);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        List<CriteriaContainerImpl> criterias = new ArrayList<>();
+        criterias.add(ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userId).criteria(Relationship.fd_followingA).equal(true));
+        criterias.add(ds.createQuery(Relationship.class).field(Relationship.fd_userB).equal(userId).criteria(Relationship.fd_followingB).equal(true));
+        Query<Relationship> query = ds.createQuery(Relationship.class);
+
+        query.or(criterias.toArray(new CriteriaContainerImpl[criterias.size()]));
+        query.offset(offset).limit(limit);
+        List<Relationship> relationships = null;
+        try {
+            relationships = query.asList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        if(relationships == null) {
+            return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(new ArrayList<UserInfo>()));
+        }
+        // 好友id集合
+        Set<Long> contactIds = new HashSet<Long>();
+        for(Relationship relationship : relationships) {
+            contactIds.add(relationship.getUserA());
+            contactIds.add(relationship.getUserB());
+        }
+        contactIds.remove(userId);
+
+        Set<String> retrievedFieldsSet = new HashSet<String>();
+        retrievedFieldsSet.add(UserInfo.fd_nickName);
+        retrievedFieldsSet.add(UserInfo.fd_avatar);
+        Map<Long, UserInfo> userInfoMap = null;
+        try {
+            userInfoMap = getUsersByIdList(contactIds, retrievedFieldsSet);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        List<UserInfo> userInfos = new ArrayList<UserInfo>();
+        for(Relationship relationship : relationships) {
+            if(relationship.getUserA() == userId) {
+                if(relationship.getMemoB() != null) {
+                    userInfoMap.get(relationship.getUserB()).setMemo(relationship.getMemoB());
+                }
+                userInfos.add(userInfoMap.get(relationship.getUserB()));
+            } else {
+                if(relationship.getMemoA() != null) {
+                    userInfoMap.get(relationship.getUserA()).setMemo(relationship.getMemoA());
+                }
+                userInfos.add(userInfoMap.get(relationship.getUserA()));
+            }
+        }
+
+        return QinShihuangResult.ok(UserInfoBasicFormatter.getMapper().valueToTree(userInfos));
+    }
 }
