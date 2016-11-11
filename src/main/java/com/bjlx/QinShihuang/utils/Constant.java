@@ -64,4 +64,37 @@ public class Constant {
         return zodiac >= AQUARIUS && zodiac <= CAPRICORN;
     }
 
+    /**
+     * 消息类型
+     */
+    public final static int TEXT_MSG = 1;
+    public final static int IMAGE_MSG = 2;
+    public final static int AUDIO_MSG = 3;
+    public final static int LOCATION_MSG = 4;
+    public final static int GUIDE_MSG = 5;
+    public final static int TRAVEL_NOTE_MSG = 6;
+    public final static int VIEWSPOT_MSG = 7;
+    public final static int RESTAURANT_MSG = 8;
+    public final static int SHOPPING_MSG = 9;
+    public final static int HOTEL_MSG = 10;
+    public final static int COMMODITY_MSG = 11;
+    public final static int ORDER_MSG = 12;
+    public final static int IDCARD_MSG = 13;
+    public final static int FOLLOWING_MSG = 14;
+    public final static int TIP_MSG = 15;
+    public final static int NOTICE_MSG = 16;
+    public static boolean checkMsgType(Integer msgType) {
+        return msgType >= TEXT_MSG && msgType <= NOTICE_MSG;
+    }
+
+    /**
+     * 聊天类型
+     */
+    public final static int SINGLE_CHAT = 1;
+    public final static int GROUP_CHAT = 2;
+    public static boolean checkChatType(Integer chatType) {
+        return chatType >= SINGLE_CHAT && chatType <= GROUP_CHAT;
+    }
+
+
 }

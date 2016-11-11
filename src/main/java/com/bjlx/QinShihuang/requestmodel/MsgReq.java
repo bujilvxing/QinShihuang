@@ -1,5 +1,7 @@
 package com.bjlx.QinShihuang.requestmodel;
 
+import com.bjlx.QinShihuang.model.im.Content;
+
 /**
  * 消息参数
  * Created by pengyt on 2016/11/10.
@@ -14,7 +16,7 @@ public class MsgReq {
     /**
      * 消息内容
      */
-    private String contents;
+    private Content content;
 
     /**
      * 消息类型
@@ -29,7 +31,7 @@ public class MsgReq {
     /**
      * 回话id
      */
-    private String conversationId;
+    private String convId;
 
     public Long getReceiverId() {
         return receiverId;
@@ -39,12 +41,12 @@ public class MsgReq {
         this.receiverId = receiverId;
     }
 
-    public String getContents() {
-        return contents;
+    public Content getContent() {
+        return content;
     }
 
-    public void setContents(String contents) {
-        this.contents = contents;
+    public void setContent(Content content) {
+        this.content = content;
     }
 
     public Integer getMsgType() {
@@ -63,11 +65,11 @@ public class MsgReq {
         this.chatType = chatType;
     }
 
-    public String getConversationId() {
-        return conversationId;
+    public String getConvId() {
+        return convId;
     }
 
-    public void setConversationId(String conversationId) {
-        this.conversationId = conversationId;
+    public void setConvId(String convId) {
+        this.convId = convId;
     }
 }
