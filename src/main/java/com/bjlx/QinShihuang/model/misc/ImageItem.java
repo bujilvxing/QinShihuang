@@ -1,14 +1,12 @@
 package com.bjlx.QinShihuang.model.misc;
 
-import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Transient;
 
-import java.util.Map;
-
 import javax.validation.constraints.Min;
+import java.util.Map;
 
 @Embedded
 public class ImageItem {
@@ -54,11 +52,6 @@ public class ImageItem {
      * 图像的url
      */
     private String url;
-
-    /**
-     * 主键
-     */
-    private ObjectId id;
     
     /**
 	 * 图像宽度
@@ -150,14 +143,6 @@ public class ImageItem {
 		this.cropHint = cropHint;
 	}
 
-	public ObjectId getId() {
-		return id;
-	}
-
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
-
 	public String getFmt() {
 		return fmt;
 	}
@@ -199,7 +184,6 @@ public class ImageItem {
 		this.key = key;
 		this.bucket = bucket;
 		this.url = url;
-		this.id = new ObjectId();
 		this.width = width;
 		this.height = height;
 		this.fmt = fmt;

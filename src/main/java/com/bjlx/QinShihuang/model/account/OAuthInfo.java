@@ -22,6 +22,7 @@ public class OAuthInfo {
 	public final static String fd_avatar = "avatar";
 	@Transient
 	public final static String fd_token = "token";
+
 	/**
      * 第三方账号体系的名称。比如：weixin表示这是微信账号
      */
@@ -89,6 +90,10 @@ public class OAuthInfo {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public OAuthInfo() {
+
 	}
 
 	public OAuthInfo(String provider, String oauthId, String nickName, String avatar, String token) {

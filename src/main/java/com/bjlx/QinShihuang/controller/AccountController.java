@@ -165,7 +165,7 @@ public class AccountController {
 
     /**
      * 用户登录, 接口编码1004
-     * @param userInfo 用户登录信息
+     * @param loginReq 用户登录信息
      * @return 用户信息
      */
     @RequestMapping(value = "/app/login", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
@@ -203,109 +203,197 @@ public class AccountController {
 
     /**
      * 第三方登录, 接口编码1005
-     * @param oAuthUserInfo 用户第三方信息
+     * @param oauthUserInfoReq 用户第三方信息
      * @return 用户信息
      */
-    @RequestMapping(value = "/app/users/oauthlogin", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String oauthLogin(@RequestBody OAuthUserInfoReq oAuthUserInfo) {
+    @RequestMapping(value = "/app/oauthlogin", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String oauthLogin(@RequestBody OAuthUserInfoReq oauthUserInfoReq) {
 
-        // 绑定个推的clientId
+        if(oauthUserInfoReq.getProvider() == null) {
+            return QinShihuangResult.getResult(ErrorCode.PROVIDER_NULL_1005);
+        }
+        if(oauthUserInfoReq.getOauthId() == null) {
+            return QinShihuangResult.getResult(ErrorCode.OAUTHID_NULL_1005);
+        }
+        if(oauthUserInfoReq.getToken() == null) {
+            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1005);
+        }
+        if(oauthUserInfoReq.getClientId() == null) {
+            return QinShihuangResult.getResult(ErrorCode.CLIENTID_NULL_1005);
+        }
 
-        // 首次登录，创建新用户
-
-        // 非首次登录，直接登录
-        return null;
+        try {
+            return AccountAPI.oauthlogin(oauthUserInfoReq.getProvider(), oauthUserInfoReq.getOauthId(), oauthUserInfoReq.getNickName(), oauthUserInfoReq.getAvatar(), oauthUserInfoReq.getToken(), oauthUserInfoReq.getClientId());
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
     }
 
     /**
-     * 重置密码, 接口编码1006
-     * @param resetPwd 参数信息
+     * 退出登录, 接口编码1006
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果信息
+     */
+    @RequestMapping(value = "/app/logout", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String logout(@RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+
+        try {
+            return AccountAPI.logout(userId, key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+    /**
+     * 重置密码, 接口编码1007
+     * @param resetPwdReq 参数信息
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String resetPwd(@RequestBody ResetPwdReq resetPwd) {
+    public @ResponseBody String resetPwd(@RequestBody ResetPwdReq resetPwdReq) {
+    	// 检验参数
+    	if(resetPwdReq.getAccount() == null) {
+            return QinShihuangResult.getResult(ErrorCode.ACCOUNT_NULL_1007);
+        }
+        if(resetPwdReq.getNewPassword() == null) {
+            return QinShihuangResult.getResult(ErrorCode.NEW_PWD_NULL_1007);
+        }
+        if(resetPwdReq.getToken() == null) {
+            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1007);
+        }
+        if(CommonUtil.isTelLegal(resetPwdReq.getAccount())) {
+            try {
+                return AccountAPI.resetPwd(resetPwdReq.getAccount(), resetPwdReq.getNewPassword(), resetPwdReq.getToken(), true);
+            } catch(Exception e) {
+                e.printStackTrace();
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+        }
 
-
-        return null;
+        if(CommonUtil.isEmail(resetPwdReq.getAccount())) {
+            try {
+                return AccountAPI.resetPwd(resetPwdReq.getAccount(), resetPwdReq.getNewPassword(), resetPwdReq.getToken(), false);
+            } catch(Exception e) {
+                e.printStackTrace();
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+        } else {
+            return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1007);
+        }
     }
 
     /**
-     * 修改密码, 接口编码1007
+     * 修改密码, 接口编码1008
      * @param updatePwd 参数信息
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
      * @return 结果信息
      */
-    @RequestMapping(value = "/app/users/{userId +d}/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updatePwd(@RequestBody UpdatePwdReq updatePwd, @PathVariable Long userId) {
-
-
-        return null;
+    @RequestMapping(value = "/app/users/{userId:\\d+}/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String updatePwd(@RequestBody UpdatePwdReq updatePwd, @PathVariable Long userId, @RequestHeader("key") String key) {
+    	// 检验参数
+    	if(updatePwd.getOldPassword() == null) {
+            return QinShihuangResult.getResult(ErrorCode.OLD_PWD_NULL_1008);
+        }
+        if(updatePwd.getNewPassword() == null) {
+            return QinShihuangResult.getResult(ErrorCode.NEW_PWD_NULL_1008);
+        }
+        
+        try {
+            return AccountAPI.updatePwd(updatePwd.getOldPassword(), updatePwd.getNewPassword(), userId, key);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
     }
 
     /**
-     * 根据用户id取得用户信息, 接口编码1008
+     * 根据用户id取得用户信息, 接口编码1009
      * @param userId 用户id
+     * @param key 不羁旅行令牌
      * @return 用户信息
      */
-    @RequestMapping(value = "/app/users/{userId +d}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getUserInfo(@PathVariable Long userId) {
-
-        // 取得用户的令牌
-//        String bjlxToken = null;
-
-        // 检验令牌
-
-        return null;
+    @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getUserInfo(@PathVariable Long userId, @RequestHeader("key") String key) {
+        try {
+            return AccountAPI.getUserInfoById(userId, key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
     }
 
     /**
-     * 修改用户信息, 接口编码1009
+     * 修改用户信息, 接口编码1010
      * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param updateUserInfoReq 参数信息
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updateUserInfo(@PathVariable(value="userId") Long userId) {
-
-        // 取得用户的令牌
-//        String bjlxToken = null;
-
-        // 检验令牌
-
-        return null;
-    }
-
-    /**
-     * 退出登录, 接口编码1010
-     * @return 结果信息
-     */
-    @RequestMapping(value = "/app/users/logout", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String logout() {
-
-        // 取得用户的令牌
-//        String bjlxToken = null;
-
-        // 检验令牌
-
-        // 解绑定
-
-        return null;
+    public @ResponseBody String updateUserInfo(@PathVariable(value="userId") Long userId, @RequestHeader("key") String key, @RequestBody UpdateUserInfoReq updateUserInfoReq) {
+        try {
+            return AccountAPI.updateUserInfo(userId, key, updateUserInfoReq);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
     }
 
     /**
      * 绑定手机号, 接口编码1011
+     * @param bindTelReq 参数信息
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
      * @return 结果信息
      */
-    @RequestMapping(value = "/app/users/{userId}/tel", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String bindTel(@RequestBody BindTelReq bindTel, @PathVariable Long userId) {
+    @RequestMapping(value = "/app/users/{userId:\\d+}/tel", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String bindTel(@RequestBody BindTelReq bindTelReq, @PathVariable Long userId, @RequestHeader("key") String key) {
+        // 检验参数
+        if(bindTelReq.getTel() == null) {
+            return QinShihuangResult.getResult(ErrorCode.TEL_NULL_1011);
+        }
 
-        // 取得用户的令牌
-//        String bjlxToken = null;
-
-        // 检验令牌
-
-        // 解绑定
-
-        return null;
+        if(bindTelReq.getToken() == null) {
+            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1011);
+        }
+        if(CommonUtil.isTelLegal(bindTelReq.getTel())) {
+            try {
+                return AccountAPI.bindTel(bindTelReq.getTel(), bindTelReq.getToken(), userId, key);
+            } catch (Exception e) {
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+        } else {
+            return QinShihuangResult.getResult(ErrorCode.TEL_FORMAT_1011);
+        }
     }
 
+    /**
+     * 绑定手机号, 接口编码1011
+     * @param bindEmailReq 参数信息
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果信息
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/email", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String bindEmail(@RequestBody BindEmailReq bindEmailReq, @PathVariable Long userId, @RequestHeader("key") String key) {
+        // 检验参数
+        if(bindEmailReq.getEmail() == null) {
+            return QinShihuangResult.getResult(ErrorCode.EMAIL_NULL_1103);
+        }
 
+        if(bindEmailReq.getToken() == null) {
+            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1103);
+        }
+        if(CommonUtil.isEmail(bindEmailReq.getEmail())) {
+            try {
+                return AccountAPI.bindEmail(bindEmailReq.getEmail(), bindEmailReq.getToken(), userId, key);
+            } catch (Exception e) {
+                return QinShihuangResult.getResult(ErrorCode.ServerException);
+            }
+        } else {
+            return QinShihuangResult.getResult(ErrorCode.EMAIL_FORMAT_1103);
+        }
+    }
 }

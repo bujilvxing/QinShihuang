@@ -91,12 +91,16 @@ public class Feedback {
 		this.origin = origin;
 	}
 
+	public Feedback() {
+
+	}
+
 	public Feedback(Long userId, String content, Long time, String origin) {
 		super();
 		this.id = new ObjectId();
 		this.userId = userId;
 		this.content = content;
 		this.time = time;
-		this.origin = origin;
+		this.origin = origin == null ? "app" : origin;
 	}
 }

@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.utils;
 
 /**
+ * 常量列表
  * Created by xiaozhi on 2016/10/21.
  */
 public class Constant {
@@ -15,7 +16,7 @@ public class Constant {
     public final static int BIND_EMAIL_ACTION = 4;
 
     public static boolean checkValidationAction(Integer action) {
-        return action >= NEW_USER_SIGNUP_ACTION && NEW_USER_SIGNUP_ACTION <= RESET_PWD_ACTION;
+        return action >= NEW_USER_SIGNUP_ACTION && action <= BIND_EMAIL_ACTION;
     }
 
     /**
@@ -28,4 +29,72 @@ public class Constant {
      * 默认邀请码长度
      */
     public final static int DEFAULT_PROMOTIONCODE_SIZE = 8;
+
+    /**
+     * 性别
+     */
+    public final static int UNKNOW_GENDER = 1;
+    public final static int MALE = 2;
+    public final static int FEMALE = 3;
+    public static boolean checkGender(Integer gender) {
+        return gender >= UNKNOW_GENDER && gender <= FEMALE;
+    }
+
+    /**
+     * 图片正确
+     */
+    public final static String IMAGE_NORMAL = "ok";
+
+    /**
+     * 星座
+     */
+    public final static int AQUARIUS = 1;
+    public final static int PISCES = 2;
+    public final static int ARIES = 3;
+    public final static int TAURUS = 4;
+    public final static int GEMINI = 5;
+    public final static int CANCER = 6;
+    public final static int LEO = 7;
+    public final static int VIRGO = 8;
+    public final static int LIBRA = 9;
+    public final static int SCORPIO = 10;
+    public final static int SAGITTARIUS = 11;
+    public final static int CAPRICORN = 12;
+    public static boolean checkZodiac(Integer zodiac) {
+        return zodiac >= AQUARIUS && zodiac <= CAPRICORN;
+    }
+
+    /**
+     * 消息类型
+     */
+    public final static int TEXT_MSG = 1;
+    public final static int IMAGE_MSG = 2;
+    public final static int AUDIO_MSG = 3;
+    public final static int LOCATION_MSG = 4;
+    public final static int GUIDE_MSG = 5;
+    public final static int TRAVEL_NOTE_MSG = 6;
+    public final static int VIEWSPOT_MSG = 7;
+    public final static int RESTAURANT_MSG = 8;
+    public final static int SHOPPING_MSG = 9;
+    public final static int HOTEL_MSG = 10;
+    public final static int COMMODITY_MSG = 11;
+    public final static int ORDER_MSG = 12;
+    public final static int IDCARD_MSG = 13;
+    public final static int FOLLOWING_MSG = 14;
+    public final static int TIP_MSG = 15;
+    public final static int NOTICE_MSG = 16;
+    public static boolean checkMsgType(Integer msgType) {
+        return msgType >= TEXT_MSG && msgType <= NOTICE_MSG;
+    }
+
+    /**
+     * 聊天类型
+     */
+    public final static int SINGLE_CHAT = 1;
+    public final static int GROUP_CHAT = 2;
+    public static boolean checkChatType(Integer chatType) {
+        return chatType >= SINGLE_CHAT && chatType <= GROUP_CHAT;
+    }
+
+
 }

@@ -77,7 +77,23 @@ public class UserInfo {
 	@Transient
 	public final static String fd_birthday = "birthday";
 	@Transient
-	public final static String fd_oauthInfoList = "oauthInfoList";
+	public final static String fd_weixin = "weixin";
+	@Transient
+	public final static String fd_weixin_provider = "weixin.provider";
+	@Transient
+	public final static String fd_weixin_oauthId = "weixin.oauthId";
+	@Transient
+	public final static String fd_sina = "sina";
+	@Transient
+	public final static String fd_sina_provider = "sina.provider";
+	@Transient
+	public final static String fd_sina_oauthId = "sina.oauthId";
+	@Transient
+	public final static String fd_qq = "qq";
+	@Transient
+	public final static String fd_qq_provider = "qq.provider";
+	@Transient
+	public final static String fd_qq_oauthId = "qq.oauthId";
 	@Transient
 	public final static String fd_level = "level";
 	@Transient
@@ -213,12 +229,22 @@ public class UserInfo {
 	/**
 	 * 用户的生日
 	 */
-	private String birthday  = null;
+	private Long birthday  = null;
 
 	/**
-	 * 第三方账号的信息
+	 * 第三方账号微信的信息
 	 */
-	private List<OAuthInfo> oauthInfoList = null;
+	private OAuthInfo weixin = null;
+
+	/**
+	 * 第三方账号微博的信息
+	 */
+	private OAuthInfo sina = null;
+
+	/**
+	 * 第三方账号qq的信息
+	 */
+	private OAuthInfo qq = null;
 
 	/**
 	 * 用户等级
@@ -246,7 +272,7 @@ public class UserInfo {
 	private List<TripPlan> tripPlans;
 
 	/**
-	 * 星座
+	 * 星座。1 水瓶 2 双鱼 3 白羊 4 金牛 5 双子 6 巨蟹 7 狮子 8 处女 9 天秤 10 天蝎 11 射手 12 魔杰
 	 */
 	private Integer zodiac;
 
@@ -488,20 +514,48 @@ public class UserInfo {
 		this.residence = residence;
 	}
 
-	public String getBirthday() {
+	public Long getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Long birthday) {
 		this.birthday = birthday;
 	}
 
-	public List<OAuthInfo> getOauthInfoList() {
-		return oauthInfoList;
+	public Boolean isLoginStatus() {
+		return loginStatus;
 	}
 
-	public void setOauthInfoList(List<OAuthInfo> oauthInfoList) {
-		this.oauthInfoList = oauthInfoList;
+	public OAuthInfo getWeixin() {
+		return weixin;
+	}
+
+	public void setWeixin(OAuthInfo weixin) {
+		this.weixin = weixin;
+	}
+
+	public OAuthInfo getSina() {
+		return sina;
+	}
+
+	public void setSina(OAuthInfo sina) {
+		this.sina = sina;
+	}
+
+	public OAuthInfo getQq() {
+		return qq;
+	}
+
+	public void setQq(OAuthInfo qq) {
+		this.qq = qq;
+	}
+
+	public Boolean isSoundNotify() {
+		return soundNotify;
+	}
+
+	public Boolean isVibrateNotify() {
+		return vibrateNotify;
 	}
 
 	public ImageItem getBackGround() {
@@ -578,6 +632,19 @@ public class UserInfo {
 		this.avatar = avatar;
 		this.backGround = backGround;
 		this.email = email;
+		this.promotionCode = promotionCode;
+		Long currentTime = System.currentTimeMillis();
+		this.createTime = currentTime;
+		this.updateTime = currentTime;
+	}
+
+	public UserInfo(Long userId, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
+		super();
+		this.id = new ObjectId();
+		this.userId = userId;
+		this.nickName = nickName;
+		this.avatar = avatar;
+		this.backGround = backGround;
 		this.promotionCode = promotionCode;
 		Long currentTime = System.currentTimeMillis();
 		this.createTime = currentTime;
