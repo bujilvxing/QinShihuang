@@ -20,7 +20,11 @@ public class Commodity {
 	@Transient
 	public final static String fd_id = "id";
 	@Transient
-	public final static String fd_category = "category";
+	public final static String fd_firstCategory = "firstCategory";
+    @Transient
+    public final static String fd_secondCategory = "secondCategory";
+    @Transient
+    public final static String fd_thirdCategory = "thirdCategory";
 	@Transient
 	public final static String fd_title = "title";
 	@Transient
@@ -60,9 +64,19 @@ public class Commodity {
     private ObjectId id;
 
     /**
-     * 商品分类
+     * 商品一级分类
      */
-    private List<String> category;
+    private String firstCategory;
+
+    /**
+     * 商品二级分类
+     */
+    private String secondCategory;
+
+    /**
+     * 商品三级分类
+     */
+    private String thirdCategory;
 
     /**
      * 标题
@@ -147,12 +161,28 @@ public class Commodity {
         this.id = id;
     }
 
-    public List<String> getCategory() {
-        return category;
+    public String getFirstCategory() {
+        return firstCategory;
     }
 
-    public void setCategory(List<String> category) {
-        this.category = category;
+    public void setFirstCategory(String firstCategory) {
+        this.firstCategory = firstCategory;
+    }
+
+    public String getSecondCategory() {
+        return secondCategory;
+    }
+
+    public void setSecondCategory(String secondCategory) {
+        this.secondCategory = secondCategory;
+    }
+
+    public String getThirdCategory() {
+        return thirdCategory;
+    }
+
+    public void setThirdCategory(String thirdCategory) {
+        this.thirdCategory = thirdCategory;
     }
 
     public String getTitle() {

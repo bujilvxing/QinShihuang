@@ -100,16 +100,20 @@ public class Constant {
      * 商品状态
      * 1、审核中(待审核), 2、审核不通过  3、审核通过  4、下架 5、上架
      */
-    public final static int AUDITING_WAI_Commodity_COMMODITY_ = 1;
-    public final static int AUDITING_NOT_GO_Commodity_COMMODITY_ = 2;
-    public final static int AUDITING_PASS_COMMODITY_ = 3;
-    public final static int UPPER_SHELVES_COMMODITY_ = 4;
-    public final static int LOWER_SHELVES_COMMODITY_ = 5;
+    public final static int PENDING_COMMODITY = 1;
+    public final static int UPPASS_COMMODITY = 2;
+    public final static int PASSED_COMMODITY = 3;
+    public final static int ON_SHELVES_COMMODITY = 4;
+    public final static int OFF_SHELVES_COMMODITY = 5;
+    public static boolean checkCommodityStatus(Integer status) {
+        return status >= PENDING_COMMODITY && status <= OFF_SHELVES_COMMODITY;
+    }
 
     /**
      * 专栏状态
      */
 
     //幻灯片类型
-    public final static String SLIDE_TYPE_COLUMN = "slide";
+    public final static String SLIDE_COLUMN = "slide";
+    public final static String SPECIAL_COLUMN = "special";
 }

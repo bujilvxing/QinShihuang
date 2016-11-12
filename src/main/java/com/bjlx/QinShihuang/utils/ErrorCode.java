@@ -201,9 +201,23 @@ public enum ErrorCode {
 
 
 	/**
-	 * 商品
+	 * 首页模块
 	 */
+	// 取得专栏列表
+	EMPTY_COLUMN_1014(101401, "运营专栏数据为空"),
+
+	// 取得专栏列表
+	EMPTY_COLUMN_1015(101501, "banner数据为空"),
+
+	// 取得首页商品列表(特产等)
+	EMPTY_COLUMN_COMMODITY_1016(101601, "首页商品数据为空"),
+	EMPTY_COLUMN_COMMODITY_MODULE_1016(101602, "首页商品数据为空"),
+
+	// 根据id取得商品详情
 	COMMODITY_NOT_EXIST_1017(101701, "商品不存在"),
+
+	// 取得首页攻略列表
+	EMPTY_COLUMN_GUIDE_1018(101801, "攻略数据为空"),
 
 	/**
 	 * 攻略

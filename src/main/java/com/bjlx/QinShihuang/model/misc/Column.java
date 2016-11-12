@@ -39,7 +39,9 @@ public class Column {
 	public final static String fd_cover = "cover";
 	@Transient
 	public final static String fd_status = "status";
-	
+	@Transient
+	public final static String fd_desc = "desc";
+
 	/**
 	 * 主键
 	 */
@@ -94,6 +96,11 @@ public class Column {
 	 */
 	@Pattern(regexp = "(review|pub|disabled)")
 	private String status;
+
+	/**
+	 * 描述
+	 */
+	private String desc;
 
 	public ObjectId getId() {
 		return id;
@@ -165,5 +172,13 @@ public class Column {
 
 	public void setItemType(String itemType) {
 		this.itemType = itemType;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 }

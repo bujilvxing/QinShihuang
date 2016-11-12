@@ -17,25 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GuideController {
 
     /**
-     * 取得攻略列表1018
-     * @return
-     */
-    @RequestMapping(value = "/app/guides",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
-    public @ResponseBody String getGuides(){
-        try{
-            return GuideAPI.getGuides();
-        }catch (Exception e){
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
-        }
-    }
-
-    /**
      * 取得攻略详情1019
      * @param guideId 攻略id
-     * @return
-     */
-    @RequestMapping(value = "/app/guides/{guideId:\\d+}",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
-    public @ResponseBody String getGuide(@PathVariable(value = "guideId") Long guideId){
+     * @return 攻略详情信息
+   */
+    @RequestMapping(value = "/app/guides/{guideId}",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    public @ResponseBody String getGuide(@PathVariable(value = "guideId") String guideId){
         try{
             return GuideAPI.getGuide(guideId);
         }catch (Exception e){

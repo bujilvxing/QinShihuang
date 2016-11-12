@@ -1,9 +1,12 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.ColumnAPI;
+import com.bjlx.QinShihuang.core.CommodityAPI;
+import com.bjlx.QinShihuang.core.GuideAPI;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +20,7 @@ public class ColumnController {
 
     /**
      * 取得专栏1014
-     * @return
+     * @return 专栏列表
      */
     @RequestMapping(value = "/app/misc/columns",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
     public @ResponseBody String getColumns(){
@@ -30,12 +33,38 @@ public class ColumnController {
 
     /**
      * 取得首页1015
-     * @return
+     * @return banner列表
      */
     @RequestMapping(value = "/app/misc/banners",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
     public @ResponseBody String getBanners(){
         try{
             return ColumnAPI.getBanners();
+        }catch (Exception e){
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     * 取得商品列表(特产等)1016
+     * @return 取得商品列表(特产等)
+     */
+    @RequestMapping(value = "/app/marketplace/commodities",method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getColumnCommodities(){
+        try{
+            return ColumnAPI.getColumnCommoditys();
+        }catch(Exception e){
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     * 取得首页攻略列表1018
+     * @return 取得首页攻略列表
+     */
+    @RequestMapping(value = "/app/columnguides",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    public @ResponseBody String getColumnGuides(){
+        try{
+            return ColumnAPI.getColumnGuides();
         }catch (Exception e){
             return QinShihuangResult.getResult(ErrorCode.ServerException);
         }
