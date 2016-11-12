@@ -1,40 +1,75 @@
 package com.bjlx.QinShihuang.core;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import com.bjlx.QinShihuang.core.formatter.misc.ColumnFormatter;
 import com.bjlx.QinShihuang.model.misc.Column;
 import com.bjlx.QinShihuang.model.misc.Sequence;
+import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.MorphiaFactory;
+import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
 /**
- * Ê×Ò³ÔËÓªºËĞÄÊµÏÖ
+ * ä¸“æ æ ¸å¿ƒå®ç°
  * Created by gaomin on 2016/11/6.
  */
 public class ColumnAPI {
 
     /**
-     * È¡µÃÊı¾İ¿â¶ÔÏó
+     * å–å¾—æ•°æ®åº“å¯¹è±¡ï¿½ï¿½İ¿ï¿½ï¿½ï¿½ï¿½
      */
     private static Datastore ds = MorphiaFactory.getInstance();
 
     /**
-     * È¡µÃ×¨À¸
-     * @return ×¨À¸ÁĞ±í
+     * å–å¾—ä¸“æ 
+     * @return
      */
     public static String getColumns() throws Exception {
-        List<Column> result;
         Query<Column> query = ds.createQuery(Column.class);
+        List<Column> result;
         try{
             result = query.asList();
         }catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
-        ObjectMapper mapper =
+
+        if (result==null){
+            return QinShihuangResult.ok(ColumnFormatter.getMapper().valueToTree(new ArrayList<Column>()));
+        }
+        else{
+            return  QinShihuangResult.ok(ColumnFormatter.getMapper().valueToTree(result));
+        }
     }
 
+    /**
+     * é¦–é¡µbanner
+     * @return
+     * @throws Exception
+     */
+    public static String getBanners() throws Exception{
+        Query<Column> query = ds.createQuery(Column.class)
+                                .field(Column.fd_columnType).equal(Constant.SLIDE_TYPE_COLUMN);
+        List<Column> result;
+        try{
+            result = query.asList();
+        }catch(Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+
+        if (result==null){
+            return QinShihuangResult.ok(ColumnFormatter.getMapper().valueToTree(new ArrayList<Column>()));
+        }
+        else{
+            return QinShihuangResult.ok(ColumnFormatter.getMapper().valueToTree(result));
+        }
+    }
 
 }

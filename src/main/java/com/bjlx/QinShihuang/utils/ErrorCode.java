@@ -200,6 +200,17 @@ public enum ErrorCode {
 	CHATGROUP_NOT_EXIST_1064(106415, "聊天组不存在"),
 
 
+	/**
+	 * 商品
+	 */
+	COMMODITY_NOT_EXIST_1017(101701, "商品不存在"),
+
+	/**
+	 * 攻略
+	 */
+	GUIDE_NOT_EXIST_1019(101901, "攻略不存在"),
+
+
 	;
 
 

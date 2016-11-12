@@ -9,22 +9,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- *
- * Created by gaomin on 2016/11/6.
+ * 专栏相关
+ * Created by gaomin on 2016/11/12
  */
 @Controller
 public class ColumnController {
 
     /**
-     * 
+     * 取得专栏1014
      * @return
-     * */
-    @RequestMapping(value="/app/misc/columns",method= RequestMethod.GET,produces = "application/json:charset=utf-8")
-    public @ResponseBody String GetSpecialColumns()
-    {
-        try{
+     */
+    @RequestMapping(value = "/app/misc/columns",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    public @ResponseBody String getColumns(){
+        try {
             return ColumnAPI.getColumns();
-        }catch (Exception e1){
+        }catch (Exception e){
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     * 取得首页1015
+     * @return
+     */
+    @RequestMapping(value = "/app/misc/banners",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    public @ResponseBody String getBanners(){
+        try{
+            return ColumnAPI.getBanners();
+        }catch (Exception e){
             return QinShihuangResult.getResult(ErrorCode.ServerException);
         }
     }
