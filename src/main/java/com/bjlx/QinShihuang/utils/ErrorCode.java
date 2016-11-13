@@ -144,6 +144,30 @@ public enum ErrorCode {
 	UNLOGIN_1013(101302, "用户未登录"),
 
 	/**
+	 * 首页模块
+	 */
+	// 取得专栏列表
+	EMPTY_COLUMN_1014(101401, "运营专栏数据为空"),
+
+	// 取得专栏列表
+	EMPTY_COLUMN_1015(101501, "banner数据为空"),
+
+	// 取得首页商品列表(特产等)
+	EMPTY_COLUMN_COMMODITY_1016(101601, "首页商品数据为空"),
+	EMPTY_COLUMN_COMMODITY_MODULE_1016(101602, "首页商品数据为空"),
+
+	// 根据id取得商品详情
+	COMMODITY_NOT_EXIST_1017(101701, "商品不存在"),
+
+	// 取得首页攻略列表
+	EMPTY_COLUMN_GUIDE_1018(101801, "攻略数据为空"),
+
+	/**
+	 * 攻略
+	 */
+	GUIDE_NOT_EXIST_1019(101901, "攻略不存在"),
+
+	/**
 	 * 社交
 	 */
 	// 关注用户
@@ -198,32 +222,16 @@ public enum ErrorCode {
 	CHATTYPE_INVALID_1064(106413, "聊天类型不合法"),
 	USER_NOT_EXIST_1064(106414, "用户不存在"),
 	CHATGROUP_NOT_EXIST_1064(106415, "聊天组不存在"),
+	CONVID_INVALID_1064(106416, "回话id不合法"),
+	UNLOGIN_1064(106417, "用户未登录"),
+	ID_INVALID_1064(106418, "消息id不合法"),
 
 
 	/**
-	 * 首页模块
+	 * 群组
 	 */
-	// 取得专栏列表
-	EMPTY_COLUMN_1014(101401, "运营专栏数据为空"),
-
-	// 取得专栏列表
-	EMPTY_COLUMN_1015(101501, "banner数据为空"),
-
-	// 取得首页商品列表(特产等)
-	EMPTY_COLUMN_COMMODITY_1016(101601, "首页商品数据为空"),
-	EMPTY_COLUMN_COMMODITY_MODULE_1016(101602, "首页商品数据为空"),
-
-	// 根据id取得商品详情
-	COMMODITY_NOT_EXIST_1017(101701, "商品不存在"),
-
-	// 取得首页攻略列表
-	EMPTY_COLUMN_GUIDE_1018(101801, "攻略数据为空"),
-
-	/**
-	 * 攻略
-	 */
-	GUIDE_NOT_EXIST_1019(101901, "攻略不存在"),
-
+	UNLOGIN_1070(107001, "用户未登录"),
+	CHATGROUP_NOT_EXIST_1070(107002, "群组不存在"),
 
 	;
 

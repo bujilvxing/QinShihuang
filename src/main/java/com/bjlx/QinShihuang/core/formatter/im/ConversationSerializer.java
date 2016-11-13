@@ -3,6 +3,7 @@ package com.bjlx.QinShihuang.core.formatter.im;
 import java.io.IOException;
 import java.util.List;
 import com.bjlx.QinShihuang.model.im.Conversation;
+import com.bjlx.QinShihuang.utils.Constant;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -14,7 +15,7 @@ public class ConversationSerializer extends JsonSerializer<Conversation> {
         try {
             gen.writeStartObject();
             gen.writeStringField(Conversation.fd_id, conversation.getId() == null ? "" : conversation.getId().toString());
-            gen.writeStringField(Conversation.fd_chatType, conversation.getChatType() == null ? "single" : conversation.getChatType());
+            gen.writeNumberField(Conversation.fd_chatType, conversation.getChatType() == null ? Constant.SINGLE_CHAT : conversation.getChatType());
             gen.writeNumberField(Conversation.fd_msgCounter, conversation.getMsgCounter() == null ? 0L : conversation.getMsgCounter());
             gen.writeStringField(Conversation.fd_conversationId, conversation.getConversationId() == null ? "" : conversation.getConversationId());
             gen.writeNumberField(Conversation.fd_createTime, conversation.getCreateTime() == null ? 0L : conversation.getCreateTime());

@@ -51,9 +51,9 @@ public class Conversation {
     private ObjectId id;
 
     /**
-     * 聊天类型。single表示单聊，group表示群组
+     * 聊天类型。1表示单聊，2表示群组
      */
-    private String chatType = "";
+    private Integer chatType = 1;
 
     /**
      * 消息数量
@@ -123,11 +123,11 @@ public class Conversation {
         this.id = id;
     }
 
-    public String getChatType() {
+    public Integer getChatType() {
         return chatType;
     }
 
-    public void setChatType(String chatType) {
+    public void setChatType(Integer chatType) {
         this.chatType = chatType;
     }
 
@@ -219,10 +219,16 @@ public class Conversation {
 		this.pinList = pinList;
 	}
 
-	public Conversation(ObjectId id, String conversationId, String chatType, Long createTime) {
+    public Conversation() {
+
+    }
+
+	public Conversation(ObjectId id, String conversationId, Integer chatType) {
         this.id = id;
         this.conversationId = conversationId;
         this.chatType = chatType;
-        this.createTime = createTime;
+        Long currentTime = System.currentTimeMillis();
+        this.createTime = currentTime;
+        this.updateTime = currentTime;
     }
 }

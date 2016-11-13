@@ -109,6 +109,8 @@ public class Constant {
         return status >= PENDING_COMMODITY && status <= OFF_SHELVES_COMMODITY;
     }
 
+    public final static int ABBREV_MAX_LEN = 16;
+
     /**
      * 专栏状态
      */
@@ -116,4 +118,12 @@ public class Constant {
     //幻灯片类型
     public final static String SLIDE_COLUMN = "slide";
     public final static String SPECIAL_COLUMN = "special";
+
+    /**
+     * 群组状态
+     */
+    public final static int CHATGROUP_NORMAL = 1;
+    public final static int CHATGROUP_UNENABLE = 2;
+    public final static int CHATGROUP_PENDING = 3;
+
 }

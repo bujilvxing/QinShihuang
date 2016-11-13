@@ -50,9 +50,9 @@ public class ColumnController {
      */
     @RequestMapping(value = "/app/marketplace/commodities",method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getColumnCommodities(){
-        try{
+        try {
             return ColumnAPI.getColumnCommoditys();
-        }catch(Exception e){
+        } catch(Exception e){
             return QinShihuangResult.getResult(ErrorCode.ServerException);
         }
     }

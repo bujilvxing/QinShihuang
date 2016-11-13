@@ -6,15 +6,17 @@ import com.gexin.rp.sdk.http.IGtPush;
 import com.gexin.rp.sdk.template.LinkTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用于测试
  * Created by xiaozhi on 2016/10/21.
  */
 public class Sandbox {
-	
-    public static void main(String[] args) {
+
+    public static void sendMsg() {
         /**
          * 个推
          * AppId:KM4CsH2Yam6gcPzLUJaUh8
@@ -53,5 +55,13 @@ public class Sandbox {
 
         IPushResult ret = push.pushMessageToApp(message);
         System.out.println(ret.getResponse().toString());
+    }
+
+    public static void main(String[] args) {
+        List<Long> participants = Arrays.asList(1L,2L);
+        List<Long> filtered = participants.stream().filter(item -> !item.equals(1L)).collect(Collectors.toList());
+        for(Long id : filtered) {
+            System.out.println(id);
+        }
     }
 }

@@ -60,7 +60,9 @@ public class Chatgroup {
     public final static String fd_createTime = "createTime";
 	@Transient
     public final static String fd_updateTime = "updateTime";
-    
+    @Transient
+    public final static String fd_status = "status";
+
     /**
      * 主键
      */
@@ -144,6 +146,10 @@ public class Chatgroup {
      */
     private Integer level = 1;
 
+    /**
+     * 群组状态
+     */
+    private Integer status = 1;
 
     public ObjectId getId() {
         return id;
@@ -257,7 +263,15 @@ public class Chatgroup {
 		this.visible = visible;
 	}
 
-	public Chatgroup(Long chatGroupId, String name, ImageItem avatar, Long creator, List<Long> participants, Integer maxUsers) {
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Chatgroup(Long chatGroupId, String name, ImageItem avatar, Long creator, List<Long> participants, Integer maxUsers) {
         this.id = new ObjectId();
         this.chatGroupId = chatGroupId;
         this.name = name;
@@ -267,5 +281,6 @@ public class Chatgroup {
         this.maxUsers = maxUsers;
         this.createTime = System.currentTimeMillis();
         this.updateTime = System.currentTimeMillis();
+        this.status = 1;
     }
 }
