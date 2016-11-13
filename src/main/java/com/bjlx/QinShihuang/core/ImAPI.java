@@ -19,8 +19,6 @@ import com.gexin.rp.sdk.base.impl.Target;
 import com.gexin.rp.sdk.base.payload.APNPayload;
 import com.gexin.rp.sdk.exceptions.RequestException;
 import com.gexin.rp.sdk.http.IGtPush;
-import com.gexin.rp.sdk.template.LinkTemplate;
-import com.gexin.rp.sdk.template.NotificationTemplate;
 import com.gexin.rp.sdk.template.TransmissionTemplate;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
@@ -53,6 +51,7 @@ public class ImAPI {
             Sequence ret = ds.findAndModify(query, ops, false, true);
             return ret.getCount();
         } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
     }
@@ -92,7 +91,7 @@ public class ImAPI {
             case Constant.FOLLOWING_MSG : abbrev = "关注了您"; break;
         }
 
-        return String.format("%s%s", senderNickName, abbrev);
+        return String.format("%s%s", nickName, abbrev);
     }
 
     /**
@@ -111,8 +110,7 @@ public class ImAPI {
     public static Message buildMessage(Long senderId, String senderNickName, ImageItem senderAvatar, ObjectId convId, Content content, Long receiverId, Integer msgType, Integer chatType) throws Exception {
         try {
             Long msgId = getNextMsgId();
-            Message msg = new Message(convId, msgId, content, senderId, receiverId, senderNickName, senderAvatar, msgType, buildMessageAbbrev(senderNickName, msgType, content), chatType);
-            return msg;
+            return new Message(convId, msgId, content, senderId, receiverId, senderNickName, senderAvatar, msgType, buildMessageAbbrev(senderNickName, msgType, content), chatType);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -166,7 +164,7 @@ public class ImAPI {
 
 
     public final static String appId = "KM4CsH2Yam6gcPzLUJaUh8";
-    public final static String appSecret = "Mk5CgJ7xC18HNlOuATO026";
+//    public final static String appSecret = "Mk5CgJ7xC18HNlOuATO026";
     public final static String masterSecret = "Wl4SJGq5kuABxz7PGg42U3";
     public final static String appKey = "x0Mte9wA5I9X0fiIMQD1x4";
 
@@ -181,7 +179,7 @@ public class ImAPI {
      * @throws Exception 异常
      */
     public static void sendSingleMsg(Message msg, String clientId) throws Exception {
-        TransmissionTemplate template = null;
+        TransmissionTemplate template;
         try {
             template = getTransmissionTemplate(MessageFormatter.getMapper().writeValueAsString(msg), msg.getAbbrev());
         } catch (JsonProcessingException e) {
@@ -199,7 +197,7 @@ public class ImAPI {
         target.setAppId(appId);
         target.setClientId(clientId);
         //target.setAlias(Alias);
-        IPushResult ret = null;
+        IPushResult ret;
         try {
             ret = push.pushMessageToSingle(message, target);
         } catch (RequestException e) {
@@ -216,7 +214,7 @@ public class ImAPI {
 
     /**
      * 取得推送模板
-     * @param content 消息内容
+     * @param contents 消息内容
      * @param abbrev 消息摘要
      * @return 推送模板
      */
@@ -256,7 +254,7 @@ public class ImAPI {
      */
     public static void sendGroupMsg(Message msg, List<String> clientIds) throws Exception {
         // 通知透传模板
-        TransmissionTemplate template = null;
+        TransmissionTemplate template;
         try {
             template = getTransmissionTemplate(MessageFormatter.getMapper().writeValueAsString(msg), msg.getAbbrev());
         } catch (JsonProcessingException e) {
@@ -280,7 +278,7 @@ public class ImAPI {
             target.setClientId(clientId);
             targets.add(target);
         }
-        IPushResult ret = null;
+        IPushResult ret;
         try {
             ret = push.pushMessageToList(taskId, targets);
         } catch (RequestException e) {
@@ -308,8 +306,8 @@ public class ImAPI {
                 sendSingleMsg(msg, clientIds.get(0));
             else
                 sendGroupMsg(msg, clientIds);
-
         } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
     }
@@ -372,12 +370,11 @@ public class ImAPI {
     }
 
     /**
-     * 发送消息至回话
-     * @param conv 回话实体
+     * 发送消息至会话
      * @param msg 消息实体
      * @return 消息实体
      */
-    public static Message sendMsg2Conv(Conversation conv, Message msg) throws Exception {
+    public static Message sendMsg2Conv(Message msg) throws Exception {
         try {
             List<Long> receiverIds;
             if(msg.getChatType() == Constant.GROUP_CHAT) {
@@ -448,7 +445,7 @@ public class ImAPI {
                 msg = buildMessage(userInfo.getUserId(), userInfo.getNickName(), userInfo.getAvatar(), conv.getId(), content, receiverId, msgType, chatType);
             }
 
-            Message result = sendMsg2Conv(conv, msg);
+            Message result = sendMsg2Conv(msg);
             return QinShihuangResult.ok(MessageFormatter.getMapper().valueToTree(result));
         } catch (Exception e) {
             e.printStackTrace();
