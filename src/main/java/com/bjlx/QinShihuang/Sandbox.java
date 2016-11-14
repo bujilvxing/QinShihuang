@@ -58,10 +58,11 @@ public class Sandbox {
     }
 
     public static void main(String[] args) {
-        List<Long> participants = Arrays.asList(1L,2L);
-        List<Long> filtered = participants.stream().filter(item -> !item.equals(1L)).collect(Collectors.toList());
-        for(Long id : filtered) {
-            System.out.println(id);
-        }
+//        List<Long> participants = Arrays.asList(1L,2L);
+//        List<Long> filtered = participants.stream().filter(item -> !item.equals(1L)).collect(Collectors.toList());
+//        for(Long id : filtered) {
+//            System.out.println(id);
+//        }
+
     }
 }

@@ -17,7 +17,7 @@ public class ConversationSerializer extends JsonSerializer<Conversation> {
             gen.writeStringField(Conversation.fd_id, conversation.getId() == null ? "" : conversation.getId().toString());
             gen.writeNumberField(Conversation.fd_chatType, conversation.getChatType() == null ? Constant.SINGLE_CHAT : conversation.getChatType());
             gen.writeNumberField(Conversation.fd_msgCounter, conversation.getMsgCounter() == null ? 0L : conversation.getMsgCounter());
-            gen.writeStringField(Conversation.fd_conversationId, conversation.getConversationId() == null ? "" : conversation.getConversationId());
+            gen.writeStringField(Conversation.fd_convId, conversation.getConvId() == null ? "" : conversation.getConvId());
             gen.writeNumberField(Conversation.fd_createTime, conversation.getCreateTime() == null ? 0L : conversation.getCreateTime());
             gen.writeNumberField(Conversation.fd_updateTime, conversation.getUpdateTime() == null ? 0L : conversation.getUpdateTime());
             gen.writeNumberField(Conversation.fd_unreadCnt, conversation.getUnreadCnt() == null ? 0 : conversation.getUnreadCnt());

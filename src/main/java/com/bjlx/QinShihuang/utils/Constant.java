@@ -126,4 +126,7 @@ public class Constant {
     public final static int CHATGROUP_UNENABLE = 2;
     public final static int CHATGROUP_PENDING = 3;
 
+    /**
+     *
+     */
 }

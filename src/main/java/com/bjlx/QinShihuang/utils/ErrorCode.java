@@ -223,12 +223,18 @@ public enum ErrorCode {
 	MSGTYPE_INVALID_1064(106414, "消息类型不合法"),
 	CHATTYPE_INVALID_1064(106415, "聊天类型不合法"),
 	USER_NOT_EXIST_1064(106416, "用户不存在"),
-	CONVID_INVALID_1064(106417, "回话id不合法"),
-	UNLOGIN_1064(106418, "用户未登录"),
-	ID_INVALID_1064(106419, "消息id不合法"),
+	CHATGROUP_NOT_EXIST_1064(106417, "群组不存在"),
+	CONVID_INVALID_1064(106418, "回话id不合法"),
+	UNLOGIN_1064(106419, "用户未登录"),
+	ID_INVALID_1064(106420, "消息id不合法"),
 
 	// 拉取消息
 	UNLOGIN_1065(106501, "用户未登录"),
+
+	// 修改会话属性
+	MUTE_NULL_1066(106601, "mute不可为空"),
+	UNLOGIN_1066(106602, "用户未登录"),
+	CONV_NOT_EXIST_1066(106603, "会话不存在"),
 
 	/**
 	 * 群组

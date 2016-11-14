@@ -455,6 +455,15 @@ public class ImAPI {
                         return QinShihuangResult.getResult(ErrorCode.LNG_NULL_1064);
             }
 
+            switch (chatType) {
+                case Constant.SINGLE_CHAT :
+                    if(!CommonAPI.checkUserExistById(receiverId))
+                        return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1064);
+                case Constant.GROUP_CHAT :
+                    if(!CommonAPI.checkChatgroupExistById(receiverId))
+                        return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1064);
+            }
+
             // 根据userId取得用户信息
             Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
             UserInfo userInfo = query.get();
@@ -512,4 +521,38 @@ public class ImAPI {
             throw e;
         }
     }
+
+    /**
+     * 设置消息免打扰
+     * @param userId 用户id
+     * @param convId 会话id
+     * @param key 不羁旅行令牌
+     * @param mute 是否消息免打扰
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String updateConversation(Long userId, String id, String key, Boolean mute) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1066);
+            }
+            Query<Conversation> query = ds.createQuery(Conversation.class).field(Conversation.fd_convId).equal(new ObjectId(id));
+            Conversation conv = query.get();
+            if(conv == null)
+                return QinShihuangResult.getResult(ErrorCode.CONV_NOT_EXIST_1066);
+
+            UpdateOperations<Conversation> ops = ds.createUpdateOperations(Conversation.class);
+            if(mute)
+                ops.add(Conversation.fd_muteNotif, userId, false);
+            else
+                ops.removeAll(Conversation.fd_muteNotif, userId);
+            ds.updateFirst(query, ops);
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+
 }

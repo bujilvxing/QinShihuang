@@ -23,7 +23,7 @@ public class Conversation {
 	@Transient
 	public final static String fd_msgCounter = "msgCounter";
 	@Transient
-	public final static String fd_conversationId = "conversationId";
+	public final static String fd_convId = "convId";
 	@Transient
 	public final static String fd_createTime = "createTime";
 	@Transient
@@ -63,7 +63,7 @@ public class Conversation {
     /**
      * 会话id。单聊为两个用户的id,例如：10001,10002   群组为群组的id
      */
-    private String conversationId;
+    private String convId;
 
     /**
      * 会话创建时间
@@ -187,12 +187,12 @@ public class Conversation {
         this.targetId = targetId;
     }
 
-    public String getConversationId() {
-        return conversationId;
+    public String getConvId() {
+        return convId;
     }
 
-    public void setConversationId(String conversationId) {
-        this.conversationId = conversationId;
+    public void setConvId(String convId) {
+        this.convId = convId;
     }
     
     public Integer getUnreadCnt() {
@@ -223,9 +223,9 @@ public class Conversation {
 
     }
 
-	public Conversation(ObjectId id, String conversationId, Integer chatType) {
+	public Conversation(ObjectId id, String convId, Integer chatType) {
         this.id = id;
-        this.conversationId = conversationId;
+        this.convId = convId;
         this.chatType = chatType;
         Long currentTime = System.currentTimeMillis();
         this.createTime = currentTime;

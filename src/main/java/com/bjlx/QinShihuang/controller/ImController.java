@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.ImAPI;
+import com.bjlx.QinShihuang.requestmodel.ConversationReq;
 import com.bjlx.QinShihuang.requestmodel.FetchMsgReq;
 import com.bjlx.QinShihuang.requestmodel.MsgReq;
 import com.bjlx.QinShihuang.utils.ErrorCode;
@@ -63,6 +64,46 @@ public class ImController {
         Long purgeBefore = fetchMsgReq.getPurgeBefore() == null ? 0L : fetchMsgReq.getPurgeBefore();
         try {
             return ImAPI.fetchMsg(userId, key, purgeBefore);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     * 更新回话
+     * @param userId 用户id
+     * @param id 回话id
+     * @param key 不羁旅行令牌
+     * @param conversationReq 更新回话的参数
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/conversations/{id:\\[0-9a-f]{24}}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
+    public @ResponseBody String updateConversation(@PathVariable Long userId, @PathVariable String id, @RequestHeader("key") String key, @RequestBody ConversationReq conversationReq) {
+        if(conversationReq.isMute() == null)
+            return QinShihuangResult.getResult(ErrorCode.MUTE_NULL_1066);
+
+        try {
+            return ImAPI.updateConversation(userId, id, key, conversationReq.isMute());
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     * 取得会话列表
+     * @param userId 用户id
+     * @param key
+     * @param conversationReq
+     * @return
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/conversations", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getConversationByIds(@PathVariable Long userId, @RequestHeader("key") String key, @RequestBody ConversationReq conversationReq) {
+        if(conversationReq.getIds() == null)
+            return QinShihuangResult.getResult(ErrorCode.MUTE_NULL_1066);
+
+        try {
+//            return ImAPI.updateConversation(userId, key, conversationReq.getIds());
+            return null;
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.ServerException);
         }
