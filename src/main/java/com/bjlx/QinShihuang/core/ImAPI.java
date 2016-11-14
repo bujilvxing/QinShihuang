@@ -424,6 +424,37 @@ public class ImAPI {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1064);
             }
+            if(!Constant.checkMsgType(msgType))
+                return QinShihuangResult.getResult(ErrorCode.MSGTYPE_INVALID_1064);
+            if(!Constant.checkChatType(chatType))
+                return QinShihuangResult.getResult(ErrorCode.CHATTYPE_INVALID_1064);
+
+            switch (msgType) {
+                case Constant.IMAGE_MSG :
+                    if(content.getThumb() == null)
+                        return QinShihuangResult.getResult(ErrorCode.THUMB_NULL_1064);
+                    if(content.getFull() == null)
+                        return QinShihuangResult.getResult(ErrorCode.FULL_NULL_1064);
+                    if(content.getOrigin() == null)
+                        return QinShihuangResult.getResult(ErrorCode.ORIGIN_NULL_1064);
+                    if(content.getThumb().getUrl() == null || content.getFull().getUrl() == null || content.getOrigin().getUrl() == null)
+                            return QinShihuangResult.getResult(ErrorCode.URL_NULL_1064);
+                case Constant.AUDIO_MSG :
+                    if(content.getAudio() == null)
+                        return QinShihuangResult.getResult(ErrorCode.AUDIO_NULL_1064);
+                    if(content.getAudio().getUrl() == null)
+                        return QinShihuangResult.getResult(ErrorCode.URL_NULL_1064);
+                    if(content.getAudio().getLength() == null)
+                        return QinShihuangResult.getResult(ErrorCode.LENGTH_NULL_1064);
+                case Constant.LOCATION_MSG :
+                    if(content.getPosition() == null)
+                        return QinShihuangResult.getResult(ErrorCode.POSITION_NULL_1064);
+                    if(content.getPosition().getLat() == null)
+                        return QinShihuangResult.getResult(ErrorCode.LAT_NULL_1064);
+                    if(content.getPosition().getLng() == null)
+                        return QinShihuangResult.getResult(ErrorCode.LNG_NULL_1064);
+            }
+
             // 根据userId取得用户信息
             Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
             UserInfo userInfo = query.get();
@@ -463,10 +494,22 @@ public class ImAPI {
      */
     public static String fetchMsg(Long userId, String key, Long purgeBefore) throws Exception {
         // 校验登录
-        // 获取消息
-        // 获取clientId
-        // 发送消息列表
-        
-        return null;
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1065);
+            }
+
+            // 获取消息
+            Query<Message> query = ds.createQuery(Message.class).field(Message.fd_timestamp).greaterThan(purgeBefore);
+            List<Message> msgs = query.asList();
+            if(msgs == null)
+                return QinShihuangResult.ok(MessageFormatter.getMapper().valueToTree(new ArrayList<Message>()));
+            else {
+                return QinShihuangResult.ok(MessageFormatter.getMapper().valueToTree(msgs));
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

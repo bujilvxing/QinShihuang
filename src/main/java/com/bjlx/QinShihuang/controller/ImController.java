@@ -60,13 +60,9 @@ public class ImController {
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/messages", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String fetchMsg(@PathVariable Long userId, @RequestHeader("key") String key, @RequestBody FetchMsgReq fetchMsgReq) {
-        // 检查参数
-        if(fetchMsgReq.getPurgeBefore() == null) {
-            return QinShihuangResult.getResult(ErrorCode.PURGEBEFORE_NULL_1065);
-        }
-
+        Long purgeBefore = fetchMsgReq.getPurgeBefore() == null ? 0L : fetchMsgReq.getPurgeBefore();
         try {
-            return ImAPI.fetchMsg(userId, key, fetchMsgReq.getPurgeBefore());
+            return ImAPI.fetchMsg(userId, key, purgeBefore);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.ServerException);
         }
