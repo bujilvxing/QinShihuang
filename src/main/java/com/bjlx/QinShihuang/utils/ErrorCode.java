@@ -226,6 +226,8 @@ public enum ErrorCode {
 	UNLOGIN_1064(106417, "用户未登录"),
 	ID_INVALID_1064(106418, "消息id不合法"),
 
+	// 拉取消息
+	PURGEBEFORE_NULL_1065(106501, "PurgeBefore不可为空"),
 
 	/**
 	 * 群组

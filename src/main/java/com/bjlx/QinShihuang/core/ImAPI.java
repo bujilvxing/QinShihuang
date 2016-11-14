@@ -452,4 +452,21 @@ public class ImAPI {
             throw e;
         }
     }
+
+    /**
+     * 拉取消息
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param purgeBefore 客户端最后一条消息的时间
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String fetchMsg(Long userId, String key, Long purgeBefore) throws Exception {
+        // 校验登录
+        // 获取消息
+        // 获取clientId
+        // 发送消息列表
+        
+        return null;
+    }
 }

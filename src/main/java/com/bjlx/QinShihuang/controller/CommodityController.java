@@ -18,10 +18,10 @@ public class CommodityController {
 
     /**
      * 取得商品详情(特产等)1017
-     * @param commodityId
-     * @return
+     * @param commodityId 商品id
+     * @return 商品详情信息
      */
-    @RequestMapping(value = "/app/marketplace/commodities/{commodityId}",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/marketplace/commodities/{commodityId:\\[0-9a-f]{24}}",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
     public @ResponseBody
     String getCommodity(@PathVariable(value = "commodityId") String commodityId){
         try{
