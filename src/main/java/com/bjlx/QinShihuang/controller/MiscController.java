@@ -32,7 +32,7 @@ public class MiscController {
             try {
                 return MiscAPI.applySeller(userId, key, applySellerReq.getTel());
             } catch (Exception e) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.TEL_FORMAT_1012);
@@ -55,12 +55,12 @@ public class MiscController {
         try {
             return MiscAPI.feedback(userId, key, feedbackReq.getContent(), feedbackReq.getOrigin());
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
     /**
-     * 搜索用户
+     * 搜索用户1100
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param query 搜索关键字
@@ -73,12 +73,12 @@ public class MiscController {
         try {
             return MiscAPI.searchUser(userId, key, query);
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
     /**
-     * 搜索群组
+     * 搜索群组1101
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param query 搜索关键字
@@ -91,7 +91,45 @@ public class MiscController {
         try {
             return MiscAPI.searchChatgroup(userId, key, query);
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 全站搜索102
+     * @param query 搜索关键词
+     * @param all 是否搜索所有
+     * @param momemt 是否搜索时间线
+     * @param commodity 是否搜索商品
+     * @param guide 是否搜索攻略
+     * @param viewspot 是否搜索景点
+     * @param trace 是否搜索足迹
+     * @param tripplan 是否搜索行程规划
+     * @param quora 是否搜索问答
+     * @param activity 是否搜索活动
+     * @param post 是否搜索帖子
+     * @param travelnote 是否搜索游记
+     * @param restaurant 是否搜索美食
+     * @param hotel 是否搜索宾馆
+     * @param shopping 是否搜索购物
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/search", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String search(String query, Boolean all, Boolean momemt, Boolean commodity, Boolean guide, Boolean viewspot,
+                                          Boolean trace, Boolean tripplan, Boolean quora, Boolean activity, Boolean post, Boolean travelnote,
+                                          Boolean restaurant, Boolean hotel, Boolean shopping) {
+        if(query == null)
+            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1102);
+        try {
+            if(all == null) {
+                return MiscAPI.searchCondition(query, momemt, commodity, guide, viewspot, trace, tripplan, quora, activity, post, travelnote, restaurant, hotel, shopping);
+            }
+            if(all)
+                return MiscAPI.searchAll(query);
+            else
+                return MiscAPI.searchCondition(query, momemt, commodity, guide, viewspot, trace, tripplan, quora, activity, post, travelnote, restaurant, hotel, shopping);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 }

@@ -26,7 +26,7 @@ public class GuideController {
         try{
             return GuideAPI.getGuide(guideId);
         }catch (Exception e){
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 }

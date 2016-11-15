@@ -1,12 +1,9 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.ColumnAPI;
-import com.bjlx.QinShihuang.core.CommodityAPI;
-import com.bjlx.QinShihuang.core.GuideAPI;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,7 +24,7 @@ public class ColumnController {
         try {
             return ColumnAPI.getColumns();
         }catch (Exception e){
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -40,7 +37,7 @@ public class ColumnController {
         try{
             return ColumnAPI.getBanners();
         }catch (Exception e){
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -53,7 +50,7 @@ public class ColumnController {
         try {
             return ColumnAPI.getColumnCommoditys();
         } catch(Exception e){
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -66,7 +63,7 @@ public class ColumnController {
         try{
             return ColumnAPI.getColumnGuides();
         }catch (Exception e){
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 }

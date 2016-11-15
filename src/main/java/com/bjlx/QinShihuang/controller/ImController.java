@@ -50,7 +50,7 @@ public class ImController {
         try {
             return ImAPI.sendMsg(userId, key, msgReq.getId(), msgReq.getConvId(), msgReq.getContent(), msgReq.getReceiverId(), msgReq.getMsgType(), msgReq.getChatType());
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -70,7 +70,7 @@ public class ImController {
         try {
             return ImAPI.fetchMsg(userId, key, purgeBefore);
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -90,7 +90,7 @@ public class ImController {
         try {
             return ImAPI.updateConversation(userId, id, key, conversationReq.isMute());
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -116,7 +116,7 @@ public class ImController {
             }
             return ImAPI.getConversationsByIds(userId, key, ids);
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 }

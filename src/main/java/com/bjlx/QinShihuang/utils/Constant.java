@@ -127,6 +127,10 @@ public class Constant {
     public final static int CHATGROUP_PENDING = 3;
 
     /**
-     *
+     * 全站搜索
      */
+    public final static int SEARCH_ALL_OFFSET = 0;
+    public final static int SEARCH_ALL_LIMIT = 3;
+    public final static int SEARCH_CONDITION_OFFSET = 0;
+    public final static int SEARCH_CONDITION_LIMIT = 10;
 }

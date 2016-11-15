@@ -33,7 +33,7 @@ public class SocialController {
         try {
             return SocialAPI.following(userId, key, followingReq.getFollowingId());
         } catch(Exception e1) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -54,7 +54,7 @@ public class SocialController {
         try {
             return SocialAPI.cancelFollowing(userId, key, followingReq.getFollowingId());
         } catch(Exception e1) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -73,7 +73,7 @@ public class SocialController {
         try {
             return SocialAPI.getContacts(userId, key, offset == null ? defaultOffset : offset, limit == null ? defaultLimit : limit);
         } catch(Exception e1) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -89,7 +89,7 @@ public class SocialController {
         try {
             return SocialAPI.getContactInfo(userId, contactId, key);
         } catch(Exception e1) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -109,7 +109,7 @@ public class SocialController {
         try {
             return SocialAPI.updateMemo(userId, contactId, key, memoReq.getMemo());
         } catch(Exception e1) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -128,7 +128,7 @@ public class SocialController {
         try {
             return SocialAPI.updateBlackList(userId, key, blockReq.getBlockId(), true);
         } catch(Exception e1) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -144,7 +144,7 @@ public class SocialController {
         try {
             return SocialAPI.updateBlackList(userId, key, blockId, false);
         } catch(Exception e1) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -170,7 +170,7 @@ public class SocialController {
         try {
             return SocialAPI.getFollowings(userId, key, offset == null ? defaultOffset : offset, limit == null ? defaultLimit : limit);
         } catch(Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -190,7 +190,7 @@ public class SocialController {
         try {
             return SocialAPI.getFollows(userId, key, offset == null ? defaultOffset : offset, limit == null ? defaultLimit : limit);
         } catch(Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 }

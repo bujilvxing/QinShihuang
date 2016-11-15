@@ -25,7 +25,7 @@ public class ChatgroupController {
         try {
             return ChatgroupAPI.getChatgroup(chatgroupId, userId, key);
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 }

@@ -20,10 +20,11 @@ public enum ErrorCode {
 	INVALID_ARGUMENTS(100, "Invalid arguments"),
 	FORBIDDEN(403, "Forbidden"), 
 	NOT_FOUND(404, "Resource not found"),
-	ServerException(500, "Server Exception"),
+	SERVER_EXCEPTION(500, "Server Exception"),
 	ALIPAY_REFUND(901, "Ali pay refund need manual operation"),
 	UNKNOWN(999, "Unknown error"),
 	NETWORK_ERROR(601, "网络异常"),
+
 	// 图片
 	IMAGE_KEY_NULL(100001, "图片key为空"),
 	IMAGE_BUCKET_NULL(100002, "图片bucket为空"),
@@ -260,7 +261,8 @@ public enum ErrorCode {
 	QUERY_NULL_1101(110101, "query不可为空"),
 	UNLOGIN_1101(110102, "用户未登录"),
 
-	
+	// 全站搜索
+	QUERY_NULL_1102(110201, "query不可为空"),
 	;
 
 

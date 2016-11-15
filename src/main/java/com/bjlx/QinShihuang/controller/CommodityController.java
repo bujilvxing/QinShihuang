@@ -27,7 +27,7 @@ public class CommodityController {
         try{
             return CommodityAPI.getCommodityById(commodityId);
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 }

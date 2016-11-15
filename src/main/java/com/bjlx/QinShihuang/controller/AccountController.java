@@ -59,7 +59,7 @@ public class AccountController {
 	        		return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
 	        	}
         	} catch(Exception e1) {
-    			return QinShihuangResult.getResult(ErrorCode.ServerException);
+    			return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
     		}
         }
 
@@ -73,7 +73,7 @@ public class AccountController {
 	                return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
 	            }
         	} catch (Exception e1) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1001);
@@ -108,7 +108,7 @@ public class AccountController {
             try {
                 return AccountAPI.checkValidationCode(validationCodeReq.getAccount(), validationCodeReq.getCode(), true);
             } catch(Exception e1) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         }
 
@@ -116,7 +116,7 @@ public class AccountController {
             try {
                 return AccountAPI.checkValidationCode(validationCodeReq.getAccount(), validationCodeReq.getCode(), false);
             } catch(Exception e1) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1002);
@@ -147,7 +147,7 @@ public class AccountController {
                 return AccountAPI.signup(userInfoReq.getAccount(), userInfoReq.getToken(), userInfoReq.getPassword(), true, promotionCodeSize);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         }
 
@@ -156,7 +156,7 @@ public class AccountController {
                 return AccountAPI.signup(userInfoReq.getAccount(), userInfoReq.getToken(), userInfoReq.getPassword(), false, promotionCodeSize);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1003);
@@ -185,7 +185,7 @@ public class AccountController {
                 return AccountAPI.login(loginReq.getAccount(), loginReq.getPassword(), loginReq.getClientId(), true);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         }
 
@@ -194,7 +194,7 @@ public class AccountController {
                 return AccountAPI.login(loginReq.getAccount(), loginReq.getPassword(), loginReq.getClientId(), false);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1004);
@@ -225,7 +225,7 @@ public class AccountController {
         try {
             return AccountAPI.oauthlogin(oauthUserInfoReq.getProvider(), oauthUserInfoReq.getOauthId(), oauthUserInfoReq.getNickName(), oauthUserInfoReq.getAvatar(), oauthUserInfoReq.getToken(), oauthUserInfoReq.getClientId());
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -242,7 +242,7 @@ public class AccountController {
             return AccountAPI.logout(userId, key);
         } catch (Exception e) {
             e.printStackTrace();
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
     /**
@@ -267,7 +267,7 @@ public class AccountController {
                 return AccountAPI.resetPwd(resetPwdReq.getAccount(), resetPwdReq.getNewPassword(), resetPwdReq.getToken(), true);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         }
 
@@ -276,7 +276,7 @@ public class AccountController {
                 return AccountAPI.resetPwd(resetPwdReq.getAccount(), resetPwdReq.getNewPassword(), resetPwdReq.getToken(), false);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1007);
@@ -304,7 +304,7 @@ public class AccountController {
             return AccountAPI.updatePwd(updatePwd.getOldPassword(), updatePwd.getNewPassword(), userId, key);
         } catch(Exception e) {
             e.printStackTrace();
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -320,7 +320,7 @@ public class AccountController {
             return AccountAPI.getUserInfoById(userId, key);
         } catch (Exception e) {
             e.printStackTrace();
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -337,7 +337,7 @@ public class AccountController {
             return AccountAPI.updateUserInfo(userId, key, updateUserInfoReq);
         } catch (Exception e) {
             e.printStackTrace();
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -362,7 +362,7 @@ public class AccountController {
             try {
                 return AccountAPI.bindTel(bindTelReq.getTel(), bindTelReq.getToken(), userId, key);
             } catch (Exception e) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.TEL_FORMAT_1011);
@@ -390,7 +390,7 @@ public class AccountController {
             try {
                 return AccountAPI.bindEmail(bindEmailReq.getEmail(), bindEmailReq.getToken(), userId, key);
             } catch (Exception e) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.EMAIL_FORMAT_1103);
