@@ -14,7 +14,7 @@ public class GuideBasicFormatter {
         ObjectMapper mapper = new ObjectMapper();
 
         SimpleModule module = new SimpleModule();
-        module.addSerializer(Guide.class, new GuideSerializer());
+        module.addSerializer(Guide.class, new GuideBasicSerializer());
         module.addSerializer(ImageItem.class, new ImageItemSerializer());
         mapper.registerModule(module);
         return mapper;

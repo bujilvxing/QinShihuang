@@ -44,16 +44,16 @@ public class TraceBasicSerializer extends JsonSerializer<Trace> {
                 retAudio.serialize(audio, gen, serializers);
             }
             gen.writeStringField(Trace.fd_title, trace.getTitle() == null ? "" : trace.getTitle());
-            
+
             if(trace.getOriginId() != null)
             	gen.writeStringField(Trace.fd_originId, trace.getOriginId().toString());
-            
+
             if(trace.getOriginUserId() != null)
             	gen.writeNumberField(Trace.fd_originUserId, trace.getOriginUserId());
 
             if(trace.getOriginNickName() != null)
             	gen.writeStringField(Trace.fd_originNickName, trace.getOriginNickName());
-           
+
             ImageItem originAvatar = trace.getOriginAvatar();
             if (originAvatar != null) {
             	gen.writeFieldName(Trace.fd_originAvatar);

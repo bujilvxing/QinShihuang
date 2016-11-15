@@ -390,7 +390,7 @@ public class MiscAPI {
                 result.set("tripPlans", TripPlanBasicFormatter.getMapper().valueToTree(tripPlans));
             List<Question> questions = queryQuestions(query);
             if(questions != null)
-                result.set("questions", QuestionBasicFormatter.getMapper().valueToTree(questions));
+                result.set("quoras", QuestionBasicFormatter.getMapper().valueToTree(questions));
             List<Activity> activities = queryActivities(query);
             if(activities != null)
                 result.set("activities", ActivityBasicFormatter.getMapper().valueToTree(activities));
@@ -469,7 +469,7 @@ public class MiscAPI {
             if(quora) {
                 List<Question> questions = queryQuestions(query);
                 if (questions != null)
-                    result.set("questions", QuestionBasicFormatter.getMapper().valueToTree(questions));
+                    result.set("quoras", QuestionBasicFormatter.getMapper().valueToTree(questions));
             }
             if(activity) {
                 List<Activity> activities = queryActivities(query);

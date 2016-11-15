@@ -15,11 +15,6 @@ public class ViewspotBasicSerializer extends JsonSerializer<Viewspot> {
 	    try {
 	        gen.writeStartObject();
 	        gen.writeStringField(Viewspot.fd_id, viewspot.getId() == null ? "" : viewspot.getId().toString());
-	        if(viewspot.getLat() != null)
-	        	gen.writeNumberField(Viewspot.fd_lat, viewspot.getLat());
-	        if(viewspot.getLng() != null)
-	        	gen.writeNumberField(Viewspot.fd_lng, viewspot.getLng());
-
 	        gen.writeFieldName(Viewspot.fd_cover);
             ImageItem cover = viewspot.getCover();
             if (cover != null) {

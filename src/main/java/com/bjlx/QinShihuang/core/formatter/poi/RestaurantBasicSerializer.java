@@ -15,11 +15,6 @@ public class RestaurantBasicSerializer extends JsonSerializer<Restaurant> {
 	    try {
 	        gen.writeStartObject();
 	        gen.writeStringField(Restaurant.fd_id, restaurant.getId() == null ? "" : restaurant.getId().toString());
-	        if(restaurant.getLat() != null)
-	        	gen.writeNumberField(Restaurant.fd_lat, restaurant.getLat());
-	        if(restaurant.getLng() != null)
-	        	gen.writeNumberField(Restaurant.fd_lng, restaurant.getLng());
-
 	        gen.writeFieldName(Restaurant.fd_cover);
             ImageItem cover = restaurant.getCover();
             if (cover != null) {
