@@ -1,11 +1,19 @@
 package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
+import com.bjlx.QinShihuang.core.formatter.activity.ActivityBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.guide.GuideBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.im.ChatgroupBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.marketplace.CommodityBasicFormatter;
+import com.bjlx.QinShihuang.core.formatter.misc.TravelNoteBasicFormatter;
+import com.bjlx.QinShihuang.core.formatter.poi.HotelBasicFormatter;
+import com.bjlx.QinShihuang.core.formatter.poi.RestaurantBasicFormatter;
+import com.bjlx.QinShihuang.core.formatter.poi.ShoppingBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.poi.ViewspotBasicFormatter;
+import com.bjlx.QinShihuang.core.formatter.quora.QuestionBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.timeline.MomentBasicFormatter;
+import com.bjlx.QinShihuang.core.formatter.trace.TraceBasicFormatter;
+import com.bjlx.QinShihuang.core.formatter.tripplan.TripPlanBasicFormatter;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.activity.Activity;
@@ -278,7 +286,7 @@ public class MiscAPI {
 
     /**
      * 搜索活动
-     * @param query 关键
+     * @param query 关键字
      * @return 活动列表
      */
     public static List<Activity> queryActivities(String query) throws Exception {
@@ -293,7 +301,7 @@ public class MiscAPI {
 
     /**
      * 搜索游记
-     * @param query 关键
+     * @param query 关键字
      * @return 游记列表
      */
     public static List<TravelNote> queryTravelNotes(String query) throws Exception {
@@ -308,7 +316,7 @@ public class MiscAPI {
 
     /**
      * 搜索美食
-     * @param query 关键
+     * @param query 关键字
      * @return 美食列表
      */
     public static List<Restaurant> queryRestaurants(String query) throws Exception {
@@ -323,7 +331,7 @@ public class MiscAPI {
 
     /**
      * 搜索宾馆
-     * @param query 关键
+     * @param query 关键字
      * @return 宾馆列表
      */
     public static List<Hotel> queryHotels(String query) throws Exception {
@@ -338,7 +346,7 @@ public class MiscAPI {
 
     /**
      * 搜索购物
-     * @param query 关键
+     * @param query 关键字
      * @return 购物列表
      */
     public static List<Shopping> queryShoppings(String query) throws Exception {
@@ -374,46 +382,31 @@ public class MiscAPI {
             List<Viewspot> viewspots = queryViewspots(query);
             if(viewspots != null)
                 result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
-
-//            List<Trace> traces = queryTraces(query);
-//            if(traces != null)
-//                result.set("traces", TraceBasicFormatter.getMapper().valueToTree(traces));
-//            List<Viewspot> viewspots = queryViewspots(query);
-//            if(viewspots != null)
-//                result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
-//            List<Viewspot> viewspots = queryViewspots(query);
-//            if(viewspots != null)
-//                result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
-//            List<Viewspot> viewspots = queryViewspots(query);
-//            if(viewspots != null)
-//                result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
-//            List<Viewspot> viewspots = queryViewspots(query);
-//            if(viewspots != null)
-//                result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
-//            List<Viewspot> viewspots = queryViewspots(query);
-//            if(viewspots != null)
-//                result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
-//            List<Viewspot> viewspots = queryViewspots(query);
-//            if(viewspots != null)
-//                result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
-//            List<Viewspot> viewspots = queryViewspots(query);
-//            if(viewspots != null)
-//                result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
-//            queryTraces  queryTripPlans queryQuestions queryActivities queryTravelNotes queryRestaurants queryHotels queryShoppings
-//            * @param query 搜索关键词
-//            * @param momemt 是否搜索时间线
-//            * @param commodity 是否搜索商品
-//            * @param guide 是否搜索攻略
-//            * @param viewspot 是否搜索景点
-//            * @param trace 是否搜索足迹
-//            * @param tripplan 是否搜索行程规划
-//            * @param quora 是否搜索问答
-//            * @param activity 是否搜索活动
-//            * @param travelnote 是否搜索游记
-//            * @param restaurant 是否搜索美食
-//            * @param hotel 是否搜索宾馆
-//            * @param shopping 是否搜索购物
-            return QinShihuangResult.ok();
+            List<Trace> traces = queryTraces(query);
+            if(traces != null)
+                result.set("traces", TraceBasicFormatter.getMapper().valueToTree(traces));
+            List<TripPlan> tripPlans = queryTripPlans(query);
+            if(tripPlans != null)
+                result.set("tripPlans", TripPlanBasicFormatter.getMapper().valueToTree(tripPlans));
+            List<Question> questions = queryQuestions(query);
+            if(questions != null)
+                result.set("questions", QuestionBasicFormatter.getMapper().valueToTree(questions));
+            List<Activity> activities = queryActivities(query);
+            if(activities != null)
+                result.set("activities", ActivityBasicFormatter.getMapper().valueToTree(activities));
+            List<TravelNote> travelNotes = queryTravelNotes(query);
+            if(travelNotes != null)
+                result.set("travelNotes", TravelNoteBasicFormatter.getMapper().valueToTree(travelNotes));
+            List<Restaurant> restaurants = queryRestaurants(query);
+            if(restaurants != null)
+                result.set("restaurants", RestaurantBasicFormatter.getMapper().valueToTree(restaurants));
+            List<Hotel> hotels = queryHotels(query);
+            if(hotels != null)
+                result.set("hotels", HotelBasicFormatter.getMapper().valueToTree(hotels));
+            List<Shopping> shoppings = queryShoppings(query);
+            if(shoppings != null)
+                result.set("shoppings", ShoppingBasicFormatter.getMapper().valueToTree(shoppings));
+            return QinShihuangResult.ok(result);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -428,11 +421,10 @@ public class MiscAPI {
      * @param guide 是否搜索攻略
      * @param viewspot 是否搜索景点
      * @param trace 是否搜索足迹
-     * @param tripplan 是否搜索行程规划
+     * @param tripPlan 是否搜索行程规划
      * @param quora 是否搜索问答
      * @param activity 是否搜索活动
-     * @param post 是否搜索帖子
-     * @param travelnote 是否搜索游记
+     * @param travelNote 是否搜索游记
      * @param restaurant 是否搜索美食
      * @param hotel 是否搜索宾馆
      * @param shopping 是否搜索购物
@@ -440,9 +432,74 @@ public class MiscAPI {
      * @throws Exception 异常
      */
     public static String searchCondition(String query , Boolean momemt, Boolean commodity, Boolean guide, Boolean viewspot,
-                                         Boolean trace, Boolean tripplan, Boolean quora, Boolean activity, Boolean post, Boolean travelnote,
+                                         Boolean trace, Boolean tripPlan, Boolean quora, Boolean activity, Boolean travelNote,
                                          Boolean restaurant, Boolean hotel, Boolean shopping) throws Exception {
-        return null;
-
+        ObjectNode result = mapper.createObjectNode();
+        try {
+            if(momemt) {
+                List<Moment> moments = queryMoments(query);
+                if (moments != null)
+                    result.set("moments", MomentBasicFormatter.getMapper().valueToTree(moments));
+            }
+            if(commodity) {
+                List<Commodity> commodities = queryCommodities(query);
+                if (commodities != null)
+                    result.set("commodities", CommodityBasicFormatter.getMapper().valueToTree(commodities));
+            }
+            if(guide) {
+                List<Guide> guides = queryGuides(query);
+                if (guides != null)
+                    result.set("guides", GuideBasicFormatter.getMapper().valueToTree(guides));
+            }
+            if(viewspot) {
+                List<Viewspot> viewspots = queryViewspots(query);
+                if (viewspots != null)
+                    result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
+            }
+            if(trace) {
+                List<Trace> traces = queryTraces(query);
+                if (traces != null)
+                    result.set("traces", TraceBasicFormatter.getMapper().valueToTree(traces));
+            }
+            if(tripPlan) {
+                List<TripPlan> tripPlans = queryTripPlans(query);
+                if (tripPlans != null)
+                    result.set("tripPlans", TripPlanBasicFormatter.getMapper().valueToTree(tripPlans));
+            }
+            if(quora) {
+                List<Question> questions = queryQuestions(query);
+                if (questions != null)
+                    result.set("questions", QuestionBasicFormatter.getMapper().valueToTree(questions));
+            }
+            if(activity) {
+                List<Activity> activities = queryActivities(query);
+                if (activities != null)
+                    result.set("activities", ActivityBasicFormatter.getMapper().valueToTree(activities));
+            }
+            if(travelNote) {
+                List<TravelNote> travelNotes = queryTravelNotes(query);
+                if (travelNotes != null)
+                    result.set("travelNotes", TravelNoteBasicFormatter.getMapper().valueToTree(travelNotes));
+            }
+            if(restaurant) {
+                List<Restaurant> restaurants = queryRestaurants(query);
+                if (restaurants != null)
+                    result.set("restaurants", RestaurantBasicFormatter.getMapper().valueToTree(restaurants));
+            }
+            if(hotel) {
+                List<Hotel> hotels = queryHotels(query);
+                if (hotels != null)
+                    result.set("hotels", HotelBasicFormatter.getMapper().valueToTree(hotels));
+            }
+            if(shopping) {
+                List<Shopping> shoppings = queryShoppings(query);
+                if (shoppings != null)
+                    result.set("shoppings", ShoppingBasicFormatter.getMapper().valueToTree(shoppings));
+            }
+            return QinShihuangResult.ok(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

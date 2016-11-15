@@ -88,6 +88,6 @@ public class QinShihuangResult {
 	}
 	
 	public static String serverException(String errorMsg) {
-		return getResult(ErrorCode.ServerException, null, errorMsg);
+		return getResult(ErrorCode.SERVER_EXCEPTION, null, errorMsg);
 	}
 }

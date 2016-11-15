@@ -104,11 +104,10 @@ public class MiscController {
      * @param guide 是否搜索攻略
      * @param viewspot 是否搜索景点
      * @param trace 是否搜索足迹
-     * @param tripplan 是否搜索行程规划
+     * @param tripPlan 是否搜索行程规划
      * @param quora 是否搜索问答
      * @param activity 是否搜索活动
-     * @param post 是否搜索帖子
-     * @param travelnote 是否搜索游记
+     * @param travelNote 是否搜索游记
      * @param restaurant 是否搜索美食
      * @param hotel 是否搜索宾馆
      * @param shopping 是否搜索购物
@@ -116,18 +115,30 @@ public class MiscController {
      */
     @RequestMapping(value = "/app/search", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String search(String query, Boolean all, Boolean momemt, Boolean commodity, Boolean guide, Boolean viewspot,
-                                          Boolean trace, Boolean tripplan, Boolean quora, Boolean activity, Boolean post, Boolean travelnote,
+                                          Boolean trace, Boolean tripPlan, Boolean quora, Boolean activity, Boolean travelNote,
                                           Boolean restaurant, Boolean hotel, Boolean shopping) {
         if(query == null)
             return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1102);
         try {
             if(all == null) {
-                return MiscAPI.searchCondition(query, momemt, commodity, guide, viewspot, trace, tripplan, quora, activity, post, travelnote, restaurant, hotel, shopping);
+                return MiscAPI.searchCondition(query, momemt == null ? false : momemt,
+                        commodity == null ? false : commodity, guide == null ? false : guide,
+                        viewspot == null ? false : viewspot, trace == null ? false : trace,
+                        tripPlan == null ? false : tripPlan, quora == null ? false : quora,
+                        activity == null ? false : activity, travelNote == null ? false : travelNote,
+                        restaurant == null ? false : restaurant, hotel == null ? false : hotel,
+                        shopping == null ? false : shopping);
             }
             if(all)
                 return MiscAPI.searchAll(query);
             else
-                return MiscAPI.searchCondition(query, momemt, commodity, guide, viewspot, trace, tripplan, quora, activity, post, travelnote, restaurant, hotel, shopping);
+                return MiscAPI.searchCondition(query, momemt == null ? false : momemt,
+                        commodity == null ? false : commodity, guide == null ? false : guide,
+                        viewspot == null ? false : viewspot, trace == null ? false : trace,
+                        tripPlan == null ? false : tripPlan, quora == null ? false : quora,
+                        activity == null ? false : activity, travelNote == null ? false : travelNote,
+                        restaurant == null ? false : restaurant, hotel == null ? false : hotel,
+                        shopping == null ? false : shopping);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
