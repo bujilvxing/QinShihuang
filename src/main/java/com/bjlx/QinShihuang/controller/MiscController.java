@@ -58,4 +58,40 @@ public class MiscController {
             return QinShihuangResult.getResult(ErrorCode.ServerException);
         }
     }
+
+    /**
+     * 搜索用户
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param query 搜索关键字
+     * @return 用户信息
+     */
+    @RequestMapping(value = "/app/users", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String searchUser(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, String query) {
+        if(query == null)
+            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1100);
+        try {
+            return MiscAPI.searchUser(userId, key, query);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
+
+    /**
+     * 搜索群组
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param query 搜索关键字
+     * @return 群组信息
+     */
+    @RequestMapping(value = "/app/chatgroups", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String searchChatgroup(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, String query) {
+        if(query == null)
+            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1101);
+        try {
+            return MiscAPI.searchChatgroup(userId, key, query);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.ServerException);
+        }
+    }
 }

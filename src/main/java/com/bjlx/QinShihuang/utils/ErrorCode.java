@@ -247,6 +247,20 @@ public enum ErrorCode {
 	UNLOGIN_1070(107001, "用户未登录"),
 	CHATGROUP_NOT_EXIST_1070(107002, "群组不存在"),
 
+	/**
+	 * 搜索
+	 */
+	// 用户搜索
+	QUERY_NULL_1100(110001, "query不可为空"),
+	UNLOGIN_1100(110002, "用户未登录"),
+	QUERY_INVALID_1100(110003, "query不合法"),
+	USER_NOT_EXIST_1100(110004, "用户不存在"),
+
+	// 群组搜索
+	QUERY_NULL_1101(110101, "query不可为空"),
+	UNLOGIN_1101(110102, "用户未登录"),
+
+	
 	;
 
 
