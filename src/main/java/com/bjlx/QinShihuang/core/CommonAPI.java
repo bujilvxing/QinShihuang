@@ -8,6 +8,10 @@ import com.bjlx.QinShihuang.utils.MorphiaFactory;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
 /**
  * 公共方法
  * Created by xiaozhi on 2016/11/8.
@@ -64,5 +68,18 @@ public class CommonAPI {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    /**
+     * 是否ObjectId
+     * @param id ObjectId字符串
+     * @return 是否ObjectId
+     * @throws PatternSyntaxException 模式匹配异常
+     */
+    public static boolean isObjectId(String id) throws PatternSyntaxException {
+        String regExp = "^\\[0-9a-f]{24}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(id);
+        return m.matches();
     }
 }

@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.core;
 
+import com.bjlx.QinShihuang.core.formatter.im.ConversationFormatter;
 import com.bjlx.QinShihuang.core.formatter.im.MessageFormatter;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.im.Content;
@@ -525,7 +526,7 @@ public class ImAPI {
     /**
      * 设置消息免打扰
      * @param userId 用户id
-     * @param convId 会话id
+     * @param id 会话id
      * @param key 不羁旅行令牌
      * @param mute 是否消息免打扰
      * @return 结果
@@ -536,7 +537,7 @@ public class ImAPI {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1066);
             }
-            Query<Conversation> query = ds.createQuery(Conversation.class).field(Conversation.fd_convId).equal(new ObjectId(id));
+            Query<Conversation> query = ds.createQuery(Conversation.class).field(Conversation.fd_id).equal(new ObjectId(id));
             Conversation conv = query.get();
             if(conv == null)
                 return QinShihuangResult.getResult(ErrorCode.CONV_NOT_EXIST_1066);
@@ -554,5 +555,34 @@ public class ImAPI {
         }
     }
 
+    /**
+     * 取的会话列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param ids 会话的id列表
+     * @return 会话列表
+     * @throws Exception 异常
+     */
+    public static String getConversationsByIds(Long userId, String key, List<ObjectId> ids) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1067);
+            }
+            Query<Conversation> query = ds.createQuery(Conversation.class).field(Conversation.fd_id).in(ids);
+            List<Conversation> convs = query.asList();
 
+            if(convs == null)
+                return QinShihuangResult.ok(ConversationFormatter.getMapper().valueToTree(new ArrayList<Conversation>()));
+            else {
+                for (Conversation conv : convs) {
+                    conv.setMuted(conv.getMuteNotif().contains(userId));
+                    conv.setPinned(conv.getPinList().contains(userId));
+                }
+                return QinShihuangResult.ok(ConversationFormatter.getMapper().valueToTree(convs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }
