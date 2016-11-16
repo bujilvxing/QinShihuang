@@ -181,28 +181,40 @@ public class MiscAPI {
 
     /**
      * 搜索时间线
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 时间线列表
+     * @throws Exception 异常
      */
-    public static List<Moment> queryMoments(String query) throws Exception {
+    public static List<Moment> queryMoments(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(Moment.class).field(Moment.fd_comment).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Moment.fd_publishTime)).asList();
+            if(isAll)
+                return ds.createQuery(Moment.class).field(Moment.fd_comment).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Moment.fd_publishTime)).asList();
+            else
+                return ds.createQuery(Moment.class).field(Moment.fd_comment).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", Moment.fd_publishTime)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
     }
-
+    
     /**
      * 搜索商品
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 商品列表
+     * @throws Exception 异常
      */
-    public static List<Commodity> queryCommodities(String query) throws Exception {
+    public static List<Commodity> queryCommodities(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(Commodity.class).field(Commodity.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Commodity.fd_updateTime)).asList();
+            if(isAll)
+                return ds.createQuery(Commodity.class).field(Commodity.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Commodity.fd_updateTime)).asList();
+            else
+                return ds.createQuery(Commodity.class).field(Commodity.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", Commodity.fd_updateTime)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -211,13 +223,19 @@ public class MiscAPI {
 
     /**
      * 搜索攻略
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 攻略列表
+     * @throws Exception 异常
      */
-    public static List<Guide> queryGuides(String query) throws Exception {
+    public static List<Guide> queryGuides(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(Guide.class).field(Guide.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Guide.fd_updateTime)).asList();
+            if(isAll)
+                return ds.createQuery(Guide.class).field(Guide.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Guide.fd_updateTime)).asList();
+            else
+                return ds.createQuery(Guide.class).field(Guide.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", Guide.fd_updateTime)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -226,13 +244,19 @@ public class MiscAPI {
 
     /**
      * 搜索景点
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 景点列表
+     * @throws Exception 异常
      */
-    public static List<Viewspot> queryViewspots(String query) throws Exception {
+    public static List<Viewspot> queryViewspots(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(Viewspot.class).field(Viewspot.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Viewspot.fd_hotness)).asList();
+            if(isAll)
+                return ds.createQuery(Viewspot.class).field(Viewspot.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Viewspot.fd_hotness)).asList();
+            else
+                return ds.createQuery(Viewspot.class).field(Viewspot.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", Viewspot.fd_hotness)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -241,13 +265,19 @@ public class MiscAPI {
 
     /**
      * 搜索足迹
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 足迹列表
+     * @throws Exception 异常
      */
-    public static List<Trace> queryTraces(String query) throws Exception {
+    public static List<Trace> queryTraces(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(Trace.class).field(Trace.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Trace.fd_updateTime)).asList();
+            if(isAll)
+                return ds.createQuery(Trace.class).field(Trace.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Trace.fd_updateTime)).asList();
+            else
+                return ds.createQuery(Trace.class).field(Trace.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", Trace.fd_updateTime)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -256,13 +286,19 @@ public class MiscAPI {
 
     /**
      * 搜索行程规划
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 行程规划列表
+     * @throws Exception 异常
      */
-    public static List<TripPlan> queryTripPlans(String query) throws Exception {
+    public static List<TripPlan> queryTripPlans(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(TripPlan.class).field(TripPlan.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", TripPlan.fd_updateTime)).asList();
+            if(isAll)
+                return ds.createQuery(TripPlan.class).field(TripPlan.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", TripPlan.fd_updateTime)).asList();
+            else
+                return ds.createQuery(TripPlan.class).field(TripPlan.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", TripPlan.fd_updateTime)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -271,13 +307,19 @@ public class MiscAPI {
 
     /**
      * 搜索问题
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 问题列表
+     * @throws Exception 异常
      */
-    public static List<Question> queryQuestions(String query) throws Exception {
+    public static List<Question> queryQuestions(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(Question.class).field(Question.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Question.fd_publishTime)).asList();
+            if(isAll)
+                return ds.createQuery(Question.class).field(Question.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Question.fd_publishTime)).asList();
+            else
+                return ds.createQuery(Question.class).field(Question.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", Question.fd_publishTime)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -286,13 +328,19 @@ public class MiscAPI {
 
     /**
      * 搜索活动
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 活动列表
+     * @throws Exception 异常
      */
-    public static List<Activity> queryActivities(String query) throws Exception {
+    public static List<Activity> queryActivities(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(Activity.class).field(Activity.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Activity.fd_endTime)).asList();
+            if(isAll)
+                return ds.createQuery(Activity.class).field(Activity.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Activity.fd_endTime)).asList();
+            else
+                return ds.createQuery(Activity.class).field(Activity.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", Activity.fd_endTime)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -301,13 +349,19 @@ public class MiscAPI {
 
     /**
      * 搜索游记
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 游记列表
+     * @throws Exception 异常
      */
-    public static List<TravelNote> queryTravelNotes(String query) throws Exception {
+    public static List<TravelNote> queryTravelNotes(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(TravelNote.class).field(TravelNote.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", TravelNote.fd_publishTime)).asList();
+            if(isAll)
+                return ds.createQuery(TravelNote.class).field(TravelNote.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", TravelNote.fd_publishTime)).asList();
+            else
+                return ds.createQuery(TravelNote.class).field(TravelNote.fd_title).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", TravelNote.fd_publishTime)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -316,13 +370,19 @@ public class MiscAPI {
 
     /**
      * 搜索美食
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 美食列表
+     * @throws Exception 异常
      */
-    public static List<Restaurant> queryRestaurants(String query) throws Exception {
+    public static List<Restaurant> queryRestaurants(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(Restaurant.class).field(Restaurant.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Restaurant.fd_hotness)).asList();
+            if(isAll)
+                return ds.createQuery(Restaurant.class).field(Restaurant.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Restaurant.fd_hotness)).asList();
+            else
+                return ds.createQuery(Restaurant.class).field(Restaurant.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", Restaurant.fd_hotness)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -331,13 +391,19 @@ public class MiscAPI {
 
     /**
      * 搜索宾馆
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 宾馆列表
+     * @throws Exception 异常
      */
-    public static List<Hotel> queryHotels(String query) throws Exception {
+    public static List<Hotel> queryHotels(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(Hotel.class).field(Hotel.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Hotel.fd_hotness)).asList();
+            if(isAll)
+                return ds.createQuery(Hotel.class).field(Hotel.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Hotel.fd_hotness)).asList();
+            else
+                return ds.createQuery(Hotel.class).field(Hotel.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_CONDITION_OFFSET)
+                        .limit(Constant.SEARCH_CONDITION_LIMIT).order(String.format("-%s", Hotel.fd_hotness)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -346,13 +412,19 @@ public class MiscAPI {
 
     /**
      * 搜索购物
+     * @param isAll 是否搜索全站
      * @param query 关键字
      * @return 购物列表
+     * @throws Exception 异常
      */
-    public static List<Shopping> queryShoppings(String query) throws Exception {
+    public static List<Shopping> queryShoppings(Boolean isAll, String query) throws Exception {
         try {
-            return ds.createQuery(Shopping.class).field(Shopping.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
-                    .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Shopping.fd_hotness)).asList();
+            if(isAll)
+                return ds.createQuery(Shopping.class).field(Shopping.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Shopping.fd_hotness)).asList();
+            else
+                return ds.createQuery(Shopping.class).field(Shopping.fd_zhName).containsIgnoreCase(query).offset(Constant.SEARCH_ALL_OFFSET)
+                        .limit(Constant.SEARCH_ALL_LIMIT).order(String.format("-%s", Shopping.fd_hotness)).asList();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -370,40 +442,40 @@ public class MiscAPI {
     public static String searchAll(String query) throws Exception {
         ObjectNode result = mapper.createObjectNode();
         try {
-            List<Moment> moments = queryMoments(query);
+            List<Moment> moments = queryMoments(true, query);
             if(moments != null)
                 result.set("moments", MomentBasicFormatter.getMapper().valueToTree(moments));
-            List<Commodity> commodities = queryCommodities(query);
+            List<Commodity> commodities = queryCommodities(true, query);
             if(commodities != null)
                 result.set("commodities", CommodityBasicFormatter.getMapper().valueToTree(commodities));
-            List<Guide> guides = queryGuides(query);
+            List<Guide> guides = queryGuides(true, query);
             if(guides != null)
                 result.set("guides", GuideBasicFormatter.getMapper().valueToTree(guides));
-            List<Viewspot> viewspots = queryViewspots(query);
+            List<Viewspot> viewspots = queryViewspots(true, query);
             if(viewspots != null)
                 result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
-            List<Trace> traces = queryTraces(query);
+            List<Trace> traces = queryTraces(true, query);
             if(traces != null)
                 result.set("traces", TraceBasicFormatter.getMapper().valueToTree(traces));
-            List<TripPlan> tripPlans = queryTripPlans(query);
+            List<TripPlan> tripPlans = queryTripPlans(true, query);
             if(tripPlans != null)
                 result.set("tripPlans", TripPlanBasicFormatter.getMapper().valueToTree(tripPlans));
-            List<Question> questions = queryQuestions(query);
+            List<Question> questions = queryQuestions(true, query);
             if(questions != null)
                 result.set("quoras", QuestionBasicFormatter.getMapper().valueToTree(questions));
-            List<Activity> activities = queryActivities(query);
+            List<Activity> activities = queryActivities(true, query);
             if(activities != null)
                 result.set("activities", ActivityBasicFormatter.getMapper().valueToTree(activities));
-            List<TravelNote> travelNotes = queryTravelNotes(query);
+            List<TravelNote> travelNotes = queryTravelNotes(true, query);
             if(travelNotes != null)
                 result.set("travelNotes", TravelNoteBasicFormatter.getMapper().valueToTree(travelNotes));
-            List<Restaurant> restaurants = queryRestaurants(query);
+            List<Restaurant> restaurants = queryRestaurants(true, query);
             if(restaurants != null)
                 result.set("restaurants", RestaurantBasicFormatter.getMapper().valueToTree(restaurants));
-            List<Hotel> hotels = queryHotels(query);
+            List<Hotel> hotels = queryHotels(true, query);
             if(hotels != null)
                 result.set("hotels", HotelBasicFormatter.getMapper().valueToTree(hotels));
-            List<Shopping> shoppings = queryShoppings(query);
+            List<Shopping> shoppings = queryShoppings(true, query);
             if(shoppings != null)
                 result.set("shoppings", ShoppingBasicFormatter.getMapper().valueToTree(shoppings));
             return QinShihuangResult.ok(result);
@@ -437,62 +509,62 @@ public class MiscAPI {
         ObjectNode result = mapper.createObjectNode();
         try {
             if(momemt) {
-                List<Moment> moments = queryMoments(query);
+                List<Moment> moments = queryMoments(false, query);
                 if (moments != null)
                     result.set("moments", MomentBasicFormatter.getMapper().valueToTree(moments));
             }
             if(commodity) {
-                List<Commodity> commodities = queryCommodities(query);
+                List<Commodity> commodities = queryCommodities(false, query);
                 if (commodities != null)
                     result.set("commodities", CommodityBasicFormatter.getMapper().valueToTree(commodities));
             }
             if(guide) {
-                List<Guide> guides = queryGuides(query);
+                List<Guide> guides = queryGuides(false, query);
                 if (guides != null)
                     result.set("guides", GuideBasicFormatter.getMapper().valueToTree(guides));
             }
             if(viewspot) {
-                List<Viewspot> viewspots = queryViewspots(query);
+                List<Viewspot> viewspots = queryViewspots(false, query);
                 if (viewspots != null)
                     result.set("viewspots", ViewspotBasicFormatter.getMapper().valueToTree(viewspots));
             }
             if(trace) {
-                List<Trace> traces = queryTraces(query);
+                List<Trace> traces = queryTraces(false, query);
                 if (traces != null)
                     result.set("traces", TraceBasicFormatter.getMapper().valueToTree(traces));
             }
             if(tripPlan) {
-                List<TripPlan> tripPlans = queryTripPlans(query);
+                List<TripPlan> tripPlans = queryTripPlans(false, query);
                 if (tripPlans != null)
                     result.set("tripPlans", TripPlanBasicFormatter.getMapper().valueToTree(tripPlans));
             }
             if(quora) {
-                List<Question> questions = queryQuestions(query);
+                List<Question> questions = queryQuestions(false, query);
                 if (questions != null)
                     result.set("quoras", QuestionBasicFormatter.getMapper().valueToTree(questions));
             }
             if(activity) {
-                List<Activity> activities = queryActivities(query);
+                List<Activity> activities = queryActivities(false, query);
                 if (activities != null)
                     result.set("activities", ActivityBasicFormatter.getMapper().valueToTree(activities));
             }
             if(travelNote) {
-                List<TravelNote> travelNotes = queryTravelNotes(query);
+                List<TravelNote> travelNotes = queryTravelNotes(false, query);
                 if (travelNotes != null)
                     result.set("travelNotes", TravelNoteBasicFormatter.getMapper().valueToTree(travelNotes));
             }
             if(restaurant) {
-                List<Restaurant> restaurants = queryRestaurants(query);
+                List<Restaurant> restaurants = queryRestaurants(false, query);
                 if (restaurants != null)
                     result.set("restaurants", RestaurantBasicFormatter.getMapper().valueToTree(restaurants));
             }
             if(hotel) {
-                List<Hotel> hotels = queryHotels(query);
+                List<Hotel> hotels = queryHotels(false, query);
                 if (hotels != null)
                     result.set("hotels", HotelBasicFormatter.getMapper().valueToTree(hotels));
             }
             if(shopping) {
-                List<Shopping> shoppings = queryShoppings(query);
+                List<Shopping> shoppings = queryShoppings(false, query);
                 if (shoppings != null)
                     result.set("shoppings", ShoppingBasicFormatter.getMapper().valueToTree(shoppings));
             }

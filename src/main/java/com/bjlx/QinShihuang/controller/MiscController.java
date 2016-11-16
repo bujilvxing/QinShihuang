@@ -2,6 +2,7 @@ package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.MiscAPI;
 import com.bjlx.QinShihuang.requestmodel.ApplySellerReq;
+import com.bjlx.QinShihuang.requestmodel.FavoriteReq;
 import com.bjlx.QinShihuang.requestmodel.FeedbackReq;
 import com.bjlx.QinShihuang.utils.CommonUtil;
 import com.bjlx.QinShihuang.utils.ErrorCode;
@@ -142,5 +143,17 @@ public class MiscController {
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
+    }
+
+    /**
+     * 添加收藏
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param favoriteReq 收藏参数
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/search", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, FavoriteReq favoriteReq) {
+        return null;
     }
 }

@@ -133,4 +133,22 @@ public class Constant {
     public final static int SEARCH_ALL_LIMIT = 3;
     public final static int SEARCH_CONDITION_OFFSET = 0;
     public final static int SEARCH_CONDITION_LIMIT = 10;
+
+    /**
+     * 收藏类型
+     */
+    public final static int FAVORITE_POST = 1;
+    public final static int FAVORITE_TRACE = 2;
+    public final static int FAVORITE_TRIPPLAN = 3;
+    public final static int FAVORITE_ACTIVITY = 4;
+    public final static int FAVORITE_QUORA = 5;
+    public final static int FAVORITE_RESTAURANT = 6;
+    public final static int FAVORITE_HOTEL = 7;
+    public final static int FAVORITE_TRAVELNOTE = 8;
+    public final static int FAVORITE_VIEWSPOT = 9;
+    public final static int FAVORITE_SHOPPING = 10;
+    public final static int FAVORITE_COMMODITY = 11;
+    public static boolean checkFavoriteType(Integer favoriteType) {
+        return favoriteType >= FAVORITE_POST && favoriteType <= FAVORITE_COMMODITY;
+    }
 }

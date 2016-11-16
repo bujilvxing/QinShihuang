@@ -1,14 +1,14 @@
 package com.bjlx.QinShihuang;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.gexin.rp.sdk.base.IPushResult;
 import com.gexin.rp.sdk.base.impl.AppMessage;
 import com.gexin.rp.sdk.http.IGtPush;
 import com.gexin.rp.sdk.template.LinkTemplate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 用于测试
@@ -63,6 +63,6 @@ public class Sandbox {
 //        for(Long id : filtered) {
 //            System.out.println(id);
 //        }
-
+        System.out.print(new ObjectMapper().valueToTree(NullNode.getInstance()).toString());
     }
 }
