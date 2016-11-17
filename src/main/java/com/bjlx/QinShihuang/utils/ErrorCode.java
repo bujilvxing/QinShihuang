@@ -260,6 +260,9 @@ public enum ErrorCode {
 	FAVORITETYPE_INVALID_1077(107705, "favoriteType不合法"),
 	ITEMID_INVALID_1077(107706, "itemId不合法"),
 
+	// 取消收藏
+	UNLOGIN_1078(107801, "用户未登录"),
+
 	/**
 	 * 搜索
 	 */

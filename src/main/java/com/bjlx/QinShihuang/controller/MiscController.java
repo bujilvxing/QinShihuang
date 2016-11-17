@@ -152,8 +152,8 @@ public class MiscController {
      * @param favoriteReq 收藏参数
      * @return 结果
      */
-    @RequestMapping(value = "/app/search", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String addFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, FavoriteReq favoriteReq) {
+    @RequestMapping(value = "/app/favorites", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody FavoriteReq favoriteReq) {
         if(favoriteReq.getFavoriteType() == null)
             return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_NULL_1077);
         if(favoriteReq.getItemId() == null)
@@ -163,6 +163,22 @@ public class MiscController {
         try {
             return MiscAPI.addFavorite(userId, key, favoriteReq.getFavoriteType(), favoriteReq.getItemId(), favoriteReq.getAuthorId(),
                     favoriteReq.getAuthorNickName(), favoriteReq.getAuthorAvatar(), favoriteReq.getCover(), favoriteReq.getTitle());
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取消收藏
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param itemId 取消收藏的对象id
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/favorites/{itemId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String delFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId) {
+        try {
+            return MiscAPI.delFavorite(userId, key, itemId);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

@@ -619,4 +619,25 @@ public class MiscAPI {
             throw e;
         }
     }
+
+    /**
+     * 取消收藏
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param itemId 取消对象id
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String delFavorite(Long userId, String key, String itemId) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1078);
+            }
+            Query<Favorite> query = ds.createQuery(Favorite.class).field(Favorite.fd_userId).equal(userId).field(Favorite.fd_itemId).equal(new ObjectId(itemId));
+            ds.delete(query);
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }
