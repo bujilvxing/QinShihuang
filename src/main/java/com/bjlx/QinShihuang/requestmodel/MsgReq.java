@@ -9,11 +9,6 @@ import com.bjlx.QinShihuang.model.im.Content;
 public class MsgReq {
 
     /**
-     * 主键。重发消息时，需要提供此id
-     */
-    private String id;
-
-    /**
      * 接受者id
      */
     private Long receiverId;
@@ -37,14 +32,6 @@ public class MsgReq {
      * 回话id
      */
     private String convId;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public Long getReceiverId() {
         return receiverId;

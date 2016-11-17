@@ -6,6 +6,7 @@ import com.bjlx.QinShihuang.requestmodel.FavoriteReq;
 import com.bjlx.QinShihuang.requestmodel.FeedbackReq;
 import com.bjlx.QinShihuang.requestmodel.VoteReq;
 import com.bjlx.QinShihuang.utils.CommonUtil;
+import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.springframework.stereotype.Controller;
@@ -177,9 +178,13 @@ public class MiscController {
      * @return 结果
      */
     @RequestMapping(value = "/app/favorites/{itemId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
-    public @ResponseBody String cancelFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId) {
+    public @ResponseBody String cancelFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId, Integer favoriteType) {
+        if(favoriteType == null)
+            return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_NULL_1078);
+        if(!Constant.checkFavoriteType(favoriteType))
+            return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_INVALID_1078);
         try {
-            return MiscAPI.cancelFavorite(userId, key, itemId);
+            return MiscAPI.cancelFavorite(userId, key, itemId, favoriteType);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
@@ -225,12 +230,17 @@ public class MiscController {
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param itemId 取消点赞的对象id
+     * @param voteType 点赞类型
      * @return 结果
      */
     @RequestMapping(value = "/app/votes/{itemId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
-    public @ResponseBody String cancelVote(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId) {
+    public @ResponseBody String cancelVote(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId, Integer voteType) {
+        if(voteType == null)
+            return QinShihuangResult.getResult(ErrorCode.VOTETYPE_INVALID_1095);
+        if(!Constant.checkVoteType(voteType))
+            return QinShihuangResult.getResult(ErrorCode.VOTETYPE_INVALID_1095);
         try {
-            return MiscAPI.cancelVote(userId, key, itemId);
+            return MiscAPI.cancelVote(userId, key, itemId, voteType);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

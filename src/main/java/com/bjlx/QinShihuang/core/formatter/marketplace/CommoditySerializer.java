@@ -61,7 +61,7 @@ public class CommoditySerializer extends JsonSerializer<Commodity> {
             gen.writeNumberField(Commodity.fd_price, commodity.getPrice() == null ? 0.0 : commodity.getPrice());
             gen.writeNumberField(Commodity.fd_marketPrice, commodity.getMarketPrice() == null ? 0.0 : commodity.getMarketPrice());
             gen.writeNumberField(Commodity.fd_status, commodity.getStatus() == null ? 1 : commodity.getStatus());
-
+            gen.writeNumberField(Commodity.fd_favorCnt, commodity.getFavorCnt() == null ? 0 : commodity.getFavorCnt());
             List<CommodityPlan> plans = commodity.getPlans();
             if (plans != null && !plans.isEmpty()) {
             	gen.writeFieldName(Commodity.fd_plans);

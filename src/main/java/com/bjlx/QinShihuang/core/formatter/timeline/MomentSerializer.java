@@ -71,6 +71,8 @@ public class MomentSerializer extends JsonSerializer<Moment> {
                 JsonSerializer<Object> retCard = serializers.findValueSerializer(Card.class, null);
                 retCard.serialize(card, gen, serializers);
             }
+            gen.writeNumberField(Moment.fd_favorCnt, moment.getFavorCnt() == null ? 0 : moment.getFavorCnt());
+            gen.writeNumberField(Moment.fd_voteCnt, moment.getVoteCnt() == null ? 0 : moment.getVoteCnt());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

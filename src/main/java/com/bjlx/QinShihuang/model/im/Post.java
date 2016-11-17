@@ -54,7 +54,9 @@ public class Post {
 	public final static String fd_authorNickName = "authorNickName";
 	@Transient
 	public final static String fd_authorAvatar = "authorAvatar";
-	
+	@Transient
+    public final static String fd_voteCnt = "voteCnt";
+
 	/**
 	 * 主键
 	 */
@@ -90,12 +92,6 @@ public class Post {
     private Long updateTime;
 
     /**
-     * 收藏次数
-     */
-    @Min(value = 0)
-    private Integer favorCnt = 0;
-
-    /**
      * 评论次数
      */
     @Min(value = 0)
@@ -112,7 +108,19 @@ public class Post {
      */
     @Min(value = 0)
     private Integer shareCnt = 0;
-    
+
+    /**
+     * 收藏次数
+     */
+    @Min(value = 0)
+    private Integer favorCnt = 0;
+
+    /**
+     * 点赞数
+     */
+    @Min(value = 0)
+    private Integer voteCnt = 0;
+
     /**
      * 帖子摘要
      */
@@ -299,5 +307,13 @@ public class Post {
 
     public void setAuthorAvatar(ImageItem authorAvatar) {
         this.authorAvatar = authorAvatar;
+    }
+
+    public Integer getVoteCnt() {
+        return voteCnt;
+    }
+
+    public void setVoteCnt(Integer voteCnt) {
+        this.voteCnt = voteCnt;
     }
 }

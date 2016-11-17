@@ -147,7 +147,8 @@ public class Constant {
     public final static int FAVORITE_TRAVELNOTE = 8;
     public final static int FAVORITE_VIEWSPOT = 9;
     public final static int FAVORITE_SHOPPING = 10;
-    public final static int FAVORITE_COMMODITY = 11;
+    public final static int FAVORITE_MOMENT = 11;
+    public final static int FAVORITE_COMMODITY = 12;
     public static boolean checkFavoriteType(Integer favoriteType) {
         return favoriteType >= FAVORITE_POST && favoriteType <= FAVORITE_COMMODITY;
     }
@@ -159,14 +160,11 @@ public class Constant {
     public final static int VOTE_TRACE = 2;
     public final static int VOTE_TRIPPLAN = 3;
     public final static int VOTE_ACTIVITY = 4;
-    public final static int VOTE_QUORA = 5;
-    public final static int VOTE_RESTAURANT = 6;
-    public final static int VOTE_HOTEL = 7;
+    public final static int VOTE_QUESTION = 5;
+    public final static int VOTE_ANSWER = 6;
+    public final static int VOTE_MOMENT = 7;
     public final static int VOTE_TRAVELNOTE = 8;
-    public final static int VOTE_VIEWSPOT = 9;
-    public final static int VOTE_SHOPPING = 10;
-    public final static int VOTE_COMMODITY = 11;
     public static boolean checkVoteType(Integer voteType) {
-        return voteType >= VOTE_POST && voteType <= VOTE_COMMODITY;
+        return voteType >= VOTE_POST && voteType <= VOTE_TRAVELNOTE;
     }
 }

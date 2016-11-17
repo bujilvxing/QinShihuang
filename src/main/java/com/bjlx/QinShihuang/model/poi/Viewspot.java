@@ -71,7 +71,9 @@ public class Viewspot {
 	public final static String fd_discount = "discount";
 	@Transient
 	public final static String fd_locality = "locality";
-	
+	@Transient
+	public final static String fd_favorCnt = "favorCnt";
+
 	/**
 	 * 主键
 	 */
@@ -223,7 +225,13 @@ public class Viewspot {
 	 * 市场价
 	 */
 	private Double marketPrice = 0.0;
-	
+
+	/**
+	 * 收藏次数
+	 */
+	@Min(value = 0)
+	private Integer favorCnt = 0;
+
 	public ObjectId getId() {
 		return id;
 	}
@@ -438,5 +446,13 @@ public class Viewspot {
 
 	public void setMarketPrice(Double marketPrice) {
 		this.marketPrice = marketPrice;
+	}
+
+	public Integer getFavorCnt() {
+		return favorCnt;
+	}
+
+	public void setFavorCnt(Integer favorCnt) {
+		this.favorCnt = favorCnt;
 	}
 }

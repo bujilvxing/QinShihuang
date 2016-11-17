@@ -8,6 +8,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -55,6 +56,8 @@ public class Commodity {
     public final static String fd_version = "version";
 	@Transient
     public final static String fd_commodityType = "commodityType";
+    @Transient
+    public final static String fd_favorCnt = "favorCnt";
     
     /**
      * 主键
@@ -152,6 +155,12 @@ public class Commodity {
      * 商品类型
      */
     private String commodityType;
+
+    /**
+     * 收藏次数
+     */
+    @Min(value = 0)
+    private Integer favorCnt = 0;
 
     public ObjectId getId() {
         return id;
@@ -303,5 +312,13 @@ public class Commodity {
 
     public void setCommodityType(String commodityType) {
         this.commodityType = commodityType;
+    }
+
+    public Integer getFavorCnt() {
+        return favorCnt;
+    }
+
+    public void setFavorCnt(Integer favorCnt) {
+        this.favorCnt = favorCnt;
     }
 }

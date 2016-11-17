@@ -20,6 +20,7 @@ import com.bjlx.QinShihuang.model.poi.Hotel;
 import com.bjlx.QinShihuang.model.poi.Restaurant;
 import com.bjlx.QinShihuang.model.poi.Shopping;
 import com.bjlx.QinShihuang.model.poi.Viewspot;
+import com.bjlx.QinShihuang.model.quora.Answer;
 import com.bjlx.QinShihuang.model.quora.Question;
 import com.bjlx.QinShihuang.model.specialservice.Car;
 import com.bjlx.QinShihuang.model.specialservice.RentCar;
@@ -76,7 +77,8 @@ public class MorphiaFactory {
     			Moment.class, Locality.class, Viewspot.class, Car.class, Feedback.class, Conversation.class, 
     			Comment.class, Guide.class, Column.class, Card.class, Message.class, Chatgroup.class, 
     			Vote.class, Ticket.class, Activity.class, Credential.class, Relationship.class, 
-    			ValidationCode.class, Sequence.class, Token.class, Application.class, ColumnCommodity.class, ColumnGuide.class);
+    			ValidationCode.class, Sequence.class, Token.class, Application.class, ColumnCommodity.class,
+				ColumnGuide.class, Answer.class);
         return morphia;
     }
 

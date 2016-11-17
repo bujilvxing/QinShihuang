@@ -261,7 +261,9 @@ public enum ErrorCode {
 	ITEMID_INVALID_1077(107706, "itemId不合法"),
 
 	// 取消收藏
-	UNLOGIN_1078(107801, "用户未登录"),
+	FAVORITETYPE_NULL_1078(107801, "收藏类型不可为空"),
+	FAVORITETYPE_INVALID_1078(107802, "收藏类型不可为空"),
+	UNLOGIN_1078(107803, "用户未登录"),
 
 	// 取得收藏列表
 	UNLOGIN_1079(107901, "用户未登录"),
@@ -277,7 +279,9 @@ public enum ErrorCode {
 	ITEMID_INVALID_1094(109405, "itemId不合法"),
 
 	// 取消点赞
-	UNLOGIN_1095(109501, "用户未登录"),
+	VOTETYPE_NULL_1095(109501, "点赞类型不可为空"),
+	VOTETYPE_INVALID_1095(109502, "voteType不合法"),
+	UNLOGIN_1095(109503, "用户未登录"),
 
 	// 取得点赞列表
 	UNLOGIN_1096(109601, "用户未登录"),

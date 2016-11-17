@@ -32,6 +32,8 @@ public class TravelNote {
 	@Transient
 	public final static String fd_favorCnt = "favorCnt";
 	@Transient
+	public final static String fd_voteCnt = "voteCnt";
+	@Transient
 	public final static String fd_commentCnt = "commentCnt";
 	@Transient
 	public final static String fd_viewCnt = "viewCnt";
@@ -93,6 +95,12 @@ public class TravelNote {
 	 */
 	@Min(value = 0)
 	private Integer favorCnt = 0;
+
+	/**
+	 * 被赞的次数
+	 */
+	@Min(value = 0)
+	private Integer voteCnt = 0;
 
 	/**
 	 * 评论次数
@@ -265,6 +273,14 @@ public class TravelNote {
 
 	public void setEssence(Boolean essence) {
 		this.essence = essence;
+	}
+
+	public Integer getVoteCnt() {
+		return voteCnt;
+	}
+
+	public void setVoteCnt(Integer voteCnt) {
+		this.voteCnt = voteCnt;
 	}
 
 	public TravelNote(ObjectId id, ImageItem cover, List<ImageItem> images, Double hotness, String title,

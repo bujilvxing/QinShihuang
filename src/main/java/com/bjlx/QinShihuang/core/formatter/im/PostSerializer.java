@@ -42,7 +42,7 @@ public class PostSerializer extends JsonSerializer<Post> {
             gen.writeNumberField(Post.fd_commentCnt, post.getCommentCnt() == null ? 0 : post.getCommentCnt());
             gen.writeNumberField(Post.fd_viewCnt, post.getViewCnt() == null ? 0 : post.getViewCnt());
             gen.writeNumberField(Post.fd_shareCnt, post.getShareCnt() == null ? 0 : post.getShareCnt());
-            
+            gen.writeNumberField(Post.fd_voteCnt, post.getVoteCnt() == null ? 0 : post.getVoteCnt());
             gen.writeStringField(Post.fd_summary, post.getSummary() == null ? "" : post.getSummary());
             gen.writeStringField(Post.fd_content, post.getContent() == null ? "" : post.getContent());
             gen.writeNumberField(Post.fd_rank, post.getRank() == null ? 0 : post.getRank());

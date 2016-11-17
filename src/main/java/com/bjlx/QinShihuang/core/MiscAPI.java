@@ -23,6 +23,7 @@ import com.bjlx.QinShihuang.model.account.Vote;
 import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.guide.Guide;
 import com.bjlx.QinShihuang.model.im.Chatgroup;
+import com.bjlx.QinShihuang.model.im.Post;
 import com.bjlx.QinShihuang.model.marketplace.Commodity;
 import com.bjlx.QinShihuang.model.misc.Application;
 import com.bjlx.QinShihuang.model.misc.Feedback;
@@ -32,6 +33,7 @@ import com.bjlx.QinShihuang.model.poi.Hotel;
 import com.bjlx.QinShihuang.model.poi.Restaurant;
 import com.bjlx.QinShihuang.model.poi.Shopping;
 import com.bjlx.QinShihuang.model.poi.Viewspot;
+import com.bjlx.QinShihuang.model.quora.Answer;
 import com.bjlx.QinShihuang.model.quora.Question;
 import com.bjlx.QinShihuang.model.timeline.Moment;
 import com.bjlx.QinShihuang.model.trace.Trace;
@@ -580,6 +582,108 @@ public class MiscAPI {
         }
     }
 
+
+    /**
+     * 更新收藏数
+     * @param itemId 收藏对象id
+     * @param favoriteType 收藏类型
+     * @param isAdd 是否添加，true表示加1，false表示减1
+     * @throws Exception 异常
+     */
+    public static void updateFavorCnt(String itemId, Integer favoriteType, Boolean isAdd) throws Exception {
+        try {
+            switch (favoriteType) {
+                case Constant.FAVORITE_POST:
+                    Query<Post> queryPost = ds.createQuery(Post.class).field(Post.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Post> opsPost = ds.createUpdateOperations(Post.class);
+                    if (isAdd) opsPost.inc(Post.fd_favorCnt);
+                    else opsPost.dec(Post.fd_favorCnt);
+                    ds.updateFirst(queryPost, opsPost);
+                    break;
+                case Constant.FAVORITE_TRACE:
+                    Query<Trace> queryTrace = ds.createQuery(Trace.class).field(Trace.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Trace> opsTrace = ds.createUpdateOperations(Trace.class);
+                    if (isAdd) opsTrace.inc(Trace.fd_favorCnt);
+                    else opsTrace.dec(Trace.fd_favorCnt);
+                    ds.updateFirst(queryTrace, opsTrace);
+                    break;
+                case Constant.FAVORITE_TRIPPLAN:
+                    Query<TripPlan> queryTripPlan = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<TripPlan> opsTripPlan = ds.createUpdateOperations(TripPlan.class);
+                    if (isAdd) opsTripPlan.inc(TripPlan.fd_favorCnt);
+                    else opsTripPlan.dec(TripPlan.fd_favorCnt);
+                    ds.updateFirst(queryTripPlan, opsTripPlan);
+                    break;
+                case Constant.FAVORITE_ACTIVITY:
+                    Query<Activity> queryActivity = ds.createQuery(Activity.class).field(Activity.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Activity> opsActivity = ds.createUpdateOperations(Activity.class);
+                    if (isAdd) opsActivity.inc(Activity.fd_favorCnt);
+                    else opsActivity.dec(Activity.fd_favorCnt);
+                    ds.updateFirst(queryActivity, opsActivity);
+                    break;
+                case Constant.FAVORITE_QUORA:
+                    Query<Question> queryQuestion = ds.createQuery(Question.class).field(Question.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Question> opsQuestion = ds.createUpdateOperations(Question.class);
+                    if (isAdd) opsQuestion.inc(Question.fd_favorCnt);
+                    else opsQuestion.dec(Question.fd_favorCnt);
+                    ds.updateFirst(queryQuestion, opsQuestion);
+                    break;
+                case Constant.FAVORITE_RESTAURANT:
+                    Query<Restaurant> queryRestaurant = ds.createQuery(Restaurant.class).field(Restaurant.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Restaurant> opsRestaurant = ds.createUpdateOperations(Restaurant.class);
+                    if (isAdd) opsRestaurant.inc(Restaurant.fd_favorCnt);
+                    else opsRestaurant.dec(Restaurant.fd_favorCnt);
+                    ds.updateFirst(queryRestaurant, opsRestaurant);
+                    break;
+                case Constant.FAVORITE_HOTEL:
+                    Query<Hotel> queryHotel = ds.createQuery(Hotel.class).field(Hotel.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Hotel> opsHotel = ds.createUpdateOperations(Hotel.class);
+                    if (isAdd) opsHotel.inc(Hotel.fd_favorCnt);
+                    else opsHotel.dec(Hotel.fd_favorCnt);
+                    ds.updateFirst(queryHotel, opsHotel);
+                    break;
+                case Constant.FAVORITE_TRAVELNOTE:
+                    Query<TravelNote> queryTravelNote = ds.createQuery(TravelNote.class).field(TravelNote.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<TravelNote> opsTravelNote = ds.createUpdateOperations(TravelNote.class);
+                    if (isAdd) opsTravelNote.inc(TravelNote.fd_favorCnt);
+                    else opsTravelNote.dec(TravelNote.fd_favorCnt);
+                    ds.updateFirst(queryTravelNote, opsTravelNote);
+                    break;
+                case Constant.FAVORITE_VIEWSPOT:
+                    Query<Viewspot> queryViewspot = ds.createQuery(Viewspot.class).field(Viewspot.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Viewspot> opsViewspot = ds.createUpdateOperations(Viewspot.class);
+                    if (isAdd) opsViewspot.inc(Viewspot.fd_favorCnt);
+                    else opsViewspot.dec(Viewspot.fd_favorCnt);
+                    ds.updateFirst(queryViewspot, opsViewspot);
+                    break;
+                case Constant.FAVORITE_SHOPPING:
+                    Query<Shopping> queryShopping = ds.createQuery(Shopping.class).field(Shopping.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Shopping> opsShopping = ds.createUpdateOperations(Shopping.class);
+                    if (isAdd) opsShopping.inc(Shopping.fd_favorCnt);
+                    else opsShopping.dec(Shopping.fd_favorCnt);
+                    ds.updateFirst(queryShopping, opsShopping);
+                    break;
+                case Constant.FAVORITE_MOMENT:
+                    Query<Moment> queryMoment = ds.createQuery(Moment.class).field(Moment.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Moment> opsMoment = ds.createUpdateOperations(Moment.class);
+                    if (isAdd) opsMoment.inc(Moment.fd_favorCnt);
+                    else opsMoment.dec(Moment.fd_favorCnt);
+                    ds.updateFirst(queryMoment, opsMoment);
+                    break;
+                case Constant.FAVORITE_COMMODITY:
+                    Query<Commodity> queryCommodity = ds.createQuery(Commodity.class).field(Commodity.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Commodity> opsCommodity = ds.createUpdateOperations(Commodity.class);
+                    if (isAdd) opsCommodity.inc(Commodity.fd_favorCnt);
+                    else opsCommodity.dec(Commodity.fd_favorCnt);
+                    ds.updateFirst(queryCommodity, opsCommodity);
+                    break;
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
     /**
      * 添加收藏
      * @param userId 用户id
@@ -617,8 +721,83 @@ public class MiscAPI {
             if(cover != null)
                 ops.set(Favorite.fd_cover, cover);
             ds.updateFirst(query, ops, true);
+            // 更新收藏数
+            updateFavorCnt(itemId, favoriteType, true);
             return QinShihuangResult.ok();
         } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * 更新点赞数
+     * @param itemId 点赞对象id
+     * @param voteType 点赞类型
+     * @param isAdd 是否点赞，true表示加1，false表示减1
+     * @throws Exception 异常
+     */
+    public static void updateVoteCnt(String itemId, Integer voteType, Boolean isAdd) throws Exception {
+        try {
+            switch (voteType) {
+                case Constant.VOTE_POST:
+                    Query<Post> queryPost = ds.createQuery(Post.class).field(Post.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Post> opsPost = ds.createUpdateOperations(Post.class);
+                    if (isAdd) opsPost.inc(Post.fd_voteCnt);
+                    else opsPost.dec(Post.fd_voteCnt);
+                    ds.updateFirst(queryPost, opsPost);
+                    break;
+                case Constant.VOTE_TRACE:
+                    Query<Trace> queryTrace = ds.createQuery(Trace.class).field(Trace.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Trace> opsTrace = ds.createUpdateOperations(Trace.class);
+                    if (isAdd) opsTrace.inc(Trace.fd_voteCnt);
+                    else opsTrace.dec(Trace.fd_voteCnt);
+                    ds.updateFirst(queryTrace, opsTrace);
+                    break;
+                case Constant.VOTE_TRIPPLAN:
+                    Query<TripPlan> queryTripPlan = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<TripPlan> opsTripPlan = ds.createUpdateOperations(TripPlan.class);
+                    if (isAdd) opsTripPlan.inc(TripPlan.fd_voteCnt);
+                    else opsTripPlan.dec(TripPlan.fd_voteCnt);
+                    ds.updateFirst(queryTripPlan, opsTripPlan);
+                    break;
+                case Constant.VOTE_ACTIVITY:
+                    Query<Activity> queryActivity = ds.createQuery(Activity.class).field(Activity.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Activity> opsActivity = ds.createUpdateOperations(Activity.class);
+                    if (isAdd) opsActivity.inc(Activity.fd_voteCnt);
+                    else opsActivity.dec(Activity.fd_voteCnt);
+                    ds.updateFirst(queryActivity, opsActivity);
+                    break;
+                case Constant.VOTE_QUESTION:
+                    Query<Question> queryQuestion = ds.createQuery(Question.class).field(Question.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Question> opsQuestion = ds.createUpdateOperations(Question.class);
+                    if (isAdd) opsQuestion.inc(Question.fd_voteCnt);
+                    else opsQuestion.dec(Question.fd_voteCnt);
+                    ds.updateFirst(queryQuestion, opsQuestion);
+                    break;
+                case Constant.VOTE_ANSWER:
+                    Query<Answer> queryAnswer = ds.createQuery(Answer.class).field(Answer.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Answer> opsAnswer = ds.createUpdateOperations(Answer.class);
+                    if (isAdd) opsAnswer.inc(Answer.fd_voteCnt);
+                    else opsAnswer.dec(Answer.fd_voteCnt);
+                    ds.updateFirst(queryAnswer, opsAnswer);
+                    break;
+                case Constant.VOTE_MOMENT:
+                    Query<Moment> queryMoment = ds.createQuery(Moment.class).field(Moment.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<Moment> opsMoment = ds.createUpdateOperations(Moment.class);
+                    if (isAdd) opsMoment.inc(Moment.fd_voteCnt);
+                    else opsMoment.dec(Moment.fd_voteCnt);
+                    ds.updateFirst(queryMoment, opsMoment);
+                    break;
+                case Constant.VOTE_TRAVELNOTE:
+                    Query<TravelNote> queryTravelNote = ds.createQuery(TravelNote.class).field(TravelNote.fd_id).equal(new ObjectId(itemId));
+                    UpdateOperations<TravelNote> opsTravelNote = ds.createUpdateOperations(TravelNote.class);
+                    if (isAdd) opsTravelNote.inc(TravelNote.fd_voteCnt);
+                    else opsTravelNote.dec(TravelNote.fd_voteCnt);
+                    ds.updateFirst(queryTravelNote, opsTravelNote);
+                    break;
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
             throw e;
         }
     }
@@ -628,16 +807,19 @@ public class MiscAPI {
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param itemId 取消对象id
+     * @param favoriteType 收藏类型
      * @return 结果
      * @throws Exception 异常
      */
-    public static String cancelFavorite(Long userId, String key, String itemId) throws Exception {
+    public static String cancelFavorite(Long userId, String key, String itemId, Integer favoriteType) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1078);
             }
             Query<Favorite> query = ds.createQuery(Favorite.class).field(Favorite.fd_userId).equal(userId).field(Favorite.fd_itemId).equal(new ObjectId(itemId));
             ds.delete(query);
+            // 更新收藏数
+            updateFavorCnt(itemId, favoriteType, false);
             return QinShihuangResult.ok();
         } catch (Exception e) {
             throw e;
@@ -691,6 +873,8 @@ public class MiscAPI {
             UpdateOperations<Vote> ops = ds.createUpdateOperations(Vote.class).set(Vote.fd_id, new ObjectId()).set(Vote.fd_userId, userId).set(Vote.fd_voteType, voteType)
                     .set(Vote.fd_itemId, new ObjectId(itemId)).set(Vote.fd_voteTime, System.currentTimeMillis());
             ds.updateFirst(query, ops, true);
+            updateVoteCnt(itemId, voteType, true);
+            // TODO 发一条消息提醒
             return QinShihuangResult.ok();
         } catch (Exception e) {
             throw e;
@@ -702,16 +886,18 @@ public class MiscAPI {
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param itemId 取消点赞对象id
+     * @param voteType 点赞类型
      * @return 结果
      * @throws Exception 异常
      */
-    public static String cancelVote(Long userId, String key, String itemId) throws Exception {
+    public static String cancelVote(Long userId, String key, String itemId, Integer voteType) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1095);
             }
             Query<Vote> query = ds.createQuery(Vote.class).field(Vote.fd_userId).equal(userId).field(Vote.fd_itemId).equal(new ObjectId(itemId));
             ds.delete(query);
+            updateVoteCnt(itemId, voteType, false);
             return QinShihuangResult.ok();
         } catch (Exception e) {
             throw e;

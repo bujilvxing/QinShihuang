@@ -119,18 +119,33 @@ public class ImAPI {
     }
 
     /**
-     * 根据convId取得回话实体
-     * convId为空，则新建一个回话，返回回话实体
-     * convId不为空，检查convId是否存在, 不存在则返回null，存在则返回回话实体
-     * @param convId 回话id
+     * 取得会话信息
+     * @param convId 会话的指纹
+     * @return 会话信息
+     * @throws Exception 异常
+     */
+    public static Conversation getConversationByConvId(String convId) throws Exception {
+        try {
+            return ds.createQuery(Conversation.class).field(Conversation.fd_convId).equal(convId).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 根据id取得回话实体
+     * id为空，则新建一个回话，返回回话实体
+     * id不为空，检查id是否存在, 不存在则返回null，存在则返回回话实体
+     * @param id 回话id
      * @param senderId 发送者id
      * @param receiverId 接收者id
      * @param chatType 聊天类型
      * @return 回话实体
      * @throws Exception 异常
      */
-    public static Conversation getConversation(String convId, Long senderId, Long receiverId, Integer chatType) throws Exception {
-        if(convId == null) {
+    public static Conversation getConversation(String id, Long senderId, Long receiverId, Integer chatType) throws Exception {
+        if(id == null) {
             String conversationId;
             if(chatType == Constant.SINGLE_CHAT) {
                 Long min = senderId < receiverId ? senderId : receiverId;
@@ -139,17 +154,21 @@ public class ImAPI {
             } else {
                 conversationId = String.format("%d", receiverId);
             }
-            Conversation conversation = new Conversation(new ObjectId(), conversationId, chatType);
-            try {
-                ds.save(conversation);
+            Conversation conversation = getConversationByConvId(conversationId);
+            if(conversation == null) {
+                conversation = new Conversation(new ObjectId(), conversationId, chatType);
+                try {
+                    ds.save(conversation);
+                    return conversation;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+            } else
                 return conversation;
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw e;
-            }
         } else {
-            ObjectId id = new ObjectId(convId);
-            Query<Conversation> query = ds.createQuery(Conversation.class).field(Conversation.fd_id).equal(id);
+            ObjectId id_ = new ObjectId(id);
+            Query<Conversation> query = ds.createQuery(Conversation.class).field(Conversation.fd_id).equal(id_);
             try {
                 Conversation conversation = query.get();
                 if (conversation == null)
@@ -420,7 +439,7 @@ public class ImAPI {
      * @return 消息实体
      * @throws Exception 异常
      */
-    public static String sendMsg(Long userId, String key, String id, String convId, Content content, Long receiverId, Integer msgType, Integer chatType) throws Exception {
+    public static String sendMsg(Long userId, String key, String convId, Content content, Long receiverId, Integer msgType, Integer chatType) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1064);
@@ -476,15 +495,7 @@ public class ImAPI {
             if (conv == null) {
                 return QinShihuangResult.getResult(ErrorCode.CONVID_INVALID_1064);
             }
-            Message msg;
-            if(id != null) {
-                Query<Message> queryMsg = ds.createQuery(Message.class).field(Message.fd_id).equal(new ObjectId(id));
-                msg = queryMsg.get();
-                if(msg == null)
-                    return QinShihuangResult.getResult(ErrorCode.ID_INVALID_1064);
-            } else {
-                msg = buildMessage(userInfo.getUserId(), userInfo.getNickName(), userInfo.getAvatar(), conv.getId(), content, receiverId, msgType, chatType);
-            }
+            Message msg = buildMessage(userInfo.getUserId(), userInfo.getNickName(), userInfo.getAvatar(), conv.getId(), content, receiverId, msgType, chatType);
 
             Message result = sendMsg2Conv(msg);
             return QinShihuangResult.ok(MessageFormatter.getMapper().valueToTree(result));

@@ -31,7 +31,9 @@ public class RestaurantBasicSerializer extends JsonSerializer<Restaurant> {
                 JsonSerializer<Object> retContact = serializers.findValueSerializer(Contact.class, null);
                 retContact.serialize(contact, gen, serializers);
             }
-            
+            if(restaurant.getFavorCnt() != null)
+                gen.writeNumberField(Restaurant.fd_favorCnt, restaurant.getFavorCnt());
+
             gen.writeStringField(Restaurant.fd_zhName, restaurant.getZhName() == null ? "" : restaurant.getZhName());
             gen.writeStringField(Restaurant.fd_enName, restaurant.getEnName() == null ? "" : restaurant.getEnName());
             gen.writeStringField(Restaurant.fd_url, restaurant.getUrl() == null ? "" : restaurant.getUrl());

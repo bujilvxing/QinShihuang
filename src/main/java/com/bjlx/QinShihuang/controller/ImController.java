@@ -48,7 +48,7 @@ public class ImController {
         }
 
         try {
-            return ImAPI.sendMsg(userId, key, msgReq.getId(), msgReq.getConvId(), msgReq.getContent(), msgReq.getReceiverId(), msgReq.getMsgType(), msgReq.getChatType());
+            return ImAPI.sendMsg(userId, key, msgReq.getConvId(), msgReq.getContent(), msgReq.getReceiverId(), msgReq.getMsgType(), msgReq.getChatType());
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
