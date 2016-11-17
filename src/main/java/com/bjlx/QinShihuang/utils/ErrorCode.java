@@ -262,7 +262,7 @@ public enum ErrorCode {
 
 	// 取消收藏
 	FAVORITETYPE_NULL_1078(107801, "收藏类型不可为空"),
-	FAVORITETYPE_INVALID_1078(107802, "收藏类型不可为空"),
+	FAVORITETYPE_INVALID_1078(107802, "favoriteType不合法"),
 	UNLOGIN_1078(107803, "用户未登录"),
 
 	// 取得收藏列表
