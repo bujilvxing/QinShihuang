@@ -146,7 +146,7 @@ public class MiscController {
     }
 
     /**
-     * 添加收藏
+     * 添加收藏1077
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param favoriteReq 收藏参数
@@ -169,7 +169,7 @@ public class MiscController {
     }
 
     /**
-     * 取消收藏
+     * 取消收藏1078
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param itemId 取消收藏的对象id
@@ -179,6 +179,21 @@ public class MiscController {
     public @ResponseBody String delFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId) {
         try {
             return MiscAPI.delFavorite(userId, key, itemId);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取得收藏列表1079
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 收藏列表
+     */
+    @RequestMapping(value = "/app/favorites", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getFavorites(@RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+        try {
+            return MiscAPI.getFavorites(userId, key);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

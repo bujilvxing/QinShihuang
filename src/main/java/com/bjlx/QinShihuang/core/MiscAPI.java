@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.core;
 
+import com.bjlx.QinShihuang.core.formatter.account.FavoriteFormatter;
 import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
 import com.bjlx.QinShihuang.core.formatter.activity.ActivityBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.guide.GuideBasicFormatter;
@@ -636,6 +637,29 @@ public class MiscAPI {
             Query<Favorite> query = ds.createQuery(Favorite.class).field(Favorite.fd_userId).equal(userId).field(Favorite.fd_itemId).equal(new ObjectId(itemId));
             ds.delete(query);
             return QinShihuangResult.ok();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * 取得收藏列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 收藏列表
+     * @throws Exception 异常
+     */
+    public static String getFavorites(Long userId, String key) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1079);
+            }
+            Query<Favorite> query = ds.createQuery(Favorite.class).field(Favorite.fd_userId).equal(userId);
+            List<Favorite> favorites = query.asList();
+            if(favorites == null)
+                return QinShihuangResult.ok(FavoriteFormatter.getMapper().valueToTree(new ArrayList<Favorite>()));
+            else
+                return QinShihuangResult.ok(FavoriteFormatter.getMapper().valueToTree(favorites));
         } catch (Exception e) {
             throw e;
         }
