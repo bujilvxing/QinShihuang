@@ -154,6 +154,17 @@ public class MiscController {
      */
     @RequestMapping(value = "/app/search", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String addFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, FavoriteReq favoriteReq) {
-        return null;
+        if(favoriteReq.getFavoriteType() == null)
+            return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_NULL_1077);
+        if(favoriteReq.getItemId() == null)
+            return QinShihuangResult.getResult(ErrorCode.ITEMID_NULL_1077);
+        if(favoriteReq.getTitle() == null)
+            return QinShihuangResult.getResult(ErrorCode.TITLE_NULL_1077);
+        try {
+            return MiscAPI.addFavorite(userId, key, favoriteReq.getFavoriteType(), favoriteReq.getItemId(), favoriteReq.getAuthorId(),
+                    favoriteReq.getAuthorNickName(), favoriteReq.getAuthorAvatar(), favoriteReq.getCover(), favoriteReq.getTitle());
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 }

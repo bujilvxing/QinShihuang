@@ -14,6 +14,7 @@ import com.bjlx.QinShihuang.core.formatter.quora.QuestionBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.timeline.MomentBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.trace.TraceBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.tripplan.TripPlanBasicFormatter;
+import com.bjlx.QinShihuang.model.account.Favorite;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.activity.Activity;
@@ -22,6 +23,7 @@ import com.bjlx.QinShihuang.model.im.Chatgroup;
 import com.bjlx.QinShihuang.model.marketplace.Commodity;
 import com.bjlx.QinShihuang.model.misc.Application;
 import com.bjlx.QinShihuang.model.misc.Feedback;
+import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.TravelNote;
 import com.bjlx.QinShihuang.model.poi.Hotel;
 import com.bjlx.QinShihuang.model.poi.Restaurant;
@@ -571,6 +573,49 @@ public class MiscAPI {
             return QinShihuangResult.ok(result);
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 添加收藏
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param favoriteType 收藏类型
+     * @param itemId 收藏对象id
+     * @param authorId 作者id
+     * @param authorNickName 作者昵称
+     * @param authorAvatar 作者头像
+     * @param cover 收藏封面图
+     * @param title 收藏标题
+     * @return 结果信息
+     * @throws Exception 异常
+     */
+    public static String addFavorite(Long userId, String key, Integer favoriteType, String itemId, Long authorId, String authorNickName, ImageItem authorAvatar, ImageItem cover, String title) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1077);
+            }
+            if(!Constant.checkFavoriteType(favoriteType)) {
+                return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_INVALID_1077);
+            }
+            if(!CommonAPI.isObjectId(itemId)) {
+                return QinShihuangResult.getResult(ErrorCode.ITEMID_INVALID_1077);
+            }
+            Query<Favorite> query = ds.createQuery(Favorite.class).field(Favorite.fd_userId).equal(userId).field(Favorite.fd_itemId).equal(new ObjectId(itemId));
+            UpdateOperations<Favorite> ops = ds.createUpdateOperations(Favorite.class).set(Favorite.fd_id, new ObjectId()).set(Favorite.fd_userId, userId).set(Favorite.fd_favoriteType, favoriteType)
+                    .set(Favorite.fd_itemId, new ObjectId(itemId)).set(Favorite.fd_title, title).set(Favorite.fd_favoriteTime, System.currentTimeMillis());
+            if(authorId != null)
+                ops.set(Favorite.fd_authorId, authorId);
+            if(authorNickName != null)
+                ops.set(Favorite.fd_authorNickName, authorNickName);
+            if(authorAvatar != null)
+                ops.set(Favorite.fd_authorAvatar, authorAvatar);
+            if(cover != null)
+                ops.set(Favorite.fd_cover, cover);
+            ds.updateFirst(query, ops, true);
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
             throw e;
         }
     }

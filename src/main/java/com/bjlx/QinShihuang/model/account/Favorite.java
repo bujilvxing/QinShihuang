@@ -171,4 +171,17 @@ public class Favorite {
 	public void setFavoriteTime(Long favoriteTime) {
 		this.favoriteTime = favoriteTime;
 	}
+
+	public Favorite() {
+
+	}
+
+	public Favorite(Long userId, Integer favoriteType, ObjectId itemId, String title) {
+		this.id = new ObjectId();
+		this.userId = userId;
+		this.favoriteType = favoriteType;
+		this.itemId = itemId;
+		this.title = title;
+		this.favoriteTime = System.currentTimeMillis();
+	}
 }

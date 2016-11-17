@@ -245,8 +245,20 @@ public enum ErrorCode {
 	/**
 	 * 群组
 	 */
+	// 取得群组信息
 	UNLOGIN_1070(107001, "用户未登录"),
 	CHATGROUP_NOT_EXIST_1070(107002, "群组不存在"),
+
+	/**
+	 * 收藏
+	 */
+	// 添加收藏
+	FAVORITETYPE_NULL_1077(107701, "收藏类型不可为空"),
+	ITEMID_NULL_1077(107702, "收藏对象id不可为空"),
+	TITLE_NULL_1077(107703, "收藏标题不可为空"),
+	UNLOGIN_1077(107704, "用户未登录"),
+	FAVORITETYPE_INVALID_1077(107705, "favoriteType不合法"),
+	ITEMID_INVALID_1077(107706, "itemId不合法"),
 
 	/**
 	 * 搜索
