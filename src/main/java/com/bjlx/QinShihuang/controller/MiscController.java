@@ -4,6 +4,7 @@ import com.bjlx.QinShihuang.core.MiscAPI;
 import com.bjlx.QinShihuang.requestmodel.ApplySellerReq;
 import com.bjlx.QinShihuang.requestmodel.FavoriteReq;
 import com.bjlx.QinShihuang.requestmodel.FeedbackReq;
+import com.bjlx.QinShihuang.requestmodel.VoteReq;
 import com.bjlx.QinShihuang.utils.CommonUtil;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
@@ -176,9 +177,9 @@ public class MiscController {
      * @return 结果
      */
     @RequestMapping(value = "/app/favorites/{itemId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
-    public @ResponseBody String delFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId) {
+    public @ResponseBody String cancelFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId) {
         try {
-            return MiscAPI.delFavorite(userId, key, itemId);
+            return MiscAPI.cancelFavorite(userId, key, itemId);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
@@ -194,6 +195,19 @@ public class MiscController {
     public @ResponseBody String getFavorites(@RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return MiscAPI.getFavorites(userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    @RequestMapping(value = "/app/votes", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addVote(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody VoteReq voteReq) {
+        if(voteReq.getVoteType() == null)
+            return QinShihuangResult.getResult(ErrorCode.VOTETYPE_NULL_1094);
+        if(voteReq.getItemId() == null)
+            return QinShihuangResult.getResult(ErrorCode.ITEMID_NULL_1094);
+        try {
+            return MiscAPI.addVote(userId, key, voteReq.getVoteType(), voteReq.getItemId());
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

@@ -18,6 +18,7 @@ import com.bjlx.QinShihuang.core.formatter.tripplan.TripPlanBasicFormatter;
 import com.bjlx.QinShihuang.model.account.Favorite;
 import com.bjlx.QinShihuang.model.account.PhoneNumber;
 import com.bjlx.QinShihuang.model.account.UserInfo;
+import com.bjlx.QinShihuang.model.account.Vote;
 import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.guide.Guide;
 import com.bjlx.QinShihuang.model.im.Chatgroup;
@@ -629,7 +630,7 @@ public class MiscAPI {
      * @return 结果
      * @throws Exception 异常
      */
-    public static String delFavorite(Long userId, String key, String itemId) throws Exception {
+    public static String cancelFavorite(Long userId, String key, String itemId) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1078);
@@ -660,6 +661,36 @@ public class MiscAPI {
                 return QinShihuangResult.ok(FavoriteFormatter.getMapper().valueToTree(new ArrayList<Favorite>()));
             else
                 return QinShihuangResult.ok(FavoriteFormatter.getMapper().valueToTree(favorites));
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * 点赞
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param voteType 点赞类型
+     * @param itemId 点赞对象id
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String addVote(Long userId, String key, Integer voteType, String itemId) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1094);
+            }
+            if(!Constant.checkVoteType(voteType)) {
+                return QinShihuangResult.getResult(ErrorCode.VOTETYPE_INVALID_1094);
+            }
+            if(!CommonAPI.isObjectId(itemId)) {
+                return QinShihuangResult.getResult(ErrorCode.ITEMID_INVALID_1094);
+            }
+            Query<Vote> query = ds.createQuery(Vote.class).field(Vote.fd_userId).equal(userId).field(Vote.fd_itemId).equal(new ObjectId(itemId));
+            UpdateOperations<Vote> ops = ds.createUpdateOperations(Vote.class).set(Vote.fd_id, new ObjectId()).set(Vote.fd_userId, userId).set(Vote.fd_voteType, voteType)
+                    .set(Vote.fd_itemId, new ObjectId(itemId)).set(Vote.fd_voteTime, System.currentTimeMillis());
+            ds.updateFirst(query, ops, true);
+            return QinShihuangResult.ok();
         } catch (Exception e) {
             throw e;
         }

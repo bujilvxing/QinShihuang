@@ -267,6 +267,15 @@ public enum ErrorCode {
 	UNLOGIN_1079(107901, "用户未登录"),
 
 	/**
+	 * 点赞
+	 */
+	VOTETYPE_NULL_1094(109401, "点赞类型不可为空"),
+	ITEMID_NULL_1094(109402, "点赞对象id不可为空"),
+	UNLOGIN_1094(109403, "用户未登录"),
+	VOTETYPE_INVALID_1094(109404, "voteType不合法"),
+	ITEMID_INVALID_1094(109405, "itemId不合法"),
+
+	/**
 	 * 搜索
 	 */
 	// 用户搜索
