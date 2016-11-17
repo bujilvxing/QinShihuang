@@ -200,6 +200,13 @@ public class MiscController {
         }
     }
 
+    /**
+     * 点赞1094
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param voteReq 点赞参数
+     * @return 结果
+     */
     @RequestMapping(value = "/app/votes", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String addVote(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody VoteReq voteReq) {
         if(voteReq.getVoteType() == null)
@@ -208,6 +215,37 @@ public class MiscController {
             return QinShihuangResult.getResult(ErrorCode.ITEMID_NULL_1094);
         try {
             return MiscAPI.addVote(userId, key, voteReq.getVoteType(), voteReq.getItemId());
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取消点赞1095
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param itemId 取消点赞的对象id
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/votes/{itemId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String cancelVote(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId) {
+        try {
+            return MiscAPI.cancelVote(userId, key, itemId);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取得点赞列表1096
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 点赞列表
+     */
+    @RequestMapping(value = "/app/votes", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getVotes(@RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+        try {
+            return MiscAPI.getVotes(userId, key);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

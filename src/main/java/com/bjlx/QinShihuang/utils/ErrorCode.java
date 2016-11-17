@@ -269,11 +269,18 @@ public enum ErrorCode {
 	/**
 	 * 点赞
 	 */
+	// 点赞
 	VOTETYPE_NULL_1094(109401, "点赞类型不可为空"),
 	ITEMID_NULL_1094(109402, "点赞对象id不可为空"),
 	UNLOGIN_1094(109403, "用户未登录"),
 	VOTETYPE_INVALID_1094(109404, "voteType不合法"),
 	ITEMID_INVALID_1094(109405, "itemId不合法"),
+
+	// 取消点赞
+	UNLOGIN_1095(109501, "用户未登录"),
+
+	// 取得点赞列表
+	UNLOGIN_1096(109601, "用户未登录"),
 
 	/**
 	 * 搜索

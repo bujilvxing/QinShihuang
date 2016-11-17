@@ -2,6 +2,7 @@ package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.core.formatter.account.FavoriteFormatter;
 import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
+import com.bjlx.QinShihuang.core.formatter.account.VoteFormatter;
 import com.bjlx.QinShihuang.core.formatter.activity.ActivityBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.guide.GuideBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.im.ChatgroupBasicFormatter;
@@ -691,6 +692,50 @@ public class MiscAPI {
                     .set(Vote.fd_itemId, new ObjectId(itemId)).set(Vote.fd_voteTime, System.currentTimeMillis());
             ds.updateFirst(query, ops, true);
             return QinShihuangResult.ok();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * 取消点赞
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param itemId 取消点赞对象id
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String cancelVote(Long userId, String key, String itemId) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1095);
+            }
+            Query<Vote> query = ds.createQuery(Vote.class).field(Vote.fd_userId).equal(userId).field(Vote.fd_itemId).equal(new ObjectId(itemId));
+            ds.delete(query);
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * 取得点赞列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 点赞列表
+     * @throws Exception 异常
+     */
+    public static String getVotes(Long userId, String key) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1096);
+            }
+            Query<Vote> query = ds.createQuery(Vote.class).field(Vote.fd_userId).equal(userId);
+            List<Vote> votes = query.asList();
+            if(votes == null)
+                return QinShihuangResult.ok(VoteFormatter.getMapper().valueToTree(new ArrayList<Vote>()));
+            else
+                return QinShihuangResult.ok(VoteFormatter.getMapper().valueToTree(votes));
         } catch (Exception e) {
             throw e;
         }
