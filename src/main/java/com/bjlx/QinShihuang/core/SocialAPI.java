@@ -53,6 +53,7 @@ public class SocialAPI {
                 else
                     ops.set(Relationship.fd_followingA, true);
                 ds.updateFirst(query, ops, true);
+                // TODO 发送一条消息
                 return QinShihuangResult.ok();
             } else {
                 return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1055);

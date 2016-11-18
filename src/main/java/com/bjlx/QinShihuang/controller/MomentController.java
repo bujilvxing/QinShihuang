@@ -14,34 +14,39 @@ import org.springframework.web.bind.annotation.*;
 public class MomentController {
 
     /**
+     *
+     * @param userId
+     * @param key
+     * @param offset
+     * @param limit
+     * @return
+     */
+    /**
      * 查看自己的关注圈1038
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param offset 从第几条开始取
      * @param limit 取多少条
+     * @param latestTime 最晚时间，用于拉取最新的朋友圈
+     * @param earliestTime 最早时间，用户拉取老的朋友圈
      * @return 信息列表
      */
     @RequestMapping(value = "/app/moments", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getMoments(@RequestHeader Long userId, @RequestHeader("key") String key, Integer offset, Integer limit, Long targetId, Long purgeBefore) {
+    public @ResponseBody String getMoments(@RequestHeader Long userId, @RequestHeader("key") String key, Integer offset, Integer limit, Long latestTime, Long earliestTime) {
+        if(latestTime == null && earliestTime == null) {
+            return QinShihuangResult.getResult(ErrorCode.TIME_NULL_1038);
+        }
         Integer defaultOffset = offset == null ? 0 : offset;
         Integer defaultLimit = limit == null ? 10 : limit;
         try {
-            return MomentAPI.getMoments(userId, key, defaultOffset, defaultLimit, targetId);
+            return MomentAPI.getMoments(userId, key, defaultOffset, defaultLimit, latestTime, earliestTime);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
     /**
-     *
-     * @param userId 用户id
-     * @param key 不羁旅行令牌
-     * @param offset 从第几条开始取
-     * @param limit 取多少条
-     * @return 信息列表
-     */
-    /**
-     * 查看某个人的发表记录
+     * 查看某个人的发表记录1080
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param offset 从第几条开始取
@@ -53,13 +58,13 @@ public class MomentController {
      */
     @RequestMapping(value = "/app/users/{targetId:\\d+}/moments", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getMomentsById(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable Long targetId, Integer offset, Integer limit, Long latestTime, Long earliestTime) {
-        if(latestTime == null) {
-//            if(earliestTime == null)
+        if(latestTime == null && earliestTime == null) {
+            return QinShihuangResult.getResult(ErrorCode.TIME_NULL_1080);
         }
         Integer defaultOffset = offset == null ? 0 : offset;
         Integer defaultLimit = limit == null ? 10 : limit;
         try {
-            return MomentAPI.getMoments(userId, key, defaultOffset, defaultLimit, targetId);
+            return MomentAPI.getMomentsById(userId, key, targetId, defaultOffset, defaultLimit, latestTime, earliestTime);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

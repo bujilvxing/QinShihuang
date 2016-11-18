@@ -172,7 +172,12 @@ public enum ErrorCode {
 	 * 时间线
 	 */
 	// 查看朋友圈
+	TIME_NULL_1038(103801, "latestTime和earliestTime不可同时为空"),
 	UNLOGIN_1038(103801, "用户未登录"),
+
+	// 查看朋友圈
+	TIME_NULL_1080(108001, "latestTime和earliestTime不可同时为空"),
+	UNLOGIN_1080(108001, "用户未登录"),
 
 	/**
 	 * 社交
