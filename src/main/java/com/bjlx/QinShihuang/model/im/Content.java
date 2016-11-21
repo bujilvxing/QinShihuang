@@ -1,5 +1,7 @@
 package com.bjlx.QinShihuang.model.im;
 
+import com.bjlx.QinShihuang.model.misc.Card;
+import com.bjlx.QinShihuang.model.timeline.Moment;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Transient;
 
@@ -31,6 +33,10 @@ public class Content {
 	public final static String fd_emoticon = "emoticon";
 	@Transient
 	public final static String fd_video = "video";
+	@Transient
+	public final static String fd_card = "card";
+	@Transient
+	public final static String fd_moment = "moment";
 	
 	/**
 	 * 文本
@@ -71,6 +77,16 @@ public class Content {
 	 * 视频
 	 */
 	private Video video;
+
+	/**
+	 * 卡片
+	 */
+	private Card card;
+
+	/**
+	 * 朋友圈
+	 */
+	private Moment moment;
 
 	public String getText() {
 		return text;
@@ -135,7 +151,23 @@ public class Content {
 	public void setVideo(Video video) {
 		this.video = video;
 	}
-	
+
+	public Card getCard() {
+		return card;
+	}
+
+	public void setCard(Card card) {
+		this.card = card;
+	}
+
+	public Moment getMoment() {
+		return moment;
+	}
+
+	public void setMoment(Moment moment) {
+		this.moment = moment;
+	}
+
 	public Content() {
 
 	}

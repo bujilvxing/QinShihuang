@@ -2,11 +2,14 @@ package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.core.formatter.timeline.MomentFormatter;
 import com.bjlx.QinShihuang.model.account.UserInfo;
+import com.bjlx.QinShihuang.model.im.Content;
+import com.bjlx.QinShihuang.model.im.Message;
 import com.bjlx.QinShihuang.model.im.Relationship;
 import com.bjlx.QinShihuang.model.misc.Card;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.timeline.Moment;
 import com.bjlx.QinShihuang.requestmodel.CardReq;
+import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.MorphiaFactory;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
@@ -191,8 +194,11 @@ public class MomentAPI {
 
             // TODO 发送消息给每一个粉丝
             List<String> clientIds = ImAPI.getClientIdsByUserIds(contactIds.stream().collect(Collectors.toList()));
-//            Message msg = ImAPI.buildMessage(userId, userInfo.getNickName(), userInfo.getAvatar(), null, Content content, System.currentTimeMillis(), Constant.MOMENT_MSG, Constant.GROUP_CHAT);
-//            ImAPI.sendGroupMsg(Message msg, clientIds);
+            Content content = new Content();
+            content.setMoment(moment);
+            Message msg = ImAPI.buildMessage(userId, userInfo.getNickName(), userInfo.getAvatar(), userInfo.getId(), content, System.currentTimeMillis(), Constant.MOMENT_MSG, Constant.GROUP_CHAT);
+            msg.setAbbrev("");
+            ImAPI.sendGroupMsg(msg, clientIds);
             return QinShihuangResult.ok();
         } catch (Exception e) {
             e.printStackTrace();

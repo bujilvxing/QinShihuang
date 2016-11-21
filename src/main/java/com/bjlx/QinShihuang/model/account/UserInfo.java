@@ -638,7 +638,7 @@ public class UserInfo {
 		Long currentTime = System.currentTimeMillis();
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
-		this.moment = new Conversation(id, id.toHexString(), Constant.GROUP_CHAT);
+		this.moment = new Conversation(id, id.toString(), Constant.GROUP_CHAT);
 	}
 	
 	public UserInfo(Long userId, String email, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
@@ -653,7 +653,7 @@ public class UserInfo {
 		Long currentTime = System.currentTimeMillis();
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
-		this.moment = new Conversation(id, id.toHexString(), Constant.GROUP_CHAT);
+		this.moment = new Conversation(id, id.toString(), Constant.GROUP_CHAT);
 	}
 
 	public UserInfo(Long userId, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
@@ -667,6 +667,6 @@ public class UserInfo {
 		Long currentTime = System.currentTimeMillis();
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
-		this.moment = new Conversation(id, id.toHexString(), Constant.GROUP_CHAT);
+		this.moment = new Conversation(id, id.toString(), Constant.GROUP_CHAT);
 	}
 }

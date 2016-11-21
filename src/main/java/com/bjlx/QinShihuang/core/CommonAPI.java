@@ -78,7 +78,7 @@ public class CommonAPI {
      */
     public static UserInfo getUserBasicById(Long userId) throws Exception {
         Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL)
-                .retrievedFields(true, UserInfo.fd_id, UserInfo.fd_nickName, UserInfo.fd_avatar, UserInfo.fd_moment);
+                .retrievedFields(true, UserInfo.fd_id, UserInfo.fd_userId, UserInfo.fd_nickName, UserInfo.fd_avatar, UserInfo.fd_moment);
         try {
             return query.get();
         } catch (Exception e) {
