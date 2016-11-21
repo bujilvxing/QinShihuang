@@ -71,6 +71,22 @@ public class CommonAPI {
     }
 
     /**
+     * 取得用户基本信息
+     * @param userId 用户id
+     * @return 用户基本信息
+     * @throws Exception 异常
+     */
+    public static UserInfo getUserBasicById(Long userId) throws Exception {
+        Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL)
+                .retrievedFields(true, UserInfo.fd_id, UserInfo.fd_nickName, UserInfo.fd_avatar, UserInfo.fd_moment);
+        try {
+            return query.get();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
      * 是否ObjectId
      * @param id ObjectId字符串
      * @return 是否ObjectId

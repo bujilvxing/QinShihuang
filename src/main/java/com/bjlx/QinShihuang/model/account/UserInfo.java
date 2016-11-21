@@ -1,11 +1,12 @@
 package com.bjlx.QinShihuang.model.account;
 
 import com.bjlx.QinShihuang.model.activity.Activity;
+import com.bjlx.QinShihuang.model.im.Conversation;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.TravelNote;
 import com.bjlx.QinShihuang.model.trace.Trace;
 import com.bjlx.QinShihuang.model.tripplan.TripPlan;
-
+import com.bjlx.QinShihuang.utils.Constant;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -110,6 +111,8 @@ public class UserInfo {
 	public final static String fd_clientId = "clientId";
 	@Transient
 	public final static String fd_key = "key";
+	@Transient
+	public final static String fd_moment = "moment";
 
 	/**
 	 * 授权码
@@ -305,7 +308,12 @@ public class UserInfo {
 	 * 个推的clientId
 	 */
 	private String clientId;
-	
+
+	/**
+	 * 朋友圈会话
+	 */
+	private Conversation moment;
+
 	public Integer getLevel() {
 		return level;
 	}
@@ -606,6 +614,14 @@ public class UserInfo {
 		this.key = key;
 	}
 
+	public Conversation getMoment() {
+		return moment;
+	}
+
+	public void setMoment(Conversation moment) {
+		this.moment = moment;
+	}
+
 	public UserInfo() {
 		this.id = new ObjectId();
 	}
@@ -622,6 +638,7 @@ public class UserInfo {
 		Long currentTime = System.currentTimeMillis();
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
+		this.moment = new Conversation(id, id.toHexString(), Constant.GROUP_CHAT);
 	}
 	
 	public UserInfo(Long userId, String email, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
@@ -636,6 +653,7 @@ public class UserInfo {
 		Long currentTime = System.currentTimeMillis();
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
+		this.moment = new Conversation(id, id.toHexString(), Constant.GROUP_CHAT);
 	}
 
 	public UserInfo(Long userId, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
@@ -649,5 +667,6 @@ public class UserInfo {
 		Long currentTime = System.currentTimeMillis();
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
+		this.moment = new Conversation(id, id.toHexString(), Constant.GROUP_CHAT);
 	}
 }

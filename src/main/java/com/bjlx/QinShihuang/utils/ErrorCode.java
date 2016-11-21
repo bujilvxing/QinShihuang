@@ -176,6 +176,13 @@ public enum ErrorCode {
 	UNLOGIN_1038(103801, "用户未登录"),
 
 	// 查看朋友圈
+	ORIGINUSERID_NULL_1039(103901, "originUserId不可为空"),
+	ORIGINNICKNAME_NULL_1039(103902, "originNickName不可为空"),
+	ORIGINAVATAR_NULL_1039(103903, "OriginAvatar不可为空"),
+	UNLOGIN_1039(103904, "用户未登录"),
+	USER_NOT_EXIST_1039(103905, "用户不存在"),
+
+	// 查看朋友圈
 	TIME_NULL_1080(108001, "latestTime和earliestTime不可同时为空"),
 	UNLOGIN_1080(108001, "用户未登录"),
 
