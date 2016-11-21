@@ -76,7 +76,9 @@ public class Hotel {
 	public final static String fd_locality = "locality";
 	@Transient
 	public final static String fd_availableDays = "availableDays";
-	
+	@Transient
+	public final static String fd_favorCnt = "favorCnt";
+
 	/**
 	 * 主键
 	 */
@@ -238,6 +240,12 @@ public class Hotel {
 	 * 一段时间内可用的房间
 	 */
 	private List<AvailableDay> availableDays;
+
+	/**
+	 * 收藏次数
+	 */
+	@Min(value = 0)
+	private Integer favorCnt = 0;
 
 	public Double getMarketPrice() {
 		return marketPrice;
@@ -469,5 +477,13 @@ public class Hotel {
 
 	public void setLocality(Locality locality) {
 		this.locality = locality;
+	}
+
+	public Integer getFavorCnt() {
+		return favorCnt;
+	}
+
+	public void setFavorCnt(Integer favorCnt) {
+		this.favorCnt = favorCnt;
 	}
 }

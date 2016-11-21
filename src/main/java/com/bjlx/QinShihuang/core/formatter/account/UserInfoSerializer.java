@@ -109,17 +109,27 @@ public class UserInfoSerializer extends JsonSerializer<UserInfo> {
                 gen.writeStringField(UserInfo.fd_residence, userInfo.getResidence());
 
             if(userInfo.getBirthday() != null)
-                gen.writeStringField(UserInfo.fd_birthday, userInfo.getBirthday());
+                gen.writeNumberField(UserInfo.fd_birthday, userInfo.getBirthday());
 
-            List<OAuthInfo> oauthInfoList = userInfo.getOauthInfoList();
-            
-            if (oauthInfoList != null && !oauthInfoList.isEmpty()) {
-            	gen.writeFieldName(UserInfo.fd_oauthInfoList);
-                gen.writeStartArray();
+            OAuthInfo weixin = userInfo.getWeixin();
+            if (weixin != null) {
+            	gen.writeFieldName(UserInfo.fd_weixin);
                 JsonSerializer<Object> ret = serializers.findValueSerializer(OAuthInfo.class, null);
-                for (OAuthInfo oauthInfo : oauthInfoList)
-                    ret.serialize(oauthInfo, gen, serializers);
-                gen.writeEndArray();
+                ret.serialize(weixin, gen, serializers);
+            }
+
+            OAuthInfo sina = userInfo.getSina();
+            if (sina != null) {
+                gen.writeFieldName(UserInfo.fd_sina);
+                JsonSerializer<Object> ret = serializers.findValueSerializer(OAuthInfo.class, null);
+                ret.serialize(sina, gen, serializers);
+            }
+
+            OAuthInfo qq = userInfo.getQq();
+            if (qq != null) {
+                gen.writeFieldName(UserInfo.fd_qq);
+                JsonSerializer<Object> ret = serializers.findValueSerializer(OAuthInfo.class, null);
+                ret.serialize(qq, gen, serializers);
             }
             
             if(userInfo.getLevel() != null)

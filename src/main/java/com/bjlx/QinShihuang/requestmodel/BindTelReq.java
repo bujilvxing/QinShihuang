@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.requestmodel;
 
 /**
+ * 绑定手机号参数
  * Created by pengyt on 2016/10/24.
  */
 public class BindTelReq {

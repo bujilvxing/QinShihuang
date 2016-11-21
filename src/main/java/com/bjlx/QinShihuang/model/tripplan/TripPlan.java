@@ -57,7 +57,8 @@ public class TripPlan {
 	public final static String fd_originAvatar = "originAvatar";
 	@Transient
 	public final static String fd_hotness = "hotness";
-
+	@Transient
+	public final static String fd_voteCnt = "voteCnt";
 	/**
      * 主键
      */
@@ -119,6 +120,12 @@ public class TripPlan {
 	 */
 	@Min(value = 0)
 	private Integer favorCnt = 0;
+
+	/**
+	 * 点赞数
+	 */
+	@Min(value = 0)
+	private Integer voteCnt = 0;
 
 	/**
 	 * 评论次数
@@ -313,6 +320,14 @@ public class TripPlan {
 
 	public void setCover(ImageItem cover) {
 		this.cover = cover;
+	}
+
+	public Integer getVoteCnt() {
+		return voteCnt;
+	}
+
+	public void setVoteCnt(Integer voteCnt) {
+		this.voteCnt = voteCnt;
 	}
 
 	public TripPlan(Long userId, String nickName, ImageItem avatar) {

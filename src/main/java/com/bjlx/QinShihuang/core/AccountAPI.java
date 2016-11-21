@@ -3,33 +3,26 @@ package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
 import com.bjlx.QinShihuang.core.formatter.misc.ValidationCodeFormatter;
-import com.bjlx.QinShihuang.model.account.Credential;
-import com.bjlx.QinShihuang.model.account.PhoneNumber;
-import com.bjlx.QinShihuang.model.account.SecretKey;
-import com.bjlx.QinShihuang.model.account.UserInfo;
+import com.bjlx.QinShihuang.model.account.*;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.Sequence;
 import com.bjlx.QinShihuang.model.misc.Token;
 import com.bjlx.QinShihuang.model.misc.ValidationCode;
-import com.bjlx.QinShihuang.utils.Constant;
-import com.bjlx.QinShihuang.utils.ErrorCode;
-import com.bjlx.QinShihuang.utils.MailerUtil;
-import com.bjlx.QinShihuang.utils.MorphiaFactory;
-import com.bjlx.QinShihuang.utils.QinShihuangResult;
-import com.bjlx.QinShihuang.utils.SmsSendUtil;
+import com.bjlx.QinShihuang.requestmodel.UpdateUserInfoReq;
+import com.bjlx.QinShihuang.utils.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
 
 /**
  * 账户核心实现
@@ -91,7 +84,7 @@ public class AccountAPI {
      * @param isTel 是否手机号
      * @return true表示存在，false表示不存在
      */
-    private static boolean checkUserExist(String account, boolean isTel) throws Exception {
+    public static boolean checkUserExist(String account, boolean isTel) throws Exception {
     	Query<UserInfo> queryUser = ds.createQuery(UserInfo.class);
     	if(isTel) {
     		queryUser.field(UserInfo.fd_number).equal(account).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
@@ -355,7 +348,7 @@ public class AccountAPI {
         int iD2 = iRet % 16;
         return strDigits[iD1] + strDigits[iD2];
     }
-    
+
 	private static String bytesToString(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
@@ -412,18 +405,16 @@ public class AccountAPI {
 			String passwdHash = bytesToString(bytes);
 			SecretKey secretKey = new SecretKey();
 			credential = new Credential(userId, salt, passwdHash, secretKey);
+			ds.save(userInfo);
+			ds.save(credential);
+			return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw e;
-		}
-		
-		try {
-			ds.save(userInfo);
-			ds.save(credential);
-			return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
-		} catch(Exception e) {
-			throw e;
+		} catch(Exception e1) {
+			e1.printStackTrace();
+			throw e1;
 		}
     }
 
@@ -486,4 +477,414 @@ public class AccountAPI {
     	}
     }
 
+	/**
+	 * 第三方登录
+	 * @param provider 第三方平台名称
+	 * @param oauthId 第三方平台的用户id
+	 * @param nickName 第三方平台的用户昵称
+	 * @param avatar 第三方平台的用户头像
+	 * @param token 第三方平台的用户令牌
+	 * @param clientId 个推客户端id
+	 * @return 用户信息
+	 */
+	public static String oauthlogin(String provider, String oauthId, String nickName, String avatar, String token, String clientId) throws Exception {
+		// 查询用户是否存在
+		Query<UserInfo> query = ds.createQuery(UserInfo.class);
+		switch (provider) {
+			case UserInfo.fd_weixin : query.field(UserInfo.fd_weixin_provider).equal(provider).field(UserInfo.fd_weixin_oauthId).equal(oauthId);break;
+			case UserInfo.fd_sina : query.field(UserInfo.fd_sina_provider).equal(provider).field(UserInfo.fd_sina_oauthId).equal(oauthId);break;
+			case UserInfo.fd_qq : query.field(UserInfo.fd_qq_provider).equal(provider).field(UserInfo.fd_qq_oauthId).equal(oauthId);break;
+			default: return QinShihuangResult.getResult(ErrorCode.PROVIDER_INVALID_1005);
+		}
+
+		try {
+			UserInfo userInfo = query.get();
+			if(userInfo == null) {
+				/**
+				 * 创建新用户
+ 				 */
+				// 生成邀请码
+				String promotionCode = getPromotionCode(Constant.DEFAULT_PROMOTIONCODE_SIZE);
+
+				// 获取用户id
+				long userId = getNextUserId();
+
+				ImageItem defaultAvatar = new ImageItem();
+				defaultAvatar.setUrl(avatar);
+				userInfo = new UserInfo(userId, nickName, defaultAvatar, defaultUserBackGround, promotionCode);
+				switch (provider) {
+					case UserInfo.fd_weixin:
+						userInfo.setWeixin(new OAuthInfo(provider, oauthId, nickName == null ? String.format("不羁%d", userId) : nickName, avatar  == null ? defaultUserAvatar.getUrl() : avatar, token)); break;
+					case UserInfo.fd_sina:
+						userInfo.setSina(new OAuthInfo(provider, oauthId, nickName == null ? String.format("不羁%d", userId) : nickName, avatar  == null ? defaultUserAvatar.getUrl() : avatar, token));break;
+					case UserInfo.fd_qq:
+						userInfo.setQq(new OAuthInfo(provider, oauthId, nickName == null ? String.format("不羁%d", userId) : nickName, avatar  == null ? defaultUserAvatar.getUrl() : avatar, token));break;
+				}
+				// 用户凭证
+				String password = new ObjectId().toString();
+				// 生成64个字节的salt
+				String salt = MessageDigest.getInstance("MD5").digest(String.valueOf(System.currentTimeMillis()).getBytes()).toString();
+				byte[] bytes = MessageDigest.getInstance("SHA-256").digest((salt + password).getBytes());
+				String passwdHash = bytesToString(bytes);
+				SecretKey secretKey = new SecretKey();
+				Credential credential = new Credential(userId, salt, passwdHash, secretKey);
+
+				// 绑定个推客户端
+				userInfo.setClientId(clientId);
+				ds.save(userInfo);
+				ds.save(credential);
+
+				// 授权码
+				userInfo.setKey(secretKey.getKey());
+			} else {
+				// 绑定个推客户端
+				UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class).set(UserInfo.fd_clientId, clientId);
+				ds.updateFirst(query, ops);
+				// 授权码
+				Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userInfo.getUserId());
+				SecretKey secretKey = new SecretKey();
+				UpdateOperations<Credential> opsCredential = ds.createUpdateOperations(Credential.class).set(Credential.fd_secretKey, secretKey);
+				ds.updateFirst(queryCredential, opsCredential);
+				userInfo.setKey(secretKey.getKey());
+			}
+
+			return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		} catch(Exception e1) {
+			e1.printStackTrace();
+			throw e1;
+		}
+	}
+
+	/**
+	 * 不羁旅行令牌是否合法
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @return 是否合法
+	 * @throws Exception 异常
+	 */
+	public static boolean delKey(Long userId, String key) throws Exception {
+		Query<Credential> query = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId).field(Credential.fd_key).equal(key);
+		UpdateOperations<Credential> ops = ds.createUpdateOperations(Credential.class)
+				.unset(Credential.fd_secretKey);
+		try {
+			return ds.findAndModify(query, ops, true) != null;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 登出
+	 * @param key 不羁旅行令牌
+	 * @return 结果
+	 */
+	public static String logout(Long userId, String key) throws Exception {
+		try {
+			if(delKey(userId, key)) {
+				// 解除个推客户端的绑定
+				Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
+				UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class)
+						.set(UserInfo.fd_logoutTime, System.currentTimeMillis())
+						.unset(UserInfo.fd_clientId);
+				ds.updateFirst(query, ops);
+				return QinShihuangResult.ok();
+			} else {
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1006);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+    /**
+     * 重置密码
+     * @param account 账户
+     * @param newPassword 新密码
+     * @param token 令牌
+     * @param isTel 是否手机号
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String resetPwd(String account, String newPassword, String token, boolean isTel) throws Exception {
+    	// 检查令牌是否合法
+    	try {
+	    	// 检验token的合法性
+	    	if(!checkTokenValid(token)) {
+	    		return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1007);
+	    	}
+    	} catch(Exception e) {
+    		throw e;
+    	}
+    	Query<UserInfo> query = ds.createQuery(UserInfo.class);
+    	if(isTel)
+    		query.field(UserInfo.fd_number).equal(account).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+    	else
+    		query.field(UserInfo.fd_email).equal(account).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+    	UserInfo userInfo = null;
+    	try {
+    		userInfo = query.get();
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    		throw e;
+    	}
+    	if(userInfo == null) {
+    		return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1007);
+    	} else {
+    		long userId = userInfo.getUserId();
+    		Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId);
+    		
+        	// 生成密码
+    		try {
+    			// 生成64个字节的salt
+    			String salt = MessageDigest.getInstance("MD5").digest(String.valueOf(System.currentTimeMillis()).getBytes()).toString();
+    			byte[] bytes = MessageDigest.getInstance("SHA-256").digest((salt + newPassword).getBytes());
+    			String passwdHash = bytesToString(bytes);
+    			SecretKey secretKey = new SecretKey();
+    			UpdateOperations<Credential> opsCredential = ds.createUpdateOperations(Credential.class)
+    					.set(Credential.fd_salt, salt).set(Credential.fd_passwdHash, passwdHash)
+    					.set(Credential.fd_secretKey, secretKey);
+    			ds.updateFirst(queryCredential, opsCredential);
+    			return QinShihuangResult.ok();
+    		} catch (NoSuchAlgorithmException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			throw e;
+    		}
+    	}
+    }
+
+    /**
+     * 修改密码
+     * @param oldPwd 旧密码
+     * @param newPwd 新密码
+     * @param userId 用户id
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String updatePwd(String oldPwd, String newPwd, Long userId, String key) throws Exception {
+    	// 检验用户是否存在
+    	Query<Credential> queryCredential = ds.createQuery(Credential.class).field(Credential.fd_userId).equal(userId);
+    	Credential credential = null;
+    	try {
+    		credential = queryCredential.get();
+    		if(credential == null) {
+    			return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1008);
+    		} else {
+    			// 用户是否登录
+    			if(!credential.getSecretKey().getKey().equals(key))
+    				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1008);
+    			String salt = credential.getSalt();
+    			byte[] bytes = MessageDigest.getInstance("SHA-256").digest((salt + oldPwd).getBytes());
+    			String oldPwdHash = bytesToString(bytes);
+    			if(oldPwdHash.equals(credential.getPasswdHash())) {
+    				bytes = MessageDigest.getInstance("SHA-256").digest((salt + newPwd).getBytes());
+        			String newPwdHash = bytesToString(bytes);
+        			UpdateOperations<Credential> opsCredential = ds.createUpdateOperations(Credential.class)
+        					.set(Credential.fd_passwdHash, newPwdHash);
+        			ds.updateFirst(queryCredential, opsCredential);
+        			return QinShihuangResult.ok();
+    			} else {
+    				return QinShihuangResult.getResult(ErrorCode.OLD_PWD_INVALID_1008);
+    			}
+    		}
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    		throw e;
+    	}
+    }
+
+
+
+	/**
+	 * 根据用户id取得用户信息
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @return 用户信息
+	 * @throws Exception 异常
+	 */
+	public static String getUserInfoById(Long userId, String key) throws Exception {
+		try {
+			if(CommonAPI.checkKeyValid(userId, key)) {
+				Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+				UserInfo userInfo = query.get();
+				if(userInfo == null) {
+					return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1009);
+				} else {
+					return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
+				}
+			} else {
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1009);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 校验图片的合法性
+	 * @param image 图片信息
+	 * @return 是否合法
+	 */
+	public static String checkImageItem(ImageItem image) {
+		if(image.getKey() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_KEY_NULL);
+
+		if(image.getBucket() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_BUCKET_NULL);
+
+		if(image.getUrl() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_URL_NULL);
+
+		if(image.getWidth() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_WIDTH_NULL);
+
+		if(image.getHeight() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_HEIGHT_NULL);
+
+		if(image.getFmt() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_FMT_NULL);
+
+		if(image.getHash() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_HASH_NULL);
+
+		if(image.getSize() == null)
+			return QinShihuangResult.getResult(ErrorCode.IMAGE_SIZE_NULL);
+
+		return Constant.IMAGE_NORMAL;
+	}
+
+	/**
+	 * 更新用户信息
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @param updateUserInfoReq 待更新用户信息
+	 * @return 用户信息
+	 * @throws Exception 异常
+	 */
+	public static String updateUserInfo(Long userId, String key, UpdateUserInfoReq updateUserInfoReq) throws Exception {
+		Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+		UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class);
+		try {
+			if(CommonAPI.checkKeyValid(userId, key)) {
+				String ret = null;
+				if(updateUserInfoReq.getAvatar() != null) {
+					ret = checkImageItem(updateUserInfoReq.getAvatar());
+					if (ret.equals(Constant.IMAGE_NORMAL))
+						ops.set(UserInfo.fd_avatar, updateUserInfoReq.getAvatar());
+					else
+						return ret;
+				}
+				if(updateUserInfoReq.getBackGround() != null) {
+					ret = checkImageItem(updateUserInfoReq.getBackGround());
+					if (ret.equals(Constant.IMAGE_NORMAL))
+						ops.set(UserInfo.fd_backGround, updateUserInfoReq.getBackGround());
+					else
+						return ret;
+				}
+				if(updateUserInfoReq.getGender() != null) {
+					if(Constant.checkGender(updateUserInfoReq.getGender()))
+						ops.set(UserInfo.fd_gender, updateUserInfoReq.getGender());
+					else
+						return QinShihuangResult.getResult(ErrorCode.GENDER_INVALID_1010);
+				}
+				if(updateUserInfoReq.getBirthday() != null)
+					ops.set(UserInfo.fd_birthday, updateUserInfoReq.getBirthday());
+				if(updateUserInfoReq.getLevel() != null)
+					ops.set(UserInfo.fd_level, updateUserInfoReq.getLevel());
+				if(updateUserInfoReq.getNickName() != null)
+					ops.set(UserInfo.fd_nickName, updateUserInfoReq.getNickName());
+				if(updateUserInfoReq.getResidence() != null)
+					ops.set(UserInfo.fd_residence, updateUserInfoReq.getResidence());
+				if(updateUserInfoReq.getSoundNotify() != null)
+					ops.set(UserInfo.fd_soundNotify, updateUserInfoReq.getSoundNotify());
+				if(updateUserInfoReq.getSignature() != null)
+					ops.set(UserInfo.fd_signature, updateUserInfoReq.getSignature());
+				if(updateUserInfoReq.getVibrateNotify() != null)
+					ops.set(UserInfo.fd_vibrateNotify, updateUserInfoReq.getVibrateNotify());
+				if(updateUserInfoReq.getZodiac() != null) {
+					if(Constant.checkZodiac(updateUserInfoReq.getZodiac()))
+						ops.set(UserInfo.fd_zodiac, updateUserInfoReq.getZodiac());
+					else
+						return QinShihuangResult.getResult(ErrorCode.ZODIAC_INVALID_1010);
+				}
+				ops.set(UserInfo.fd_updateTime, System.currentTimeMillis());
+				UserInfo userInfo = ds.findAndModify(query, ops, false);
+				if(userInfo == null)
+					return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1010);
+				else
+					return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
+			} else {
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1010);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	/**
+	 * 绑定手机号
+	 * @param tel 手机号
+	 * @param token 验证码令牌
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @return 结果
+	 * @throws Exception 异常
+	 */
+	public static String bindTel(String tel, String token, Long userId, String key) throws Exception {
+		try {
+			if (!CommonAPI.checkKeyValid(userId, key)) {
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1011);
+			}
+			if(!checkTokenValid(token)) {
+				return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1011);
+			}
+			if(checkUserExist(tel, true)) {
+				return QinShihuangResult.getResult(ErrorCode.TEL_EXIST_1011);
+			}
+			Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
+			PhoneNumber phoneNumber = new PhoneNumber(86, tel);
+			UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class).set(UserInfo.fd_tel, phoneNumber);
+			ds.update(query, ops);
+			return QinShihuangResult.ok();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	/**
+	 * 绑定邮箱号
+	 * @param email 邮箱号
+	 * @param token 验证码令牌
+	 * @param userId 用户id
+	 * @param key 不羁旅行令牌
+	 * @return 结果
+	 * @throws Exception 异常
+	 */
+	public static String bindEmail(String email, String token, Long userId, String key) throws Exception {
+		try {
+			if (!CommonAPI.checkKeyValid(userId, key)) {
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1103);
+			}
+			if(!checkTokenValid(token)) {
+				return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1103);
+			}
+			if(checkUserExist(email, false)) {
+				return QinShihuangResult.getResult(ErrorCode.EMAIL_EXIST_1103);
+			}
+			Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
+			UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class).set(UserInfo.fd_email, email);
+			ds.updateFirst(query, ops);
+			return QinShihuangResult.ok();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 }

@@ -73,6 +73,8 @@ public class Shopping {
 	public final static String fd_rentCar = "rentCar";
 	@Transient
 	public final static String fd_locality = "locality";
+	@Transient
+	public final static String fd_favorCnt = "favorCnt";
 	
 	/**
 	 * 主键
@@ -226,6 +228,12 @@ public class Shopping {
 	 * 折扣
 	 */
 	private Float discount;
+
+	/**
+	 * 收藏次数
+	 */
+	@Min(value = 0)
+	private Integer favorCnt = 0;
 
 	public ObjectId getId() {
 		return id;
@@ -442,5 +450,12 @@ public class Shopping {
 	public void setDiscount(Float discount) {
 		this.discount = discount;
 	}
-	
+
+	public Integer getFavorCnt() {
+		return favorCnt;
+	}
+
+	public void setFavorCnt(Integer favorCnt) {
+		this.favorCnt = favorCnt;
+	}
 }

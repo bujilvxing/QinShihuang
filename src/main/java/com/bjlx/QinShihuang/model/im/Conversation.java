@@ -23,7 +23,7 @@ public class Conversation {
 	@Transient
 	public final static String fd_msgCounter = "msgCounter";
 	@Transient
-	public final static String fd_conversationId = "conversationId";
+	public final static String fd_convId = "convId";
 	@Transient
 	public final static String fd_createTime = "createTime";
 	@Transient
@@ -51,9 +51,9 @@ public class Conversation {
     private ObjectId id;
 
     /**
-     * 聊天类型。single表示单聊，group表示群组
+     * 聊天类型。1表示单聊，2表示群组
      */
-    private String chatType = "";
+    private Integer chatType = 1;
 
     /**
      * 消息数量
@@ -63,7 +63,7 @@ public class Conversation {
     /**
      * 会话id。单聊为两个用户的id,例如：10001,10002   群组为群组的id
      */
-    private String conversationId;
+    private String convId;
 
     /**
      * 会话创建时间
@@ -123,11 +123,11 @@ public class Conversation {
         this.id = id;
     }
 
-    public String getChatType() {
+    public Integer getChatType() {
         return chatType;
     }
 
-    public void setChatType(String chatType) {
+    public void setChatType(Integer chatType) {
         this.chatType = chatType;
     }
 
@@ -187,12 +187,12 @@ public class Conversation {
         this.targetId = targetId;
     }
 
-    public String getConversationId() {
-        return conversationId;
+    public String getConvId() {
+        return convId;
     }
 
-    public void setConversationId(String conversationId) {
-        this.conversationId = conversationId;
+    public void setConvId(String convId) {
+        this.convId = convId;
     }
     
     public Integer getUnreadCnt() {
@@ -219,10 +219,16 @@ public class Conversation {
 		this.pinList = pinList;
 	}
 
-	public Conversation(ObjectId id, String conversationId, String chatType, Long createTime) {
+    public Conversation() {
+
+    }
+
+	public Conversation(ObjectId id, String convId, Integer chatType) {
         this.id = id;
-        this.conversationId = conversationId;
+        this.convId = convId;
         this.chatType = chatType;
-        this.createTime = createTime;
+        Long currentTime = System.currentTimeMillis();
+        this.createTime = currentTime;
+        this.updateTime = currentTime;
     }
 }

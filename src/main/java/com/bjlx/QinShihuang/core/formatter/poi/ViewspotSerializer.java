@@ -58,7 +58,9 @@ public class ViewspotSerializer extends JsonSerializer<Viewspot> {
             if(viewspot.getHotness() != null)
                 gen.writeNumberField(Viewspot.fd_hotness, viewspot.getHotness());
 
-            
+            if(viewspot.getFavorCnt() != null)
+                gen.writeNumberField(Viewspot.fd_favorCnt, viewspot.getFavorCnt());
+
             Contact contact = viewspot.getContact();
             if (contact != null) {
             	gen.writeFieldName(Viewspot.fd_contact);

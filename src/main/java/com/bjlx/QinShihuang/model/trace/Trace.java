@@ -83,6 +83,8 @@ public class Trace {
 	public final static String fd_lat = "lat";
 	@Transient
 	public final static String fd_lng = "lng";
+	@Transient
+	public final static String fd_voteCnt = "voteCnt";
 
 	/**
 	 * 主键
@@ -185,6 +187,12 @@ public class Trace {
 	 */
 	@Min(value = 0)
 	private Integer favorCnt = 0;
+
+	/**
+	 * 点赞数
+	 */
+	@Min(value = 0)
+	private Integer voteCnt = 0;
 
 	/**
 	 * 评论次数
@@ -460,6 +468,14 @@ public class Trace {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Integer getVoteCnt() {
+		return voteCnt;
+	}
+
+	public void setVoteCnt(Integer voteCnt) {
+		this.voteCnt = voteCnt;
 	}
 
 	public Trace(Long userId, String nickName, ImageItem avatar) {

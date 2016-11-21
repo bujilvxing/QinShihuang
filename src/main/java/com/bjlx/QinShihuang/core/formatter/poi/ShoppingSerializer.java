@@ -57,7 +57,8 @@ public class ShoppingSerializer extends JsonSerializer<Shopping> {
 
             if(shopping.getHotness() != null)
                 gen.writeNumberField(Shopping.fd_hotness, shopping.getHotness());
-
+            if(shopping.getFavorCnt() != null)
+                gen.writeNumberField(Shopping.fd_favorCnt, shopping.getFavorCnt());
             
             Contact contact = shopping.getContact();
             if (contact != null) {

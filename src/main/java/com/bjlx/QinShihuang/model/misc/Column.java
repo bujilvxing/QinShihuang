@@ -10,8 +10,6 @@ import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import java.util.List;
 
 /**
  * 专栏运营位
@@ -24,18 +22,26 @@ public class Column {
 	@Transient
 	public final static String fd_id = "id";
 	@Transient
+	public final static String fd_itemId = "itemId";
+	@Transient
 	public final static String fd_rank = "rank";
 	@Transient
 	public final static String fd_columnType = "columnType";
+	@Transient
+	public final static String fd_itemType = "itemType";
 	@Transient
 	public final static String fd_title = "title";
 	@Transient
 	public final static String fd_link = "link";
 	@Transient
-	public final static String fd_images = "images";
+	public final static String fd_linkType = "linkType";
+	@Transient
+	public final static String fd_cover = "cover";
 	@Transient
 	public final static String fd_status = "status";
-	
+	@Transient
+	public final static String fd_desc = "desc";
+
 	/**
 	 * 主键
 	 */
@@ -50,6 +56,11 @@ public class Column {
 	private Integer rank;
 	
 	/**
+	 * 专栏分类。攻略、酒店、购物等
+	 */
+	private String itemType;
+	
+	/**
 	 * TODO
 	 * 专栏类型，"slide"表示幻灯片专栏，"special"表示特色专栏，这个值还需要敲定
 	 */
@@ -60,7 +71,7 @@ public class Column {
 	 */
 	@NotBlank
 	@Length(min = 1, max = 256)
-	String title;
+	private String title;
 
 	/**
 	 * 链接
@@ -68,19 +79,28 @@ public class Column {
 	@NotBlank
 	@URL
 	@Length(min = 1, max = 1024)
-	String link;
+	private String link;
 
+	/**
+	 * 链接类型。app或者web
+	 */
+	private String linkType = "app";
+	
 	/**
 	 * 图像
 	 */
-	@Size(min = 0, max = 10)
-	List<ImageItem> images;
+	private ImageItem cover;
 
 	/**
 	 * 专栏状态: 审核中, 已发布
 	 */
 	@Pattern(regexp = "(review|pub|disabled)")
-	String status;
+	private String status;
+
+	/**
+	 * 描述
+	 */
+	private String desc;
 
 	public ObjectId getId() {
 		return id;
@@ -122,12 +142,12 @@ public class Column {
 		this.link = link;
 	}
 
-	public List<ImageItem> getImages() {
-		return images;
+	public ImageItem getCover() {
+		return cover;
 	}
 
-	public void setImages(List<ImageItem> images) {
-		this.images = images;
+	public void setCover(ImageItem cover) {
+		this.cover = cover;
 	}
 
 	public String getStatus() {
@@ -136,5 +156,29 @@ public class Column {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getLinkType() {
+		return linkType;
+	}
+
+	public void setLinkType(String linkType) {
+		this.linkType = linkType;
+	}
+
+	public String getItemType() {
+		return itemType;
+	}
+
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 }

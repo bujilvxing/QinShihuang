@@ -69,6 +69,8 @@ public class Restaurant {
 	public final static String fd_saleVolume = "saleVolume";
 	@Transient
 	public final static String fd_locality = "locality";
+	@Transient
+	public final static String fd_favorCnt = "favorCnt";
 	
 	/**
 	 * 主键
@@ -217,6 +219,12 @@ public class Restaurant {
 	 * 销量
 	 */
 	private Integer saleVolume;
+
+	/**
+	 * 收藏次数
+	 */
+	@Min(value = 0)
+	private Integer favorCnt = 0;
 
 	public ObjectId getId() {
 		return id;
@@ -425,5 +433,12 @@ public class Restaurant {
 	public void setMarketPrice(Double marketPrice) {
 		this.marketPrice = marketPrice;
 	}
-	
+
+	public Integer getFavorCnt() {
+		return favorCnt;
+	}
+
+	public void setFavorCnt(Integer favorCnt) {
+		this.favorCnt = favorCnt;
+	}
 }

@@ -15,11 +15,6 @@ public class ShoppingBasicSerializer extends JsonSerializer<Shopping> {
 	    try {
 	        gen.writeStartObject();
 	        gen.writeStringField(Shopping.fd_id, shopping.getId() == null ? "" : shopping.getId().toString());
-	        if(shopping.getLat() != null)
-	        	gen.writeNumberField(Shopping.fd_lat, shopping.getLat());
-	        if(shopping.getLng() != null)
-	        	gen.writeNumberField(Shopping.fd_lng, shopping.getLng());
-
 	        gen.writeFieldName(Shopping.fd_cover);
             ImageItem cover = shopping.getCover();
             if (cover != null) {

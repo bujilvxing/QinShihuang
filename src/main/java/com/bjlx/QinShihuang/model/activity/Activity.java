@@ -62,7 +62,8 @@ public class Activity {
     public final static String fd_tickets = "tickets";
 	@Transient
     public final static String fd_isFree = "isFree";
-
+    @Transient
+    public final static String fd_voteCnt = "voteCnt";
     /**
      * 主键
      */
@@ -106,6 +107,12 @@ public class Activity {
      */
     @Min(value = 0)
     private Integer favorCnt = 0;
+
+    /**
+     * 点赞数
+     */
+    @Min(value = 0)
+    private Integer voteCnt = 0;
 
     /**
      * 评论次数
@@ -343,7 +350,19 @@ public class Activity {
 		this.isFree = isFree;
 	}
 
-	public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
+    public Integer getVoteCnt() {
+        return voteCnt;
+    }
+
+    public void setVoteCnt(Integer voteCnt) {
+        this.voteCnt = voteCnt;
+    }
+
+    public Boolean isFree() {
+        return isFree;
+    }
+
+    public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
         this.id = new ObjectId();
         this.title = title;
         this.maxNum = maxNum;

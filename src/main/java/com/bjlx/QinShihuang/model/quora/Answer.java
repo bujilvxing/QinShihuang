@@ -3,6 +3,10 @@ package com.bjlx.QinShihuang.model.quora;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.bson.types.ObjectId;
+import org.hibernate.validator.constraints.NotBlank;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
 /**
@@ -10,6 +14,7 @@ import org.mongodb.morphia.annotations.Transient;
  * @author xiaozhi
  *
  */
+@Entity
 public class Answer extends AbstractQuoraEntry {
 
 	@Transient
@@ -18,6 +23,15 @@ public class Answer extends AbstractQuoraEntry {
 	public final static String fd_voteCnt = "voteCnt";
 	@Transient
 	public final static String fd_accepted = "accepted";
+	@Transient
+	public final static String fd_id = "id";
+
+	/**
+	 * 主键
+	 */
+	@NotBlank
+	@Id
+	private ObjectId id;
 
 	/**
 	 * 对应的问题
@@ -65,5 +79,13 @@ public class Answer extends AbstractQuoraEntry {
 
 	public void setAccepted(Boolean accepted) {
 		this.accepted = accepted;
+	}
+
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
 	}
 }

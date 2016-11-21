@@ -39,7 +39,8 @@ public class QuestionSerializer extends JsonSerializer<Question> {
             gen.writeNumberField(Question.fd_viewCnt, question.getViewCnt() == null ? 0 : question.getViewCnt());
             gen.writeNumberField(Question.fd_answerCnt, question.getAnswerCnt() == null ? 0 : question.getAnswerCnt());
             gen.writeNumberField(Question.fd_maxVoteCnt, question.getMaxVoteCnt() == null ? 0 : question.getMaxVoteCnt());
-
+            gen.writeNumberField(Question.fd_favorCnt, question.getFavorCnt() == null ? 0 : question.getFavorCnt());
+            gen.writeNumberField(Question.fd_voteCnt, question.getVoteCnt() == null ? 0 : question.getVoteCnt());
             gen.writeFieldName(Question.fd_author);
             UserInfo author = question.getAuthor();
             if (author != null) {

@@ -56,6 +56,9 @@ public class TravelNoteSerializer extends JsonSerializer<TravelNote> {
             if(travelNote.getFavorCnt() != null)
                 gen.writeNumberField(TravelNote.fd_favorCnt, travelNote.getFavorCnt());
 
+            if(travelNote.getVoteCnt() != null)
+                gen.writeNumberField(TravelNote.fd_voteCnt, travelNote.getVoteCnt());
+
             if(travelNote.getCommentCnt() != null)
                 gen.writeNumberField(TravelNote.fd_commentCnt, travelNote.getCommentCnt());
 

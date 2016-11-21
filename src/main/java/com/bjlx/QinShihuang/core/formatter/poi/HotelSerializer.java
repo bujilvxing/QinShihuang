@@ -60,7 +60,8 @@ public class HotelSerializer extends JsonSerializer<Hotel> {
             if(hotel.getHotness() != null)
                 gen.writeNumberField(Hotel.fd_hotness, hotel.getHotness());
 
-            
+            if(hotel.getFavorCnt() != null)
+                gen.writeNumberField(Hotel.fd_favorCnt, hotel.getFavorCnt());
             Contact contact = hotel.getContact();
             if (contact != null) {
             	gen.writeFieldName(Hotel.fd_contact);

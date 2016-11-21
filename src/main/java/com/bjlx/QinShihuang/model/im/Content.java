@@ -136,5 +136,7 @@ public class Content {
 		this.video = video;
 	}
 	
-	
+	public Content() {
+
+	}
 }

@@ -61,6 +61,19 @@ public class CommonUtil {
     }
 
     /**
+     * 首位不为0且位数小于18的数字
+     * @param str 待检验字符串
+     * @return 检验结果
+     * @throws PatternSyntaxException 正则匹配异常
+     */
+    public static boolean isLongDigit(String str)throws PatternSyntaxException {
+        String regExp = "^[1-9]\\d{0,17}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(str);
+        return m.matches();
+    }
+
+    /**
      * Date 转 String
      * @param val date类型的值
      * @return String类型的值
