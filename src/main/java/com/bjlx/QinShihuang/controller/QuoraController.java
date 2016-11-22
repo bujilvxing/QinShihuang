@@ -70,4 +70,21 @@ public class QuoraController {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
+
+    /**
+     * 取得问题列表1054
+     * @param offset 从第几个问题开始取
+     * @param limit 取多少个问题
+     * @return 问题列表
+     */
+    @RequestMapping(value = "/app/questions", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getQuestions(Integer offset, Integer limit) {
+        int defaultOffset = offset == null ? 0 : offset;
+        int defaultLimit = limit == null ? 10 : limit;
+        try {
+            return QuoraAPI.getQuestions(defaultOffset, defaultLimit);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
 }

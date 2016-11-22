@@ -84,7 +84,8 @@ public class QuoraAPI {
                 return QinShihuangResult.getResult(ErrorCode.QUESTION_NOT_EXIST_1052);
             ObjectNode quora = CommonAPI.mapper.createObjectNode();
             quora.set("question", QuestionFormatter.getMapper().valueToTree(question));
-            Query<Answer> queryAnswer = ds.createQuery(Answer.class).field(Answer.fd_questionId).equal(new ObjectId(questionId)).field(Answer.fd_status).equal(Constant.ANSWER_NORMAL).offset(offset).limit(limit);
+            Query<Answer> queryAnswer = ds.createQuery(Answer.class).field(Answer.fd_questionId).equal(new ObjectId(questionId))
+                    .field(Answer.fd_status).equal(Constant.ANSWER_NORMAL).offset(offset).limit(limit).order(String.format("-%s", Answer.fd_voteCnt));
             List<Answer> answers = queryAnswer.asList();
             if(answers != null)
                 quora.set("answers", AnswerFormatter.getMapper().valueToTree(answers));
@@ -99,17 +100,40 @@ public class QuoraAPI {
      * 取得用户的问题列表
      * @param userId 用户id
      * @param key 不羁旅行令牌
-     * @param defaultOffset 从第几个问题开始取
-     * @param defaultLimit 取多少个问题
+     * @param offset 从第几个问题开始取
+     * @param limit 取多少个问题
      * @return 问题列表
      * @throws Exception 异常
      */
-    public static String getQuestionsByUserId(Long userId, String key, Integer defaultOffset, Integer defaultLimit) throws Exception {
+    public static String getQuestionsByUserId(Long userId, String key, Integer offset, Integer limit) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1053);
             }
-            Query<Question> queryQuestion = ds.createQuery(Question.class).field(Question.fd_authorId).equal(userId).field(Question.fd_status).equal(Constant.QUESTION_NORMAL);
+            Query<Question> queryQuestion = ds.createQuery(Question.class).field(Question.fd_authorId).equal(userId)
+                    .field(Question.fd_status).equal(Constant.QUESTION_NORMAL).order(String.format("-%s", Question.fd_publishTime)).offset(offset).limit(limit);
+            List<Question> questions = queryQuestion.asList();
+            if (questions == null)
+                return QinShihuangResult.ok(QuestionBasicFormatter.getMapper().valueToTree(new ArrayList<Question>()));
+            else
+                return QinShihuangResult.ok(QuestionBasicFormatter.getMapper().valueToTree(questions));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 取得问题列表
+     * @param offset 从第几个问题开始取
+     * @param limit 取多少个问题
+     * @return 问题列表
+     * @throws Exception 异常
+     */
+    public static String getQuestions(Integer offset, Integer limit) throws Exception {
+        try {
+            Query<Question> queryQuestion = ds.createQuery(Question.class).field(Question.fd_status).equal(Constant.QUESTION_NORMAL)
+                    .order(String.format("-%s", Question.fd_publishTime)).offset(offset).limit(limit);
             List<Question> questions = queryQuestion.asList();
             if (questions == null)
                 return QinShihuangResult.ok(QuestionBasicFormatter.getMapper().valueToTree(new ArrayList<Question>()));
