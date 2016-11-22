@@ -37,6 +37,9 @@ public class Question extends AbstractQuoraEntry {
 	public final static String fd_voteCnt = "voteCnt";
 	@Transient
 	public final static String fd_status = "status";
+	@Transient
+	public final static String fd_authorId = "author.userId";
+
 	/**
 	 * 主键
 	 */

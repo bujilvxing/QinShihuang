@@ -198,6 +198,9 @@ public enum ErrorCode {
 	// 取得问题详情
 	QUESTION_NOT_EXIST_1052(105201, "问题不存在"),
 
+	// 取得用户问题列表
+	UNLOGIN_1053(105301, "用户未登录"),
+
 	/**
 	 * 社交
 	 */

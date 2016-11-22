@@ -51,4 +51,23 @@ public class QuoraController {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
+
+    /**
+     * 取得用户的问题列表1053
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param offset 从第几个问题开始取
+     * @param limit 取多少个问题
+     * @return 问题列表
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/questions", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getQuestionsByUserId(@PathVariable("userId") Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
+        int defaultOffset = offset == null ? 0 : offset;
+        int defaultLimit = limit == null ? 10 : limit;
+        try {
+            return QuoraAPI.getQuestionsByUserId(userId, key, defaultOffset, defaultLimit);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
 }
