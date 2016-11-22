@@ -192,7 +192,7 @@ public class MomentAPI {
             }
             contactIds.remove(userId);
 
-            // TODO 发送消息给每一个粉丝
+            // TODO 发送消息给每一个粉丝，此处只需要发一个提醒消息即可，消息的内容已不重要
             List<String> clientIds = ImAPI.getClientIdsByUserIds(contactIds.stream().collect(Collectors.toList()));
             Content content = new Content();
             content.setMoment(moment);

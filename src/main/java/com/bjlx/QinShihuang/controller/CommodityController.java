@@ -22,8 +22,7 @@ public class CommodityController {
      * @return 商品详情信息
      */
     @RequestMapping(value = "/app/marketplace/commodities/{commodityId:\\[0-9a-f]{24}}",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
-    public @ResponseBody
-    String getCommodity(@PathVariable(value = "commodityId") String commodityId){
+    public @ResponseBody String getCommodity(@PathVariable("commodityId") String commodityId){
         try{
             return CommodityAPI.getCommodityById(commodityId);
         } catch (Exception e) {

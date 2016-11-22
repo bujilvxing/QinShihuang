@@ -24,7 +24,7 @@ public class SocialController {
      * @return 结果
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/followings", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String following(@PathVariable Long userId, @RequestHeader("key") String key, @RequestBody FollowingReq followingReq) {
+    public @ResponseBody String following(@PathVariable("userId") Long userId, @RequestHeader("key") String key, @RequestBody FollowingReq followingReq) {
         // 参数校验
         if(followingReq.getFollowingId() == null) {
             return QinShihuangResult.getResult(ErrorCode.FOLLOWINGID_NULL_1055);
@@ -45,7 +45,7 @@ public class SocialController {
      * @return 结果
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/followings", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
-    public @ResponseBody String cancelFollowing(@PathVariable Long userId, @RequestHeader("key") String key, @RequestBody FollowingReq followingReq) {
+    public @ResponseBody String cancelFollowing(@PathVariable("userId") Long userId, @RequestHeader("key") String key, @RequestBody FollowingReq followingReq) {
         // 参数校验
         if(followingReq.getFollowingId() == null) {
             return QinShihuangResult.getResult(ErrorCode.FOLLOWINGID_NULL_1056);
@@ -67,7 +67,7 @@ public class SocialController {
      * @return 好友信息列表
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/contacts", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getContacts(@PathVariable Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
+    public @ResponseBody String getContacts(@PathVariable("userId") Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
         Integer defaultOffset = 0;
         Integer defaultLimit = 200;
         try {
@@ -85,7 +85,7 @@ public class SocialController {
      * @return 好友(关注人)信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/contacts/{contactId:\\d+}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getContactInfo(@PathVariable Long userId, @PathVariable Long contactId, @RequestHeader("key") String key) {
+    public @ResponseBody String getContactInfo(@PathVariable("userId") Long userId, @PathVariable("contactId") Long contactId, @RequestHeader("key") String key) {
         try {
             return SocialAPI.getContactInfo(userId, contactId, key);
         } catch(Exception e1) {
@@ -102,7 +102,7 @@ public class SocialController {
      * @return 好友(关注人)信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/contacts/{contactId:\\d+}/memos", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updateMemo(@PathVariable Long userId, @PathVariable Long contactId, @RequestHeader("key") String key, @RequestBody MemoReq memoReq) {
+    public @ResponseBody String updateMemo(@PathVariable("userId") Long userId, @PathVariable("contactId") Long contactId, @RequestHeader("key") String key, @RequestBody MemoReq memoReq) {
         if(memoReq.getMemo() == null || "".equals(memoReq.getMemo())) {
             return QinShihuangResult.getResult(ErrorCode.MEMO_NULL_1059);
         }
@@ -121,7 +121,7 @@ public class SocialController {
      * @return 结果
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/blacklist", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String addBlackList(@PathVariable Long userId, @RequestHeader("key") String key, @RequestBody BlockReq blockReq) {
+    public @ResponseBody String addBlackList(@PathVariable("userId") Long userId, @RequestHeader("key") String key, @RequestBody BlockReq blockReq) {
         if(blockReq.getBlockId() == null) {
             return QinShihuangResult.getResult(ErrorCode.BLOCKID_NULL_1060);
         }
@@ -140,7 +140,7 @@ public class SocialController {
      * @return 结果
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/followings/{blockId:\\d+}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
-    public @ResponseBody String removeBlackList(@PathVariable Long userId, @PathVariable Long blockId, @RequestHeader("key") String key) {
+    public @ResponseBody String removeBlackList(@PathVariable("userId") Long userId, @PathVariable("blockId") Long blockId, @RequestHeader("key") String key) {
         try {
             return SocialAPI.updateBlackList(userId, key, blockId, false);
         } catch(Exception e1) {
@@ -163,7 +163,7 @@ public class SocialController {
      * @return 用户关注列表
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/followings", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getFollowings(@PathVariable Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
+    public @ResponseBody String getFollowings(@PathVariable("userId") Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
         Integer defaultOffset = 0;
         Integer defaultLimit = 200;
 
@@ -183,7 +183,7 @@ public class SocialController {
      * @return 用户粉丝列表
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/follows", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getFollows(@PathVariable Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
+    public @ResponseBody String getFollows(@PathVariable("userId") Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
         Integer defaultOffset = 0;
         Integer defaultLimit = 200;
 

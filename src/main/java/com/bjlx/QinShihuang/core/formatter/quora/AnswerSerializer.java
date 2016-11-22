@@ -40,7 +40,7 @@ public class AnswerSerializer extends JsonSerializer<Answer> {
             gen.writeNumberField(Answer.fd_publishTime, answer.getPublishTime() == null ? 0L : answer.getPublishTime());
 
             gen.writeStringField(Answer.fd_title, answer.getTitle() == null ? "" : answer.getTitle());
-            gen.writeStringField(Answer.fd_contents, answer.getContents() == null ? "" : answer.getContents());
+            gen.writeStringField(Answer.fd_content, answer.getContent() == null ? "" : answer.getContent());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

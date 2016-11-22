@@ -65,7 +65,7 @@ public class ImController {
      * @return 结果
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/messages", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String fetchMsg(@PathVariable Long userId, @RequestHeader("key") String key, @RequestBody FetchMsgReq fetchMsgReq) {
+    public @ResponseBody String fetchMsg(@PathVariable("userId") Long userId, @RequestHeader("key") String key, @RequestBody FetchMsgReq fetchMsgReq) {
         Long purgeBefore = fetchMsgReq.getPurgeBefore() == null ? 0L : fetchMsgReq.getPurgeBefore();
         try {
             return ImAPI.fetchMsg(userId, key, purgeBefore);
@@ -83,7 +83,7 @@ public class ImController {
      * @return 结果
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/conversations/{id:\\[0-9a-f]{24}}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updateConversation(@PathVariable Long userId, @PathVariable String id, @RequestHeader("key") String key, @RequestBody ConversationReq conversationReq) {
+    public @ResponseBody String updateConversation(@PathVariable("userId") Long userId, @PathVariable("id") String id, @RequestHeader("key") String key, @RequestBody ConversationReq conversationReq) {
         if(conversationReq.isMute() == null)
             return QinShihuangResult.getResult(ErrorCode.MUTE_NULL_1066);
 
@@ -102,7 +102,7 @@ public class ImController {
      * @return 会话列表
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/conversations", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getConversationsByIds(@PathVariable Long userId, @RequestHeader("key") String key, @RequestBody ConversationReq conversationReq) {
+    public @ResponseBody String getConversationsByIds(@PathVariable("userId") Long userId, @RequestHeader("key") String key, @RequestBody ConversationReq conversationReq) {
         if(conversationReq.getIds() == null)
             return QinShihuangResult.getResult(ErrorCode.IDLIST_NULL_1067);
 

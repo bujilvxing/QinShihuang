@@ -35,6 +35,7 @@ public class Question extends AbstractQuoraEntry {
 	public final static String fd_favorCnt = "favorCnt";
 	@Transient
 	public final static String fd_voteCnt = "voteCnt";
+
 	/**
 	 * 主键
 	 */
@@ -62,7 +63,7 @@ public class Question extends AbstractQuoraEntry {
 	 * 问题被浏览的次数
 	 */
 	@Min(value = 0)
-	private Integer viewCnt;
+	private Integer viewCnt = 0;
 
 	/**
 	 * 收藏次数
@@ -80,7 +81,7 @@ public class Question extends AbstractQuoraEntry {
 	 * 问题被回答的次数
 	 */
 	@Min(value = 0)
-	private Integer answerCnt;
+	private Integer answerCnt = 0;
 	
 	/**
 	 * 该问题的所有回答中，被赞的次数最高的数值

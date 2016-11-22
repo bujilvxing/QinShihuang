@@ -53,7 +53,7 @@ public class QuestionSerializer extends JsonSerializer<Question> {
             gen.writeNumberField(Question.fd_publishTime, question.getPublishTime() == null ? 0L : question.getPublishTime());
 
             gen.writeStringField(Question.fd_title, question.getTitle() == null ? "" : question.getTitle());
-            gen.writeStringField(Question.fd_contents, question.getContents() == null ? "" : question.getContents());
+            gen.writeStringField(Question.fd_content, question.getContent() == null ? "" : question.getContent());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

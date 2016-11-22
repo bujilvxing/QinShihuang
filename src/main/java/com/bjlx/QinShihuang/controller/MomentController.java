@@ -25,7 +25,7 @@ public class MomentController {
      * @return 信息列表
      */
     @RequestMapping(value = "/app/moments", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getMoments(@RequestHeader Long userId, @RequestHeader("key") String key, Integer offset, Integer limit, Long latestTime, Long earliestTime) {
+    public @ResponseBody String getMoments(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, Integer offset, Integer limit, Long latestTime, Long earliestTime) {
         if(latestTime == null && earliestTime == null) {
             return QinShihuangResult.getResult(ErrorCode.TIME_NULL_1038);
         }
@@ -46,7 +46,7 @@ public class MomentController {
      * @return 结果
      */
     @RequestMapping(value = "/app/moments", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String addMoment(@RequestHeader Long userId, @RequestHeader("key") String key, @RequestBody MomentReq momentReq) {
+    public @ResponseBody String addMoment(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody MomentReq momentReq) {
         if(momentReq.getOriginId() != null) {
             if(momentReq.getOriginUserId() == null)
                 return QinShihuangResult.getResult(ErrorCode.ORIGINUSERID_NULL_1039);
@@ -75,7 +75,7 @@ public class MomentController {
      * @return 信息列表
      */
     @RequestMapping(value = "/app/users/{targetId:\\d+}/moments", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getMomentsById(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable Long targetId, Integer offset, Integer limit, Long latestTime, Long earliestTime) {
+    public @ResponseBody String getMomentsById(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable("targetId") Long targetId, Integer offset, Integer limit, Long latestTime, Long earliestTime) {
         if(latestTime == null && earliestTime == null) {
             return QinShihuangResult.getResult(ErrorCode.TIME_NULL_1080);
         }
