@@ -61,11 +61,10 @@ public class Answer extends AbstractQuoraEntry {
 
 	}
 
-	public Answer(ObjectId questionId, Integer voteCnt, Boolean accepted) {
+	public Answer(ObjectId questionId) {
 		super();
+		this.id = new ObjectId();
 		this.questionId = questionId;
-		this.voteCnt = voteCnt;
-		this.accepted = accepted;
 	}
 
 	public ObjectId getQuestionId() {

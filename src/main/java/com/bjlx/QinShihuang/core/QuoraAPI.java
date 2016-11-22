@@ -161,9 +161,15 @@ public class QuoraAPI {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1081);
             }
-            Answer answer = new Answer();
-
-
+            UserInfo author = CommonAPI.getUserBasicById(userId);
+            if(author == null)
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1081);
+            Answer answer = new Answer(new ObjectId(questionId));
+            answer.setTitle(title);
+            answer.setContent(content);
+            answer.setPublishTime(System.currentTimeMillis());
+            answer.setAuthor(author);
+            ds.save(answer);
             return QinShihuangResult.ok(AnswerFormatter.getMapper().valueToTree(answer));
         } catch (Exception e) {
             e.printStackTrace();
