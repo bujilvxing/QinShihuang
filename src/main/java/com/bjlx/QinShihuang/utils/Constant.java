@@ -168,4 +168,12 @@ public class Constant {
     public static boolean checkVoteType(Integer voteType) {
         return voteType >= VOTE_POST && voteType <= VOTE_TRAVELNOTE;
     }
+
+    /**
+     * 问答
+     */
+    public final static int ANSWER_NORMAL = 1;
+    public final static int ANSWER_UNENABLE = 2;
+    public final static int QUESTION_NORMAL = 1;
+    public final static int QUESTION_UNENABLE = 2;
 }

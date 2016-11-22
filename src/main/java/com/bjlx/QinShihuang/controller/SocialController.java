@@ -149,12 +149,6 @@ public class SocialController {
     }
 
     /**
-     *
-     * @param userId
-     * @param key
-     * @return
-     */
-    /**
      * 取得用户关注列表1062
      * @param userId 用户id
      * @param key 不羁旅行令牌

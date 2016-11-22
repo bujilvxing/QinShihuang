@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class QuoraController {
 
     /**
-     * 添加问题
+     * 添加问题1051
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param questionReq 问题参数
@@ -29,6 +29,24 @@ public class QuoraController {
             return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1051);
         try {
             return QuoraAPI.addQuestion(userId, key, questionReq.getTitle(), questionReq.getContent(), questionReq.getTags(), questionReq.getTopics(), questionReq.getSource());
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取得问答信息1052
+     * @param questionId 问题id
+     * @param offset 从第几条回答开始取
+     * @param limit 取多少条回答
+     * @return 问答详情信息
+     */
+    @RequestMapping(value = "/app/quoras/{questionId:\\[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getQuora(@PathVariable("questionId") String questionId, Integer offset, Integer limit) {
+        int defaultOffset = offset == null ? 0 : offset;
+        int defaultLimit = limit == null ? 10 : limit;
+        try {
+            return QuoraAPI.getQuora(questionId, defaultOffset, defaultLimit);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

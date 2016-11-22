@@ -144,7 +144,7 @@ public class MomentAPI {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1039);
             }
-            UserInfo userInfo = CommonAPI.getUserBasicById(userId);
+            UserInfo userInfo = CommonAPI.getUserBasicWithMomentById(userId);
             if(userInfo == null)
                 return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1039);
             Moment moment = new Moment(userId, userInfo.getNickName(), userInfo.getAvatar());
@@ -199,7 +199,7 @@ public class MomentAPI {
             Message msg = ImAPI.buildMessage(userId, userInfo.getNickName(), userInfo.getAvatar(), userInfo.getId(), content, System.currentTimeMillis(), Constant.MOMENT_MSG, Constant.GROUP_CHAT);
             msg.setAbbrev("");
             ImAPI.sendGroupMsg(msg, clientIds);
-            return QinShihuangResult.ok();
+            return QinShihuangResult.ok(MomentFormatter.getMapper().valueToTree(moment));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

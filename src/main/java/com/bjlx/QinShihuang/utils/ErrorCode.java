@@ -192,6 +192,11 @@ public enum ErrorCode {
 	// 添加问题
 	TITLE_NULL_1051(105101, "标题不可为空"),
 	CONTENT_NULL_1051(105102, "内容不可为空"),
+	UNLOGIN_1051(105103, "用户未登录"),
+	USER_NOT_EXIST_1051(105104, "用户不存在"),
+
+	// 取得问题详情
+	QUESTION_NOT_EXIST_1052(105201, "问题不存在"),
 
 	/**
 	 * 社交
