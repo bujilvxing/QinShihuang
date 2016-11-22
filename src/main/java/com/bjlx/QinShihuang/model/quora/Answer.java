@@ -57,6 +57,10 @@ public class Answer extends AbstractQuoraEntry {
 	 */
 	private Integer status = 1;
 
+	public Answer(){
+
+	}
+
 	public Answer(ObjectId questionId, Integer voteCnt, Boolean accepted) {
 		super();
 		this.questionId = questionId;

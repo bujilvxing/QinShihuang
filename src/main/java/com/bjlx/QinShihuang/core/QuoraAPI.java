@@ -98,6 +98,7 @@ public class QuoraAPI {
 
     /**
      * 取得用户的问题列表
+     * @param targetId 待查看的用户id
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param offset 从第几个问题开始取
@@ -105,12 +106,12 @@ public class QuoraAPI {
      * @return 问题列表
      * @throws Exception 异常
      */
-    public static String getQuestionsByUserId(Long userId, String key, Integer offset, Integer limit) throws Exception {
+    public static String getQuestionsByUserId(Long targetId, Long userId, String key, Integer offset, Integer limit) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1053);
             }
-            Query<Question> queryQuestion = ds.createQuery(Question.class).field(Question.fd_authorId).equal(userId)
+            Query<Question> queryQuestion = ds.createQuery(Question.class).field(Question.fd_authorId).equal(targetId)
                     .field(Question.fd_status).equal(Constant.QUESTION_NORMAL).order(String.format("-%s", Question.fd_publishTime)).offset(offset).limit(limit);
             List<Question> questions = queryQuestion.asList();
             if (questions == null)
@@ -139,6 +140,31 @@ public class QuoraAPI {
                 return QinShihuangResult.ok(QuestionBasicFormatter.getMapper().valueToTree(new ArrayList<Question>()));
             else
                 return QinShihuangResult.ok(QuestionBasicFormatter.getMapper().valueToTree(questions));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 添加回答
+     * @param questionId 问题id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param title 标题
+     * @param content 回答内容
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String addAnswer(String questionId, Long userId, String key, String title, String content) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1081);
+            }
+            Answer answer = new Answer();
+
+
+            return QinShihuangResult.ok(AnswerFormatter.getMapper().valueToTree(answer));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

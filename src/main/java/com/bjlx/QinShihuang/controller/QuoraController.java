@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.QuoraAPI;
+import com.bjlx.QinShihuang.requestmodel.AnswerReq;
 import com.bjlx.QinShihuang.requestmodel.QuestionReq;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
@@ -54,18 +55,19 @@ public class QuoraController {
 
     /**
      * 取得用户的问题列表1053
+     * @param targetId 待查看的用户id
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param offset 从第几个问题开始取
      * @param limit 取多少个问题
      * @return 问题列表
      */
-    @RequestMapping(value = "/app/users/{userId:\\d+}/questions", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getQuestionsByUserId(@PathVariable("userId") Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
+    @RequestMapping(value = "/app/users/{targetId:\\d+}/questions", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getQuestionsByUserId(@PathVariable("targetId") Long targetId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
         int defaultOffset = offset == null ? 0 : offset;
         int defaultLimit = limit == null ? 10 : limit;
         try {
-            return QuoraAPI.getQuestionsByUserId(userId, key, defaultOffset, defaultLimit);
+            return QuoraAPI.getQuestionsByUserId(targetId, userId, key, defaultOffset, defaultLimit);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
@@ -83,6 +85,28 @@ public class QuoraController {
         int defaultLimit = limit == null ? 10 : limit;
         try {
             return QuoraAPI.getQuestions(defaultOffset, defaultLimit);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 添加回答1081
+     * @param questionId 问题id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param answerReq 回答参数
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/questions/{questionId:\\[0-9a-f]{24}}/answers", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addAnswer(@PathVariable("questionId") String questionId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody AnswerReq answerReq) {
+        if(answerReq.getTitle() == null)
+            return QinShihuangResult.getResult(ErrorCode.TITLE_NULL_1081);
+        if(answerReq.getContent() == null)
+            return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1081);
+
+        try {
+            return QuoraAPI.addAnswer(questionId, userId, key, answerReq.getTitle(), answerReq.getContent());
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
