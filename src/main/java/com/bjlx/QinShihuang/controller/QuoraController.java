@@ -111,4 +111,37 @@ public class QuoraController {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
+
+    /**
+     * 删除问题
+     * @param questionId 问题id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/questions/{questionId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String delQuestion(@PathVariable("questionId") String questionId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+        try {
+            return QuoraAPI.delQuestion(questionId, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+    
+    /**
+     * 删除问题
+     * @param questionId 问题id
+     * @param answerId 回答id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/questions/{questionId}/answers/{answerId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String delAnswer(@PathVariable("questionId") String questionId, @PathVariable("answerId") String answerId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+        try {
+            return QuoraAPI.delAnswer(questionId, answerId, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
 }

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,6 +172,57 @@ public class QuoraAPI {
             answer.setAuthor(author);
             ds.save(answer);
             return QinShihuangResult.ok(AnswerFormatter.getMapper().valueToTree(answer));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 删除问题
+     * @param questionId 问题id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String delQuestion(String questionId, Long userId, String key) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1082);
+            }
+            Query<Question> query = ds.createQuery(Question.class).field(Question.fd_id).equal(new ObjectId(questionId))
+                    .field(Question.fd_authorId).equal(userId).field(Question.fd_status).equal(Constant.QUESTION_NORMAL);
+            UpdateOperations<Question> ops = ds.createUpdateOperations(Question.class).set(Question.fd_status, Constant.QUESTION_UNENABLE);
+            ds.updateFirst(query, ops);
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 删除回答
+     * @param questionId 问题id
+     * @param answerId 回答id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String delAnswer(String questionId, String answerId, Long userId, String key) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1083);
+            }
+            // TODO 问题作者和回答作者均可删除
+            Query<Answer> query = ds.createQuery(Answer.class).field(Answer.fd_id).equal(new ObjectId(answerId))
+                    .field(Answer.fd_questionId).equal(new ObjectId(questionId))
+                    .field(Answer.fd_authorId).equal(userId).field(Answer.fd_status).equal(Constant.ANSWER_NORMAL);
+            UpdateOperations<Answer> ops = ds.createUpdateOperations(Answer.class).set(Answer.fd_status, Constant.ANSWER_UNENABLE);
+            ds.updateFirst(query, ops);
+            return QinShihuangResult.ok();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
