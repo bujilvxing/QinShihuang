@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.MomentAPI;
+import com.bjlx.QinShihuang.requestmodel.MomentReq;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.springframework.stereotype.Controller;
@@ -14,14 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class MomentController {
 
     /**
-     *
-     * @param userId
-     * @param key
-     * @param offset
-     * @param limit
-     * @return
-     */
-    /**
      * 查看自己的关注圈1038
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -32,7 +25,7 @@ public class MomentController {
      * @return 信息列表
      */
     @RequestMapping(value = "/app/moments", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getMoments(@RequestHeader Long userId, @RequestHeader("key") String key, Integer offset, Integer limit, Long latestTime, Long earliestTime) {
+    public @ResponseBody String getMoments(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, Integer offset, Integer limit, Long latestTime, Long earliestTime) {
         if(latestTime == null && earliestTime == null) {
             return QinShihuangResult.getResult(ErrorCode.TIME_NULL_1038);
         }
@@ -40,6 +33,31 @@ public class MomentController {
         Integer defaultLimit = limit == null ? 10 : limit;
         try {
             return MomentAPI.getMoments(userId, key, defaultOffset, defaultLimit, latestTime, earliestTime);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 添加时间线1039
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param momentReq 时间线参数
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/moments", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addMoment(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody MomentReq momentReq) {
+        if(momentReq.getOriginId() != null) {
+            if(momentReq.getOriginUserId() == null)
+                return QinShihuangResult.getResult(ErrorCode.ORIGINUSERID_NULL_1039);
+            if(momentReq.getOriginNickName() == null)
+                return QinShihuangResult.getResult(ErrorCode.ORIGINNICKNAME_NULL_1039);
+            if(momentReq.getOriginAvatar() == null)
+                return QinShihuangResult.getResult(ErrorCode.ORIGINAVATAR_NULL_1039);
+        }
+        try {
+            return MomentAPI.addMoment(userId, key, momentReq.getOriginId(), momentReq.getOriginUserId(), momentReq.getOriginNickName(), momentReq.getOriginAvatar(), momentReq.getText(),
+                    momentReq.getComment(), momentReq.getImages(), momentReq.getCard());
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
@@ -57,7 +75,7 @@ public class MomentController {
      * @return 信息列表
      */
     @RequestMapping(value = "/app/users/{targetId:\\d+}/moments", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getMomentsById(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable Long targetId, Integer offset, Integer limit, Long latestTime, Long earliestTime) {
+    public @ResponseBody String getMomentsById(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable("targetId") Long targetId, Integer offset, Integer limit, Long latestTime, Long earliestTime) {
         if(latestTime == null && earliestTime == null) {
             return QinShihuangResult.getResult(ErrorCode.TIME_NULL_1080);
         }

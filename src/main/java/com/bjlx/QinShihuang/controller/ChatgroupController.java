@@ -30,7 +30,7 @@ public class ChatgroupController {
      * @return 群组信息
      */
     @RequestMapping(value = "/app/chatgroups/{chatgroupId:\\d+}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getChatgroup(@PathVariable Long chatgroupId, @RequestHeader("key") Long userId, @RequestHeader("key") String key) {
+    public @ResponseBody String getChatgroup(@PathVariable("chatgroupId") Long chatgroupId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         // 参数校验
         try {
             return ChatgroupAPI.getChatgroup(chatgroupId, userId, key);

@@ -22,7 +22,7 @@ public class GuideController {
      * @return 攻略详情信息
    */
     @RequestMapping(value = "/app/guides/{guideId:\\[0-9a-f]{24}}",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
-    public @ResponseBody String getGuide(@PathVariable(value = "guideId") String guideId){
+    public @ResponseBody String getGuide(@PathVariable("guideId") String guideId){
         try{
             return GuideAPI.getGuide(guideId);
         }catch (Exception e){

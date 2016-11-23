@@ -234,7 +234,7 @@ public class MiscController {
      * @return 结果
      */
     @RequestMapping(value = "/app/votes/{itemId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
-    public @ResponseBody String cancelVote(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId, Integer voteType) {
+    public @ResponseBody String cancelVote(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable("itemId") String itemId, Integer voteType) {
         if(voteType == null)
             return QinShihuangResult.getResult(ErrorCode.VOTETYPE_NULL_1095);
         if(!Constant.checkVoteType(voteType))

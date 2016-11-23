@@ -247,4 +247,16 @@ public class Moment {
     public void setFavorCnt(Integer favorCnt) {
         this.favorCnt = favorCnt;
     }
+
+    public Moment(){
+
+    }
+
+    public Moment(Long userId, String nickName, ImageItem avatar) {
+        this.id = new ObjectId();
+        this.publishTime = System.currentTimeMillis();
+        this.userId = userId;
+        this.nickName = nickName;
+        this.avatar = avatar;
+    }
 }

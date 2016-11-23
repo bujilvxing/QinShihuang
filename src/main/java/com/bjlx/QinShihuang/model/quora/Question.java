@@ -35,6 +35,11 @@ public class Question extends AbstractQuoraEntry {
 	public final static String fd_favorCnt = "favorCnt";
 	@Transient
 	public final static String fd_voteCnt = "voteCnt";
+	@Transient
+	public final static String fd_status = "status";
+	@Transient
+	public final static String fd_authorId = "author.userId";
+
 	/**
 	 * 主键
 	 */
@@ -62,7 +67,7 @@ public class Question extends AbstractQuoraEntry {
 	 * 问题被浏览的次数
 	 */
 	@Min(value = 0)
-	private Integer viewCnt;
+	private Integer viewCnt = 0;
 
 	/**
 	 * 收藏次数
@@ -80,13 +85,18 @@ public class Question extends AbstractQuoraEntry {
 	 * 问题被回答的次数
 	 */
 	@Min(value = 0)
-	private Integer answerCnt;
+	private Integer answerCnt = 0;
 	
 	/**
 	 * 该问题的所有回答中，被赞的次数最高的数值
 	 */
 	@Transient
 	private Integer maxVoteCnt;
+
+	/**
+	 * 问题的状态，1表示正常，2表示被删除
+	 */
+	private Integer status = 1;
 
 	public ObjectId getId() {
 		return id;
@@ -160,8 +170,29 @@ public class Question extends AbstractQuoraEntry {
 		this.voteCnt = voteCnt;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Question(){
+
+	}
+
+	public Question(List<String> topics, List<String> tags, String source) {
+		super();
+		this.id = new ObjectId();
+		this.source = source;
+		this.topics = topics;
+		this.tags = tags;
+	}
+
 	public Question(String source, List<String> topics, List<String> tags, Integer viewCnt, Integer answerCnt, Integer maxVoteCnt) {
 		super();
+		this.id = new ObjectId();
 		this.source = source;
 		this.topics = topics;
 		this.tags = tags;
@@ -169,4 +200,5 @@ public class Question extends AbstractQuoraEntry {
 		this.answerCnt = answerCnt;
 		this.maxVoteCnt = maxVoteCnt;
 	}
+
 }

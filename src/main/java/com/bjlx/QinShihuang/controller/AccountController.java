@@ -245,6 +245,7 @@ public class AccountController {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
+
     /**
      * 重置密码, 接口编码1007
      * @param resetPwdReq 参数信息
@@ -291,7 +292,7 @@ public class AccountController {
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updatePwd(@RequestBody UpdatePwdReq updatePwd, @PathVariable Long userId, @RequestHeader("key") String key) {
+    public @ResponseBody String updatePwd(@RequestBody UpdatePwdReq updatePwd, @PathVariable("userId") Long userId, @RequestHeader("key") String key) {
     	// 检验参数
     	if(updatePwd.getOldPassword() == null) {
             return QinShihuangResult.getResult(ErrorCode.OLD_PWD_NULL_1008);
@@ -315,7 +316,7 @@ public class AccountController {
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getUserInfo(@PathVariable Long userId, @RequestHeader("key") String key) {
+    public @ResponseBody String getUserInfo(@PathVariable("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return AccountAPI.getUserInfoById(userId, key);
         } catch (Exception e) {
@@ -332,7 +333,7 @@ public class AccountController {
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updateUserInfo(@PathVariable(value="userId") Long userId, @RequestHeader("key") String key, @RequestBody UpdateUserInfoReq updateUserInfoReq) {
+    public @ResponseBody String updateUserInfo(@PathVariable("userId") Long userId, @RequestHeader("key") String key, @RequestBody UpdateUserInfoReq updateUserInfoReq) {
         try {
             return AccountAPI.updateUserInfo(userId, key, updateUserInfoReq);
         } catch (Exception e) {
@@ -349,7 +350,7 @@ public class AccountController {
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/tel", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String bindTel(@RequestBody BindTelReq bindTelReq, @PathVariable Long userId, @RequestHeader("key") String key) {
+    public @ResponseBody String bindTel(@RequestBody BindTelReq bindTelReq, @PathVariable("userId") Long userId, @RequestHeader("key") String key) {
         // 检验参数
         if(bindTelReq.getTel() == null) {
             return QinShihuangResult.getResult(ErrorCode.TEL_NULL_1011);
@@ -377,7 +378,7 @@ public class AccountController {
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/email", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String bindEmail(@RequestBody BindEmailReq bindEmailReq, @PathVariable Long userId, @RequestHeader("key") String key) {
+    public @ResponseBody String bindEmail(@RequestBody BindEmailReq bindEmailReq, @PathVariable("userId") Long userId, @RequestHeader("key") String key) {
         // 检验参数
         if(bindEmailReq.getEmail() == null) {
             return QinShihuangResult.getResult(ErrorCode.EMAIL_NULL_1103);

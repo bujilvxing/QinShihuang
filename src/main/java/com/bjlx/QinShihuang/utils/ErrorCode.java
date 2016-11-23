@@ -176,8 +176,42 @@ public enum ErrorCode {
 	UNLOGIN_1038(103801, "用户未登录"),
 
 	// 查看朋友圈
+	ORIGINUSERID_NULL_1039(103901, "originUserId不可为空"),
+	ORIGINNICKNAME_NULL_1039(103902, "originNickName不可为空"),
+	ORIGINAVATAR_NULL_1039(103903, "OriginAvatar不可为空"),
+	UNLOGIN_1039(103904, "用户未登录"),
+	USER_NOT_EXIST_1039(103905, "用户不存在"),
+
+	// 查看朋友圈
 	TIME_NULL_1080(108001, "latestTime和earliestTime不可同时为空"),
 	UNLOGIN_1080(108001, "用户未登录"),
+
+	/**
+	 * 问答
+	 */
+	// 添加问题
+	TITLE_NULL_1051(105101, "标题不可为空"),
+	CONTENT_NULL_1051(105102, "内容不可为空"),
+	UNLOGIN_1051(105103, "用户未登录"),
+	USER_NOT_EXIST_1051(105104, "用户不存在"),
+
+	// 取得问题详情
+	QUESTION_NOT_EXIST_1052(105201, "问题不存在"),
+
+	// 取得用户问题列表
+	UNLOGIN_1053(105301, "用户未登录"),
+
+	// 添加回答
+	TITLE_NULL_1081(108101, "标题不可为空"),
+	CONTENT_NULL_1081(108102, "内容不可为空"),
+	UNLOGIN_1081(108103, "用户未登录"),
+	USER_NOT_EXIST_1081(108104, "用户不存在"),
+
+	// 删除问题
+	UNLOGIN_1082(108201, "用户未登录"),
+
+	// 删除回答
+	UNLOGIN_1083(108301, "用户未登录"),
 
 	/**
 	 * 社交

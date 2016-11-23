@@ -82,7 +82,8 @@ public class Constant {
     public final static int IDCARD_MSG = 13;
     public final static int FOLLOWING_MSG = 14;
     public final static int TIP_MSG = 15;
-    public final static int NOTICE_MSG = 16;
+    public final static int MOMENT_MSG = 16;
+    public final static int NOTICE_MSG = 17;
     public static boolean checkMsgType(Integer msgType) {
         return msgType >= TEXT_MSG && msgType <= NOTICE_MSG;
     }
@@ -167,4 +168,12 @@ public class Constant {
     public static boolean checkVoteType(Integer voteType) {
         return voteType >= VOTE_POST && voteType <= VOTE_TRAVELNOTE;
     }
+
+    /**
+     * 问答
+     */
+    public final static int ANSWER_NORMAL = 1;
+    public final static int ANSWER_UNENABLE = 2;
+    public final static int QUESTION_NORMAL = 1;
+    public final static int QUESTION_UNENABLE = 2;
 }

@@ -39,7 +39,6 @@ import com.bjlx.QinShihuang.model.timeline.Moment;
 import com.bjlx.QinShihuang.model.trace.Trace;
 import com.bjlx.QinShihuang.model.tripplan.TripPlan;
 import com.bjlx.QinShihuang.utils.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
@@ -438,7 +437,7 @@ public class MiscAPI {
         }
     }
 
-    public static ObjectMapper mapper = new ObjectMapper();
+
 
     /**
      * 全站搜索
@@ -447,7 +446,7 @@ public class MiscAPI {
      * @throws Exception 异常
      */
     public static String searchAll(String query) throws Exception {
-        ObjectNode result = mapper.createObjectNode();
+        ObjectNode result = CommonAPI.mapper.createObjectNode();
         try {
             List<Moment> moments = queryMoments(true, query);
             if(moments != null)
@@ -513,7 +512,7 @@ public class MiscAPI {
     public static String searchCondition(String query , Boolean momemt, Boolean commodity, Boolean guide, Boolean viewspot,
                                          Boolean trace, Boolean tripPlan, Boolean quora, Boolean activity, Boolean travelNote,
                                          Boolean restaurant, Boolean hotel, Boolean shopping) throws Exception {
-        ObjectNode result = mapper.createObjectNode();
+        ObjectNode result = CommonAPI.mapper.createObjectNode();
         try {
             if(momemt) {
                 List<Moment> moments = queryMoments(false, query);
@@ -720,10 +719,10 @@ public class MiscAPI {
                 ops.set(Favorite.fd_authorAvatar, authorAvatar);
             if(cover != null)
                 ops.set(Favorite.fd_cover, cover);
-            ds.updateFirst(query, ops, true);
+            Favorite favorite = ds.findAndModify(query, ops, false, true);
             // 更新收藏数
             updateFavorCnt(itemId, favoriteType, true);
-            return QinShihuangResult.ok();
+            return QinShihuangResult.ok(FavoriteFormatter.getMapper().valueToTree(favorite));
         } catch (Exception e) {
             throw e;
         }

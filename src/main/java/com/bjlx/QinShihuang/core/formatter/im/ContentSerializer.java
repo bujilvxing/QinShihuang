@@ -6,8 +6,10 @@ import com.bjlx.QinShihuang.model.im.Content;
 import com.bjlx.QinShihuang.model.im.Emoticon;
 import com.bjlx.QinShihuang.model.im.Video;
 import com.bjlx.QinShihuang.model.misc.Audio;
+import com.bjlx.QinShihuang.model.misc.Card;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.Position;
+import com.bjlx.QinShihuang.model.timeline.Moment;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -70,7 +72,18 @@ public class ContentSerializer extends JsonSerializer<Content> {
                 JsonSerializer<Object> retVideo = serializers.findValueSerializer(Video.class, null);
                 retVideo.serialize(video, gen, serializers);
             }
-        	
+            Card card = content.getCard();
+            if (card != null) {
+                gen.writeFieldName(Content.fd_card);
+                JsonSerializer<Object> retCard = serializers.findValueSerializer(Card.class, null);
+                retCard.serialize(card, gen, serializers);
+            }
+            Moment moment = content.getMoment();
+            if (moment != null) {
+                gen.writeFieldName(Content.fd_moment);
+                JsonSerializer<Object> retMoment = serializers.findValueSerializer(Moment.class, null);
+                retMoment.serialize(moment, gen, serializers);
+            }
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();
