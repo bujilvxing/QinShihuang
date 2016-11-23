@@ -113,7 +113,7 @@ public class QuoraController {
     }
 
     /**
-     * 删除问题
+     * 删除问题1082
      * @param questionId 问题id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -129,7 +129,7 @@ public class QuoraController {
     }
     
     /**
-     * 删除问题
+     * 删除问题1083
      * @param questionId 问题id
      * @param answerId 回答id
      * @param userId 用户id
@@ -140,6 +140,41 @@ public class QuoraController {
     public @ResponseBody String delAnswer(@PathVariable("questionId") String questionId, @PathVariable("answerId") String answerId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return QuoraAPI.delAnswer(questionId, answerId, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 编辑问题
+     * @param questionId 问题id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param questionReq 问题参数
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/questions/{questionId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String editQuestion(@PathVariable("questionId") String questionId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody QuestionReq questionReq) {
+        try {
+            return QuoraAPI.editQuestion(questionId, userId, key, questionReq.getTitle(), questionReq.getContent(), questionReq.getTags(), questionReq.getTopics(), questionReq.getSource());
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 编辑回答
+     * @param questionId 问题id
+     * @param answerId 回答id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param answerReq 回答参数
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/questions/{questionId}/answers/{answerId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String editAnswer(@PathVariable("questionId") String questionId, @PathVariable("answerId") String answerId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody AnswerReq answerReq) {
+        try {
+            return QuoraAPI.editAnswer(questionId, answerId, userId, key, answerReq.getTitle(), answerReq.getContent());
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

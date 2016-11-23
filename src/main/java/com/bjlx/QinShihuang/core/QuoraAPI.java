@@ -228,4 +228,67 @@ public class QuoraAPI {
             throw e;
         }
     }
+
+    /**
+     * 编辑问题
+     * @param questionId 问题id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param title 标题
+     * @param content 内容
+     * @param tags 标签
+     * @param topics 主题
+     * @param source 来源
+     * @return 问题信息
+     * @throws Exception 异常
+     */
+    public static String editQuestion(String questionId, Long userId, String key, String title, String content, List<String> tags, List<String> topics, String source) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1084);
+            }
+            Query<Question> query = ds.createQuery(Question.class).field(Question.fd_id).equal(new ObjectId(questionId)).field(Question.fd_authorId).equal(userId)
+                    .field(Question.fd_status).equal(Constant.QUESTION_NORMAL);
+            UpdateOperations<Question> ops = ds.createUpdateOperations(Question.class).set(Question.fd_publishTime, System.currentTimeMillis());
+            if(title != null) ops.set(Question.fd_title, title);
+            if(content != null) ops.set(Question.fd_content, content);
+            if(tags != null) ops.set(Question.fd_tags, tags);
+            if(topics != null) ops.set(Question.fd_topics, topics);
+            if(source != null) ops.set(Question.fd_source, source);
+            ds.updateFirst(query, ops);
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 编辑回答
+     * @param questionId 问题id
+     * @param answerId 答案id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param title 标题
+     * @param content 内容
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String editAnswer(String questionId, String answerId, Long userId, String key, String title, String content) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1085);
+            }
+            Query<Answer> query = ds.createQuery(Answer.class).field(Answer.fd_id).equal(new ObjectId(answerId)).field(Answer.fd_authorId).equal(userId)
+                    .field(Answer.fd_questionId).equal(new ObjectId(questionId)).field(Answer.fd_status).equal(Constant.ANSWER_NORMAL);
+            UpdateOperations<Answer> ops = ds.createUpdateOperations(Answer.class).set(Answer.fd_publishTime, System.currentTimeMillis());
+            if(title != null) ops.set(Question.fd_title, title);
+            if(content != null) ops.set(Question.fd_content, content);
+            ds.updateFirst(query, ops);
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }
