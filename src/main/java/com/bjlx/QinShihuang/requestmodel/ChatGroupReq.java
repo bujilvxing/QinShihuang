@@ -5,6 +5,10 @@ package com.bjlx.QinShihuang.requestmodel;
  */
 public class ChatGroupReq {
 
+    /**
+     * 合法的token
+     */
+    private String token;
 
     /**
      * 群名
@@ -12,29 +16,19 @@ public class ChatGroupReq {
     private String name;
 
     /**
-     * 创建者
+     * 创建者用户Id
      */
-    private String creator;
+    private Long creator;
 
-    /**
-     * 管理员
-     */
-    private String [] admin;
 
-    /**
-     * 组员
-     */
-    private String [] participants ;
 
-    /**
-     * 群组状态
-     */
-    private int status ;
+    public String getToken() {
+        return token;
+    }
 
-    /**
-     * 最大成员数
-     */
-  //  public final static int maxnum = groupMax ;
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getName() {
         return name;
@@ -52,27 +46,6 @@ public class ChatGroupReq {
         this.creator = creator;
     }
 
-    public String [] getAdmin() {
-        return admin;
-    }
 
-    public void setAdmin(String admin) {
-        this.admin = admin;
-    }
 
-    public String getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(String participants) {
-        this.participants = participants;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }
