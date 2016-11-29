@@ -289,10 +289,24 @@ public enum ErrorCode {
 
 	/**
 	 * 群组
+	 * 106907和106908是否重复，只需106907？
 	 */
+	//创建群组
+	NAME_NULL_106901(106901, "参数name不可为空"),
+	CREATOR_NULL_106902(106902, "参数creator不可为空"),
+	TOKEN_NULL_106903(106903, "参数token不可为空"),
+	GROUP_EXIST_106904(106904, "群组名称已存在"),
+	TOKEN_INVALID_106905(106905, "令牌不可为空"),
+	CREATOR_NOT_EXIST_106906(106906, "创建用户不存在"),
+	CREATOR_NOT_LOGIN_106907(106907, "创建用户未登录"),
+
+
+
 	// 取得群组信息
 	UNLOGIN_1070(107001, "用户未登录"),
 	CHATGROUP_NOT_EXIST_1070(107002, "群组不存在"),
+
+
 
 	/**
 	 * 收藏

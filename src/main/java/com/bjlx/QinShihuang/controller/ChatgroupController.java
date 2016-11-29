@@ -30,8 +30,10 @@ public class ChatgroupController {
 
 //<<<<<<< HEAD
 //=======
+
+
     /**
-     * 取得群组信息1067
+     * 创建群组1069
      * @param chatGroupReq 参数
      * @return 群组信息
      */
@@ -40,13 +42,23 @@ public class ChatgroupController {
         // 参数校验
         // name必须存在
         if(chatGroupReq.getName() == null) {
-            return QinShihuangResult.getResult(ErrorCode.ACCOUNT_NULL_1001);
+            return QinShihuangResult.getResult(ErrorCode.NAME_NULL_106901);
+        }
+        //用户ID不能为空
+        if(chatGroupReq.getCreator() == null) {
+            return QinShihuangResult.getResult(ErrorCode.CREATOR_NULL_106902);
+        }
+        //令牌不能为空
+        if(chatGroupReq.getToken() == null) {
+            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_106903);
         }
 
-
-
-
-
+        try{
+            return ChatgroupAPI.creatChatGroup(chatGroupReq.getName(), chatGroupReq.getToken(), chatGroupReq.getCreator());
+        }catch(Exception e) {
+            e.printStackTrace();
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 
 
@@ -69,5 +81,21 @@ public class ChatgroupController {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //>>>>>>> 65e5d0db0648c03d4bab3589b0a78a8a8a8c7024
 }

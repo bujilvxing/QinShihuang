@@ -38,11 +38,11 @@ public class ChatGroupReq {
         this.name = name;
     }
 
-    public String getCreator() {
+    public Long getCreator() {
         return creator;
     }
 
-    public void setCreator(String creator) {
+    public void setCreator(Long creator) {
         this.creator = creator;
     }
 
