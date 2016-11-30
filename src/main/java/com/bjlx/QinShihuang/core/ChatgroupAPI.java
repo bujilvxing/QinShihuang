@@ -1,8 +1,6 @@
 package com.bjlx.QinShihuang.core;
 
-import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
 import com.bjlx.QinShihuang.core.formatter.im.ChatgroupFormatter;
-import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.im.Chatgroup;
 import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
