@@ -176,4 +176,10 @@ public class Constant {
     public final static int ANSWER_UNENABLE = 2;
     public final static int QUESTION_NORMAL = 1;
     public final static int QUESTION_UNENABLE = 2;
+
+    /**
+     * 行程规划状态
+     */
+    public final static int TRIPPLAN_NORMAL = 1;
+    public final static int TRIPPLAN_UNENABLE = 2;
 }

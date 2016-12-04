@@ -12,12 +12,14 @@ import com.bjlx.QinShihuang.model.tripplan.TripItem;
 import com.bjlx.QinShihuang.model.tripplan.TripPlan;
 import com.bjlx.QinShihuang.requestmodel.TripItemReq;
 import com.bjlx.QinShihuang.requestmodel.TripPlanReq;
+import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.MorphiaFactory;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +128,7 @@ public class TripPlanAPI {
             if (!CommonAPI.checkKeyValid(userId, key))
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1046);
             // 取得行程规划
-            Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId));
+            Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId)).field(TripPlan.fd_status).equal(Constant.TRIPPLAN_NORMAL);
             TripPlan tripPlan = query.get();
             if (tripPlan == null)
                 return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1046);
@@ -164,12 +166,36 @@ public class TripPlanAPI {
     public static String getTripPlan(String tripPlanId) throws Exception {
         try {
             // 取得行程规划
-            Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId));
+            Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId)).field(TripPlan.fd_status).equal(Constant.TRIPPLAN_NORMAL);
             TripPlan tripPlan = query.get();
             if(tripPlan == null)
                 return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1049);
             else
                 return QinShihuangResult.ok(TripPlanFormatter.getMapper().valueToTree(tripPlan));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 删除行程规划
+     * @param tripPlanId 行程规划id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String removeTripPlan(String tripPlanId, Long userId, String key) throws Exception {
+
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key))
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1050);
+            Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId))
+                    .field(TripPlan.fd_userId).equal(userId).field(TripPlan.fd_status).equal(Constant.TRIPPLAN_NORMAL);
+            UpdateOperations<TripPlan> ops = ds.createUpdateOperations(TripPlan.class).set(TripPlan.fd_status, Constant.TRIPPLAN_UNENABLE);
+            ds.updateFirst(query, ops);
+            return QinShihuangResult.ok();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

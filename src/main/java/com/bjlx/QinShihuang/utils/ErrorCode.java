@@ -204,6 +204,9 @@ public enum ErrorCode {
 	// 取得行程规划详情
 	TRIPPLAN_NOT_EXIST_1049(104901, "行程规划不存在"),
 
+	// 删除行程规划
+	UNLOGIN_1050(105001, "用户未登录"),
+
 	/**
 	 * 问答
 	 */

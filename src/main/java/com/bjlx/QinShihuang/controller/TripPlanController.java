@@ -62,4 +62,21 @@ public class TripPlanController {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
+
+    /**
+     * 删除行程规划1050
+     * @param tripPlanId 行程规划id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/tripplans/{tripPlanId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String removeTripPlan(@PathVariable("tripPlanId") String tripPlanId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+
+        try {
+            return TripPlanAPI.removeTripPlan(tripPlanId, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
 }

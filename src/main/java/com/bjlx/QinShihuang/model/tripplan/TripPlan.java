@@ -59,6 +59,9 @@ public class TripPlan {
 	public final static String fd_hotness = "hotness";
 	@Transient
 	public final static String fd_voteCnt = "voteCnt";
+	@Transient
+	public final static String fd_status = "status";
+
 	/**
      * 主键
      */
@@ -169,6 +172,11 @@ public class TripPlan {
      * 热度
      */
     private Double hotness;
+
+	/**
+	 * 行程规划状态
+	 */
+	private Integer status;
 
     public ObjectId getId() {
         return id;
