@@ -196,6 +196,14 @@ public enum ErrorCode {
 	ORIGINNICKNAME_NULL_1045(104504, "源用户昵称不可为空"),
 	ORIGINAVATAR_NULL_1045(104505, "源用户头像不可为空"),
 
+	// 复制行程规划
+	UNLOGIN_1046(104601, "用户未登录"),
+	TRIPPLAN_NOT_EXIST_1046(104602, "行程规划不存在"),
+	USER_NOT_EXIST_1046(104603, "用户不存在"),
+
+	// 取得行程规划详情
+	TRIPPLAN_NOT_EXIST_1049(104901, "行程规划不存在"),
+
 	/**
 	 * 问答
 	 */

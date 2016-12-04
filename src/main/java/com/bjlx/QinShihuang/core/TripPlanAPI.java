@@ -17,6 +17,7 @@ import com.bjlx.QinShihuang.utils.MorphiaFactory;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +107,69 @@ public class TripPlanAPI {
             }
             ds.save(tripPlan);
             return QinShihuangResult.ok(TripPlanFormatter.getMapper().valueToTree(tripPlan));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 复制行程规划
+     * @param tripPlanId 行程规划id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 行程规划
+     * @throws Exception 异常
+     */
+    public static String forkTripPlan(String tripPlanId, Long userId, String key) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key))
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1046);
+            // 取得行程规划
+            Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId));
+            TripPlan tripPlan = query.get();
+            if (tripPlan == null)
+                return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1046);
+
+            if (tripPlan.getUserId() != userId) {
+                if (tripPlan.getOriginUserId() == null) {
+                    tripPlan.setOriginId(tripPlan.getId());
+                    tripPlan.setOriginUserId(tripPlan.getUserId());
+                    tripPlan.setOriginNickName(tripPlan.getNickName());
+                    tripPlan.setOriginAvatar(tripPlan.getAvatar());
+                }
+                // 取得用户信息
+                UserInfo userInfo = CommonAPI.getUserBasicById(userId);
+                if (userInfo == null)
+                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1046);
+                tripPlan.setUserId(userId);
+                tripPlan.setNickName(userInfo.getNickName());
+                tripPlan.setAvatar(userInfo.getAvatar());
+            }
+            tripPlan.setId(new ObjectId());
+            ds.save(tripPlan);
+            return QinShihuangResult.ok(TripPlanFormatter.getMapper().valueToTree(tripPlan));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 取得行程规划详情
+     * @param tripPlanId 行程规划id
+     * @return 行程规划详情
+     * @throws Exception 异常
+     */
+    public static String getTripPlan(String tripPlanId) throws Exception {
+        try {
+            // 取得行程规划
+            Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId));
+            TripPlan tripPlan = query.get();
+            if(tripPlan == null)
+                return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1049);
+            else
+                return QinShihuangResult.ok(TripPlanFormatter.getMapper().valueToTree(tripPlan));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

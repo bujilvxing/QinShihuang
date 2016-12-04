@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class TripPlanController {
 
     /**
-     * 发布行程规划
+     * 发布行程规划1045
      * @param tripPlanReq 行程规划参数
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -26,6 +26,38 @@ public class TripPlanController {
 
         try {
             return TripPlanAPI.addTripPlan(tripPlanReq, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 复制行程规划1046
+     * @param tripPlanId 行程规划id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 行程规划
+     */
+    @RequestMapping(value = "/app/tripplans/{tripPlanId:\\[0-9a-f]{24}}/fork", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String forkTripPlan(@PathVariable("tripPlanId") String tripPlanId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+
+        try {
+            return TripPlanAPI.forkTripPlan(tripPlanId, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取得行程规划详情1049
+     * @param tripPlanId 行程规划id
+     * @return 行程规划信息
+     */
+    @RequestMapping(value = "/app/tripplans/{tripPlanId:\\[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getTripPlan(@PathVariable("tripPlanId") String tripPlanId) {
+
+        try {
+            return TripPlanAPI.getTripPlan(tripPlanId);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
