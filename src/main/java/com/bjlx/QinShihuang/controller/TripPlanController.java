@@ -49,7 +49,7 @@ public class TripPlanController {
     }
 
     /**
-     * 取得用户行程规划列表
+     * 取得用户行程规划列表1047
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 行程规划列表
