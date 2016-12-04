@@ -458,4 +458,18 @@ public class Shopping {
 	public void setFavorCnt(Integer favorCnt) {
 		this.favorCnt = favorCnt;
 	}
+
+	public Shopping() {
+
+	}
+
+	public Shopping(String id, ImageItem cover, String zhName, String enName, String url, Double price, Double marketPrice) {
+		this.id = new ObjectId(id);
+		this.cover = cover;
+		this.zhName = zhName;
+		this.enName = enName;
+		this.url = url;
+		this.price = price;
+		this.marketPrice = marketPrice;
+	}
 }

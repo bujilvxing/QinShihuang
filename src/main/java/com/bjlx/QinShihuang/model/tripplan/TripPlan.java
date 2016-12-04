@@ -330,6 +330,10 @@ public class TripPlan {
 		this.voteCnt = voteCnt;
 	}
 
+	public TripPlan() {
+
+	}
+
 	public TripPlan(Long userId, String nickName, ImageItem avatar) {
 		super();
 		this.id = new ObjectId();

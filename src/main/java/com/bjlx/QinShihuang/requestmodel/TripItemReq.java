@@ -1,8 +1,7 @@
 package com.bjlx.QinShihuang.requestmodel;
 
-import com.bjlx.QinShihuang.model.activity.Activity;
-import com.bjlx.QinShihuang.model.poi.Shopping;
-import com.bjlx.QinShihuang.model.poi.Viewspot;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * 行程规划项参数
@@ -13,11 +12,13 @@ public class TripItemReq {
     /**
      * 行程项时间
      */
+    @Min(value = 0)
     private Long tripTime;
 
     /**
      * 描述
      */
+    @NotNull
     private String desc;
 
     /**
@@ -33,15 +34,71 @@ public class TripItemReq {
     /**
      * 景点
      */
-    private Viewspot viewspot;
+    private ViewspotReq viewspot;
 
     /**
      * 活动
      */
-    private Activity activity;
+    private ActivityReq activity;
 
     /**
      * 购物
      */
-    private Shopping shopping;
+    private ShoppingReq shopping;
+
+    public Long getTripTime() {
+        return tripTime;
+    }
+
+    public void setTripTime(Long tripTime) {
+        this.tripTime = tripTime;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public RestaurantReq getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(RestaurantReq restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public HotelReq getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(HotelReq hotel) {
+        this.hotel = hotel;
+    }
+
+    public ViewspotReq getViewspot() {
+        return viewspot;
+    }
+
+    public void setViewspot(ViewspotReq viewspot) {
+        this.viewspot = viewspot;
+    }
+
+    public ActivityReq getActivity() {
+        return activity;
+    }
+
+    public void setActivity(ActivityReq activity) {
+        this.activity = activity;
+    }
+
+    public ShoppingReq getShopping() {
+        return shopping;
+    }
+
+    public void setShopping(ShoppingReq shopping) {
+        this.shopping = shopping;
+    }
 }

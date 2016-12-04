@@ -362,6 +362,19 @@ public class Activity {
         return isFree;
     }
 
+    public Activity() {
+    }
+
+    public Activity(String id, String title, String theme, String category, Integer visiable, ImageItem cover, Boolean isFree) {
+        this.id = new ObjectId(id);
+        this.title = title;
+        this.theme = theme;
+        this.category = category;
+        this.visiable = visiable;
+        this.cover = cover;
+        this.isFree = isFree;
+    }
+
     public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
         this.id = new ObjectId();
         this.title = title;

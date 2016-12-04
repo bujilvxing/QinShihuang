@@ -3,6 +3,7 @@ package com.bjlx.QinShihuang.requestmodel;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 
 /**
+ * 卡片参数
  * Created by xiaozhi on 2016/11/21.
  */
 public class CardReq {

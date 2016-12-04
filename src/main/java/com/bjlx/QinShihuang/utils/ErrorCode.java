@@ -184,7 +184,17 @@ public enum ErrorCode {
 
 	// 查看朋友圈
 	TIME_NULL_1080(108001, "latestTime和earliestTime不可同时为空"),
-	UNLOGIN_1080(108001, "用户未登录"),
+	UNLOGIN_1080(108002, "用户未登录"),
+
+	/**
+	 * 行程规划
+	 */
+	// 发布行程规划
+	UNLOGIN_1045(104501, "用户未登录"),
+	USER_NOT_EXIST_1045(104502, "用户不存在"),
+	ORIGINUSERID_NULL_1045(104503, "源用户id不可为空"),
+	ORIGINNICKNAME_NULL_1045(104504, "源用户昵称不可为空"),
+	ORIGINAVATAR_NULL_1045(104505, "源用户头像不可为空"),
 
 	/**
 	 * 问答

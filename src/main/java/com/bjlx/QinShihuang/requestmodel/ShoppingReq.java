@@ -7,10 +7,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
- * 旅馆参数
- * Created by xiaozhi on 2016/11/30.
+ * 购物参数
+ * Created by pengyt on 2016/12/4.
  */
-public class HotelReq {
+public class ShoppingReq {
 
     /**
      * 主键
@@ -19,7 +19,7 @@ public class HotelReq {
     private String id = null;
 
     /**
-     * 封面
+     * 封面图
      */
     @NotNull
     private ImageItem cover;
@@ -42,16 +42,16 @@ public class HotelReq {
     private String url;
 
     /**
-     * 市场价
-     */
-    @Min(value = 0)
-    private Double marketPrice = 0.0;
-
-    /**
      * POI价格
      */
     @Min(value = 0)
     private Double price = 0.0;
+
+    /**
+     * POI市场价格
+     */
+    @Min(value = 0)
+    private Double marketPrice = 0.0;
 
     public String getId() {
         return id;
@@ -93,19 +93,19 @@ public class HotelReq {
         this.url = url;
     }
 
-    public Double getMarketPrice() {
-        return marketPrice;
-    }
-
-    public void setMarketPrice(Double marketPrice) {
-        this.marketPrice = marketPrice;
-    }
-
     public Double getPrice() {
         return price;
     }
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(Double marketPrice) {
+        this.marketPrice = marketPrice;
     }
 }

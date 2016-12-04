@@ -486,4 +486,18 @@ public class Hotel {
 	public void setFavorCnt(Integer favorCnt) {
 		this.favorCnt = favorCnt;
 	}
+
+	public Hotel() {
+
+	}
+
+	public Hotel(String id, ImageItem cover, String zhName, String enName, Double marketPrice, String url, Double price) {
+		this.id = new ObjectId(id);
+		this.cover = cover;
+		this.zhName = zhName;
+		this.enName = enName;
+		this.marketPrice = marketPrice;
+		this.url = url;
+		this.price = price;
+	}
 }

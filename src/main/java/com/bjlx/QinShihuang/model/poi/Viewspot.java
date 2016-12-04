@@ -455,4 +455,18 @@ public class Viewspot {
 	public void setFavorCnt(Integer favorCnt) {
 		this.favorCnt = favorCnt;
 	}
+
+	public Viewspot() {
+
+	}
+
+	public Viewspot(String id, ImageItem cover, String zhName, String url, String enName, Double price, Double marketPrice) {
+		this.id = new ObjectId(id);
+		this.cover = cover;
+		this.zhName = zhName;
+		this.url = url;
+		this.enName = enName;
+		this.price = price;
+		this.marketPrice = marketPrice;
+	}
 }

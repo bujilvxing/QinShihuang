@@ -2,6 +2,7 @@ package com.bjlx.QinShihuang.requestmodel;
 
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -10,16 +11,19 @@ import java.util.List;
  */
 public class TripPlanReq {
 
+    @NotNull
     private String title;
 
     /**
      * 描述
      */
+    @NotNull
     private String desc;
 
     /**
      * 封面
      */
+    @NotNull
     private ImageItem cover;
 
     /**

@@ -1,6 +1,9 @@
 package com.bjlx.QinShihuang.controller;
 
+import com.bjlx.QinShihuang.core.TripPlanAPI;
 import com.bjlx.QinShihuang.requestmodel.TripPlanReq;
+import com.bjlx.QinShihuang.utils.ErrorCode;
+import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +23,11 @@ public class TripPlanController {
      */
     @RequestMapping(value = "/app/tripplans", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String addTripPlan(@RequestBody TripPlanReq tripPlanReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
-        return null;
+
+        try {
+            return TripPlanAPI.addTripPlan(tripPlanReq, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 }

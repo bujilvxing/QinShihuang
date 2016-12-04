@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.requestmodel;
 
 /**
+ * 点赞参数
  * Created by xiaozhi on 2016/11/17.
  */
 public class VoteReq {

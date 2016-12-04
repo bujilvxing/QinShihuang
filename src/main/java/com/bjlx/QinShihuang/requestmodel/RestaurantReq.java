@@ -3,6 +3,9 @@ package com.bjlx.QinShihuang.requestmodel;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 /**
  * 餐馆参数
  * Created by xiaozhi on 2016/11/30.
@@ -18,11 +21,13 @@ public class RestaurantReq {
     /**
      * 封面图
      */
+    @NotNull
     private ImageItem cover;
 
     /**
      * POI中文名
      */
+    @NotNull
     private String zhName;
 
     /**
@@ -39,13 +44,13 @@ public class RestaurantReq {
     /**
      * POI价格
      */
-    @NotBlank
+    @Min(value = 0)
     private Double price = 0.0;
 
     /**
      * POI价格
      */
-    @NotBlank
+    @Min(value = 0)
     private Double marketPrice = 0.0;
 
 
