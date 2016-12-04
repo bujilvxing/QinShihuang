@@ -169,6 +169,25 @@ public enum ErrorCode {
 	GUIDE_NOT_EXIST_1019(101901, "攻略不存在"),
 
 	/**
+	 * poi
+	 */
+	// 取得宾馆详情
+	HOTEL_NOT_EXIST_1021(102101, "宾馆不存在"),
+
+	// 取得目的地详情
+	LOCALITY_NOT_EXIST_1023(102301, "目的地不存在"),
+
+	// 取得景点详情
+	VIEWSPOT_NOT_EXIST_1025(102501, "景点不存在"),
+
+	// 取得美食详情
+	RESTAURANT_NOT_EXIST_1027(102701, "美食不存在"),
+
+	// 取得购物详情
+	SHOPPING_NOT_EXIST_1029(102901, "购物不存在"),
+
+
+	/**
 	 * 时间线
 	 */
 	// 查看朋友圈

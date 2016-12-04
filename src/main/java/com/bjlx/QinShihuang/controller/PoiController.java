@@ -1,5 +1,8 @@
 package com.bjlx.QinShihuang.controller;
 
+import com.bjlx.QinShihuang.core.PoiAPI;
+import com.bjlx.QinShihuang.utils.ErrorCode;
+import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,8 +19,13 @@ public class PoiController {
      */
     @RequestMapping(value = "/app/hotels", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getHotels(Integer offset, Integer limit) {
-
-        return null;
+        Integer defaultOffset = offset == null ? 0 : offset;
+        Integer defaultLimit = limit == null ? 10 : limit;
+        try {
+            return PoiAPI.getHotels(defaultOffset, defaultLimit);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 
     /**
@@ -27,8 +35,11 @@ public class PoiController {
      */
     @RequestMapping(value = "/app/hotels/{hotelId:\\[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getHotelById(@PathVariable("hotelId") String hotelId) {
-
-        return null;
+        try {
+            return PoiAPI.getHotelById(hotelId);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 
     /**
@@ -39,8 +50,13 @@ public class PoiController {
      */
     @RequestMapping(value = "/app/localities", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getLocalities(Integer offset, Integer limit) {
-
-        return null;
+        Integer defaultOffset = offset == null ? 0 : offset;
+        Integer defaultLimit = limit == null ? 10 : limit;
+        try {
+            return PoiAPI.getLocalities(defaultOffset, defaultLimit);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 
     /**
@@ -50,8 +66,11 @@ public class PoiController {
      */
     @RequestMapping(value = "/app/localities/{localityId:\\[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getLocalityById(@PathVariable("localityId") String localityId) {
-
-        return null;
+        try {
+            return PoiAPI.getLocalityById(localityId);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 
     /**
@@ -62,8 +81,13 @@ public class PoiController {
      */
     @RequestMapping(value = "/app/viewspots", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getViewspots(Integer offset, Integer limit) {
-
-        return null;
+        Integer defaultOffset = offset == null ? 0 : offset;
+        Integer defaultLimit = limit == null ? 10 : limit;
+        try {
+            return PoiAPI.getViewspots(defaultOffset, defaultLimit);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 
     /**
@@ -73,8 +97,11 @@ public class PoiController {
      */
     @RequestMapping(value = "/app/viewspots/{viewspotId:\\[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getViewspotById(@PathVariable("viewspotId") String viewspotId) {
-
-        return null;
+        try {
+            return PoiAPI.getViewspotById(viewspotId);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 
     /**
@@ -85,8 +112,13 @@ public class PoiController {
      */
     @RequestMapping(value = "/app/restaurants", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getRestaurants(Integer offset, Integer limit) {
-
-        return null;
+        Integer defaultOffset = offset == null ? 0 : offset;
+        Integer defaultLimit = limit == null ? 10 : limit;
+        try {
+            return PoiAPI.getRestaurants(defaultOffset, defaultLimit);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 
     /**
@@ -96,8 +128,11 @@ public class PoiController {
      */
     @RequestMapping(value = "/app/restaurants/{restaurantId:\\[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getRestaurantById(@PathVariable("restaurantId") String restaurantId) {
-
-        return null;
+        try {
+            return PoiAPI.getRestaurantById(restaurantId);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 
     /**
@@ -108,8 +143,13 @@ public class PoiController {
      */
     @RequestMapping(value = "/app/shoppings", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getShoppings(Integer offset, Integer limit) {
-
-        return null;
+        Integer defaultOffset = offset == null ? 0 : offset;
+        Integer defaultLimit = limit == null ? 10 : limit;
+        try {
+            return PoiAPI.getShoppings(defaultOffset, defaultLimit);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 
     /**
@@ -119,7 +159,10 @@ public class PoiController {
      */
     @RequestMapping(value = "/app/shoppings/{shoppingId:\\[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getShoppingById(@PathVariable("shoppingId") String shoppingId) {
-
-        return null;
+        try {
+            return PoiAPI.getShoppingById(shoppingId);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
     }
 }
