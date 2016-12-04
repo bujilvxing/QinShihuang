@@ -28,6 +28,8 @@ public class TripPlan {
 	@Transient
 	public final static String fd_nickName = "nickName";
 	@Transient
+	public final static String fd_avatar = "avatar";
+	@Transient
 	public final static String fd_createTime = "createTime";
 	@Transient
 	public final static String fd_updateTime = "updateTime";

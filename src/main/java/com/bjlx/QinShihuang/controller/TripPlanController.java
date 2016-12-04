@@ -49,6 +49,39 @@ public class TripPlanController {
     }
 
     /**
+     * 取得用户行程规划列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 行程规划列表
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/tripplans", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getTripPlans(@PathVariable("userId") Long userId, @RequestHeader("key") String key) {
+        try {
+            return TripPlanAPI.getTripPlans(userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 更新行程规划1048
+     * @param tripPlanId 行程规划id
+     * @param tripPlanReq 行程规划参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 行程规划信息
+     */
+    @RequestMapping(value = "/app/tripplans/{tripPlanId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String updateTripPlan(@PathVariable("tripPlanId") String tripPlanId, @RequestBody TripPlanReq tripPlanReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+
+        try {
+            return TripPlanAPI.getTripPlan(tripPlanId);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
      * 取得行程规划详情1049
      * @param tripPlanId 行程规划id
      * @return 行程规划信息

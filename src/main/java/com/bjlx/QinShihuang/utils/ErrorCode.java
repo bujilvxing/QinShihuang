@@ -201,6 +201,13 @@ public enum ErrorCode {
 	TRIPPLAN_NOT_EXIST_1046(104602, "行程规划不存在"),
 	USER_NOT_EXIST_1046(104603, "用户不存在"),
 
+	// 取得用户行程规划列表
+	UNLOGIN_1047(104701, "用户未登录"),
+
+	// 更新行程规划
+	UNLOGIN_1048(104801, "用户未登录"),
+	TRIPPLAN_NOT_EXIST_1048(104802, "行程规划不存在"),
+
 	// 取得行程规划详情
 	TRIPPLAN_NOT_EXIST_1049(104901, "行程规划不存在"),
 
