@@ -39,7 +39,7 @@ public class TripItemReq {
     /**
      * 活动
      */
-    private ActivityReq activity;
+    private ActivityBasicReq activity;
 
     /**
      * 购物
@@ -86,11 +86,11 @@ public class TripItemReq {
         this.viewspot = viewspot;
     }
 
-    public ActivityReq getActivity() {
+    public ActivityBasicReq getActivity() {
         return activity;
     }
 
-    public void setActivity(ActivityReq activity) {
+    public void setActivity(ActivityBasicReq activity) {
         this.activity = activity;
     }
 

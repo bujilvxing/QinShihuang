@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.controller;
 
+import com.bjlx.QinShihuang.core.ActivityAPI;
 import com.bjlx.QinShihuang.requestmodel.ActivityReq;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
@@ -10,20 +11,21 @@ import org.springframework.web.bind.annotation.*;
  * Created by pengyt on 2016/12/4.
  */
 public class ActivityController {
-
+    
     /**
      * 发布活动1030
      * @param activityReq 活动参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
      * @return 活动信息
      */
     @RequestMapping(value = "/app/activities", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String addActivity(@RequestBody ActivityReq activityReq) {
+    public @ResponseBody String addActivity(@RequestBody ActivityReq activityReq, @RequestHeader ("userId") Long userId, @RequestHeader ("key") String key) {
         try {
-
+            return ActivityAPI.addActivity(activityReq, userId, key);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
-        return null;
     }
 
     /**

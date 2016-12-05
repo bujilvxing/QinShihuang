@@ -75,7 +75,7 @@ public class TripPlanController {
     public @ResponseBody String updateTripPlan(@PathVariable("tripPlanId") String tripPlanId, @RequestBody TripPlanReq tripPlanReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
 
         try {
-            return TripPlanAPI.getTripPlan(tripPlanId);
+            return TripPlanAPI.updateTripPlan(tripPlanId, tripPlanReq, userId, key);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

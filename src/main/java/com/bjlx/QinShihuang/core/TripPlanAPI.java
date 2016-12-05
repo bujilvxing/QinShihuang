@@ -4,7 +4,6 @@ import com.bjlx.QinShihuang.core.formatter.tripplan.TripPlanBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.tripplan.TripPlanFormatter;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.activity.Activity;
-import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.poi.Hotel;
 import com.bjlx.QinShihuang.model.poi.Restaurant;
 import com.bjlx.QinShihuang.model.poi.Shopping;
@@ -54,7 +53,7 @@ public class TripPlanAPI {
             if(userInfo == null)
                 return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1045);
 
-            TripPlan tripPlan = null;
+            TripPlan tripPlan;
             if(tripPlanReq.getOriginId() == null) {
                 tripPlan = new TripPlan(userId, userInfo.getNickName(), userInfo.getAvatar());
             } else {
@@ -134,7 +133,7 @@ public class TripPlanAPI {
             if (tripPlan == null)
                 return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1046);
 
-            if (tripPlan.getUserId() != userId) {
+            if (!tripPlan.getUserId().equals(userId)) {
                 if (tripPlan.getOriginUserId() == null) {
                     tripPlan.setOriginId(tripPlan.getId());
                     tripPlan.setOriginUserId(tripPlan.getUserId());
@@ -203,7 +202,7 @@ public class TripPlanAPI {
             TripPlan tripPlan = query.get();
             if(tripPlan == null)
                 return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1048);
-            if(tripPlan.getUserId() != userId)
+            if(!tripPlan.getUserId().equals(userId))
                 return QinShihuangResult.getResult(ErrorCode.FORBIDDEN);
 
             UpdateOperations<TripPlan> ops = ds.createUpdateOperations(TripPlan.class);
