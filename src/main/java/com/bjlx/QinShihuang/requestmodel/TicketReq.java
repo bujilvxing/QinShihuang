@@ -2,14 +2,25 @@ package com.bjlx.QinShihuang.requestmodel;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 门票参数
  * Created by xiaozhi on 2016/12/5.
  */
 public class TicketReq {
 
+    /**
+     * 门票id
+     */
     @NotBlank
     private String id;
+
+    /**
+     * 门票标题
+     */
+    @NotNull
+    private String title;
 
     /**
      * 门票价格
@@ -24,6 +35,7 @@ public class TicketReq {
     /**
      * 是否免费
      */
+    @NotNull
     private Boolean free;
 
     /**
@@ -44,6 +56,7 @@ public class TicketReq {
     /**
      * 最大数量
      */
+    @NotNull
     private Integer maxNum;
 
     public String getId() {

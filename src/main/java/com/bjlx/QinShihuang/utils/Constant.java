@@ -182,4 +182,23 @@ public class Constant {
      */
     public final static int TRIPPLAN_NORMAL = 1;
     public final static int TRIPPLAN_UNENABLE = 2;
+
+    /**
+     * 门票退款方式，1表示退款到平台公共账号，2表示原路返回，3表示不接受退款
+     */
+    public final static int REFUND_BJLX = 1;
+    public final static int REFUND_ORIGIN = 2;
+    public final static int REFUND_NOWAY = 3;
+
+    /**
+     * 活动状态
+     */
+    public final static int ACTIVITY_NORMAL = 1;
+    public final static int ACTIVITY_UNENABLE = 2;
+
+    /**
+     * 活动是否可见
+     */
+    public final static int ACTIVITY_UNVISIABLE = 1;
+    public final static int ACTIVITY_VISIABLE = 2;
 }

@@ -1,7 +1,7 @@
 package com.bjlx.QinShihuang.model.activity;
 
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.misc.Address;
-import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
@@ -64,6 +64,17 @@ public class Activity {
     public final static String fd_isFree = "isFree";
     @Transient
     public final static String fd_voteCnt = "voteCnt";
+    @Transient
+    public final static String fd_publishTime = "publishTime";
+    @Transient
+    public final static String fd_creator = "creator";
+    @Transient
+    public final static String fd_creatorId = "creator.userId";
+    @Transient
+    public final static String fd_status = "status";
+    @Transient
+    public final static String fd_participants = "participants";
+
     /**
      * 主键
      */
@@ -170,7 +181,7 @@ public class Activity {
     /**
      * 报名人信息
      */
-    private List<Contact> applicantInfos;
+    private List<Joiner> applicantInfos;
 
     /**
      * 门票
@@ -181,6 +192,21 @@ public class Activity {
      * 是否免费
      */
     private Boolean isFree = true;
+
+    /**
+     * 活动发布时间
+     */
+    private Long publishTime = 0L;
+
+    /**
+     * 活动的状态。1表示正常，2表示已删除
+     */
+    private Integer status;
+
+    /**
+     * 发布者
+     */
+    private UserInfo creator;
 
     public ObjectId getId() {
         return id;
@@ -326,11 +352,11 @@ public class Activity {
         this.desc = desc;
     }
 
-    public List<Contact> getApplicantInfos() {
+    public List<Joiner> getApplicantInfos() {
         return applicantInfos;
     }
 
-    public void setApplicantInfos(List<Contact> applicantInfos) {
+    public void setApplicantInfos(List<Joiner> applicantInfos) {
         this.applicantInfos = applicantInfos;
     }
 
@@ -362,7 +388,32 @@ public class Activity {
         return isFree;
     }
 
+    public Long getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(Long publishTime) {
+        this.publishTime = publishTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public UserInfo getCreator() {
+        return creator;
+    }
+
+    public void setCreator(UserInfo creator) {
+        this.creator = creator;
+    }
+
     public Activity() {
+
     }
 
     public Activity(String id, String title, String theme, String category, Integer visiable, ImageItem cover, Boolean isFree) {
@@ -384,5 +435,21 @@ public class Activity {
         this.address = address;
         this.theme = theme;
         this.category = category;
+    }
+
+    public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, ImageItem cover, String theme, String category, Integer visiable, String desc, Boolean isFree) {
+        this.id = new ObjectId();
+        this.title = title;
+        this.maxNum = maxNum;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.address = address;
+        this.cover = cover;
+        this.theme = theme;
+        this.category = category;
+        this.visiable = visiable;
+        this.desc = desc;
+        this.isFree = isFree;
+        this.publishTime = System.currentTimeMillis();
     }
 }

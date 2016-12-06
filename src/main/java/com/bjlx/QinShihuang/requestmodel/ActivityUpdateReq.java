@@ -1,72 +1,59 @@
 package com.bjlx.QinShihuang.requestmodel;
 
-import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * 活动参数
- * Created by pengyt on 2016/12/4.
+ * 活动更新参数
+ * Created by xiaozhi on 2016/12/6.
  */
-public class ActivityReq {
+public class ActivityUpdateReq {
 
     /**
      * 活动名称(标题)
      */
-    @NotNull
     private String title;
 
     /**
      * 最大允许人数
      */
-    @Min(value = 1)
     private Integer maxNum;
 
     /**
      * 开始时间
      */
-    @Min(value = 1)
     private Long startTime;
 
     /**
      * 结束时间
      */
-    @Min(value = 1)
     private Long endTime;
 
     /**
      * 活动地点
      */
-    @NotNull
     private Address address;
 
     /**
      * 封面图
      */
-    @NotNull
     private ImageItem cover;
 
     /**
      * 海报
      */
-    @NotNull
     private List<ImageItem> posters;
 
     /**
      * 活动主题
      */
-    @NotNull
     private String theme;
 
     /**
      * 活动分类
      */
-    @NotNull
     private String category;
 
     /**
@@ -77,20 +64,12 @@ public class ActivityReq {
     /**
      * 活动是否为隐私活动，1表示不可见，2表示可见
      */
-    @Min(value = 1)
-    @Max(value = 2)
     private Integer visiable = 1;
 
     /**
      * 活动详情
      */
-    @NotNull
     private String desc;
-
-    /**
-     * 报名人信息
-     */
-    private List<Joiner> applicantInfos;
 
     /**
      * 门票
@@ -100,8 +79,7 @@ public class ActivityReq {
     /**
      * 是否免费
      */
-    @NotNull
-    private Boolean isFree = true;
+    private Boolean isFree;
 
     public String getTitle() {
         return title;
@@ -197,14 +175,6 @@ public class ActivityReq {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public List<Joiner> getApplicantInfos() {
-        return applicantInfos;
-    }
-
-    public void setApplicantInfos(List<Joiner> applicantInfos) {
-        this.applicantInfos = applicantInfos;
     }
 
     public List<TicketReq> getTickets() {

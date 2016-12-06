@@ -1,9 +1,10 @@
 package com.bjlx.QinShihuang.core.formatter.activity;
 
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.activity.Activity;
+import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.model.activity.Ticket;
 import com.bjlx.QinShihuang.model.misc.Address;
-import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -89,14 +90,24 @@ public class ActivitySerializer extends JsonSerializer<Activity> {
             if(activity.getDesc() != null)
                 gen.writeStringField(Activity.fd_desc, activity.getDesc());
 
-            List<Contact> applicantInfos = activity.getApplicantInfos();
+            List<Joiner> applicantInfos = activity.getApplicantInfos();
             if (applicantInfos != null && !applicantInfos.isEmpty()) {
             	gen.writeFieldName(Activity.fd_applicantInfos);
                 gen.writeStartArray();
-                JsonSerializer<Object> ret = serializers.findValueSerializer(Contact.class, null);
-                for (Contact applicantInfo : applicantInfos)
+                JsonSerializer<Object> ret = serializers.findValueSerializer(Joiner.class, null);
+                for (Joiner applicantInfo : applicantInfos)
                     ret.serialize(applicantInfo, gen, serializers);
                 gen.writeEndArray();
+            }
+
+            UserInfo userInfo = activity.getCreator();
+            gen.writeFieldName(Activity.fd_creator);
+            if (userInfo != null) {
+                JsonSerializer<Object> ret = serializers.findValueSerializer(UserInfo.class, null);
+                ret.serialize(userInfo, gen, serializers);
+            } else {
+                gen.writeStartObject();
+                gen.writeEndObject();
             }
             
             List<Ticket> tickets = activity.getTickets();
@@ -109,6 +120,7 @@ public class ActivitySerializer extends JsonSerializer<Activity> {
                 gen.writeEndArray();
             }
             gen.writeBooleanField(Activity.fd_isFree, activity.getIsFree() == null ? true : activity.getIsFree());
+            gen.writeNumberField(Activity.fd_publishTime, activity.getPublishTime() == null ? 0L : activity.getPublishTime());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

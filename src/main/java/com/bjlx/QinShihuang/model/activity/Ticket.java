@@ -6,6 +6,9 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by pengyt on 2016/7/22.
  * 门票
@@ -29,6 +32,8 @@ public class Ticket {
     public final static String fd_desc = "desc";
 	@Transient
     public final static String fd_maxNum = "maxNum";
+    @Transient
+    public final static String fd_title = "title";
 
     /**
      * 主键
@@ -36,6 +41,12 @@ public class Ticket {
     @NotBlank
     @Id
     private ObjectId id;
+
+    /**
+     * 门票标题
+     */
+    @NotNull
+    private String title;
 
     /**
      * 门票价格
@@ -70,6 +81,7 @@ public class Ticket {
     /**
      * 最大数量
      */
+    @Min(value = 1)
     private Integer maxNum;
 
     public ObjectId getId() {
@@ -136,8 +148,26 @@ public class Ticket {
         this.marketPrice = marketPrice;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Ticket() {
+
+    }
+
     public Ticket(Boolean free, Integer maxNum) {
         this.id = new ObjectId();
+        this.free = free;
+        this.maxNum = maxNum;
+    }
+
+    public Ticket(String id, Boolean free, Integer maxNum) {
+        this.id = new ObjectId(id);
         this.free = free;
         this.maxNum = maxNum;
     }
