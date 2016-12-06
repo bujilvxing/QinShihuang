@@ -286,53 +286,152 @@ public class ActivityAPI {
             if(activityUpdateReq.getMaxNum() != null)
                 ops.set(Activity.fd_maxNum, activityUpdateReq.getMaxNum());
 
+            if(activityUpdateReq.getPosters() != null && !activityUpdateReq.getPosters().isEmpty())
+                ops.set(Activity.fd_posters, activityUpdateReq.getPosters());
 
+            if(activityUpdateReq.getTheme() != null)
+                ops.set(Activity.fd_theme, activityUpdateReq.getTheme());
 
-//
-//            /**
-//             * 海报
-//             */
-//            private List<ImageItem> posters;
-//
-//            /**
-//             * 活动主题
-//             */
-//            private String theme;
-//
-//            /**
-//             * 活动分类
-//             */
-//            private String category;
-//
-//            /**
-//             * 活动标签
-//             */
-//            private List<String> tags;
-//
-//            /**
-//             * 活动是否为隐私活动，1表示不可见，2表示可见
-//             */
-//            private Integer visiable = 1;
-//
-//            /**
-//             * 活动详情
-//             */
-//            private String desc;
-//
-//            /**
-//             * 门票
-//             */
-//            private List<TicketReq> tickets;
-//
-//            /**
-//             * 是否免费
-//             */
-//            private Boolean isFree;
-            ds.updateFirst(query, ops);
+            if(activityUpdateReq.getCategory() != null)
+                ops.set(Activity.fd_category, activityUpdateReq.getCategory());
+
+            if(activityUpdateReq.getTags() != null && !activityUpdateReq.getTags().isEmpty())
+                ops.set(Activity.fd_tags, activityUpdateReq.getTags());
+
+            if(activityUpdateReq.getVisiable() != null)
+                ops.set(Activity.fd_visiable, activityUpdateReq.getVisiable());
+
+            if(activityUpdateReq.getDesc() != null)
+                ops.set(Activity.fd_desc, activityUpdateReq.getDesc());
+
+            if(activityUpdateReq.isFree() != null)
+                ops.set(Activity.fd_isFree, activityUpdateReq.isFree());
+
+            if(activityUpdateReq.getTickets() != null && !activityUpdateReq.getTickets().isEmpty()) {
+                List<Ticket> tickets = new ArrayList<Ticket>();
+                for(TicketReq ticketReq : activityUpdateReq.getTickets()) {
+                    Ticket ticket = new Ticket(ticketReq.getId(), ticketReq.isFree(), ticketReq.getMaxNum());
+                    if(ticketReq.getDesc() != null)
+                        ticket.setDesc(ticketReq.getDesc());
+                    if(!ticketReq.isFree()) {
+                        if(ticketReq.getPrice() == null)
+                            return QinShihuangResult.getResult(ErrorCode.PRICE_NULL_1030);
+                        else
+                            ticket.setPrice(ticketReq.getPrice());
+                        if(ticketReq.getMarketPrice() != null)
+                            ticket.setMarketPrice(ticketReq.getMarketPrice());
+                        ticket.setRefundWay(ticketReq.getRefundWay() == null ? Constant.REFUND_ORIGIN : ticketReq.getRefundWay());
+                        if(ticketReq.getRefundDesc() != null)
+                            ticket.setRefundDesc(ticketReq.getRefundDesc());
+                    }
+                    tickets.add(ticket);
+                }
+                ops.set(Activity.fd_tickets, tickets);
+            }
+
+            ds.findAndModify(query, ops, false);
             return QinShihuangResult.ok();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
     }
+
+    /**
+     * 添加门票
+     * @param ticketReq 门票参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 门票信息
+     * @throws Exception 异常
+     */
+    public static String addTicket(TicketReq ticketReq, Long userId, String key) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1088);
+            }
+
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 删除门票
+     * @param ticketId 门票id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String removeTicket(String ticketId, Long userId, String key) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1088);
+            }
+
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 修改门票
+     * @param ticketId 门票id
+     * @param ticketReq 门票参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String updateTicket(String ticketId, TicketReq ticketReq, Long userId, String key) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1088);
+            }
+
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 取得门票详情
+     * @param ticketId 门票id
+     * @return 门票信息
+     * @throws Exception 异常
+     */
+    public static String getTicket(String ticketId) throws Exception {
+        try {
+
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 取得用户门票列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 门票列表
+     * @throws Exception 异常
+     */
+    public static String getTickets(Long userId, String key) throws Exception {
+        try {
+
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
 }

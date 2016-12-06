@@ -4,6 +4,7 @@ import com.bjlx.QinShihuang.core.ActivityAPI;
 import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.requestmodel.ActivityReq;
 import com.bjlx.QinShihuang.requestmodel.ActivityUpdateReq;
+import com.bjlx.QinShihuang.requestmodel.TicketReq;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.springframework.web.bind.annotation.*;
@@ -133,7 +134,80 @@ public class ActivityController {
     }
 
     /**
-     * 添加门票，删除门票，修改门票，查询门票，门票列表
+     * 添加门票1090
+     * @param ticketReq 门票参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 门票信息
      */
+    @RequestMapping(value = "/app/tickets", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addTicket(@RequestBody TicketReq ticketReq, @RequestHeader ("userId") Long userId, @RequestHeader ("key") String key) {
+        try {
+            return ActivityAPI.addTicket(ticketReq, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
 
+    /**
+     * 删除门票1091
+     * @param ticketId 门票id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/tickets/{ticketId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String removeTicket(@PathVariable ("ticketId") String ticketId, @RequestHeader ("userId") Long userId, @RequestHeader ("key") String key) {
+        try {
+            return ActivityAPI.removeTicket(ticketId, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 修改门票1092
+     * @param ticketId 门票id
+     * @param ticketReq 门票参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 门票信息
+     */
+    @RequestMapping(value = "/app/tickets/{ticketId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String updateTicket(@PathVariable ("ticketId") String ticketId, @RequestBody TicketReq ticketReq, @RequestHeader ("userId") Long userId, @RequestHeader ("key") String key) {
+        try {
+            return ActivityAPI.updateTicket(ticketId, ticketReq, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取得门票详情1092
+     * @param ticketId 门票id
+     * @return 门票信息
+     */
+    @RequestMapping(value = "/app/tickets/{ticketId:\\[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getTicket(@PathVariable ("ticketId") String ticketId) {
+        try {
+            return ActivityAPI.getTicket(ticketId);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取得用户门票列表1104
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 门票列表
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/tickets", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getTickets(@PathVariable ("userId") Long userId, @RequestHeader ("key") String key) {
+        try {
+            return ActivityAPI.getTickets(userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
 }
