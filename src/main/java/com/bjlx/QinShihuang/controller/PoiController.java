@@ -3,12 +3,17 @@ package com.bjlx.QinShihuang.controller;
 import com.bjlx.QinShihuang.core.PoiAPI;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * poi控制器
  * Created by pengyt on 2016/12/4.
  */
+@Controller
 public class PoiController {
 
     /**

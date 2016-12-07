@@ -1,10 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.MiscAPI;
-import com.bjlx.QinShihuang.requestmodel.ApplySellerReq;
-import com.bjlx.QinShihuang.requestmodel.FavoriteReq;
-import com.bjlx.QinShihuang.requestmodel.FeedbackReq;
-import com.bjlx.QinShihuang.requestmodel.VoteReq;
+import com.bjlx.QinShihuang.requestmodel.*;
 import com.bjlx.QinShihuang.utils.CommonUtil;
 import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
@@ -63,85 +60,16 @@ public class MiscController {
     }
 
     /**
-     * 搜索用户1100
+     * 发布游记1033
+     * @param travelNoteReq 游记参数
      * @param userId 用户id
      * @param key 不羁旅行令牌
-     * @param query 搜索关键字
-     * @return 用户信息
+     * @return 游记信息
      */
-    @RequestMapping(value = "/app/users", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String searchUser(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, String query) {
-        if(query == null)
-            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1100);
+    @RequestMapping(value = "/app/travelnotes", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addTravelNote(@RequestBody TravelNoteReq travelNoteReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         try {
-            return MiscAPI.searchUser(userId, key, query);
-        } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
-        }
-    }
-
-    /**
-     * 搜索群组1101
-     * @param userId 用户id
-     * @param key 不羁旅行令牌
-     * @param query 搜索关键字
-     * @return 群组信息
-     */
-    @RequestMapping(value = "/app/chatgroups", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String searchChatgroup(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, String query) {
-        if(query == null)
-            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1101);
-        try {
-            return MiscAPI.searchChatgroup(userId, key, query);
-        } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
-        }
-    }
-
-    /**
-     * 全站搜索102
-     * @param query 搜索关键词
-     * @param all 是否搜索所有
-     * @param momemt 是否搜索时间线
-     * @param commodity 是否搜索商品
-     * @param guide 是否搜索攻略
-     * @param viewspot 是否搜索景点
-     * @param trace 是否搜索足迹
-     * @param tripPlan 是否搜索行程规划
-     * @param quora 是否搜索问答
-     * @param activity 是否搜索活动
-     * @param travelNote 是否搜索游记
-     * @param restaurant 是否搜索美食
-     * @param hotel 是否搜索宾馆
-     * @param shopping 是否搜索购物
-     * @return 结果
-     */
-    @RequestMapping(value = "/app/search", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String search(String query, Boolean all, Boolean momemt, Boolean commodity, Boolean guide, Boolean viewspot,
-                                          Boolean trace, Boolean tripPlan, Boolean quora, Boolean activity, Boolean travelNote,
-                                          Boolean restaurant, Boolean hotel, Boolean shopping) {
-        if(query == null)
-            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1102);
-        try {
-            if(all == null) {
-                return MiscAPI.searchCondition(query, momemt == null ? false : momemt,
-                        commodity == null ? false : commodity, guide == null ? false : guide,
-                        viewspot == null ? false : viewspot, trace == null ? false : trace,
-                        tripPlan == null ? false : tripPlan, quora == null ? false : quora,
-                        activity == null ? false : activity, travelNote == null ? false : travelNote,
-                        restaurant == null ? false : restaurant, hotel == null ? false : hotel,
-                        shopping == null ? false : shopping);
-            }
-            if(all)
-                return MiscAPI.searchAll(query);
-            else
-                return MiscAPI.searchCondition(query, momemt == null ? false : momemt,
-                        commodity == null ? false : commodity, guide == null ? false : guide,
-                        viewspot == null ? false : viewspot, trace == null ? false : trace,
-                        tripPlan == null ? false : tripPlan, quora == null ? false : quora,
-                        activity == null ? false : activity, travelNote == null ? false : travelNote,
-                        restaurant == null ? false : restaurant, hotel == null ? false : hotel,
-                        shopping == null ? false : shopping);
+            return MiscAPI.addTravelNote(travelNoteReq, userId, key);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
@@ -256,6 +184,91 @@ public class MiscController {
     public @ResponseBody String getVotes(@RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return MiscAPI.getVotes(userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 搜索用户1100
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param query 搜索关键字
+     * @return 用户信息
+     */
+    @RequestMapping(value = "/app/users", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String searchUser(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, String query) {
+        if(query == null)
+            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1100);
+        try {
+            return MiscAPI.searchUser(userId, key, query);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 搜索群组1101
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param query 搜索关键字
+     * @return 群组信息
+     */
+    @RequestMapping(value = "/app/chatgroups", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String searchChatgroup(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, String query) {
+        if(query == null)
+            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1101);
+        try {
+            return MiscAPI.searchChatgroup(userId, key, query);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 全站搜索102
+     * @param query 搜索关键词
+     * @param all 是否搜索所有
+     * @param momemt 是否搜索时间线
+     * @param commodity 是否搜索商品
+     * @param guide 是否搜索攻略
+     * @param viewspot 是否搜索景点
+     * @param trace 是否搜索足迹
+     * @param tripPlan 是否搜索行程规划
+     * @param quora 是否搜索问答
+     * @param activity 是否搜索活动
+     * @param travelNote 是否搜索游记
+     * @param restaurant 是否搜索美食
+     * @param hotel 是否搜索宾馆
+     * @param shopping 是否搜索购物
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/search", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String search(String query, Boolean all, Boolean momemt, Boolean commodity, Boolean guide, Boolean viewspot,
+                                          Boolean trace, Boolean tripPlan, Boolean quora, Boolean activity, Boolean travelNote,
+                                          Boolean restaurant, Boolean hotel, Boolean shopping) {
+        if(query == null)
+            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1102);
+        try {
+            if(all == null) {
+                return MiscAPI.searchCondition(query, momemt == null ? false : momemt,
+                        commodity == null ? false : commodity, guide == null ? false : guide,
+                        viewspot == null ? false : viewspot, trace == null ? false : trace,
+                        tripPlan == null ? false : tripPlan, quora == null ? false : quora,
+                        activity == null ? false : activity, travelNote == null ? false : travelNote,
+                        restaurant == null ? false : restaurant, hotel == null ? false : hotel,
+                        shopping == null ? false : shopping);
+            }
+            if(all)
+                return MiscAPI.searchAll(query);
+            else
+                return MiscAPI.searchCondition(query, momemt == null ? false : momemt,
+                        commodity == null ? false : commodity, guide == null ? false : guide,
+                        viewspot == null ? false : viewspot, trace == null ? false : trace,
+                        tripPlan == null ? false : tripPlan, quora == null ? false : quora,
+                        activity == null ? false : activity, travelNote == null ? false : travelNote,
+                        restaurant == null ? false : restaurant, hotel == null ? false : hotel,
+                        shopping == null ? false : shopping);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

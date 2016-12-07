@@ -7,12 +7,14 @@ import com.bjlx.QinShihuang.requestmodel.ActivityUpdateReq;
 import com.bjlx.QinShihuang.requestmodel.TicketReq;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * 活动控制器
  * Created by pengyt on 2016/12/4.
  */
+@Controller
 public class ActivityController {
     
     /**

@@ -38,6 +38,7 @@ import com.bjlx.QinShihuang.model.quora.Question;
 import com.bjlx.QinShihuang.model.timeline.Moment;
 import com.bjlx.QinShihuang.model.trace.Trace;
 import com.bjlx.QinShihuang.model.tripplan.TripPlan;
+import com.bjlx.QinShihuang.requestmodel.TravelNoteReq;
 import com.bjlx.QinShihuang.utils.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.bson.types.ObjectId;
@@ -82,6 +83,18 @@ public class MiscAPI {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    /**
+     * 发布游记
+     * @param travelNoteReq 游记参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 游记详情
+     * @throws Exception 异常
+     */
+    public static String addTravelNote(TravelNoteReq travelNoteReq, Long userId, String key) throws Exception {
+        return null;
     }
 
     /**
