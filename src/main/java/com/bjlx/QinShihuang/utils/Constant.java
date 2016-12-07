@@ -201,4 +201,11 @@ public class Constant {
      */
     public final static int ACTIVITY_UNVISIABLE = 1;
     public final static int ACTIVITY_VISIABLE = 2;
+
+    /**
+     * 门票状态
+     */
+    public final static int TICKET_NORMAL = 1;
+    public final static int TICKET_UNENABLE = 2;
+
 }

@@ -34,6 +34,12 @@ public class Ticket {
     public final static String fd_maxNum = "maxNum";
     @Transient
     public final static String fd_title = "title";
+    @Transient
+    public final static String fd_status = "status";
+    @Transient
+    public final static String fd_creatorId = "creatorId";
+    @Transient
+    public final static String fd_updateTime = "updateTime";
 
     /**
      * 主键
@@ -83,6 +89,26 @@ public class Ticket {
      */
     @Min(value = 1)
     private Integer maxNum;
+
+    /**
+     * 创建时间
+     */
+    private Long createTime;
+
+    /**
+     * 更新时间
+     */
+    private Long updateTime;
+
+    /**
+     * 门票状态。1表示正常，2表示已删除
+     */
+    private Integer status;
+
+    /**
+     * 门票创建人
+     */
+    private Long creatorId;
 
     public ObjectId getId() {
         return id;
@@ -156,6 +182,38 @@ public class Ticket {
         this.title = title;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
     public Ticket() {
 
     }
@@ -170,5 +228,7 @@ public class Ticket {
         this.id = new ObjectId(id);
         this.free = free;
         this.maxNum = maxNum;
+        this.createTime = System.currentTimeMillis();
+        this.updateTime = this.createTime;
     }
 }

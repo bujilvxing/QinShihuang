@@ -183,7 +183,7 @@ public class ActivityController {
     }
 
     /**
-     * 取得门票详情1092
+     * 取得门票详情1093
      * @param ticketId 门票id
      * @return 门票信息
      */

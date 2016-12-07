@@ -95,7 +95,7 @@ public class ActivityReq {
     /**
      * 门票
      */
-    private List<TicketReq> tickets;
+    private List<String> ticketIds;
 
     /**
      * 是否免费
@@ -207,12 +207,12 @@ public class ActivityReq {
         this.applicantInfos = applicantInfos;
     }
 
-    public List<TicketReq> getTickets() {
-        return tickets;
+    public List<String> getTicketIds() {
+        return ticketIds;
     }
 
-    public void setTickets(List<TicketReq> tickets) {
-        this.tickets = tickets;
+    public void setTicketIds(List<String> ticketIds) {
+        this.ticketIds = ticketIds;
     }
 
     public Boolean isFree() {

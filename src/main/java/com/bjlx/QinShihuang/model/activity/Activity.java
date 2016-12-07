@@ -58,8 +58,8 @@ public class Activity {
     public final static String fd_desc = "desc";
 	@Transient
     public final static String fd_applicantInfos = "applicantInfos";
-	@Transient
-    public final static String fd_tickets = "tickets";
+    @Transient
+    public final static String fd_ticketIds = "ticketIds";
 	@Transient
     public final static String fd_isFree = "isFree";
     @Transient
@@ -186,7 +186,7 @@ public class Activity {
     /**
      * 门票
      */
-    private List<Ticket> tickets;
+    private List<ObjectId> ticketIds;
     
     /**
      * 是否免费
@@ -360,14 +360,14 @@ public class Activity {
         this.applicantInfos = applicantInfos;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
+    public List<ObjectId> getTicketIds() {
+        return ticketIds;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public void setTicketIds(List<ObjectId> ticketIds) {
+        this.ticketIds = ticketIds;
     }
-    
+
     public Boolean getIsFree() {
 		return isFree;
 	}

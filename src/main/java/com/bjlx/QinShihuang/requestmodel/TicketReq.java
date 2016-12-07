@@ -122,4 +122,12 @@ public class TicketReq {
     public void setMaxNum(Integer maxNum) {
         this.maxNum = maxNum;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

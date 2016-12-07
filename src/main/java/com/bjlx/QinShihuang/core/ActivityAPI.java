@@ -2,6 +2,7 @@ package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.core.formatter.activity.ActivityBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.activity.ActivityFormatter;
+import com.bjlx.QinShihuang.core.formatter.activity.TicketFormatter;
 import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.model.activity.Ticket;
@@ -51,26 +52,12 @@ public class ActivityAPI {
                 activity.setTags(activityReq.getTags());
             if(activityReq.getApplicantInfos() != null && !activityReq.getApplicantInfos().isEmpty())
                 activity.setApplicantInfos(activityReq.getApplicantInfos());
-            if(activityReq.getTickets() != null && !activityReq.getTickets().isEmpty()) {
-                List<Ticket> tickets = new ArrayList<Ticket>();
-                for(TicketReq ticketReq : activityReq.getTickets()) {
-                    Ticket ticket = new Ticket(ticketReq.getId(), ticketReq.isFree(), ticketReq.getMaxNum());
-                    if(ticketReq.getDesc() != null)
-                        ticket.setDesc(ticketReq.getDesc());
-                    if(!ticketReq.isFree()) {
-                        if(ticketReq.getPrice() == null)
-                            return QinShihuangResult.getResult(ErrorCode.PRICE_NULL_1030);
-                        else
-                            ticket.setPrice(ticketReq.getPrice());
-                        if(ticketReq.getMarketPrice() != null)
-                            ticket.setMarketPrice(ticketReq.getMarketPrice());
-                        ticket.setRefundWay(ticketReq.getRefundWay() == null ? Constant.REFUND_ORIGIN : ticketReq.getRefundWay());
-                        if(ticketReq.getRefundDesc() != null)
-                            ticket.setRefundDesc(ticketReq.getRefundDesc());
-                    }
-                    tickets.add(ticket);
+            if(activityReq.getTicketIds() != null && !activityReq.getTicketIds().isEmpty()) {
+                List<ObjectId> ticketIds = new ArrayList<ObjectId>();
+                for(String ticketId : activityReq.getTicketIds()) {
+                    ticketIds.add(new ObjectId(ticketId));
                 }
-                activity.setTickets(tickets);
+                activity.setTicketIds(ticketIds);
             }
             ds.save(activity);
             return QinShihuangResult.ok(ActivityFormatter.getMapper().valueToTree(activity));
@@ -135,8 +122,19 @@ public class ActivityAPI {
             Activity activity = query.get();
             if(activity == null)
                 return QinShihuangResult.getResult(ErrorCode.ACTIVITY_NOT_EXIST_1032);
-            else
-                return QinShihuangResult.ok(ActivityFormatter.getMapper().valueToTree(activity));
+            else {
+                ObjectNode result = CommonAPI.mapper.createObjectNode();
+                result.set("activity", ActivityFormatter.getMapper().valueToTree(activity));
+                List<ObjectId> ticketIds = activity.getTicketIds();
+                if(ticketIds != null && !ticketIds.isEmpty()) {
+                    Query<Ticket> ticketQuery = ds.createQuery(Ticket.class).field(Ticket.fd_id).in(ticketIds).field(Ticket.fd_status).equal(Constant.TICKET_NORMAL);
+                    List<Ticket> tickets = ticketQuery.asList();
+                    if(tickets != null && !tickets.isEmpty()) {
+                        result.set("tickets", TicketFormatter.getMapper().valueToTree(tickets));
+                    }
+                }
+                return QinShihuangResult.ok(result);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -307,26 +305,12 @@ public class ActivityAPI {
             if(activityUpdateReq.isFree() != null)
                 ops.set(Activity.fd_isFree, activityUpdateReq.isFree());
 
-            if(activityUpdateReq.getTickets() != null && !activityUpdateReq.getTickets().isEmpty()) {
-                List<Ticket> tickets = new ArrayList<Ticket>();
-                for(TicketReq ticketReq : activityUpdateReq.getTickets()) {
-                    Ticket ticket = new Ticket(ticketReq.getId(), ticketReq.isFree(), ticketReq.getMaxNum());
-                    if(ticketReq.getDesc() != null)
-                        ticket.setDesc(ticketReq.getDesc());
-                    if(!ticketReq.isFree()) {
-                        if(ticketReq.getPrice() == null)
-                            return QinShihuangResult.getResult(ErrorCode.PRICE_NULL_1030);
-                        else
-                            ticket.setPrice(ticketReq.getPrice());
-                        if(ticketReq.getMarketPrice() != null)
-                            ticket.setMarketPrice(ticketReq.getMarketPrice());
-                        ticket.setRefundWay(ticketReq.getRefundWay() == null ? Constant.REFUND_ORIGIN : ticketReq.getRefundWay());
-                        if(ticketReq.getRefundDesc() != null)
-                            ticket.setRefundDesc(ticketReq.getRefundDesc());
-                    }
-                    tickets.add(ticket);
+            if(activityUpdateReq.getTicketIds() != null && !activityUpdateReq.getTicketIds().isEmpty()) {
+                List<ObjectId> ticketIds = new ArrayList<ObjectId>();
+                for(String ticketId : activityUpdateReq.getTicketIds()) {
+                    ticketIds.add(new ObjectId(ticketId));
                 }
-                ops.set(Activity.fd_tickets, tickets);
+                ops.set(Activity.fd_ticketIds, ticketIds);
             }
 
             ds.findAndModify(query, ops, false);
@@ -348,9 +332,24 @@ public class ActivityAPI {
     public static String addTicket(TicketReq ticketReq, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1088);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1090);
             }
 
+            Ticket ticket = new Ticket(ticketReq.getId(), ticketReq.isFree(), ticketReq.getMaxNum());
+            if(ticketReq.getDesc() != null)
+                ticket.setDesc(ticketReq.getDesc());
+            if(!ticketReq.isFree()) {
+                if(ticketReq.getPrice() == null)
+                    return QinShihuangResult.getResult(ErrorCode.PRICE_NULL_1090);
+                else
+                    ticket.setPrice(ticketReq.getPrice());
+                if(ticketReq.getMarketPrice() != null)
+                    ticket.setMarketPrice(ticketReq.getMarketPrice());
+                ticket.setRefundWay(ticketReq.getRefundWay() == null ? Constant.REFUND_ORIGIN : ticketReq.getRefundWay());
+                if(ticketReq.getRefundDesc() != null)
+                    ticket.setRefundDesc(ticketReq.getRefundDesc());
+            }
+            ds.save(ticket);
             return QinShihuangResult.ok();
         } catch (Exception e) {
             e.printStackTrace();
@@ -369,9 +368,18 @@ public class ActivityAPI {
     public static String removeTicket(String ticketId, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1088);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1091);
             }
 
+            // 检查门票是否被活动使用
+            Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_ticketIds).hasThisOne(new ObjectId(ticketId));
+            Activity activity = query.get();
+            if(activity != null)
+                return QinShihuangResult.getResult(ErrorCode.TICKET_USED_1091);
+            // 删除门票
+            Query<Ticket> ticketQuery = ds.createQuery(Ticket.class).field(Ticket.fd_id).equal(new ObjectId(ticketId)).field(Ticket.fd_status).equal(Constant.TICKET_NORMAL);
+            UpdateOperations ops = ds.createUpdateOperations(Ticket.class).set(Ticket.fd_status, Constant.TICKET_UNENABLE);
+            ds.updateFirst(ticketQuery, ops);
             return QinShihuangResult.ok();
         } catch (Exception e) {
             e.printStackTrace();
@@ -391,10 +399,42 @@ public class ActivityAPI {
     public static String updateTicket(String ticketId, TicketReq ticketReq, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1088);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1092);
             }
+            Query<Ticket> query = ds.createQuery(Ticket.class).field(Ticket.fd_id).equal(new ObjectId(ticketId)).field(Ticket.fd_status).equal(Constant.TICKET_NORMAL).field(Ticket.fd_creatorId).equal(userId);
+            UpdateOperations<Ticket> ops = ds.createUpdateOperations(Ticket.class).set(Ticket.fd_updateTime, System.currentTimeMillis());
+            if(ticketReq.getTitle() != null)
+                ops.set(Ticket.fd_title, ticketReq.getTitle());
 
-            return QinShihuangResult.ok();
+            if(ticketReq.getPrice() != null)
+                ops.set(Ticket.fd_price, ticketReq.getPrice());
+
+            if(ticketReq.getMarketPrice() != null)
+                ops.set(Ticket.fd_marketPrice, ticketReq.getMarketPrice());
+
+            if(ticketReq.isFree() != null)
+                ops.set(Ticket.fd_free, ticketReq.isFree());
+
+            if(ticketReq.getRefundWay() != null)
+                ops.set(Ticket.fd_refundWay, ticketReq.getRefundWay());
+
+            if(ticketReq.getRefundDesc() != null)
+                ops.set(Ticket.fd_refundDesc, ticketReq.getRefundDesc());
+
+            if(ticketReq.getDesc() != null)
+                ops.set(Ticket.fd_desc, ticketReq.getDesc());
+
+            if(ticketReq.getTitle() != null)
+                ops.set(Ticket.fd_title, ticketReq.getTitle());
+
+            if(ticketReq.getMaxNum() != null)
+                ops.set(Ticket.fd_maxNum, ticketReq.getMaxNum());
+
+            Ticket ticket = ds.findAndModify(query, ops, false);
+            if(ticket == null)
+                return QinShihuangResult.getResult(ErrorCode.TICKET_NOT_EXIST_1092);
+            else
+                return QinShihuangResult.ok(TicketFormatter.getMapper().valueToTree(ticket));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -409,8 +449,12 @@ public class ActivityAPI {
      */
     public static String getTicket(String ticketId) throws Exception {
         try {
-
-            return QinShihuangResult.ok();
+            Query<Ticket> query = ds.createQuery(Ticket.class).field(Ticket.fd_id).equal(new ObjectId(ticketId)).field(Ticket.fd_status).equal(Constant.TICKET_NORMAL);
+            Ticket ticket = query.get();
+            if(ticket == null)
+                return QinShihuangResult.getResult(ErrorCode.TICKET_NOT_EXIST_1093);
+            else
+                return QinShihuangResult.ok(TicketFormatter.getMapper().valueToTree(ticket));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -426,8 +470,15 @@ public class ActivityAPI {
      */
     public static String getTickets(Long userId, String key) throws Exception {
         try {
-
-            return QinShihuangResult.ok();
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1104);
+            }
+            Query<Ticket> query = ds.createQuery(Ticket.class).field(Ticket.fd_creatorId).equal(userId).field(Ticket.fd_status).equal(Constant.TICKET_NORMAL);
+            List<Ticket> tickets = query.asList();
+            if(tickets == null || tickets.isEmpty())
+                return QinShihuangResult.ok(TicketFormatter.getMapper().valueToTree(new ArrayList<Ticket>()));
+            else
+                return QinShihuangResult.ok(TicketFormatter.getMapper().valueToTree(tickets));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
