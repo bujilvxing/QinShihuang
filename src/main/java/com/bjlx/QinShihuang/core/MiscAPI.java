@@ -8,6 +8,7 @@ import com.bjlx.QinShihuang.core.formatter.guide.GuideBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.im.ChatgroupBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.marketplace.CommodityBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.misc.TravelNoteBasicFormatter;
+import com.bjlx.QinShihuang.core.formatter.misc.TravelNoteFormatter;
 import com.bjlx.QinShihuang.core.formatter.poi.HotelBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.poi.RestaurantBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.poi.ShoppingBasicFormatter;
@@ -86,6 +87,27 @@ public class MiscAPI {
     }
 
     /**
+     * 取得游记列表
+     * @param offset 从第几个开始取
+     * @param limit 取多少个
+     * @return 游记列表
+     * @throws Exception 异常
+     */
+    public static String getTravelNotes(Integer offset, Integer limit) throws Exception {
+        try {
+            Query<TravelNote> query = ds.createQuery(TravelNote.class).field(TravelNote.fd_status).equal(Constant.TRAVELNOTE_NORMAL).order(String.format("-%s", TravelNote.fd_publishTime)).offset(offset).limit(limit);
+            List<TravelNote> travelNotes = query.asList();
+            if(travelNotes == null || travelNotes.isEmpty())
+                return QinShihuangResult.ok(TravelNoteBasicFormatter.getMapper().valueToTree(new ArrayList<TravelNote>()));
+            else
+                return QinShihuangResult.ok(TravelNoteBasicFormatter.getMapper().valueToTree(travelNotes));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
      * 发布游记
      * @param travelNoteReq 游记参数
      * @param userId 用户id
@@ -94,7 +116,136 @@ public class MiscAPI {
      * @throws Exception 异常
      */
     public static String addTravelNote(TravelNoteReq travelNoteReq, Long userId, String key) throws Exception {
-        return null;
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1034);
+            }
+
+            UserInfo author = CommonAPI.getUserBasicById(userId);
+            if(author == null)
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1034);
+            TravelNote travelNote = new TravelNote(travelNoteReq.getCover(), travelNoteReq.getImages(), travelNoteReq.getTitle(), author, travelNoteReq.getTravelTime(), travelNoteReq.getSummary() == null ? "" : travelNoteReq.getTitle());
+            if(travelNoteReq.getContents() != null && !travelNoteReq.getContents().isEmpty())
+                travelNote.setContents(travelNoteReq.getContents());
+            ds.save(travelNote);
+            return QinShihuangResult.ok(TravelNoteFormatter.getMapper().valueToTree(travelNote));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 更新游记
+     * @param travelNoteId 游记id
+     * @param travelNoteReq 游记参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String updateTravelNote(String travelNoteId, TravelNoteReq travelNoteReq, Long userId, String key) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1035);
+            }
+
+            Query<TravelNote> query = ds.createQuery(TravelNote.class).field(TravelNote.fd_id).equal(new ObjectId(travelNoteId)).field(TravelNote.fd_authorId).equal(userId).field(TravelNote.fd_status).equal(Constant.TRAVELNOTE_NORMAL);
+            UpdateOperations<TravelNote> ops = ds.createUpdateOperations(TravelNote.class);
+            if(travelNoteReq.getContents() != null && !travelNoteReq.getContents().isEmpty())
+                ops.set(TravelNote.fd_contents, travelNoteReq.getContents());
+            if(travelNoteReq.getCover() != null)
+                ops.set(TravelNote.fd_cover, travelNoteReq.getCover());
+            if(travelNoteReq.getImages() != null && !travelNoteReq.getImages().isEmpty())
+                ops.set(TravelNote.fd_images, travelNoteReq.getImages());
+            if(travelNoteReq.getSummary() != null)
+                ops.set(TravelNote.fd_summary, travelNoteReq.getSummary());
+            if(travelNoteReq.getTitle() != null)
+                ops.set(TravelNote.fd_title, travelNoteReq.getTitle());
+            if(travelNoteReq.getTravelTime() != null)
+                ops.set(TravelNote.fd_travelTime, travelNoteReq.getTravelTime());
+            TravelNote travelNote = ds.findAndModify(query, ops, false);
+            if(travelNote == null)
+                return QinShihuangResult.getResult(ErrorCode.TRAVELNOTE_NOT_EXIST_1035);
+            else
+                return QinShihuangResult.ok(TravelNoteFormatter.getMapper().valueToTree(travelNote));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 取得游记详情
+     * @param travelNoteId 游记id
+     * @return 游记详情
+     * @throws Exception 异常
+     */
+    public static String getTravelNote(String travelNoteId) throws Exception {
+        try {
+            Query<TravelNote> query = ds.createQuery(TravelNote.class).field(TravelNote.fd_id).equal(new ObjectId(travelNoteId)).field(TravelNote.fd_status).equal(Constant.TRAVELNOTE_NORMAL);
+            TravelNote travelNote = query.get();
+            if(travelNote == null)
+                return QinShihuangResult.getResult(ErrorCode.TRAVELNOTE_NOT_EXIST_1036);
+            else
+                return QinShihuangResult.ok(TravelNoteBasicFormatter.getMapper().valueToTree(travelNote));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 删除游记
+     * @param travelNoteId 游记id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String removeTravelNote(String travelNoteId, Long userId, String key) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1037);
+            }
+
+            Query<TravelNote> query = ds.createQuery(TravelNote.class).field(TravelNote.fd_id).equal(new ObjectId(travelNoteId)).field(TravelNote.fd_authorId).equal(userId)
+                    .field(TravelNote.fd_status).equal(Constant.TRAVELNOTE_NORMAL);
+            UpdateOperations<TravelNote> ops = ds.createUpdateOperations(TravelNote.class).set(TravelNote.fd_status, Constant.TRAVELNOTE_UNENABLE);
+            ds.updateFirst(query, ops);
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /**
+     * 取得用户游记列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param offset 从第几个开始取
+     * @param limit 取多少个
+     * @return 游记列表
+     * @throws Exception 异常
+     */
+    public static String getUserTravelNotes(Long userId, String key, Integer offset, Integer limit) throws Exception {
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key)) {
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1105);
+            }
+
+            Query<TravelNote> query = ds.createQuery(TravelNote.class).field(TravelNote.fd_authorId).equal(userId)
+                    .field(TravelNote.fd_status).equal(Constant.TRAVELNOTE_NORMAL).order(String.format("-%s", TravelNote.fd_publishTime)).offset(offset).limit(limit);
+            List<TravelNote> travelNotes = query.asList();
+            if(travelNotes == null || travelNotes.isEmpty())
+                return QinShihuangResult.ok(TravelNoteBasicFormatter.getMapper().valueToTree(new ArrayList<TravelNote>()));
+            else
+                return QinShihuangResult.ok(TravelNoteBasicFormatter.getMapper().valueToTree(travelNotes));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     /**
@@ -450,8 +601,6 @@ public class MiscAPI {
         }
     }
 
-
-
     /**
      * 全站搜索
      * @param query 搜索关键词
@@ -593,7 +742,6 @@ public class MiscAPI {
             throw e;
         }
     }
-
 
     /**
      * 更新收藏数

@@ -208,4 +208,9 @@ public class Constant {
     public final static int TICKET_NORMAL = 1;
     public final static int TICKET_UNENABLE = 2;
 
+    /**
+     * 游记状态
+     */
+    public final static int TRAVELNOTE_NORMAL = 1;
+    public final static int TRAVELNOTE_UNENABLE = 2;
 }

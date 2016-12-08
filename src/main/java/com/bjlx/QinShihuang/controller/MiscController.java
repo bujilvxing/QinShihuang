@@ -60,7 +60,22 @@ public class MiscController {
     }
 
     /**
-     * 发布游记1033
+     * 取得游记列表1033
+     * @param offset 从第几个开始
+     * @param limit 取多少个
+     * @return 游记列表
+     */
+    @RequestMapping(value = "/app/travelnotes", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getTravelNotes(Integer offset, Integer limit) {
+        try {
+            return MiscAPI.getTravelNotes(offset, limit);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 发布游记1034
      * @param travelNoteReq 游记参数
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -70,6 +85,70 @@ public class MiscController {
     public @ResponseBody String addTravelNote(@RequestBody TravelNoteReq travelNoteReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return MiscAPI.addTravelNote(travelNoteReq, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 更新游记1035
+     * @param travelNoteId 游记id
+     * @param travelNoteReq 游记参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/travelnotes/{travelNoteId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String updateTravelNote(@PathVariable ("travelNoteId") String travelNoteId, @RequestBody TravelNoteReq travelNoteReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+        try {
+            return MiscAPI.updateTravelNote(travelNoteId, travelNoteReq, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取得游记详情1036
+     * @param travelNoteId 游记id
+     * @return 游记详情
+     */
+    @RequestMapping(value = "/app/travelnotes/{travelNoteId:\\[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getTravelNote(@PathVariable ("travelNoteId") String travelNoteId) {
+        try {
+            return MiscAPI.getTravelNote(travelNoteId);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 删除游记1037
+     * @param travelNoteId 游记id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/travelnotes/{travelNoteId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String removeTravelNote(@PathVariable ("travelNoteId") String travelNoteId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+        try {
+            return MiscAPI.removeTravelNote(travelNoteId, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取得用户游记列表105
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param offset 从第几个开始取
+     * @param limit 取多少个
+     * @return 游记列表
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/travelnotes", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getUserTravelNotes(@PathVariable ("userId") Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
+        try {
+            return MiscAPI.getUserTravelNotes(userId, key, offset, limit);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

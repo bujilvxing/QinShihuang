@@ -47,5 +47,51 @@ public class TravelNoteReq {
      */
     private List<Map<String, String>> contents;
 
+    public ImageItem getCover() {
+        return cover;
+    }
 
+    public void setCover(ImageItem cover) {
+        this.cover = cover;
+    }
+
+    public List<ImageItem> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ImageItem> images) {
+        this.images = images;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Long getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(Long travelTime) {
+        this.travelTime = travelTime;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public List<Map<String, String>> getContents() {
+        return contents;
+    }
+
+    public void setContents(List<Map<String, String>> contents) {
+        this.contents = contents;
+    }
 }
