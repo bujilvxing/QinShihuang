@@ -2,6 +2,8 @@ package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.core.formatter.im.ChatgroupFormatter;
 import com.bjlx.QinShihuang.model.im.Chatgroup;
+import com.bjlx.QinShihuang.requestmodel.ChatgroupReq;
+import com.bjlx.QinShihuang.requestmodel.PostReq;
 import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.MorphiaFactory;
@@ -59,5 +61,100 @@ public class ChatgroupAPI {
         } else {
             return chatgroup.getParticipants();
         }
+    }
+
+    /**
+     * 创建聊天组
+     * @param chatgroupReq 聊天组参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 聊天组信息
+     * @throws Exception 异常
+     */
+    public static String createChatgroup(ChatgroupReq chatgroupReq, Long userId, String key) throws Exception {
+
+        return null;
+    }
+
+    /**
+     * 更新聊天组
+     * @param chatgroupId 聊天组id
+     * @param chatgroupReq 聊天组参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 聊天组信息
+     * @throws Exception 异常
+     */
+    public static String updateChatgroup(Long chatgroupId, ChatgroupReq chatgroupReq, Long userId, String key) throws Exception {
+
+        return null;
+    }
+
+    /**
+     * 取得聊天组成员列表
+     * @param chatgroupId 聊天组id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 聊天组成员列表
+     * @throws Exception 异常
+     */
+    public static String getChatgroupMembers(Long chatgroupId, Long userId, String key) throws Exception {
+        return null;
+    }
+
+    /**
+     * 添加聊天组成员
+     * @param chatgroupId 聊天组id
+     * @param memberId 成员id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 聊天组信息
+     * @throws Exception 异常
+     */
+    public static String addChatgroupMember(Long chatgroupId, Long memberId, Long userId, String key) throws Exception {
+
+        // 发送一条tips消息
+
+        return null;
+    }
+
+    /**
+     * 移除聊天组成员
+     * @param chatgroupId 聊天组id
+     * @param memberId 成员id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 聊天组信息
+     * @throws Exception 异常
+     */
+    public static String removeChatgroupMember(Long chatgroupId, Long memberId, Long userId, String key) throws Exception {
+
+
+        return null;
+    }
+
+    /**
+     * 取得用户聊天组列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 聊天组列表
+     * @throws Exception 异常
+     */
+    public static String getUserChatgroups(Long userId, String key) throws Exception {
+        return null;
+    }
+
+    /**
+     * 添加聊天组帖子
+     * @param chatgroupId 聊天组id
+     * @param postReq 帖子参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 帖子信息
+     * @throws Exception 异常
+     */
+    public static String addChatgroupPost(Long chatgroupId, PostReq postReq, Long userId, String key) throws Exception {
+        // 发一条群消息，提示发布帖子
+        return null;
     }
 }
