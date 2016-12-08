@@ -352,6 +352,8 @@ public enum ErrorCode {
 
 	// 全站搜索
 	QUERY_NULL_1102(110201, "query不可为空"),
+	// 足迹
+	NICKNAME_NULL_1040(104001, "昵称不可为空"),
 	;
 
 

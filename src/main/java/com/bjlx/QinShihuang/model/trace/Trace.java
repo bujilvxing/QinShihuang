@@ -498,6 +498,8 @@ public class Trace {
 		this.originNickName = originNickName;
 		this.originAvatar = originAvatar;
 	}
+	public Trace() {
+	}
 	
 	
 }
