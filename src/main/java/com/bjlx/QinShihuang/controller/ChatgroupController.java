@@ -154,4 +154,89 @@ public class ChatgroupController {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
+
+    /**
+     * 取得聊天组帖子列表1076
+     * @param chatgroupId 聊天组id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 帖子列表
+     */
+    @RequestMapping(value = "/app/chatgroups/{chatgroupId:\\d+}/posts", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getChatgroupPosts(@PathVariable("chatgroupId") Long chatgroupId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+        // 参数校验
+        try {
+            return ChatgroupAPI.getChatgroupPosts(chatgroupId, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 更新聊天组帖子1106
+     * @param postId 帖子id
+     * @param postReq 帖子参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 帖子信息
+     */
+    @RequestMapping(value = "/app/posts/{postId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String updateChatgroupPost(@PathVariable("postId") String postId, @RequestBody PostReq postReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+        // 参数校验
+        try {
+            return ChatgroupAPI.updateChatgroupPost(postId, postReq, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 删除聊天组帖子1107
+     * @param postId 帖子id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     */
+    @RequestMapping(value = "/app/posts/{postId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public @ResponseBody String removeChatgroupPost(@PathVariable("postId") String postId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+        // 参数校验
+        try {
+            return ChatgroupAPI.removeChatgroupPost(postId, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取得聊天组帖子详情1108
+     * @param postId 帖子id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 帖子详情
+     */
+    @RequestMapping(value = "/app/posts/{postId:\\[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getChatgroupPost(@PathVariable("postId") String postId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+        // 参数校验
+        try {
+            return ChatgroupAPI.getChatgroupPost(postId, userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
+
+    /**
+     * 取得用户帖子列表1109
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 帖子列表
+     */
+    @RequestMapping(value = "/app/users/{userId:\\d+}/posts", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getUserPosts(@PathVariable("userId") Long userId, @RequestHeader("key") String key) {
+        // 参数校验
+        try {
+            return ChatgroupAPI.getUserPosts(userId, key);
+        } catch (Exception e) {
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
 }

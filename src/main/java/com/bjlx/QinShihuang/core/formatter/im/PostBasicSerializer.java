@@ -26,7 +26,7 @@ public class PostBasicSerializer  extends JsonSerializer<Post> {
             gen.writeNumberField(Post.fd_updateTime, post.getUpdateTime() == null ? 0L : post.getUpdateTime());
             
             gen.writeStringField(Post.fd_summary, post.getSummary() == null ? "" : post.getSummary());
-            
+            gen.writeNumberField(Post.fd_chatgroupId, post.getChatgroupId() == null ? 0 : post.getChatgroupId());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

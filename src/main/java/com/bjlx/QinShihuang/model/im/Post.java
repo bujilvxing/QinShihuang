@@ -56,6 +56,8 @@ public class Post {
 	public final static String fd_authorAvatar = "authorAvatar";
 	@Transient
     public final static String fd_voteCnt = "voteCnt";
+    @Transient
+    public final static String fd_chatgroupId = "chatgroupId";
 
 	/**
 	 * 主键
@@ -164,6 +166,11 @@ public class Post {
      * 作者头像
      */
     private ImageItem authorAvatar;
+
+    /**
+     * 群组id
+     */
+    private Long chatgroupId;
 
     public ObjectId getId() {
         return id;
@@ -315,5 +322,13 @@ public class Post {
 
     public void setVoteCnt(Integer voteCnt) {
         this.voteCnt = voteCnt;
+    }
+
+    public Long getChatgroupId() {
+        return chatgroupId;
+    }
+
+    public void setChatgroupId(Long chatgroupId) {
+        this.chatgroupId = chatgroupId;
     }
 }

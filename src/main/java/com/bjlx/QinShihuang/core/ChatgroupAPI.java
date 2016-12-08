@@ -157,4 +157,65 @@ public class ChatgroupAPI {
         // 发一条群消息，提示发布帖子
         return null;
     }
+
+    /**
+     * 取得聊天组帖子列表
+     * @param chatgroupId 聊天组id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 帖子列表
+     * @throws Exception 异常
+     */
+    public static String getChatgroupPosts(Long chatgroupId, Long userId, String key) throws Exception {
+        return null;
+    }
+
+    /**
+     * 更新聊天组帖子
+     * @param postId 帖子id
+     * @param postReq 帖子参数
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 帖子信息
+     * @throws Exception 异常
+     */
+    public static String updateChatgroupPost(String postId, PostReq postReq, Long userId, String key) throws Exception {
+        return null;
+    }
+
+    /**
+     * 删除聊天组帖子
+     * @param postId 帖子id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String removeChatgroupPost(String postId, Long userId, String key) throws Exception {
+        return null;
+    }
+
+    /**
+     * 取得聊天组帖子详情
+     * @param chatgroupId 聊天组id
+     * @param postId 帖子id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 帖子详情
+     * @throws Exception 异常
+     */
+    public static String getChatgroupPost(String postId, Long userId, String key) throws Exception {
+        return null;
+    }
+
+    /**
+     * 取得用户帖子列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 帖子列表
+     * @throws Exception 异常
+     */
+    public static String getUserPosts(Long userId, String key) throws Exception {
+        return null;
+    }
 }

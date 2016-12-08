@@ -61,7 +61,7 @@ public class PostSerializer extends JsonSerializer<Post> {
                 JsonSerializer<Object> retAuthorAvatar = serializers.findValueSerializer(ImageItem.class, null);
                 retAuthorAvatar.serialize(authorAvatar, gen, serializers);
             }
-            
+            gen.writeNumberField(Post.fd_chatgroupId, post.getChatgroupId() == null ? 0 : post.getChatgroupId());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();
