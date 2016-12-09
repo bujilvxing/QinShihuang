@@ -1,13 +1,14 @@
 package com.bjlx.QinShihuang.core.formatter.im;
 
-import java.io.IOException;
-import java.util.List;
-
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.im.Post;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
+import java.util.List;
 
 public class PostSerializer extends JsonSerializer<Post> {
 
@@ -48,18 +49,15 @@ public class PostSerializer extends JsonSerializer<Post> {
             gen.writeNumberField(Post.fd_rank, post.getRank() == null ? 0 : post.getRank());
             gen.writeNumberField(Post.fd_hotness, post.getHotness() == null ? 0.0 : post.getHotness());
             gen.writeNumberField(Post.fd_rating, post.getRating() == null ? 0.0 : post.getRating());
-            
-            if(post.getAuthorId() != null)
-            	gen.writeNumberField(Post.fd_authorId, post.getAuthorId());
-            
-            if(post.getAuthorNickName() != null)
-            	gen.writeStringField(Post.fd_authorNickName, post.getAuthorNickName());
-            
-            ImageItem authorAvatar = post.getAuthorAvatar();
-            if (authorAvatar != null) {
-            	gen.writeFieldName(Post.fd_authorAvatar);
-                JsonSerializer<Object> retAuthorAvatar = serializers.findValueSerializer(ImageItem.class, null);
-                retAuthorAvatar.serialize(authorAvatar, gen, serializers);
+
+            gen.writeFieldName(Post.fd_author);
+            UserInfo author = post.getAuthor();
+            if (author != null) {
+                JsonSerializer<Object> ret = serializers.findValueSerializer(UserInfo.class, null);
+                ret.serialize(author, gen, serializers);
+            } else {
+                gen.writeStartObject();
+                gen.writeEndObject();
             }
             gen.writeNumberField(Post.fd_chatgroupId, post.getChatgroupId() == null ? 0 : post.getChatgroupId());
             gen.writeEndObject();

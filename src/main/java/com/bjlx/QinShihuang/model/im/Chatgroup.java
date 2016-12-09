@@ -19,6 +19,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +46,7 @@ public class Chatgroup {
 	@Transient
     public final static String fd_tags = "tags";
 	@Transient
-    public final static String fd_creator = "creator";
+    public final static String fd_creatorId = "creatorId";
 	@Transient
     public final static String fd_admins = "admins";
 	@Transient
@@ -103,7 +104,7 @@ public class Chatgroup {
      * 创建者用户id
      */
     @NotNull
-    private Long creator;
+    private Long creatorId;
     
     /**
      * 管理员用户id
@@ -199,12 +200,12 @@ public class Chatgroup {
         this.tags = tags;
     }
 
-    public Long getCreator() {
-        return creator;
+    public Long getCreatorId() {
+        return creatorId;
     }
 
-    public void setCreator(Long creator) {
-        this.creator = creator;
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
     }
 
     public List<Long> getAdmins() {
@@ -271,16 +272,22 @@ public class Chatgroup {
         this.status = status;
     }
 
-    public Chatgroup(Long chatGroupId, String name, ImageItem avatar, Long creator, List<Long> participants, Integer maxUsers) {
+    public Chatgroup() {
+
+    }
+
+    public Chatgroup(Long chatGroupId, String name, ImageItem avatar, Long creatorId, Integer maxUsers, Boolean visible) {
         this.id = new ObjectId();
         this.chatGroupId = chatGroupId;
         this.name = name;
         this.avatar = avatar;
-        this.creator = creator;
-        this.participants = participants;
+        this.creatorId = creatorId;
         this.maxUsers = maxUsers;
         this.createTime = System.currentTimeMillis();
         this.updateTime = System.currentTimeMillis();
+        this.visible = visible;
         this.status = 1;
+        this.admins = new ArrayList<Long>();
+        this.admins.add(creatorId);
     }
 }

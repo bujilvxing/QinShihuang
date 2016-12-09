@@ -9,9 +9,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
+import java.util.*;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
 
 /**
  * 公共方法
@@ -111,4 +114,80 @@ public class CommonAPI {
     }
 
     public static ObjectMapper mapper = new ObjectMapper();
+
+    /**
+     * 根据用户id列表取得用户信息列表
+     * @param userIds 用户id列表
+     * @param retrievedFieldsSet 返回字段列表
+     * @return 用户id与用户信息映射
+     * @throws Exception 异常
+     */
+    public static Map<Long, UserInfo> getUsersMapByIdList(Set<Long> userIds, Set<String> retrievedFieldsSet) throws Exception {
+        if (userIds == null || userIds.isEmpty()) {
+            return new HashMap<Long, UserInfo>();
+        } else {
+            Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+            int size = userIds.size();
+            switch (size) {
+                case 1 : query.field(UserInfo.fd_userId).equal(userIds.iterator().next()); break;
+                default: query.field(UserInfo.fd_userId).in(userIds);
+            }
+
+            /**
+             * 返回字段必须含有id和userId
+             */
+            retrievedFieldsSet.add(UserInfo.fd_id);
+            retrievedFieldsSet.add(UserInfo.fd_userId);
+            String[] retrievedFields = retrievedFieldsSet.toArray(new String[retrievedFieldsSet.size()]);
+            query.retrievedFields(true, retrievedFields);
+            try {
+                List<UserInfo> userInfos = query.asList();
+                if (userInfos == null)
+                    return new HashMap<Long, UserInfo>();
+                else
+                    return userInfos.stream().collect(Collectors.toMap(UserInfo::getUserId, Function.identity()));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw e;
+            }
+        }
+    }
+
+    /**
+     * 根据用户id列表取得用户信息列表
+     * @param userIds 用户id列表
+     * @param retrievedFieldsSet 返回字段列表
+     * @return 用户信息列表
+     * @throws Exception 异常
+     */
+    public static List<UserInfo> getUsersByIdList(Set<Long> userIds, Set<String> retrievedFieldsSet) throws Exception {
+        if (userIds == null || userIds.isEmpty()) {
+            return new ArrayList<UserInfo>();
+        } else {
+            Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
+            int size = userIds.size();
+            switch (size) {
+                case 1 : query.field(UserInfo.fd_userId).equal(userIds.iterator().next()); break;
+                default: query.field(UserInfo.fd_userId).in(userIds);
+            }
+
+            /**
+             * 返回字段必须含有id和userId
+             */
+            retrievedFieldsSet.add(UserInfo.fd_id);
+            retrievedFieldsSet.add(UserInfo.fd_userId);
+            String[] retrievedFields = retrievedFieldsSet.toArray(new String[retrievedFieldsSet.size()]);
+            query.retrievedFields(true, retrievedFields);
+            try {
+                List<UserInfo> userInfos = query.asList();
+                if (userInfos == null)
+                    return new ArrayList<UserInfo>();
+                else
+                    return userInfos;
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw e;
+            }
+        }
+    }
 }

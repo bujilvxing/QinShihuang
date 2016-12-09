@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.model.im;
 
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
@@ -49,11 +50,9 @@ public class Post {
 	@Transient
 	public final static String fd_rating = "rating";
 	@Transient
-	public final static String fd_authorId = "authorId";
+	public final static String fd_authorId = "author.userId";
 	@Transient
-	public final static String fd_authorNickName = "authorNickName";
-	@Transient
-	public final static String fd_authorAvatar = "authorAvatar";
+	public final static String fd_author = "author";
 	@Transient
     public final static String fd_voteCnt = "voteCnt";
     @Transient
@@ -155,22 +154,17 @@ public class Post {
     /**
      * 作者的用户id
      */
-    private Long authorId;
-    
-    /**
-     * 作者昵称
-     */
-    private String authorNickName;
-
-    /**
-     * 作者头像
-     */
-    private ImageItem authorAvatar;
+    private UserInfo author;
 
     /**
      * 群组id
      */
     private Long chatgroupId;
+
+    /**
+     * 帖子状态
+     */
+    private Integer status;
 
     public ObjectId getId() {
         return id;
@@ -292,28 +286,12 @@ public class Post {
         this.rating = rating;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public UserInfo getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
-
-    public String getAuthorNickName() {
-        return authorNickName;
-    }
-
-    public void setAuthorNickName(String authorNickName) {
-        this.authorNickName = authorNickName;
-    }
-
-    public ImageItem getAuthorAvatar() {
-        return authorAvatar;
-    }
-
-    public void setAuthorAvatar(ImageItem authorAvatar) {
-        this.authorAvatar = authorAvatar;
+    public void setAuthor(UserInfo author) {
+        this.author = author;
     }
 
     public Integer getVoteCnt() {
@@ -330,5 +308,13 @@ public class Post {
 
     public void setChatgroupId(Long chatgroupId) {
         this.chatgroupId = chatgroupId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

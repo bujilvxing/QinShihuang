@@ -14,8 +14,6 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * 社交核心实现
@@ -95,44 +93,6 @@ public class SocialAPI {
     }
 
     /**
-     * 根据用户id列表取得用户信息列表
-     * @param userIds 用户id列表
-     * @param retrievedFieldsSet 返回字段列表
-     * @return 用户id与用户信息映射
-     * @throws Exception 异常
-     */
-    public static Map<Long, UserInfo> getUsersByIdList(Set<Long> userIds, Set<String> retrievedFieldsSet) throws Exception {
-        if (userIds == null || userIds.isEmpty()) {
-            return new HashMap<Long, UserInfo>();
-        } else {
-            Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
-            int size = userIds.size();
-            switch (size) {
-                case 1 : query.field(UserInfo.fd_userId).equal(userIds.iterator().next()); break;
-                default: query.field(UserInfo.fd_userId).in(userIds);
-            }
-
-            /**
-             * 返回字段必须含有id和userId
-             */
-            retrievedFieldsSet.add(UserInfo.fd_id);
-            retrievedFieldsSet.add(UserInfo.fd_userId);
-            String[] retrievedFields = retrievedFieldsSet.toArray(new String[retrievedFieldsSet.size()]);
-            query.retrievedFields(true, retrievedFields);
-            try {
-                List<UserInfo> userInfos = query.asList();
-                if (userInfos == null)
-                    return new HashMap<Long, UserInfo>();
-                else
-                    return userInfos.stream().collect(Collectors.toMap(UserInfo::getUserId, Function.identity()));
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw e;
-            }
-        }
-    }
-
-    /**
      * 取得好友列表1057
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -180,7 +140,7 @@ public class SocialAPI {
         retrievedFieldsSet.add(UserInfo.fd_avatar);
         Map<Long, UserInfo> userInfoMap = null;
         try {
-            userInfoMap = getUsersByIdList(contactIds, retrievedFieldsSet);
+            userInfoMap = CommonAPI.getUsersMapByIdList(contactIds, retrievedFieldsSet);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -364,7 +324,7 @@ public class SocialAPI {
         retrievedFieldsSet.add(UserInfo.fd_avatar);
         Map<Long, UserInfo> userInfoMap = null;
         try {
-            userInfoMap = getUsersByIdList(contactIds, retrievedFieldsSet);
+            userInfoMap = CommonAPI.getUsersMapByIdList(contactIds, retrievedFieldsSet);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -436,7 +396,7 @@ public class SocialAPI {
         retrievedFieldsSet.add(UserInfo.fd_avatar);
         Map<Long, UserInfo> userInfoMap = null;
         try {
-            userInfoMap = getUsersByIdList(contactIds, retrievedFieldsSet);
+            userInfoMap = CommonAPI.getUsersMapByIdList(contactIds, retrievedFieldsSet);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

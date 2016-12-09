@@ -1,13 +1,13 @@
 package com.bjlx.QinShihuang.core.formatter.im;
 
-import java.io.IOException;
-import java.util.List;
-
 import com.bjlx.QinShihuang.model.im.Chatgroup;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 群组序列化
@@ -44,7 +44,7 @@ public class ChatgroupSerializer extends JsonSerializer<Chatgroup> {
                 gen.writeEndArray();
             }
 
-            gen.writeNumberField(Chatgroup.fd_creator, chatgroup.getCreator() == null ? 0L : chatgroup.getCreator());
+            gen.writeNumberField(Chatgroup.fd_creatorId, chatgroup.getCreatorId() == null ? 0L : chatgroup.getCreatorId());
 
             List<Long> admins = chatgroup.getAdmins();
             if (admins != null && (!admins.isEmpty())) {
