@@ -213,4 +213,10 @@ public class Constant {
      */
     public final static int TRAVELNOTE_NORMAL = 1;
     public final static int TRAVELNOTE_UNENABLE = 2;
+
+    /**
+     * 帖子状态
+     */
+    public final static int POST_NORMAL = 1;
+    public final static int POST_UNENABLE = 2;
 }

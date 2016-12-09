@@ -3,6 +3,7 @@ package com.bjlx.QinShihuang.core;
 import com.bjlx.QinShihuang.model.account.Credential;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.im.Chatgroup;
+import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.MorphiaFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +27,16 @@ public class CommonAPI {
      * 取得数据库对象
      */
     private static Datastore ds = MorphiaFactory.getInstance();
+
+    /**
+     * 默认用户头像
+     */
+    private static ImageItem defaultUserAvatar = new ImageItem("default_user_avatar.jpg", "qiniu-bujilvxing", "http://oe7hx2tam.bkt.clouddn.com/default_user_avatar.jpg", 100, 100, "jpg");
+
+    /**
+     * 系统用户
+     */
+    public final static UserInfo systemUser = new UserInfo(0L, "system-bjlx", defaultUserAvatar);
 
     /**
      * 不羁旅行令牌是否合法

@@ -57,6 +57,8 @@ public class Post {
     public final static String fd_voteCnt = "voteCnt";
     @Transient
     public final static String fd_chatgroupId = "chatgroupId";
+    @Transient
+    public final static String fd_status = "status";
 
 	/**
 	 * 主键
@@ -316,5 +318,23 @@ public class Post {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Post() {
+
+    }
+
+    public Post(String title, ImageItem cover, String summary, String content, UserInfo author, Long chatgroupId) {
+        this.id = new ObjectId();
+        Long currentTime = System.currentTimeMillis();
+        this.publishTime = currentTime;
+        this.updateTime = currentTime;
+        this.status = 1;
+        this.title = title;
+        this.cover = cover;
+        this.summary = summary;
+        this.content = content;
+        this.author = author;
+        this.chatgroupId = chatgroupId;
     }
 }

@@ -625,7 +625,14 @@ public class UserInfo {
 	public UserInfo() {
 		this.id = new ObjectId();
 	}
-	
+
+	public UserInfo(Long userId, String nickName, ImageItem avatar) {
+		super();
+		this.userId = userId;
+		this.nickName = nickName;
+		this.avatar = avatar;
+	}
+
 	public UserInfo(Long userId, PhoneNumber tel, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
 		super();
 		this.id = new ObjectId();

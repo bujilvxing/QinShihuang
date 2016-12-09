@@ -3,6 +3,7 @@ package com.bjlx.QinShihuang.requestmodel;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ public class PostReq {
     /**
      * 标题
      */
+    @NotNull
     private String title;
 
     /**
@@ -35,6 +37,7 @@ public class PostReq {
     /**
      * 帖子详情
      */
+    @NotNull
     private String content;
 
     public String getTitle() {

@@ -174,17 +174,18 @@ public class ChatgroupController {
 
     /**
      * 更新聊天组帖子1106
+     * @param chatgroupId 聊天组id
      * @param postId 帖子id
      * @param postReq 帖子参数
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 帖子信息
      */
-    @RequestMapping(value = "/app/posts/{postId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updateChatgroupPost(@PathVariable("postId") String postId, @RequestBody PostReq postReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+    @RequestMapping(value = "/app/chatgroups/{chatgroupId:\\d+}/posts/{postId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    public @ResponseBody String updateChatgroupPost(@PathVariable("chatgroupId") Long chatgroupId, @PathVariable("postId") String postId, @RequestBody PostReq postReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         // 参数校验
         try {
-            return ChatgroupAPI.updateChatgroupPost(postId, postReq, userId, key);
+            return ChatgroupAPI.updateChatgroupPost(chatgroupId, postId, postReq, userId, key);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
