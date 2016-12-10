@@ -219,4 +219,10 @@ public class Constant {
      */
     public final static int POST_NORMAL = 1;
     public final static int POST_UNENABLE = 2;
+
+    /**
+     * 足迹状态
+     */
+    public final static int TRACE_NORMAL = 1;
+    public final static int TRACE_UNENABLE = 2;
 }

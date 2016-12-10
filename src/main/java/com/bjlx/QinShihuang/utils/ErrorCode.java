@@ -270,7 +270,17 @@ public enum ErrorCode {
 	 */
 	// 发布足迹
 	UNLOGIN_1040(104001, "用户未登录"),
+	USER_NOT_EXIST_1040(104002, "用户不存在"),
+	ORIGINUSERID_NULL_1040(104003, "源用户id不可为空"),
+	ORIGINNICKNAME_NULL_1040(104004, "源用户昵称不可为空"),
+	ORIGINAVATAR_NULL_1040(104005, "源用户头像不可为空"),
 
+	// 更新足迹
+	UNLOGIN_1041(104101, "用户未登录"),
+	TRACE_NOT_EXIST_1041(104102, "足迹不存在"),
+
+	// 足迹详情
+	TRACE_NOT_EXIST_1044(104401, "足迹不存在"),
 
 
 	/**

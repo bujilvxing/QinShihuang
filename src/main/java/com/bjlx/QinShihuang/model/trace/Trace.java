@@ -501,4 +501,18 @@ public class Trace {
 		this.originNickName = originNickName;
 		this.originAvatar = originAvatar;
 	}
+
+	public Trace(Long userId, String nickName, ImageItem avatar, Long traceTime, String title, Double lat, Double lng) {
+		this.id = new ObjectId();
+		this.userId = userId;
+		this.nickName = nickName;
+		this.avatar = avatar;
+		this.traceTime = traceTime;
+		this.title = title;
+		this.lat = lat;
+		this.lng = lng;
+		this.createTime = System.currentTimeMillis();
+		this.status = 1;
+		this.updateTime = this.createTime;
+	}
 }

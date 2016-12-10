@@ -1,14 +1,11 @@
 package com.bjlx.QinShihuang.requestmodel;
 
-import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.misc.Audio;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
-import com.bjlx.QinShihuang.model.poi.Hotel;
-import com.bjlx.QinShihuang.model.poi.Restaurant;
-import com.bjlx.QinShihuang.model.poi.Shopping;
-import com.bjlx.QinShihuang.model.poi.Viewspot;
-import com.sun.prism.image.ViewPort;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -16,81 +13,97 @@ import java.util.List;
  * Created by zhouyb on 2016/11/20.
  */
 public class TraceReq {
-    /**
-     * 昵称
-     */
-    private String nickName;
 
     /**
-     * 时间
+     * 足迹的时间。默认与创建时间是一致的。但是也有可能与创建时间不同，也许是事后创建的足迹
      */
+    @NotNull
     private Long traceTime;
+
     /**
-     * 封面
+     * 封面图
      */
     private ImageItem cover;
 
     /**
-     * 图片
+     * 图片列表
      */
     private List<ImageItem> images;
-    /**
-     * 音频
-     */
-    private Audio audio;
-    /**
-     * 状态
-     */
-    private int status;
-    /**
-     * 描述
-     */
-    private String desc;
-    /**
-     * 餐厅
-     */
-    private Restaurant restaurant;
 
     /**
-     * 宾馆
+     * 语音描述
      */
-    private Hotel hotel;
+    private Audio audio;
+
     /**
-     * 景点
+     * 标题
      */
-    private Viewspot viewspot;
+    @NotNull
+    private String title;
+
     /**
-     * 活动
+     * 文字描述
      */
-    private Activity activity;
+    private String desc;
+
     /**
-     * 购物
+     * 足迹所参加的活动
      */
-    private Shopping shopping;
+    private ActivityBasicReq activity;
+
     /**
-     * originId
+     * 足迹所在的景点
+     */
+    private ViewspotReq viewspot;
+
+    /**
+     * 足迹所在的餐馆
+     */
+    private RestaurantReq restaurant;
+
+    /**
+     * 足迹所在的购物
+     */
+    private ShoppingReq shopping;
+
+    /**
+     * 足迹所在的酒店
+     */
+    private HotelReq hotel;
+
+    /**
+     * 源足迹id
      */
     private String originId;
+
     /**
-     * originUserId
+     * 足迹原创用户id
      */
-    private int originUserId;
+    private Long originUserId;
+
     /**
-     * originNickName
+     * 足迹原创用户昵称
      */
     private String originNickName;
+
     /**
-     * originAvatar
+     * 足迹原创用户头像
      */
     private ImageItem originAvatar;
+
     /**
-     * lat
+     * 经度
      */
-    private double lat;
+    @Min(value = -90)
+    @Max(value = 90)
+    private Double lat;
+
     /**
-     * lng
+     * 纬度
      */
-    private double lng;
+    @Min(value = -180)
+    @Max(value = 180)
+    private Double lng;
 
     public Long getTraceTime() {
         return traceTime;
@@ -124,12 +137,12 @@ public class TraceReq {
         this.audio = audio;
     }
 
-    public int getStatus() {
-        return status;
+    public String getTitle() {
+        return title;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDesc() {
@@ -140,44 +153,44 @@ public class TraceReq {
         this.desc = desc;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
-    }
-
-    public Viewspot getViewspot() {
-        return viewspot;
-    }
-
-    public void setViewspot(Viewspot viewspot) {
-        this.viewspot = viewspot;
-    }
-
-    public Activity getActivity() {
+    public ActivityBasicReq getActivity() {
         return activity;
     }
 
-    public void setActivity(Activity activity) {
+    public void setActivity(ActivityBasicReq activity) {
         this.activity = activity;
     }
 
-    public Shopping getShopping() {
+    public ViewspotReq getViewspot() {
+        return viewspot;
+    }
+
+    public void setViewspot(ViewspotReq viewspot) {
+        this.viewspot = viewspot;
+    }
+
+    public RestaurantReq getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(RestaurantReq restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public ShoppingReq getShopping() {
         return shopping;
     }
 
-    public void setShopping(Shopping shopping) {
+    public void setShopping(ShoppingReq shopping) {
         this.shopping = shopping;
+    }
+
+    public HotelReq getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(HotelReq hotel) {
+        this.hotel = hotel;
     }
 
     public String getOriginId() {
@@ -188,11 +201,11 @@ public class TraceReq {
         this.originId = originId;
     }
 
-    public int getOriginUserId() {
+    public Long getOriginUserId() {
         return originUserId;
     }
 
-    public void setOriginUserId(int originUserId) {
+    public void setOriginUserId(Long originUserId) {
         this.originUserId = originUserId;
     }
 
@@ -212,27 +225,19 @@ public class TraceReq {
         this.originAvatar = originAvatar;
     }
 
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public double getLng() {
+    public Double getLng() {
         return lng;
     }
 
-    public void setLng(double lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
 }

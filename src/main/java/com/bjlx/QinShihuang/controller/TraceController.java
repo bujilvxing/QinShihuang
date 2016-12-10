@@ -1,7 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.TraceAPI;
-import com.bjlx.QinShihuang.requestmodel.*;
+import com.bjlx.QinShihuang.requestmodel.TraceReq;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class TraceController {
 
     /**
-     * 添加足迹1040
+     * 发布足迹1040
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param traceReq 足迹参数
@@ -51,7 +51,7 @@ public class TraceController {
     }
 
     /**
-     * 删除足迹
+     * 删除足迹1042
      * @param traceId 足迹id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -68,7 +68,7 @@ public class TraceController {
     }
 
     /**
-     * 取得足迹列表
+     * 取得足迹列表1043
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 足迹列表
@@ -84,7 +84,7 @@ public class TraceController {
     }
 
     /**
-     * 取得足迹详情
+     * 取得足迹详情1044
      * @param traceId 足迹id
      * @return 足迹详情
      */
