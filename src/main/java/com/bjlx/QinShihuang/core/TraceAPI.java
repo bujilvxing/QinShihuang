@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.core;
 
+import com.bjlx.QinShihuang.core.formatter.trace.TraceBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.trace.TraceFormatter;
 import com.bjlx.QinShihuang.core.formatter.tripplan.TripPlanFormatter;
 import com.bjlx.QinShihuang.model.account.UserInfo;
@@ -9,10 +10,8 @@ import com.bjlx.QinShihuang.model.poi.Restaurant;
 import com.bjlx.QinShihuang.model.poi.Shopping;
 import com.bjlx.QinShihuang.model.poi.Viewspot;
 import com.bjlx.QinShihuang.model.trace.Trace;
-import com.bjlx.QinShihuang.model.tripplan.TripItem;
 import com.bjlx.QinShihuang.model.tripplan.TripPlan;
 import com.bjlx.QinShihuang.requestmodel.TraceReq;
-import com.bjlx.QinShihuang.requestmodel.TripItemReq;
 import com.bjlx.QinShihuang.utils.*;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
@@ -125,7 +124,7 @@ public class TraceAPI {
         try {
             if (!CommonAPI.checkKeyValid(userId, key))
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1041);
-            // 取得行程规划
+            // 取得足迹
             Query<Trace> query = ds.createQuery(Trace.class).field(Trace.fd_id).equal(new ObjectId(traceId)).field(Trace.fd_status).equal(Constant.TRACE_NORMAL);
             Trace trace = query.get();
             if(trace == null)
@@ -135,7 +134,7 @@ public class TraceAPI {
                 return QinShihuangResult.getResult(ErrorCode.FORBIDDEN);
 
             UpdateOperations<Trace> ops = ds.createUpdateOperations(Trace.class);
-            // 更新行程规划
+            // 更新足迹
             if(traceReq.getTitle() != null)
                 ops.set(Trace.fd_title, traceReq.getTitle());
             if(traceReq.getCover() != null)
@@ -202,18 +201,44 @@ public class TraceAPI {
      * @throws Exception 异常
      */
     public static String removeTrace(String traceId, Long userId, String key) throws Exception {
-        return null;
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key))
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1042);
+            Query<Trace> query = ds.createQuery(Trace.class).field(Trace.fd_id).equal(new ObjectId(traceId))
+                    .field(Trace.fd_userId).equal(userId).field(Trace.fd_status).equal(Constant.TRACE_NORMAL);
+            UpdateOperations<Trace> ops = ds.createUpdateOperations(Trace.class).set(Trace.fd_status, Constant.TRACE_UNENABLE);
+            ds.updateFirst(query, ops);
+            return QinShihuangResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     /**
-     * 取得足迹列表
+     * 取得用户足迹列表
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 足迹列表
      * @throws Exception 异常
      */
     public static String getTraces(Long userId, String key) throws Exception {
-        return null;
+        try {
+            if (!CommonAPI.checkKeyValid(userId, key))
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1043);
+            // 取得足迹
+            Query<Trace> query = ds.createQuery(Trace.class).field(Trace.fd_userId).equal(userId).field(TripPlan.fd_status).equal(Constant.TRIPPLAN_NORMAL)
+                    .retrievedFields(true, Trace.fd_id, Trace.fd_userId, Trace.fd_nickName, Trace.fd_avatar, Trace.fd_title,
+                            Trace.fd_cover, Trace.fd_audio, Trace.fd_originId, Trace.fd_originUserId, Trace.fd_originNickName, Trace.fd_originAvatar);
+            List<Trace> traces = query.asList();
+            if (traces == null || traces.isEmpty())
+                return QinShihuangResult.ok(TraceBasicFormatter.getMapper().valueToTree(new ArrayList<Trace>()));
+            else
+                return QinShihuangResult.ok(TraceBasicFormatter.getMapper().valueToTree(traces));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     /**
