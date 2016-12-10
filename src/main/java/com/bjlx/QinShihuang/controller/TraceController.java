@@ -68,13 +68,13 @@ public class TraceController {
     }
 
     /**
-     * 取得足迹列表1043
+     * 取得用户足迹列表1043
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 足迹列表
      */
-    @RequestMapping(value = "/app/traces", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getTraces(@RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
+    @RequestMapping(value = "/app/users/{userId:\\d+}/traces", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String getTraces(@PathVariable("userId") Long userId, @RequestHeader("key") String key) {
 
         try {
             return TraceAPI.getTraces(userId, key);
