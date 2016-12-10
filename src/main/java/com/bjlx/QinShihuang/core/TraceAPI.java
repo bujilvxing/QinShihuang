@@ -22,54 +22,68 @@ public class TraceAPI {
     private static Datastore ds = MorphiaFactory.getInstance();
 
     /**
-     * 添加收藏
+     * 添加足迹
      * @param userId 用户id
      * @param key 不羁旅行令牌
-     * @param traceReq
-     * @return 结果信息
+     * @param traceReq 足迹参数
+     * @return 足迹信息
      * @throws Exception 异常
      */
     public static String addTrace(Long userId, String key, TraceReq traceReq) throws Exception {
         try {
-            /*
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1077);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1040);
             }
-            */
-
-            Query<Trace> query = ds.createQuery(Trace.class)
-                    .field(Trace.fd_userId).equal(userId);
-            UpdateOperations<Trace> ops = ds.createUpdateOperations(Trace.class)
-                    .set(Trace.fd_id, new ObjectId())
-                    .set(Trace.fd_userId, userId)
-                    .set(Trace.fd_activity,traceReq.getActivity())
-                    .set(Trace.fd_audio,traceReq.getAudio())
-                    .set(Trace.fd_createTime, System.currentTimeMillis())
-                    .set(Trace.fd_desc, traceReq.getDesc())
-                    .set(Trace.fd_hotel, traceReq.getHotel())
-                    .set(Trace.fd_images, traceReq.getImages())
-                    .set(Trace.fd_lat, traceReq.getLat())
-                    .set(Trace.fd_lng, traceReq.getLng())
-                    .set(Trace.fd_nickName, traceReq.getNickName())
-                    .set(Trace.fd_originId, traceReq.getOriginId())
-                    .set(Trace.fd_originUserId, traceReq.getOriginUserId())
-                    .set(Trace.fd_originNickName, traceReq.getOriginNickName())
-                    .set(Trace.fd_originAvatar, traceReq.getOriginAvatar())
-                    .set(Trace.fd_restaurant, traceReq.getRestaurant())
-                    .set(Trace.fd_shopping, traceReq.getShopping())
-                    .set(Trace.fd_status, traceReq.getStatus())
-                    .set(Trace.fd_traceTime, traceReq.getTraceTime())
-                    .set(Trace.fd_viewspot, traceReq.getViewspot())
-                    ;
-            if(traceReq.getCover() != null)
-                ops.set(Trace.fd_cover, traceReq.getCover());
-            Trace trace = ds.findAndModify(query, ops, false, true);
-
+            Trace trace = new Trace();
             return QinShihuangResult.ok(TraceFormatter.getMapper().valueToTree(trace));
         } catch (Exception e) {
             throw e;
         }
     }
 
+    /**
+     * 更新足迹
+     * @param traceId 足迹id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @param traceReq 足迹参数
+     * @return 足迹信息
+     * @throws Exception 异常
+     */
+    public static String updateTrace(String traceId, Long userId, String key, TraceReq traceReq) throws Exception {
+        return null;
+    }
 
+    /**
+     * 删除足迹
+     * @param traceId 足迹id
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 结果
+     * @throws Exception 异常
+     */
+    public static String removeTrace(String traceId, Long userId, String key) throws Exception {
+        return null;
+    }
+
+    /**
+     * 取得足迹列表
+     * @param userId 用户id
+     * @param key 不羁旅行令牌
+     * @return 足迹列表
+     * @throws Exception 异常
+     */
+    public static String getTraces(Long userId, String key) throws Exception {
+        return null;
+    }
+
+    /**
+     * 取得足迹详情
+     * @param traceId 足迹id
+     * @return 足迹详情
+     * @throws Exception 异常
+     */
+    public static String getTrace(String traceId) throws Exception {
+        return null;
+    }
 }
