@@ -80,13 +80,13 @@ public class Activity {
      */
     @NotBlank
     @Id
-    private ObjectId id;
+    private ObjectId id=null;
 
     /**
      * 活动名称(标题)
      */
     @NotNull
-    private String title;
+    private String title=null;
 
     /**
      * 最大允许人数
@@ -386,6 +386,9 @@ public class Activity {
 
     public Boolean isFree() {
         return isFree;
+    }
+    public Activity() {
+
     }
 
     public Long getPublishTime() {
