@@ -81,7 +81,7 @@ public class Shopping {
 	 */
 	@NotBlank
 	@Id
-	private ObjectId id ;
+	private ObjectId id;
 	
 	/**
 	 * 经度

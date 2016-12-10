@@ -478,6 +478,9 @@ public class Trace {
 		this.voteCnt = voteCnt;
 	}
 
+	public Trace() {
+	}
+
 	public Trace(Long userId, String nickName, ImageItem avatar) {
 		super();
 		this.id = new ObjectId();
@@ -498,8 +501,4 @@ public class Trace {
 		this.originNickName = originNickName;
 		this.originAvatar = originAvatar;
 	}
-	public Trace() {
-	}
-	
-	
 }

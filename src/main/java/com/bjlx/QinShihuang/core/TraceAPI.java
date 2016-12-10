@@ -1,54 +1,14 @@
 package com.bjlx.QinShihuang.core;
 
-import com.bjlx.QinShihuang.core.formatter.account.FavoriteFormatter;
-import com.bjlx.QinShihuang.core.formatter.account.UserInfoFormatter;
-import com.bjlx.QinShihuang.core.formatter.account.VoteFormatter;
-import com.bjlx.QinShihuang.core.formatter.activity.ActivityBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.guide.GuideBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.im.ChatgroupBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.marketplace.CommodityBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.misc.TravelNoteBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.poi.HotelBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.poi.RestaurantBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.poi.ShoppingBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.poi.ViewspotBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.quora.QuestionBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.timeline.MomentBasicFormatter;
-import com.bjlx.QinShihuang.core.formatter.trace.TraceBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.trace.TraceFormatter;
-import com.bjlx.QinShihuang.core.formatter.tripplan.TripPlanBasicFormatter;
-import com.bjlx.QinShihuang.model.account.Favorite;
-import com.bjlx.QinShihuang.model.account.PhoneNumber;
-import com.bjlx.QinShihuang.model.account.UserInfo;
-import com.bjlx.QinShihuang.model.account.Vote;
-import com.bjlx.QinShihuang.model.activity.Activity;
-import com.bjlx.QinShihuang.model.guide.Guide;
-import com.bjlx.QinShihuang.model.im.Chatgroup;
-import com.bjlx.QinShihuang.model.im.Post;
-import com.bjlx.QinShihuang.model.marketplace.Commodity;
-import com.bjlx.QinShihuang.model.misc.Application;
-import com.bjlx.QinShihuang.model.misc.Feedback;
-import com.bjlx.QinShihuang.model.misc.ImageItem;
-import com.bjlx.QinShihuang.model.misc.TravelNote;
-import com.bjlx.QinShihuang.model.poi.Hotel;
-import com.bjlx.QinShihuang.model.poi.Restaurant;
-import com.bjlx.QinShihuang.model.poi.Shopping;
-import com.bjlx.QinShihuang.model.poi.Viewspot;
-import com.bjlx.QinShihuang.model.quora.Answer;
-import com.bjlx.QinShihuang.model.quora.Question;
-import com.bjlx.QinShihuang.model.timeline.Moment;
 import com.bjlx.QinShihuang.model.trace.Trace;
-import com.bjlx.QinShihuang.model.tripplan.TripPlan;
 import com.bjlx.QinShihuang.requestmodel.TraceReq;
 import com.bjlx.QinShihuang.utils.*;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 其他控制器
@@ -60,8 +20,6 @@ public class TraceAPI {
      * 取得数据库对象
      */
     private static Datastore ds = MorphiaFactory.getInstance();
-
-
 
     /**
      * 添加收藏

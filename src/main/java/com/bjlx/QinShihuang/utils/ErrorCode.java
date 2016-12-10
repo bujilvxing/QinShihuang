@@ -266,6 +266,11 @@ public enum ErrorCode {
 	UNLOGIN_1080(108002, "用户未登录"),
 
 	/**
+	 * 足迹
+	 */
+	// 发布足迹
+
+	/**
 	 * 行程规划
 	 */
 	// 发布行程规划
@@ -506,8 +511,7 @@ public enum ErrorCode {
 
 	// 全站搜索
 	QUERY_NULL_1102(110201, "query不可为空"),
-	// 足迹
-	NICKNAME_NULL_1040(104001, "昵称不可为空"),
+
 	;
 
 
