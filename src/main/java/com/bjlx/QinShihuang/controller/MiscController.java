@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class MiscController {
 
     /**
-     * 申请商家1012
+     * 申请商家1013
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param applySellerReq 申请参数
@@ -26,7 +26,7 @@ public class MiscController {
     @RequestMapping(value = "/app/misc/sellers", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String applySeller(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody ApplySellerReq applySellerReq) {
         if(applySellerReq.getTel() == null) {
-            return QinShihuangResult.getResult(ErrorCode.TEL_NULL_1012);
+            return QinShihuangResult.getResult(ErrorCode.TEL_NULL_1013);
         }
         if(CommonUtil.isTelLegal(applySellerReq.getTel())) {
             try {
@@ -35,12 +35,12 @@ public class MiscController {
                 return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
-            return QinShihuangResult.getResult(ErrorCode.TEL_FORMAT_1012);
+            return QinShihuangResult.getResult(ErrorCode.TEL_FORMAT_1013);
         }
     }
 
     /**
-     * 用户反馈1013
+     * 用户反馈1014
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param feedbackReq 反馈参数信息
@@ -49,7 +49,7 @@ public class MiscController {
     @RequestMapping(value = "/app/misc/feedback", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String feedback(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody FeedbackReq feedbackReq) {
         if(feedbackReq.getContent() == null) {
-            return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1013);
+            return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1014);
         }
 
         try {

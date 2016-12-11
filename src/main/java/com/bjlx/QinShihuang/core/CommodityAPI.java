@@ -30,7 +30,7 @@ public class CommodityAPI {
         try {
             Commodity commodity = query.get();
             if(commodity == null) {
-                return QinShihuangResult.getResult(ErrorCode.COMMODITY_NOT_EXIST_1017);
+                return QinShihuangResult.getResult(ErrorCode.COMMODITY_NOT_EXIST_1018);
             } else {
                 return QinShihuangResult.ok(CommodityFormatter.getMapper().valueToTree(commodity));
             }

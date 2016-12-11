@@ -371,7 +371,7 @@ public class AccountController {
     }
 
     /**
-     * 绑定手机号, 接口编码1011
+     * 绑定邮箱, 接口编码1012
      * @param bindEmailReq 参数信息
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -381,11 +381,11 @@ public class AccountController {
     public @ResponseBody String bindEmail(@RequestBody BindEmailReq bindEmailReq, @PathVariable("userId") Long userId, @RequestHeader("key") String key) {
         // 检验参数
         if(bindEmailReq.getEmail() == null) {
-            return QinShihuangResult.getResult(ErrorCode.EMAIL_NULL_1103);
+            return QinShihuangResult.getResult(ErrorCode.EMAIL_NULL_1012);
         }
 
         if(bindEmailReq.getToken() == null) {
-            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1103);
+            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1012);
         }
         if(CommonUtil.isEmail(bindEmailReq.getEmail())) {
             try {
@@ -394,7 +394,7 @@ public class AccountController {
                 return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
-            return QinShihuangResult.getResult(ErrorCode.EMAIL_FORMAT_1103);
+            return QinShihuangResult.getResult(ErrorCode.EMAIL_FORMAT_1012);
         }
     }
 }

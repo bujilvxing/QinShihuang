@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ColumnController {
 
     /**
-     * 取得专栏1014
+     * 取得专栏1015
      * @return 专栏列表
      */
     @RequestMapping(value = "/app/misc/columns",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
@@ -29,7 +29,7 @@ public class ColumnController {
     }
 
     /**
-     * 取得首页1015
+     * 取得首页1016
      * @return banner列表
      */
     @RequestMapping(value = "/app/misc/banners",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
@@ -42,7 +42,7 @@ public class ColumnController {
     }
 
     /**
-     * 取得商品列表(特产等)1016
+     * 取得商品列表(特产等)1017
      * @return 取得商品列表(特产等)
      */
     @RequestMapping(value = "/app/marketplace/commodities",method = RequestMethod.GET, produces = "application/json;charset=utf-8")
@@ -55,7 +55,7 @@ public class ColumnController {
     }
 
     /**
-     * 取得首页攻略列表1018
+     * 取得首页攻略列表1019
      * @return 取得首页攻略列表
      */
     @RequestMapping(value = "/app/columnguides",method = RequestMethod.GET,produces = "application/json;charset=utf-8")

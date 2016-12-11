@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CommodityController {
 
     /**
-     * 取得商品详情(特产等)1017
+     * 取得商品详情(特产等)1018
      * @param commodityId 商品id
      * @return 商品详情信息
      */

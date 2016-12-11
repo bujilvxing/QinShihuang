@@ -72,7 +72,7 @@ public class MiscAPI {
     public static String applySeller(Long userId, String key, String tel) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1012);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1013);
             }
 
             Query<Application> query = ds.createQuery(Application.class).field(Application.fd_number).equal(tel);
@@ -260,7 +260,7 @@ public class MiscAPI {
     public static String feedback(Long userId, String key, String content, String origin) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1013);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1014);
             }
             Feedback feedback = new Feedback(userId, content, System.currentTimeMillis(), origin);
             ds.save(feedback);

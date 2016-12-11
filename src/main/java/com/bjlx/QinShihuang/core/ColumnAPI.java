@@ -39,7 +39,7 @@ public class ColumnAPI {
         try{
             result = query.asList();
             if (result == null) {
-                return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_1014);
+                return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_1015);
             } else {
                 return QinShihuangResult.ok(ColumnFormatter.getMapper().valueToTree(result));
             }
@@ -60,7 +60,7 @@ public class ColumnAPI {
         try{
             result = query.asList();
             if (result==null) {
-                return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_1015);
+                return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_1016);
             } else {
                 return QinShihuangResult.ok(ColumnFormatter.getMapper().valueToTree(result));
             }
@@ -83,17 +83,17 @@ public class ColumnAPI {
         try {
             columnCommodities = query.asList();
             if(columnCommodities == null) {
-                return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_COMMODITY_1016);
+                return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_COMMODITY_1017);
             } else {
                 // 将每个模块的商品信息查询出来
                 for(ColumnCommodity columnCommodity : columnCommodities) {
                     if(columnCommodity.getCommodityIds() == null)
-                        return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_COMMODITY_MODULE_1016, String.format("%s模块数据为空", columnCommodity.getCategory()));
+                        return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_COMMODITY_MODULE_1017, String.format("%s模块数据为空", columnCommodity.getCategory()));
                     else {
                         Query<Commodity> queryCommodity = ds.createQuery(Commodity.class).field(Commodity.fd_id).in(columnCommodity.getCommodityIds());
                         List<Commodity> commodities = queryCommodity.asList();
                         if(commodities == null) {
-                            return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_COMMODITY_MODULE_1016, String.format("%s模块数据为空", columnCommodity.getCategory()));
+                            return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_COMMODITY_MODULE_1017, String.format("%s模块数据为空", columnCommodity.getCategory()));
                         } else {
                             columnCommodity.setCommodities(commodities);
                         }
@@ -118,15 +118,15 @@ public class ColumnAPI {
         try {
             columnGuide = query.get();
             if (columnGuide == null){
-                return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_GUIDE_1018);
+                return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_GUIDE_1019);
             } else {
                 if(columnGuide.getGuideIds() == null || columnGuide.getGuideIds().isEmpty()) {
-                    return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_GUIDE_1018);
+                    return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_GUIDE_1019);
                 } else {
                     Query<Guide> queryGuide = ds.createQuery(Guide.class).field(Guide.fd_id).in(columnGuide.getGuideIds());
                     List<Guide> guides = queryGuide.asList();
                     if (guides == null) {
-                        return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_GUIDE_1018);
+                        return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_GUIDE_1019);
                     } else {
                         columnGuide.setGuides(guides);
                     }

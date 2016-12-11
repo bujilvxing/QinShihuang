@@ -125,43 +125,43 @@ public enum ErrorCode {
 	TOKEN_INVALID_1011(101106, "令牌不合法"),
 
 	// 绑定邮箱号
-	EMAIL_NULL_1103(110301, "参数email为空"),
-	TOKEN_NULL_1103(110302, "参数token为空"),
-	EMAIL_FORMAT_1103(110303, "邮箱号格式不正确"),
-	UNLOGIN_1103(110304, "用户未登录"),
-	EMAIL_EXIST_1103(110305, "邮箱号已存在"),
-	TOKEN_INVALID_1103(110306, "令牌不合法"),
+	EMAIL_NULL_1012(101201, "参数email为空"),
+	TOKEN_NULL_1012(101202, "参数token为空"),
+	EMAIL_FORMAT_1012(101203, "邮箱号格式不正确"),
+	UNLOGIN_1012(101204, "用户未登录"),
+	EMAIL_EXIST_1012(101205, "邮箱号已存在"),
+	TOKEN_INVALID_1012(101206, "令牌不合法"),
 
 	/**
 	 * 其他模块
 	 */
 	// 申请商家
-	TEL_NULL_1012(101201, "参数tel为空"),
-	TEL_FORMAT_1012(101202, "手机号格式不正确"),
-	UNLOGIN_1012(101203, "用户未登录"),
+	TEL_NULL_1013(101301, "参数tel为空"),
+	TEL_FORMAT_1013(101302, "手机号格式不正确"),
+	UNLOGIN_1013(101303, "用户未登录"),
 
 	// 用户反馈
-	CONTENT_NULL_1013(101301, "参数content为空"),
-	UNLOGIN_1013(101302, "用户未登录"),
+	CONTENT_NULL_1014(101401, "参数content为空"),
+	UNLOGIN_1014(101402, "用户未登录"),
 
 	/**
 	 * 首页模块
 	 */
 	// 取得专栏列表
-	EMPTY_COLUMN_1014(101401, "运营专栏数据为空"),
+	EMPTY_COLUMN_1015(101501, "运营专栏数据为空"),
 
 	// 取得专栏列表
-	EMPTY_COLUMN_1015(101501, "banner数据为空"),
+	EMPTY_COLUMN_1016(101601, "banner数据为空"),
 
 	// 取得首页商品列表(特产等)
-	EMPTY_COLUMN_COMMODITY_1016(101601, "首页商品数据为空"),
-	EMPTY_COLUMN_COMMODITY_MODULE_1016(101602, "首页商品数据为空"),
+	EMPTY_COLUMN_COMMODITY_1017(101701, "首页商品数据为空"),
+	EMPTY_COLUMN_COMMODITY_MODULE_1017(101702, "首页商品数据为空"),
 
 	// 根据id取得商品详情
-	COMMODITY_NOT_EXIST_1017(101701, "商品不存在"),
+	COMMODITY_NOT_EXIST_1018(101801, "商品不存在"),
 
 	// 取得首页攻略列表
-	EMPTY_COLUMN_GUIDE_1018(101801, "攻略数据为空"),
+	EMPTY_COLUMN_GUIDE_1019(101901, "攻略数据为空"),
 
 	/**
 	 * 攻略
