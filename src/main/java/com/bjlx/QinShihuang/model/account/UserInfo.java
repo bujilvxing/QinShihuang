@@ -185,7 +185,6 @@ public class UserInfo {
 	 * 邀请码。每个人有全局唯一的一个邀请码，用于分享平台内容时奖励
 	 */
 	@NotBlank
-	@Indexed(options = @IndexOptions(unique = true))
 	private String promotionCode;
 
 	/**

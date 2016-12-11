@@ -143,10 +143,10 @@
 	<dependency>
 		<groupId>org.mongodb</groupId>
 		<artifactId>mongo-java-driver</artifactId>
-		<version>3.1.1</version>
+		<version>3.4.0</version>
 	</dependency>
-	
-	<!-- morphia -->
+
+  	<!-- morphia -->
 	<!-- https://mvnrepository.com/artifact/org.mongodb.morphia/morphia -->
 	<dependency>
 	    <groupId>org.mongodb.morphia</groupId>

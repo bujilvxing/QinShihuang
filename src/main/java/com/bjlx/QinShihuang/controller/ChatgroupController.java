@@ -111,7 +111,7 @@ public class ChatgroupController {
      * @param key 不羁旅行令牌
      * @return 聊天组信息
      */
-    @RequestMapping(value = "/app/chatgroups/{chatgroupId:\\d+}/members", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/chatgroups/{chatgroupId:\\d+}/members", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String removeChatgroupMember(@PathVariable("chatgroupId") Long chatgroupId, @RequestBody MemberReq memberReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         // 参数校验
         try {

@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.model.account;
 
 import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.IndexOptions;
 import org.mongodb.morphia.annotations.Indexed;
 import org.mongodb.morphia.annotations.Transient;
 
@@ -32,8 +33,7 @@ public class OAuthInfo {
     /**
      * 用户在第三方账号体系中的id
      */
-	@Indexed
-    @NotNull
+	@NotNull
     private String oauthId;
 
     /**
