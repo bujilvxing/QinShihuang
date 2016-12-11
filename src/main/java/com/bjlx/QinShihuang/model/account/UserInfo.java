@@ -15,6 +15,8 @@ import org.mongodb.morphia.annotations.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -645,6 +647,7 @@ public class UserInfo {
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
 		this.moment = new Conversation(id, id.toString(), Constant.GROUP_CHAT);
+		this.roles = Arrays.asList(1);
 	}
 	
 	public UserInfo(Long userId, String email, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
@@ -660,6 +663,7 @@ public class UserInfo {
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
 		this.moment = new Conversation(id, id.toString(), Constant.GROUP_CHAT);
+		this.roles = Arrays.asList(1);
 	}
 
 	public UserInfo(Long userId, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
@@ -674,5 +678,6 @@ public class UserInfo {
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
 		this.moment = new Conversation(id, id.toString(), Constant.GROUP_CHAT);
+		this.roles = Arrays.asList(1);
 	}
 }

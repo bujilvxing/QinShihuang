@@ -676,7 +676,7 @@ public class AccountAPI {
     			return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1008);
     		} else {
     			// 用户是否登录
-    			if(!credential.getSecretKey().getKey().equals(key))
+    			if(credential.getSecretKey() == null || credential.getSecretKey().getKey() == null || !credential.getSecretKey().getKey().equals(key))
     				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1008);
     			String salt = credential.getSalt();
     			byte[] bytes = MessageDigest.getInstance("SHA-256").digest((salt + oldPwd).getBytes());

@@ -97,7 +97,7 @@ public enum ErrorCode {
 	TOKEN_NULL_1007(100703, "参数令牌为空"),
 	ACCOUNT_FORMAT_1007(100704, "账户格式不正确"),
 	USER_NOT_EXIST_1007(100705, "用户不存在"),
-	TOKEN_INVALID_1007(100706, "参数令牌为空"),
+	TOKEN_INVALID_1007(100706, "参数令牌不合法"),
 	
 	// 修改密码
 	OLD_PWD_NULL_1008(100801, "参数旧密码为空"),
