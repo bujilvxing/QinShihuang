@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PoiController {
 
     /**
-     * 取得宾馆列表1020
+     * 取得宾馆列表1021
      * @param offset 从第几个开始取
      * @param limit 取多少个
      * @return 宾馆列表
@@ -34,7 +34,7 @@ public class PoiController {
     }
 
     /**
-     * 取得宾馆详情1021
+     * 取得宾馆详情1022
      * @param hotelId 宾馆id
      * @return 宾馆详情
      */
@@ -48,7 +48,7 @@ public class PoiController {
     }
 
     /**
-     * 取得目的地列表1022
+     * 取得目的地列表1023
      * @param offset 从第几个开始取
      * @param limit 取多少个
      * @return 目的地列表
@@ -65,7 +65,7 @@ public class PoiController {
     }
 
     /**
-     * 取得目的地详情1023
+     * 取得目的地详情1024
      * @param localityId 目的地id
      * @return 目的地详情
      */
@@ -79,7 +79,7 @@ public class PoiController {
     }
 
     /**
-     * 取得景点列表1024
+     * 取得景点列表1025
      * @param offset 从第几个开始取
      * @param limit 取多少个
      * @return 景点列表
@@ -96,7 +96,7 @@ public class PoiController {
     }
 
     /**
-     * 取得景点详情1025
+     * 取得景点详情1026
      * @param viewspotId 景点id
      * @return 景点详情
      */
@@ -110,7 +110,7 @@ public class PoiController {
     }
 
     /**
-     * 取得美食列表1026
+     * 取得美食列表1027
      * @param offset 从第几个开始取
      * @param limit 取多少个
      * @return 美食列表
@@ -127,7 +127,7 @@ public class PoiController {
     }
 
     /**
-     * 取得美食详情1027
+     * 取得美食详情1028
      * @param restaurantId 美食id
      * @return 美食详情
      */
@@ -141,7 +141,7 @@ public class PoiController {
     }
 
     /**
-     * 取得购物列表1028
+     * 取得购物列表1029
      * @param offset 从第几个开始取
      * @param limit 取多少个
      * @return 购物列表
@@ -158,7 +158,7 @@ public class PoiController {
     }
 
     /**
-     * 取得购物详情1029
+     * 取得购物详情1030
      * @param shoppingId 购物id
      * @return 购物详情
      */

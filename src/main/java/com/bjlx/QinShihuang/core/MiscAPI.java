@@ -118,12 +118,12 @@ public class MiscAPI {
     public static String addTravelNote(TravelNoteReq travelNoteReq, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1034);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1044);
             }
 
             UserInfo author = CommonAPI.getUserBasicById(userId);
             if(author == null)
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1034);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1044);
             TravelNote travelNote = new TravelNote(travelNoteReq.getCover(), travelNoteReq.getImages(), travelNoteReq.getTitle(), author, travelNoteReq.getTravelTime(), travelNoteReq.getSummary() == null ? "" : travelNoteReq.getTitle());
             if(travelNoteReq.getContents() != null && !travelNoteReq.getContents().isEmpty())
                 travelNote.setContents(travelNoteReq.getContents());
@@ -147,7 +147,7 @@ public class MiscAPI {
     public static String updateTravelNote(String travelNoteId, TravelNoteReq travelNoteReq, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1035);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1045);
             }
 
             Query<TravelNote> query = ds.createQuery(TravelNote.class).field(TravelNote.fd_id).equal(new ObjectId(travelNoteId)).field(TravelNote.fd_authorId).equal(userId).field(TravelNote.fd_status).equal(Constant.TRAVELNOTE_NORMAL);
@@ -166,7 +166,7 @@ public class MiscAPI {
                 ops.set(TravelNote.fd_travelTime, travelNoteReq.getTravelTime());
             TravelNote travelNote = ds.findAndModify(query, ops, false);
             if(travelNote == null)
-                return QinShihuangResult.getResult(ErrorCode.TRAVELNOTE_NOT_EXIST_1035);
+                return QinShihuangResult.getResult(ErrorCode.TRAVELNOTE_NOT_EXIST_1045);
             else
                 return QinShihuangResult.ok(TravelNoteFormatter.getMapper().valueToTree(travelNote));
         } catch (Exception e) {
@@ -186,7 +186,7 @@ public class MiscAPI {
             Query<TravelNote> query = ds.createQuery(TravelNote.class).field(TravelNote.fd_id).equal(new ObjectId(travelNoteId)).field(TravelNote.fd_status).equal(Constant.TRAVELNOTE_NORMAL);
             TravelNote travelNote = query.get();
             if(travelNote == null)
-                return QinShihuangResult.getResult(ErrorCode.TRAVELNOTE_NOT_EXIST_1036);
+                return QinShihuangResult.getResult(ErrorCode.TRAVELNOTE_NOT_EXIST_1046);
             else
                 return QinShihuangResult.ok(TravelNoteBasicFormatter.getMapper().valueToTree(travelNote));
         } catch (Exception e) {
@@ -206,7 +206,7 @@ public class MiscAPI {
     public static String removeTravelNote(String travelNoteId, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1037);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1047);
             }
 
             Query<TravelNote> query = ds.createQuery(TravelNote.class).field(TravelNote.fd_id).equal(new ObjectId(travelNoteId)).field(TravelNote.fd_authorId).equal(userId)
@@ -232,7 +232,7 @@ public class MiscAPI {
     public static String getUserTravelNotes(Long userId, String key, Integer offset, Integer limit) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1105);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1048);
             }
 
             Query<TravelNote> query = ds.createQuery(TravelNote.class).field(TravelNote.fd_authorId).equal(userId)
@@ -281,7 +281,7 @@ public class MiscAPI {
     public static String searchUser(Long userId, String key, String query) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1100);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1107);
             }
             Query<UserInfo> queryUser = ds.createQuery(UserInfo.class).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
 
@@ -290,7 +290,7 @@ public class MiscAPI {
                 if(userInfo != null)
                     return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
                 else
-                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1100);
+                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1107);
             }
 
             if(CommonUtil.isTelLegal(query)) {
@@ -305,9 +305,9 @@ public class MiscAPI {
                 if(userInfo != null)
                     return QinShihuangResult.ok(UserInfoFormatter.getMapper().valueToTree(userInfo));
                 else
-                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1100);
+                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1107);
             } else {
-                return QinShihuangResult.getResult(ErrorCode.QUERY_INVALID_1100);
+                return QinShihuangResult.getResult(ErrorCode.QUERY_INVALID_1107);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -325,7 +325,7 @@ public class MiscAPI {
     public static String searchChatgroup(Long userId, String key, String query) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1101);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1108);
             }
 
 
@@ -861,13 +861,13 @@ public class MiscAPI {
     public static String addFavorite(Long userId, String key, Integer favoriteType, String itemId, Long authorId, String authorNickName, ImageItem authorAvatar, ImageItem cover, String title) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1077);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1098);
             }
             if(!Constant.checkFavoriteType(favoriteType)) {
-                return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_INVALID_1077);
+                return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_INVALID_1098);
             }
             if(!CommonAPI.isObjectId(itemId)) {
-                return QinShihuangResult.getResult(ErrorCode.ITEMID_INVALID_1077);
+                return QinShihuangResult.getResult(ErrorCode.ITEMID_INVALID_1098);
             }
             Query<Favorite> query = ds.createQuery(Favorite.class).field(Favorite.fd_userId).equal(userId).field(Favorite.fd_itemId).equal(new ObjectId(itemId));
             UpdateOperations<Favorite> ops = ds.createUpdateOperations(Favorite.class).set(Favorite.fd_id, new ObjectId()).set(Favorite.fd_userId, userId).set(Favorite.fd_favoriteType, favoriteType)
@@ -974,7 +974,7 @@ public class MiscAPI {
     public static String cancelFavorite(Long userId, String key, String itemId, Integer favoriteType) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1078);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1099);
             }
             Query<Favorite> query = ds.createQuery(Favorite.class).field(Favorite.fd_userId).equal(userId).field(Favorite.fd_itemId).equal(new ObjectId(itemId));
             ds.delete(query);
@@ -996,7 +996,7 @@ public class MiscAPI {
     public static String getFavorites(Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1079);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1100);
             }
             Query<Favorite> query = ds.createQuery(Favorite.class).field(Favorite.fd_userId).equal(userId);
             List<Favorite> favorites = query.asList();
@@ -1021,13 +1021,13 @@ public class MiscAPI {
     public static String addVote(Long userId, String key, Integer voteType, String itemId) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1094);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1101);
             }
             if(!Constant.checkVoteType(voteType)) {
-                return QinShihuangResult.getResult(ErrorCode.VOTETYPE_INVALID_1094);
+                return QinShihuangResult.getResult(ErrorCode.VOTETYPE_INVALID_1101);
             }
             if(!CommonAPI.isObjectId(itemId)) {
-                return QinShihuangResult.getResult(ErrorCode.ITEMID_INVALID_1094);
+                return QinShihuangResult.getResult(ErrorCode.ITEMID_INVALID_1101);
             }
             Query<Vote> query = ds.createQuery(Vote.class).field(Vote.fd_userId).equal(userId).field(Vote.fd_itemId).equal(new ObjectId(itemId));
             UpdateOperations<Vote> ops = ds.createUpdateOperations(Vote.class).set(Vote.fd_id, new ObjectId()).set(Vote.fd_userId, userId).set(Vote.fd_voteType, voteType)
@@ -1053,7 +1053,7 @@ public class MiscAPI {
     public static String cancelVote(Long userId, String key, String itemId, Integer voteType) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1095);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1102);
             }
             Query<Vote> query = ds.createQuery(Vote.class).field(Vote.fd_userId).equal(userId).field(Vote.fd_itemId).equal(new ObjectId(itemId));
             ds.delete(query);
@@ -1074,7 +1074,7 @@ public class MiscAPI {
     public static String getVotes(Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1096);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1103);
             }
             Query<Vote> query = ds.createQuery(Vote.class).field(Vote.fd_userId).equal(userId);
             List<Vote> votes = query.asList();

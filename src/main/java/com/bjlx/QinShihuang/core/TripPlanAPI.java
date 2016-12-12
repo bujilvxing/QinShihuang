@@ -46,23 +46,23 @@ public class TripPlanAPI {
     public static String addTripPlan(TripPlanReq tripPlanReq, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1045);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1057);
 
             // 取得用户信息
             UserInfo userInfo = CommonAPI.getUserBasicById(userId);
             if(userInfo == null)
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1045);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1057);
 
             TripPlan tripPlan;
             if(tripPlanReq.getOriginId() == null) {
                 tripPlan = new TripPlan(userId, userInfo.getNickName(), userInfo.getAvatar());
             } else {
                 if(tripPlanReq.getOriginUserId() == null)
-                    return QinShihuangResult.getResult(ErrorCode.ORIGINUSERID_NULL_1045);
+                    return QinShihuangResult.getResult(ErrorCode.ORIGINUSERID_NULL_1057);
                 if(tripPlanReq.getOriginNickName() == null)
-                    return QinShihuangResult.getResult(ErrorCode.ORIGINNICKNAME_NULL_1045);
+                    return QinShihuangResult.getResult(ErrorCode.ORIGINNICKNAME_NULL_1057);
                 if(tripPlanReq.getOriginAvatar() == null)
-                    return QinShihuangResult.getResult(ErrorCode.ORIGINAVATAR_NULL_1045);
+                    return QinShihuangResult.getResult(ErrorCode.ORIGINAVATAR_NULL_1057);
                 tripPlan = new TripPlan(userId, userInfo.getNickName(), userInfo.getAvatar(), new ObjectId(tripPlanReq.getOriginId()),
                         tripPlanReq.getOriginUserId(), tripPlanReq.getOriginNickName(), tripPlanReq.getOriginAvatar());
             }
@@ -126,12 +126,12 @@ public class TripPlanAPI {
     public static String forkTripPlan(String tripPlanId, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1046);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1058);
             // 取得行程规划
             Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId)).field(TripPlan.fd_status).equal(Constant.TRIPPLAN_NORMAL);
             TripPlan tripPlan = query.get();
             if (tripPlan == null)
-                return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1046);
+                return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1058);
 
             if (!tripPlan.getUserId().equals(userId)) {
                 if (tripPlan.getOriginUserId() == null) {
@@ -143,7 +143,7 @@ public class TripPlanAPI {
                 // 取得用户信息
                 UserInfo userInfo = CommonAPI.getUserBasicById(userId);
                 if (userInfo == null)
-                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1046);
+                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1058);
                 tripPlan.setUserId(userId);
                 tripPlan.setNickName(userInfo.getNickName());
                 tripPlan.setAvatar(userInfo.getAvatar());
@@ -168,7 +168,7 @@ public class TripPlanAPI {
 
         try {
             if (!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1047);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1059);
             // 取得行程规划
             Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_userId).equal(userId).field(TripPlan.fd_status).equal(Constant.TRIPPLAN_NORMAL)
                     .retrievedFields(true, TripPlan.fd_id, TripPlan.fd_userId, TripPlan.fd_nickName, TripPlan.fd_avatar, TripPlan.fd_title,
@@ -196,12 +196,12 @@ public class TripPlanAPI {
     public static String updateTripPlan(String tripPlanId, TripPlanReq tripPlanReq, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1048);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1060);
             // 取得行程规划
             Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId)).field(TripPlan.fd_status).equal(Constant.TRIPPLAN_NORMAL);
             TripPlan tripPlan = query.get();
             if(tripPlan == null)
-                return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1048);
+                return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1060);
             if(!tripPlan.getUserId().equals(userId))
                 return QinShihuangResult.getResult(ErrorCode.FORBIDDEN);
 
@@ -274,7 +274,7 @@ public class TripPlanAPI {
             Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId)).field(TripPlan.fd_status).equal(Constant.TRIPPLAN_NORMAL);
             TripPlan tripPlan = query.get();
             if(tripPlan == null)
-                return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1049);
+                return QinShihuangResult.getResult(ErrorCode.TRIPPLAN_NOT_EXIST_1061);
             else
                 return QinShihuangResult.ok(TripPlanFormatter.getMapper().valueToTree(tripPlan));
         } catch (Exception e) {
@@ -295,7 +295,7 @@ public class TripPlanAPI {
 
         try {
             if (!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1050);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1062);
             Query<TripPlan> query = ds.createQuery(TripPlan.class).field(TripPlan.fd_id).equal(new ObjectId(tripPlanId))
                     .field(TripPlan.fd_userId).equal(userId).field(TripPlan.fd_status).equal(Constant.TRIPPLAN_NORMAL);
             UpdateOperations<TripPlan> ops = ds.createUpdateOperations(TripPlan.class).set(TripPlan.fd_status, Constant.TRIPPLAN_UNENABLE);

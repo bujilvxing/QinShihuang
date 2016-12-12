@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class ActivityController {
     
     /**
-     * 发布活动1030
+     * 发布活动1031
      * @param activityReq 活动参数
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -34,7 +34,7 @@ public class ActivityController {
     }
 
     /**
-     * 取得活动列表1031
+     * 取得活动列表1032
      * @param start 是否开始
      * @param end 是否结束
      * @param theme 主题
@@ -56,7 +56,7 @@ public class ActivityController {
     }
 
     /**
-     * 取得活动详情1032
+     * 取得活动详情1033
      * @param activityId 活动id
      * @return 活动详情
      */
@@ -70,7 +70,7 @@ public class ActivityController {
     }
 
     /**
-     * 取得用户活动列表1086
+     * 取得用户活动列表1034
      * @param offset 从第几个开始取
      * @param limit 取多少个
      * @return 活动列表
@@ -85,7 +85,7 @@ public class ActivityController {
     }
 
     /**
-     * 报名活动1087
+     * 报名活动1035
      * @param activityId 活动id
      * @param joiner 参与人联系方式
      * @param userId 用户id
@@ -102,7 +102,7 @@ public class ActivityController {
     }
 
     /**
-     * 退出报名1088
+     * 退出报名1036
      * @param activityId 活动id
      * @param joiner 参与人联系方式
      * @param userId 用户id
@@ -119,7 +119,7 @@ public class ActivityController {
     }
 
     /**
-     * 更新活动1089
+     * 更新活动1037
      * @param activityId 活动id
      * @param activityUpdateReq 更新活动参数
      * @param userId 用户id
@@ -136,7 +136,7 @@ public class ActivityController {
     }
 
     /**
-     * 添加门票1090
+     * 添加门票1038
      * @param ticketReq 门票参数
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -152,7 +152,7 @@ public class ActivityController {
     }
 
     /**
-     * 删除门票1091
+     * 删除门票1039
      * @param ticketId 门票id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -168,7 +168,7 @@ public class ActivityController {
     }
 
     /**
-     * 修改门票1092
+     * 修改门票1040
      * @param ticketId 门票id
      * @param ticketReq 门票参数
      * @param userId 用户id
@@ -185,7 +185,7 @@ public class ActivityController {
     }
 
     /**
-     * 取得门票详情1093
+     * 取得门票详情1041
      * @param ticketId 门票id
      * @return 门票信息
      */
@@ -199,7 +199,7 @@ public class ActivityController {
     }
 
     /**
-     * 取得用户门票列表1104
+     * 取得用户门票列表1042
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 门票列表

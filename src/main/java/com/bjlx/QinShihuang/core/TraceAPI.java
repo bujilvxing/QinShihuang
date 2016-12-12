@@ -43,11 +43,11 @@ public class TraceAPI {
     public static String addTrace(Long userId, String key, TraceReq traceReq) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1040);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1052);
             }
             UserInfo author = CommonAPI.getUserBasicById(userId);
             if(author == null)
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1040);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1052);
 
             Trace trace = new Trace(userId, author.getNickName(), author.getAvatar(), traceReq.getTraceTime(), traceReq.getTitle(),
                     traceReq.getLat() == null ? 0.0 : traceReq.getLat(), traceReq.getLng() == null ? 0.0 : traceReq.getLng());
@@ -62,11 +62,11 @@ public class TraceAPI {
 
             if(traceReq.getOriginId() != null) {
                 if(traceReq.getOriginUserId() == null)
-                    return QinShihuangResult.getResult(ErrorCode.ORIGINUSERID_NULL_1040);
+                    return QinShihuangResult.getResult(ErrorCode.ORIGINUSERID_NULL_1052);
                 if(traceReq.getOriginNickName() == null)
-                    return QinShihuangResult.getResult(ErrorCode.ORIGINNICKNAME_NULL_1040);
+                    return QinShihuangResult.getResult(ErrorCode.ORIGINNICKNAME_NULL_1052);
                 if(traceReq.getOriginAvatar() == null)
-                    return QinShihuangResult.getResult(ErrorCode.ORIGINAVATAR_NULL_1040);
+                    return QinShihuangResult.getResult(ErrorCode.ORIGINAVATAR_NULL_1052);
                 trace.setOriginId(new ObjectId(traceReq.getOriginId()));
                 trace.setOriginUserId(traceReq.getOriginUserId());
                 trace.setOriginNickName(traceReq.getOriginNickName());
@@ -123,12 +123,12 @@ public class TraceAPI {
     public static String updateTrace(String traceId, Long userId, String key, TraceReq traceReq) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1041);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1053);
             // 取得足迹
             Query<Trace> query = ds.createQuery(Trace.class).field(Trace.fd_id).equal(new ObjectId(traceId)).field(Trace.fd_status).equal(Constant.TRACE_NORMAL);
             Trace trace = query.get();
             if(trace == null)
-                return QinShihuangResult.getResult(ErrorCode.TRACE_NOT_EXIST_1041);
+                return QinShihuangResult.getResult(ErrorCode.TRACE_NOT_EXIST_1053);
 
             if(!trace.getUserId().equals(userId))
                 return QinShihuangResult.getResult(ErrorCode.FORBIDDEN);
@@ -203,7 +203,7 @@ public class TraceAPI {
     public static String removeTrace(String traceId, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1042);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1054);
             Query<Trace> query = ds.createQuery(Trace.class).field(Trace.fd_id).equal(new ObjectId(traceId))
                     .field(Trace.fd_userId).equal(userId).field(Trace.fd_status).equal(Constant.TRACE_NORMAL);
             UpdateOperations<Trace> ops = ds.createUpdateOperations(Trace.class).set(Trace.fd_status, Constant.TRACE_UNENABLE);
@@ -225,7 +225,7 @@ public class TraceAPI {
     public static String getTraces(Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1043);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1055);
             // 取得足迹
             Query<Trace> query = ds.createQuery(Trace.class).field(Trace.fd_userId).equal(userId).field(TripPlan.fd_status).equal(Constant.TRIPPLAN_NORMAL)
                     .retrievedFields(true, Trace.fd_id, Trace.fd_userId, Trace.fd_nickName, Trace.fd_avatar, Trace.fd_title,
@@ -252,7 +252,7 @@ public class TraceAPI {
             Query<Trace> query = ds.createQuery(Trace.class).field(Trace.fd_id).equal(new ObjectId(traceId)).field(Trace.fd_status).equal(Constant.TRACE_NORMAL);
             Trace trace = query.get();
             if(trace == null)
-                return QinShihuangResult.getResult(ErrorCode.TRACE_NOT_EXIST_1044);
+                return QinShihuangResult.getResult(ErrorCode.TRACE_NOT_EXIST_1056);
             else
                 return QinShihuangResult.ok(TraceFormatter.getMapper().valueToTree(trace));
         } catch (Exception e) {

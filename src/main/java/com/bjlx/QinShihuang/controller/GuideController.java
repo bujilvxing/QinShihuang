@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GuideController {
 
     /**
-     * 取得攻略详情1019
+     * 取得攻略详情1020
      * @param guideId 攻略id
      * @return 攻略详情信息
    */

@@ -38,7 +38,7 @@ public class MomentAPI {
     public static String getMoments(Long userId, String key, Integer offset, Integer limit, Long latestTime, Long earliestTime) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1038);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1049);
             }
             // 根据用户id查找关注人的id列表
             List<CriteriaContainerImpl> criterias = new ArrayList<>();
@@ -101,7 +101,7 @@ public class MomentAPI {
     public static String getMomentsById(Long userId, String key, Long targetId, Integer offset, Integer limit, Long latestTime, Long earliestTime) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1080);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1050);
             }
             // 发表人为自己或者关注的人
             Query<Moment> query = ds.createQuery(Moment.class).field(Moment.fd_userId).equal(targetId);
@@ -142,11 +142,11 @@ public class MomentAPI {
                                    List<ImageItem> images, CardReq card) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1039);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1051);
             }
             UserInfo userInfo = CommonAPI.getUserBasicWithMomentById(userId);
             if(userInfo == null)
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1039);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1051);
             Moment moment = new Moment(userId, userInfo.getNickName(), userInfo.getAvatar());
 
             if(originId != null && CommonAPI.isObjectId(originId)) {

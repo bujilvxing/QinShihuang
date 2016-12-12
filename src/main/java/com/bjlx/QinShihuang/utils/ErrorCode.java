@@ -166,370 +166,371 @@ public enum ErrorCode {
 	/**
 	 * 攻略
 	 */
-	GUIDE_NOT_EXIST_1019(101901, "攻略不存在"),
+	GUIDE_NOT_EXIST_1020(102001, "攻略不存在"),
 
 	/**
 	 * poi
 	 */
 	// 取得宾馆详情
-	HOTEL_NOT_EXIST_1021(102101, "宾馆不存在"),
+	HOTEL_NOT_EXIST_1022(102201, "宾馆不存在"),
 
 	// 取得目的地详情
-	LOCALITY_NOT_EXIST_1023(102301, "目的地不存在"),
+	LOCALITY_NOT_EXIST_1024(102401, "目的地不存在"),
 
 	// 取得景点详情
-	VIEWSPOT_NOT_EXIST_1025(102501, "景点不存在"),
+	VIEWSPOT_NOT_EXIST_1026(102601, "景点不存在"),
 
 	// 取得美食详情
-	RESTAURANT_NOT_EXIST_1027(102701, "美食不存在"),
+	RESTAURANT_NOT_EXIST_1028(102801, "美食不存在"),
 
 	// 取得购物详情
-	SHOPPING_NOT_EXIST_1029(102901, "购物不存在"),
+	SHOPPING_NOT_EXIST_1030(103001, "购物不存在"),
 
 	/**
 	 * 活动
 	 */
 	// 发布活动
-	UNLOGIN_1030(103001, "用户未登录"),
-	PRICE_NULL_1030(103002, "收费门票价格不可为空"),
+	UNLOGIN_1031(103101, "用户未登录"),
+	PRICE_NULL_1031(103102, "收费门票价格不可为空"),
 
 	// 取得活动详情
-	ACTIVITY_NOT_EXIST_1032(103201, "活动不存在"),
+	ACTIVITY_NOT_EXIST_1033(103301, "活动不存在"),
 
 	// 取得用户活动列表
-	UNLOGIN_1086(108601, "用户未登录"),
+	UNLOGIN_1034(103401, "用户未登录"),
 
 	// 报名活动
-	UNLOGIN_1087(108701, "用户未登录"),
+	UNLOGIN_1035(103501, "用户未登录"),
 
 	// 取消报名活动
-	UNLOGIN_1088(108801, "用户未登录"),
+	UNLOGIN_1036(103601, "用户未登录"),
 
 	// 更新活动
-	UNLOGIN_1089(108901, "用户未登录"),
-	PRICE_NULL_1089(108902, "收费门票价格不可为空"),
+	UNLOGIN_1037(103701, "用户未登录"),
+	PRICE_NULL_1037(103702, "收费门票价格不可为空"),
 
 	// 添加门票
-	UNLOGIN_1090(109001, "用户未登录"),
-	PRICE_NULL_1090(109002, "收费门票价格不可为空"),
+	UNLOGIN_1038(103801, "用户未登录"),
+	PRICE_NULL_1038(103802, "收费门票价格不可为空"),
 
 	// 删除门票
-	UNLOGIN_1091(109101, "用户未登录"),
-	TICKET_USED_1091(109102, "门票被使用，删除失败"),
+	UNLOGIN_1039(103901, "用户未登录"),
+	TICKET_USED_1039(103902, "门票被使用，删除失败"),
 
 	// 修改门票
-	UNLOGIN_1092(109201, "用户未登录"),
-	TICKET_NOT_EXIST_1092(109202, "门票不存在"),
+	UNLOGIN_1040(104001, "用户未登录"),
+	TICKET_NOT_EXIST_1040(104002, "门票不存在"),
 
 	// 取得门票详情
-	TICKET_NOT_EXIST_1093(109301, "门票不存在"),
+	TICKET_NOT_EXIST_1041(104101, "门票不存在"),
 
 	// 取得门票列表
-	UNLOGIN_1104(110401, "用户未登录"),
+	UNLOGIN_1042(104201, "用户未登录"),
 
 	/**
 	 * 游记
 	 */
 	// 发布游记
-	UNLOGIN_1034(103401, "用户未登录"),
-	USER_NOT_EXIST_1034(103402, "用户不存在"),
+	UNLOGIN_1044(104401, "用户未登录"),
+	USER_NOT_EXIST_1044(104402, "用户不存在"),
 
 	// 更新游记
-	UNLOGIN_1035(103501, "用户未登录"),
-	TRAVELNOTE_NOT_EXIST_1035(103502, "游记不存在"),
+	UNLOGIN_1045(104501, "用户未登录"),
+	TRAVELNOTE_NOT_EXIST_1045(104502, "游记不存在"),
 
 	// 取得游记详情
-	TRAVELNOTE_NOT_EXIST_1036(103601, "游记不存在"),
+	TRAVELNOTE_NOT_EXIST_1046(104601, "游记不存在"),
 
 	// 删除游记
-	UNLOGIN_1037(103701, "用户未登录"),
+	UNLOGIN_1047(104701, "用户未登录"),
 
 	// 取得用户游记列表
-	UNLOGIN_1105(110501, "用户未登录"),
+	UNLOGIN_1048(104801, "用户未登录"),
 
 	/**
 	 * 时间线
 	 */
 	// 查看朋友圈
-	TIME_NULL_1038(103801, "latestTime和earliestTime不可同时为空"),
-	UNLOGIN_1038(103801, "用户未登录"),
+	TIME_NULL_1049(104901, "latestTime和earliestTime不可同时为空"),
+	UNLOGIN_1049(104901, "用户未登录"),
 
-	// 查看朋友圈
-	ORIGINUSERID_NULL_1039(103901, "originUserId不可为空"),
-	ORIGINNICKNAME_NULL_1039(103902, "originNickName不可为空"),
-	ORIGINAVATAR_NULL_1039(103903, "OriginAvatar不可为空"),
-	UNLOGIN_1039(103904, "用户未登录"),
-	USER_NOT_EXIST_1039(103905, "用户不存在"),
+	// 查看某个人的朋友圈
+	TIME_NULL_1050(105001, "latestTime和earliestTime不可同时为空"),
+	UNLOGIN_1050(105002, "用户未登录"),
 
-	// 查看朋友圈
-	TIME_NULL_1080(108001, "latestTime和earliestTime不可同时为空"),
-	UNLOGIN_1080(108002, "用户未登录"),
+	// 添加时间线
+	ORIGINUSERID_NULL_1051(105101, "originUserId不可为空"),
+	ORIGINNICKNAME_NULL_1051(105102, "originNickName不可为空"),
+	ORIGINAVATAR_NULL_1051(105103, "OriginAvatar不可为空"),
+	UNLOGIN_1051(105104, "用户未登录"),
+	USER_NOT_EXIST_1051(105105, "用户不存在"),
+
 
 	/**
 	 * 足迹
 	 */
 	// 发布足迹
-	UNLOGIN_1040(104001, "用户未登录"),
-	USER_NOT_EXIST_1040(104002, "用户不存在"),
-	ORIGINUSERID_NULL_1040(104003, "源用户id不可为空"),
-	ORIGINNICKNAME_NULL_1040(104004, "源用户昵称不可为空"),
-	ORIGINAVATAR_NULL_1040(104005, "源用户头像不可为空"),
+	UNLOGIN_1052(105201, "用户未登录"),
+	USER_NOT_EXIST_1052(105202, "用户不存在"),
+	ORIGINUSERID_NULL_1052(105203, "源用户id不可为空"),
+	ORIGINNICKNAME_NULL_1052(105204, "源用户昵称不可为空"),
+	ORIGINAVATAR_NULL_1052(105205, "源用户头像不可为空"),
 
 	// 更新足迹
-	UNLOGIN_1041(104101, "用户未登录"),
-	TRACE_NOT_EXIST_1041(104102, "足迹不存在"),
+	UNLOGIN_1053(105301, "用户未登录"),
+	TRACE_NOT_EXIST_1053(105302, "足迹不存在"),
 
 	// 删除足迹
-	UNLOGIN_1042(104201, "用户未登录"),
+	UNLOGIN_1054(105401, "用户未登录"),
 
 	// 取得足迹列表
-	UNLOGIN_1043(104301, "用户未登录"),
+	UNLOGIN_1055(105501, "用户未登录"),
 
 	// 足迹详情
-	TRACE_NOT_EXIST_1044(104401, "足迹不存在"),
+	TRACE_NOT_EXIST_1056(105601, "足迹不存在"),
 
 
 	/**
 	 * 行程规划
 	 */
 	// 发布行程规划
-	UNLOGIN_1045(104501, "用户未登录"),
-	USER_NOT_EXIST_1045(104502, "用户不存在"),
-	ORIGINUSERID_NULL_1045(104503, "源用户id不可为空"),
-	ORIGINNICKNAME_NULL_1045(104504, "源用户昵称不可为空"),
-	ORIGINAVATAR_NULL_1045(104505, "源用户头像不可为空"),
+	UNLOGIN_1057(105701, "用户未登录"),
+	USER_NOT_EXIST_1057(105702, "用户不存在"),
+	ORIGINUSERID_NULL_1057(105703, "源用户id不可为空"),
+	ORIGINNICKNAME_NULL_1057(105704, "源用户昵称不可为空"),
+	ORIGINAVATAR_NULL_1057(105705, "源用户头像不可为空"),
 
 	// 复制行程规划
-	UNLOGIN_1046(104601, "用户未登录"),
-	TRIPPLAN_NOT_EXIST_1046(104602, "行程规划不存在"),
-	USER_NOT_EXIST_1046(104603, "用户不存在"),
+	UNLOGIN_1058(105801, "用户未登录"),
+	TRIPPLAN_NOT_EXIST_1058(105802, "行程规划不存在"),
+	USER_NOT_EXIST_1058(105803, "用户不存在"),
 
 	// 取得用户行程规划列表
-	UNLOGIN_1047(104701, "用户未登录"),
+	UNLOGIN_1059(105901, "用户未登录"),
 
 	// 更新行程规划
-	UNLOGIN_1048(104801, "用户未登录"),
-	TRIPPLAN_NOT_EXIST_1048(104802, "行程规划不存在"),
+	UNLOGIN_1060(106001, "用户未登录"),
+	TRIPPLAN_NOT_EXIST_1060(106002, "行程规划不存在"),
 
 	// 取得行程规划详情
-	TRIPPLAN_NOT_EXIST_1049(104901, "行程规划不存在"),
+	TRIPPLAN_NOT_EXIST_1061(106101, "行程规划不存在"),
 
 	// 删除行程规划
-	UNLOGIN_1050(105001, "用户未登录"),
+	UNLOGIN_1062(106201, "用户未登录"),
 
 	/**
 	 * 问答
 	 */
 	// 添加问题
-	TITLE_NULL_1051(105101, "标题不可为空"),
-	CONTENT_NULL_1051(105102, "内容不可为空"),
-	UNLOGIN_1051(105103, "用户未登录"),
-	USER_NOT_EXIST_1051(105104, "用户不存在"),
+	TITLE_NULL_1063(106301, "标题不可为空"),
+	CONTENT_NULL_1063(106302, "内容不可为空"),
+	UNLOGIN_1063(106303, "用户未登录"),
+	USER_NOT_EXIST_1063(106304, "用户不存在"),
 
 	// 取得问题详情
-	QUESTION_NOT_EXIST_1052(105201, "问题不存在"),
+	QUESTION_NOT_EXIST_1064(106401, "问题不存在"),
 
 	// 取得用户问题列表
-	UNLOGIN_1053(105301, "用户未登录"),
+	UNLOGIN_1065(106501, "用户未登录"),
 
 	// 添加回答
-	TITLE_NULL_1081(108101, "标题不可为空"),
-	CONTENT_NULL_1081(108102, "内容不可为空"),
-	UNLOGIN_1081(108103, "用户未登录"),
-	USER_NOT_EXIST_1081(108104, "用户不存在"),
+	TITLE_NULL_1067(106701, "标题不可为空"),
+	CONTENT_NULL_1067(106702, "内容不可为空"),
+	UNLOGIN_1067(106703, "用户未登录"),
+	USER_NOT_EXIST_1067(106704, "用户不存在"),
 
 	// 删除问题
-	UNLOGIN_1082(108201, "用户未登录"),
+	UNLOGIN_1068(106801, "用户未登录"),
 
 	// 删除回答
-	UNLOGIN_1083(108301, "用户未登录"),
+	UNLOGIN_1069(106901, "用户未登录"),
 
 	// 编辑问题
-	UNLOGIN_1084(108401, "用户未登录"),
+	UNLOGIN_1070(107001, "用户未登录"),
 
 	// 编辑回答
-	UNLOGIN_1085(108501, "用户未登录"),
+	UNLOGIN_1071(107101, "用户未登录"),
 
 	/**
 	 * 社交
 	 */
 	// 关注用户
-	FOLLOWINGID_NULL_1055(105501, "参数followingId不可为空"),
-	UNLOGIN_1055(105502, "用户未登录"),
-	USER_NOT_EXIST_1055(105503, "用户不存在"),
+	FOLLOWINGID_NULL_1072(107201, "参数followingId不可为空"),
+	UNLOGIN_1072(107202, "用户未登录"),
+	USER_NOT_EXIST_1072(107203, "用户不存在"),
 
 	// 取消关注用户
-	FOLLOWINGID_NULL_1056(105601, "参数followingId不可为空"),
-	UNLOGIN_1056(105602, "用户未登录"),
+	FOLLOWINGID_NULL_1073(107301, "参数followingId不可为空"),
+	UNLOGIN_1073(107302, "用户未登录"),
 
 	// 取得好友列表
-	UNLOGIN_1057(105701, "用户未登录"),
+	UNLOGIN_1074(107401, "用户未登录"),
 
 	// 取得好友(关注人)信息
-	UNLOGIN_1058(105801, "用户未登录"),
-	USER_NOT_EXIST_1058(105802, "用户不存在"),
+	UNLOGIN_1075(107501, "用户未登录"),
+	USER_NOT_EXIST_1075(107502, "用户不存在"),
 
 	// 修改备注
-	MEMO_NULL_1059(105901, "备注不可为空或者或字符串"),
-	UNLOGIN_1059(105902, "用户未登录"),
-	USER_NOT_EXIST_1059(105903, "用户不存在"),
+	MEMO_NULL_1076(107601, "备注不可为空或者或字符串"),
+	UNLOGIN_1076(107602, "用户未登录"),
+	USER_NOT_EXIST_1076(107603, "用户不存在"),
 
 	// 添加黑名单
-	BLOCKID_NULL_1060(106001, "屏蔽用户id不可为空"),
-	UNLOGIN_1060(106002, "用户未登录"),
-	USER_NOT_EXIST_1060(106003, "用户不存在"),
+	BLOCKID_NULL_1077(107701, "屏蔽用户id不可为空"),
+	UNLOGIN_1077(107702, "用户未登录"),
+	USER_NOT_EXIST_1077(107703, "用户不存在"),
 
-	// 添加黑名单
-	UNLOGIN_1061(106101, "用户未登录"),
-	USER_NOT_EXIST_1061(106102, "用户不存在"),
+	// 移除黑名单
+	UNLOGIN_1078(107801, "用户未登录"),
+	USER_NOT_EXIST_1078(107802, "用户不存在"),
 
 	// 取得用户关注列表
-	UNLOGIN_1062(106201, "用户未登录"),
+	UNLOGIN_1079(107901, "用户未登录"),
 
 	// 取得用户粉丝列表
-	UNLOGIN_1063(106301, "用户未登录"),
+	UNLOGIN_1080(108001, "用户未登录"),
 
 	// 发送消息
-	RECEIVERID_NULL_1064(106401, "接收者id不可为空"),
-	CONTENT_NULL_1064(106402, "消息内容不可为空"),
-	MSGTYPE_NULL_1064(106403, "消息类型不可为空"),
-	CHATTYPE_NULL_1064(106404, "聊天类型不可为空"),
-	THUMB_NULL_1064(106405, "缩略图不可为空"),
-	FULL_NULL_1064(106406, "完整图不可为空"),
-	ORIGIN_NULL_1064(106407, "原图不可为空"),
-	URL_NULL_1064(106408, "链接不可为空"),
-	AUDIO_NULL_1064(106409, "音频不可为空"),
-	LENGTH_NULL_1064(106410, "长度不可为空"),
-	POSITION_NULL_1064(106411, "位置不可为空"),
-	LAT_NULL_1064(106412, "经度不可为空"),
-	LNG_NULL_1064(106413, "纬度不可为空"),
-	MSGTYPE_INVALID_1064(106414, "消息类型不合法"),
-	CHATTYPE_INVALID_1064(106415, "聊天类型不合法"),
-	USER_NOT_EXIST_1064(106416, "用户不存在"),
-	CHATGROUP_NOT_EXIST_1064(106417, "群组不存在"),
-	CONVID_INVALID_1064(106418, "回话id不合法"),
-	UNLOGIN_1064(106419, "用户未登录"),
-	ID_INVALID_1064(106420, "消息id不合法"),
+	RECEIVERID_NULL_1081(108101, "接收者id不可为空"),
+	CONTENT_NULL_1081(108102, "消息内容不可为空"),
+	MSGTYPE_NULL_1081(108103, "消息类型不可为空"),
+	CHATTYPE_NULL_1081(108104, "聊天类型不可为空"),
+	THUMB_NULL_1081(108105, "缩略图不可为空"),
+	FULL_NULL_1081(108106, "完整图不可为空"),
+	ORIGIN_NULL_1081(108107, "原图不可为空"),
+	URL_NULL_1081(108108, "链接不可为空"),
+	AUDIO_NULL_1081(108109, "音频不可为空"),
+	LENGTH_NULL_1081(108110, "长度不可为空"),
+	POSITION_NULL_1081(108111, "位置不可为空"),
+	LAT_NULL_1081(108112, "经度不可为空"),
+	LNG_NULL_1081(108113, "纬度不可为空"),
+	MSGTYPE_INVALID_1081(108114, "消息类型不合法"),
+	CHATTYPE_INVALID_1081(108115, "聊天类型不合法"),
+	USER_NOT_EXIST_1081(108116, "用户不存在"),
+	CHATGROUP_NOT_EXIST_1081(108117, "群组不存在"),
+	CONVID_INVALID_1081(108118, "回话id不合法"),
+	UNLOGIN_1081(108119, "用户未登录"),
+	ID_INVALID_1081(108120, "消息id不合法"),
 
 	// 拉取消息
-	UNLOGIN_1065(106501, "用户未登录"),
+	UNLOGIN_1082(108201, "用户未登录"),
 
 	// 修改会话属性
-	MUTE_NULL_1066(106601, "mute不可为空"),
-	UNLOGIN_1066(106602, "用户未登录"),
-	CONV_NOT_EXIST_1066(106603, "会话不存在"),
+	MUTE_NULL_1083(108301, "mute不可为空"),
+	UNLOGIN_1083(108302, "用户未登录"),
+	CONV_NOT_EXIST_1083(108303, "会话不存在"),
 
 	// 取得会话列表
-	IDLIST_NULL_1067(106701, "会话id列表参数不可为空"),
-	ID_INVALID_1067(106702, "会话id不合法"),
-	UNLOGIN_1067(106703, "用户未登录"),
+	IDLIST_NULL_1084(108401, "会话id列表参数不可为空"),
+	ID_INVALID_1084(108402, "会话id不合法"),
+	UNLOGIN_1084(108403, "用户未登录"),
 
 	/**
 	 * 聊天组
 	 */
 	// 创建聊天组
-	UNLOGIN_1068(106801, "用户未登录"),
+	UNLOGIN_1085(108501, "用户未登录"),
 
 	// 更新聊天组信息
-	UNLOGIN_1069(106901, "用户未登录"),
-	CHATGROUP_NOT_EXIST_1069(106902, "群组不存在"),
+	UNLOGIN_1086(108601, "用户未登录"),
+	CHATGROUP_NOT_EXIST_1086(108602, "群组不存在"),
 
 	// 取得聊天组信息
-	UNLOGIN_1070(107001, "用户未登录"),
-	CHATGROUP_NOT_EXIST_1070(107002, "群组不存在"),
+	UNLOGIN_1087(108701, "用户未登录"),
+	CHATGROUP_NOT_EXIST_1087(108702, "群组不存在"),
 
 	// 取得聊天组成员列表
-	UNLOGIN_1071(107101, "用户未登录"),
-	CHATGROUP_NOT_EXIST_1071(107102, "群组不存在"),
-	CREATOR_NOT_EXIST_1071(107103, "创建者不存在"),
+	UNLOGIN_1088(108801, "用户未登录"),
+	CHATGROUP_NOT_EXIST_1088(108802, "群组不存在"),
+	CREATOR_NOT_EXIST_1088(108803, "创建者不存在"),
 
 	// 添加聊天组成员
-	UNLOGIN_1072(107201, "用户未登录"),
-	CHATGROUP_NOT_EXIST_1072(107202, "群组不存在"),
-	USER_NOT_EXIST_1072(107203, "用户不存在"),
+	UNLOGIN_1089(108901, "用户未登录"),
+	CHATGROUP_NOT_EXIST_1089(108902, "群组不存在"),
+	USER_NOT_EXIST_1089(108903, "用户不存在"),
 
 	// 删除聊天组成员
-	UNLOGIN_1073(107301, "用户未登录"),
+	UNLOGIN_1090(109001, "用户未登录"),
 
 	// 取得用户聊天组列表
-	UNLOGIN_1074(107401, "用户未登录"),
+	UNLOGIN_1091(109101, "用户未登录"),
 
 	// 发布聊天组帖子
-	UNLOGIN_1075(107501, "用户未登录"),
-	USER_NOT_EXIST_1075(107502, "用户不存在"),
-	CHATGROUP_NOT_EXIST_1075(107503, "群组不存在"),
+	UNLOGIN_1092(109201, "用户未登录"),
+	USER_NOT_EXIST_1092(109202, "用户不存在"),
+	CHATGROUP_NOT_EXIST_1092(109203, "群组不存在"),
 
 	// 发布聊天组帖子
-	UNLOGIN_1076(107601, "用户未登录"),
+	UNLOGIN_1093(109301, "用户未登录"),
 
 	// 更新聊天组帖子
-	UNLOGIN_1106(110601, "用户未登录"),
-	USER_NOT_EXIST_1106(110602, "用户不存在"),
-	CHATGROUP_NOT_EXIST_1106(110603, "群组不存在"),
-	POST_NOT_EXIST_1106(110604, "帖子不存在"),
+	UNLOGIN_1094(109401, "用户未登录"),
+	USER_NOT_EXIST_1094(109402, "用户不存在"),
+	CHATGROUP_NOT_EXIST_1094(109403, "群组不存在"),
+	POST_NOT_EXIST_1094(109404, "帖子不存在"),
 
 	// 删除聊天组帖子
-	UNLOGIN_1107(110701, "用户未登录"),
+	UNLOGIN_1095(109501, "用户未登录"),
 
 	// 取得聊天组帖子详情
-	UNLOGIN_1108(110801, "用户未登录"),
-	POST_NOT_EXIST_1108(110802, "帖子不存在"),
+	UNLOGIN_1096(109601, "用户未登录"),
+	POST_NOT_EXIST_1096(109602, "帖子不存在"),
 
 	// 取得用户聊天组帖子列表
-	UNLOGIN_1109(110901, "用户未登录"),
+	UNLOGIN_1097(109701, "用户未登录"),
 
 	/**
 	 * 收藏
 	 */
 	// 添加收藏
-	FAVORITETYPE_NULL_1077(107701, "收藏类型不可为空"),
-	ITEMID_NULL_1077(107702, "收藏对象id不可为空"),
-	TITLE_NULL_1077(107703, "收藏标题不可为空"),
-	UNLOGIN_1077(107704, "用户未登录"),
-	FAVORITETYPE_INVALID_1077(107705, "favoriteType不合法"),
-	ITEMID_INVALID_1077(107706, "itemId不合法"),
+	FAVORITETYPE_NULL_1098(109801, "收藏类型不可为空"),
+	ITEMID_NULL_1098(109802, "收藏对象id不可为空"),
+	TITLE_NULL_1098(109803, "收藏标题不可为空"),
+	UNLOGIN_1098(109804, "用户未登录"),
+	FAVORITETYPE_INVALID_1098(109805, "favoriteType不合法"),
+	ITEMID_INVALID_1098(109806, "itemId不合法"),
 
 	// 取消收藏
-	FAVORITETYPE_NULL_1078(107801, "收藏类型不可为空"),
-	FAVORITETYPE_INVALID_1078(107802, "favoriteType不合法"),
-	UNLOGIN_1078(107803, "用户未登录"),
+	FAVORITETYPE_NULL_1099(109901, "收藏类型不可为空"),
+	FAVORITETYPE_INVALID_1099(109902, "favoriteType不合法"),
+	UNLOGIN_1099(109903, "用户未登录"),
 
 	// 取得收藏列表
-	UNLOGIN_1079(107901, "用户未登录"),
+	UNLOGIN_1100(110001, "用户未登录"),
 
 	/**
 	 * 点赞
 	 */
 	// 点赞
-	VOTETYPE_NULL_1094(109401, "点赞类型不可为空"),
-	ITEMID_NULL_1094(109402, "点赞对象id不可为空"),
-	UNLOGIN_1094(109403, "用户未登录"),
-	VOTETYPE_INVALID_1094(109404, "voteType不合法"),
-	ITEMID_INVALID_1094(109405, "itemId不合法"),
+	VOTETYPE_NULL_1101(110101, "点赞类型不可为空"),
+	ITEMID_NULL_1101(110102, "点赞对象id不可为空"),
+	UNLOGIN_1101(110103, "用户未登录"),
+	VOTETYPE_INVALID_1101(110104, "voteType不合法"),
+	ITEMID_INVALID_1101(110105, "itemId不合法"),
 
 	// 取消点赞
-	VOTETYPE_NULL_1095(109501, "点赞类型不可为空"),
-	VOTETYPE_INVALID_1095(109502, "voteType不合法"),
-	UNLOGIN_1095(109503, "用户未登录"),
+	VOTETYPE_NULL_1102(110201, "点赞类型不可为空"),
+	VOTETYPE_INVALID_1102(110202, "voteType不合法"),
+	UNLOGIN_1102(110203, "用户未登录"),
 
 	// 取得点赞列表
-	UNLOGIN_1096(109601, "用户未登录"),
+	UNLOGIN_1103(110301, "用户未登录"),
 
 	/**
 	 * 搜索
 	 */
 	// 用户搜索
-	QUERY_NULL_1100(110001, "query不可为空"),
-	UNLOGIN_1100(110002, "用户未登录"),
-	QUERY_INVALID_1100(110003, "query不合法"),
-	USER_NOT_EXIST_1100(110004, "用户不存在"),
+	QUERY_NULL_1107(110701, "query不可为空"),
+	UNLOGIN_1107(110702, "用户未登录"),
+	QUERY_INVALID_1107(110703, "query不合法"),
+	USER_NOT_EXIST_1107(110704, "用户不存在"),
 
 	// 群组搜索
-	QUERY_NULL_1101(110101, "query不可为空"),
-	UNLOGIN_1101(110102, "用户未登录"),
+	QUERY_NULL_1108(110801, "query不可为空"),
+	UNLOGIN_1108(110802, "用户未登录"),
 
 	// 全站搜索
-	QUERY_NULL_1102(110201, "query不可为空"),
+	QUERY_NULL_1109(110901, "query不可为空"),
 
 	;
 

@@ -44,7 +44,7 @@ public class ActivityAPI {
     public static String addActivity(ActivityReq activityReq, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1030);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1031);
             }
             Activity activity = new Activity(activityReq.getTitle(), activityReq.getMaxNum(), activityReq.getStartTime(), activityReq.getEndTime(), activityReq.getAddress(),
                     activityReq.getCover(), activityReq.getTheme(), activityReq.getCategory(), activityReq.getVisiable(), activityReq.getDesc(), activityReq.isFree());
@@ -121,7 +121,7 @@ public class ActivityAPI {
             Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL);
             Activity activity = query.get();
             if(activity == null)
-                return QinShihuangResult.getResult(ErrorCode.ACTIVITY_NOT_EXIST_1032);
+                return QinShihuangResult.getResult(ErrorCode.ACTIVITY_NOT_EXIST_1033);
             else {
                 ObjectNode result = CommonAPI.mapper.createObjectNode();
                 result.set("activity", ActivityFormatter.getMapper().valueToTree(activity));
@@ -153,7 +153,7 @@ public class ActivityAPI {
     public static String getUserActivities(Long userId, String key, Integer offset, Integer limit) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1086);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1034);
             }
 
             Query<Activity> queryOwner = ds.createQuery(Activity.class).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL).field(Activity.fd_creatorId).equal(userId)
@@ -208,7 +208,7 @@ public class ActivityAPI {
     public static String joinActivity(String activityId, Joiner joiner, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1087);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1035);
             }
             Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_id).equal(new ObjectId(activityId)).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL);
             joiner.setUserId(userId);
@@ -233,7 +233,7 @@ public class ActivityAPI {
     public static String quitActivity(String activityId, Joiner joiner, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1088);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1036);
             }
             Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_id).equal(new ObjectId(activityId)).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL);
             joiner.setUserId(userId);
@@ -258,7 +258,7 @@ public class ActivityAPI {
     public static String updateActivity(String activityId, ActivityUpdateReq activityUpdateReq, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1089);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1037);
             }
             Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_id).equal(new ObjectId(activityId)).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL);
             UpdateOperations<Activity> ops = ds.createUpdateOperations(Activity.class);
@@ -332,7 +332,7 @@ public class ActivityAPI {
     public static String addTicket(TicketReq ticketReq, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1090);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1038);
             }
 
             Ticket ticket = new Ticket(ticketReq.getId(), ticketReq.isFree(), ticketReq.getMaxNum());
@@ -340,7 +340,7 @@ public class ActivityAPI {
                 ticket.setDesc(ticketReq.getDesc());
             if(!ticketReq.isFree()) {
                 if(ticketReq.getPrice() == null)
-                    return QinShihuangResult.getResult(ErrorCode.PRICE_NULL_1090);
+                    return QinShihuangResult.getResult(ErrorCode.PRICE_NULL_1038);
                 else
                     ticket.setPrice(ticketReq.getPrice());
                 if(ticketReq.getMarketPrice() != null)
@@ -368,14 +368,14 @@ public class ActivityAPI {
     public static String removeTicket(String ticketId, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1091);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1039);
             }
 
             // 检查门票是否被活动使用
             Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_ticketIds).hasThisOne(new ObjectId(ticketId));
             Activity activity = query.get();
             if(activity != null)
-                return QinShihuangResult.getResult(ErrorCode.TICKET_USED_1091);
+                return QinShihuangResult.getResult(ErrorCode.TICKET_USED_1039);
             // 删除门票
             Query<Ticket> ticketQuery = ds.createQuery(Ticket.class).field(Ticket.fd_id).equal(new ObjectId(ticketId)).field(Ticket.fd_status).equal(Constant.TICKET_NORMAL);
             UpdateOperations ops = ds.createUpdateOperations(Ticket.class).set(Ticket.fd_status, Constant.TICKET_UNENABLE);
@@ -399,7 +399,7 @@ public class ActivityAPI {
     public static String updateTicket(String ticketId, TicketReq ticketReq, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1092);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1040);
             }
             Query<Ticket> query = ds.createQuery(Ticket.class).field(Ticket.fd_id).equal(new ObjectId(ticketId)).field(Ticket.fd_status).equal(Constant.TICKET_NORMAL).field(Ticket.fd_creatorId).equal(userId);
             UpdateOperations<Ticket> ops = ds.createUpdateOperations(Ticket.class).set(Ticket.fd_updateTime, System.currentTimeMillis());
@@ -432,7 +432,7 @@ public class ActivityAPI {
 
             Ticket ticket = ds.findAndModify(query, ops, false);
             if(ticket == null)
-                return QinShihuangResult.getResult(ErrorCode.TICKET_NOT_EXIST_1092);
+                return QinShihuangResult.getResult(ErrorCode.TICKET_NOT_EXIST_1040);
             else
                 return QinShihuangResult.ok(TicketFormatter.getMapper().valueToTree(ticket));
         } catch (Exception e) {
@@ -452,7 +452,7 @@ public class ActivityAPI {
             Query<Ticket> query = ds.createQuery(Ticket.class).field(Ticket.fd_id).equal(new ObjectId(ticketId)).field(Ticket.fd_status).equal(Constant.TICKET_NORMAL);
             Ticket ticket = query.get();
             if(ticket == null)
-                return QinShihuangResult.getResult(ErrorCode.TICKET_NOT_EXIST_1093);
+                return QinShihuangResult.getResult(ErrorCode.TICKET_NOT_EXIST_1041);
             else
                 return QinShihuangResult.ok(TicketFormatter.getMapper().valueToTree(ticket));
         } catch (Exception e) {
@@ -471,7 +471,7 @@ public class ActivityAPI {
     public static String getTickets(Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1104);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1042);
             }
             Query<Ticket> query = ds.createQuery(Ticket.class).field(Ticket.fd_creatorId).equal(userId).field(Ticket.fd_status).equal(Constant.TICKET_NORMAL);
             List<Ticket> tickets = query.asList();

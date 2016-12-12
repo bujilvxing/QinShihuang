@@ -442,58 +442,58 @@ public class ImAPI {
     public static String sendMsg(Long userId, String key, String convId, Content content, Long receiverId, Integer msgType, Integer chatType) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1064);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1081);
             }
             if(!Constant.checkMsgType(msgType))
-                return QinShihuangResult.getResult(ErrorCode.MSGTYPE_INVALID_1064);
+                return QinShihuangResult.getResult(ErrorCode.MSGTYPE_INVALID_1081);
             if(!Constant.checkChatType(chatType))
-                return QinShihuangResult.getResult(ErrorCode.CHATTYPE_INVALID_1064);
+                return QinShihuangResult.getResult(ErrorCode.CHATTYPE_INVALID_1081);
 
             switch (msgType) {
                 case Constant.IMAGE_MSG :
                     if(content.getThumb() == null)
-                        return QinShihuangResult.getResult(ErrorCode.THUMB_NULL_1064);
+                        return QinShihuangResult.getResult(ErrorCode.THUMB_NULL_1081);
                     if(content.getFull() == null)
-                        return QinShihuangResult.getResult(ErrorCode.FULL_NULL_1064);
+                        return QinShihuangResult.getResult(ErrorCode.FULL_NULL_1081);
                     if(content.getOrigin() == null)
-                        return QinShihuangResult.getResult(ErrorCode.ORIGIN_NULL_1064);
+                        return QinShihuangResult.getResult(ErrorCode.ORIGIN_NULL_1081);
                     if(content.getThumb().getUrl() == null || content.getFull().getUrl() == null || content.getOrigin().getUrl() == null)
-                            return QinShihuangResult.getResult(ErrorCode.URL_NULL_1064);
+                            return QinShihuangResult.getResult(ErrorCode.URL_NULL_1081);
                 case Constant.AUDIO_MSG :
                     if(content.getAudio() == null)
-                        return QinShihuangResult.getResult(ErrorCode.AUDIO_NULL_1064);
+                        return QinShihuangResult.getResult(ErrorCode.AUDIO_NULL_1081);
                     if(content.getAudio().getUrl() == null)
-                        return QinShihuangResult.getResult(ErrorCode.URL_NULL_1064);
+                        return QinShihuangResult.getResult(ErrorCode.URL_NULL_1081);
                     if(content.getAudio().getLength() == null)
-                        return QinShihuangResult.getResult(ErrorCode.LENGTH_NULL_1064);
+                        return QinShihuangResult.getResult(ErrorCode.LENGTH_NULL_1081);
                 case Constant.LOCATION_MSG :
                     if(content.getPosition() == null)
-                        return QinShihuangResult.getResult(ErrorCode.POSITION_NULL_1064);
+                        return QinShihuangResult.getResult(ErrorCode.POSITION_NULL_1081);
                     if(content.getPosition().getLat() == null)
-                        return QinShihuangResult.getResult(ErrorCode.LAT_NULL_1064);
+                        return QinShihuangResult.getResult(ErrorCode.LAT_NULL_1081);
                     if(content.getPosition().getLng() == null)
-                        return QinShihuangResult.getResult(ErrorCode.LNG_NULL_1064);
+                        return QinShihuangResult.getResult(ErrorCode.LNG_NULL_1081);
             }
 
             switch (chatType) {
                 case Constant.SINGLE_CHAT :
                     if(!CommonAPI.checkUserExistById(receiverId))
-                        return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1064);
+                        return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1081);
                 case Constant.GROUP_CHAT :
                     if(!CommonAPI.checkChatgroupExistById(receiverId))
-                        return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1064);
+                        return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1081);
             }
 
             // 根据userId取得用户信息
             Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
             UserInfo userInfo = query.get();
             if(userInfo == null) {
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1064);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1081);
             }
 
             Conversation conv = getConversation(convId, userId, receiverId, chatType);
             if (conv == null) {
-                return QinShihuangResult.getResult(ErrorCode.CONVID_INVALID_1064);
+                return QinShihuangResult.getResult(ErrorCode.CONVID_INVALID_1081);
             }
             Message msg = buildMessage(userInfo.getUserId(), userInfo.getNickName(), userInfo.getAvatar(), conv.getId(), content, receiverId, msgType, chatType);
 
@@ -517,7 +517,7 @@ public class ImAPI {
         // 校验登录
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1065);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1082);
             }
 
             // 获取消息
@@ -546,12 +546,12 @@ public class ImAPI {
     public static String updateConversation(Long userId, String id, String key, Boolean mute) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1066);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1083);
             }
             Query<Conversation> query = ds.createQuery(Conversation.class).field(Conversation.fd_id).equal(new ObjectId(id));
             Conversation conv = query.get();
             if(conv == null)
-                return QinShihuangResult.getResult(ErrorCode.CONV_NOT_EXIST_1066);
+                return QinShihuangResult.getResult(ErrorCode.CONV_NOT_EXIST_1083);
 
             UpdateOperations<Conversation> ops = ds.createUpdateOperations(Conversation.class);
             if(mute)
@@ -577,7 +577,7 @@ public class ImAPI {
     public static String getConversationsByIds(Long userId, String key, List<ObjectId> ids) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1067);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1084);
             }
             Query<Conversation> query = ds.createQuery(Conversation.class).field(Conversation.fd_id).in(ids);
             List<Conversation> convs = query.asList();

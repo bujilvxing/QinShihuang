@@ -37,7 +37,7 @@ public class SocialAPI {
     public static String following(Long userId, String key, Long followingId) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1055);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1072);
             // 校验用户是否存在
             if(CommonAPI.checkUserExistById(followingId)) {
                 Long userA = userId < followingId ? userId : followingId;
@@ -54,7 +54,7 @@ public class SocialAPI {
                 // TODO 发送一条消息
                 return QinShihuangResult.ok();
             } else {
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1055);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1072);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class SocialAPI {
     public static String cancelFollowing(Long userId, String key, Long followingId) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1056);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1073);
             Long userA = userId < followingId ? userId : followingId;
             Long userB = userId >= followingId ? userId : followingId;
             Query<Relationship> query = ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userA)
@@ -105,7 +105,7 @@ public class SocialAPI {
         // 校验用户登录
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1057);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1074);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -174,11 +174,11 @@ public class SocialAPI {
         try {
             // 校验用户登录
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1058);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1075);
             Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
             UserInfo userInfo = query.get();
             if(userInfo == null) {
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1058);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1075);
             } else {
                 // 备注
                 Long userA = userId < contactId ? userId : contactId;
@@ -212,11 +212,11 @@ public class SocialAPI {
         try {
             // 校验用户登录
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1059);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1076);
             Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
             UserInfo userInfo = query.get();
             if(userInfo == null) {
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1059);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1076);
             } else {
                 // 备注
                 Long userA = userId < contactId ? userId : contactId;
@@ -249,16 +249,16 @@ public class SocialAPI {
             // 校验用户登录
             if(!CommonAPI.checkKeyValid(userId, key)) {
                 if(isAdd)
-                    return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1060);
+                    return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1077);
                 else
-                    return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1061);
+                    return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1078);
             }
 
             if(!CommonAPI.checkUserExistById(blockId)) {
                 if(isAdd)
-                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1060);
+                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1077);
                 else
-                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1061);
+                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1078);
             }
             // 更新黑名单
             Long userA = userId < blockId ? userId : blockId;
@@ -288,7 +288,7 @@ public class SocialAPI {
         // 校验用户登录
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1062);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1079);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -360,7 +360,7 @@ public class SocialAPI {
         // 校验用户登录
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1063);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1080);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

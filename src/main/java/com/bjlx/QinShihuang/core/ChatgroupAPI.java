@@ -46,12 +46,12 @@ public class ChatgroupAPI {
     public static String getChatgroup(Long chatgroupId, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1070);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1087);
             }
             Query<Chatgroup> query = ds.createQuery(Chatgroup.class).field(Chatgroup.fd_chatGroupId).equal(chatgroupId).field(Chatgroup.fd_status).equal(Constant.CHATGROUP_NORMAL);
             Chatgroup chatgroup = query.get();
             if(chatgroup == null) {
-                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1070);
+                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1087);
             } else {
                 return QinShihuangResult.ok(ChatgroupFormatter.getMapper().valueToTree(chatgroup));
             }
@@ -113,7 +113,7 @@ public class ChatgroupAPI {
     public static String createChatgroup(ChatgroupReq chatgroupReq, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1068);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1085);
             }
             Long chatGroupId = getNextChatgroupId();
             String name = chatgroupReq.getName() == null ? String.format("不羁旅行%d", chatGroupId) : chatgroupReq.getName();
@@ -145,7 +145,7 @@ public class ChatgroupAPI {
     public static String updateChatgroup(Long chatgroupId, ChatgroupReq chatgroupReq, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1069);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1086);
             }
             Query<Chatgroup> query = ds.createQuery(Chatgroup.class).field(Chatgroup.fd_chatGroupId).equal(chatgroupId).field(Chatgroup.fd_creatorId).equal(userId).field(Chatgroup.fd_status).equal(Constant.CHATGROUP_NORMAL);
             UpdateOperations<Chatgroup> ops = ds.createUpdateOperations(Chatgroup.class);
@@ -163,7 +163,7 @@ public class ChatgroupAPI {
                 ops.set(Chatgroup.fd_visible, chatgroupReq.isVisible());
             Chatgroup chatgroup = ds.findAndModify(query, ops, false);
             if(chatgroup == null)
-                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1069);
+                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1086);
             else
                 return QinShihuangResult.ok(ChatgroupFormatter.getMapper().valueToTree(chatgroup));
         } catch (Exception e) {
@@ -183,18 +183,18 @@ public class ChatgroupAPI {
     public static String getChatgroupMembers(Long chatgroupId, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1071);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1088);
             }
             Query<Chatgroup> query = ds.createQuery(Chatgroup.class).field(Chatgroup.fd_chatGroupId).equal(chatgroupId).field(Chatgroup.fd_status).equal(Constant.CHATGROUP_NORMAL)
                     .retrievedFields(true, Chatgroup.fd_creatorId, Chatgroup.fd_participants);
             Chatgroup chatgroup = query.get();
             if(chatgroup == null)
-                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1071);
+                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1088);
             else {
                 ObjectNode result = CommonAPI.mapper.createObjectNode();
                 UserInfo creator = CommonAPI.getUserBasicById(chatgroup.getCreatorId());
                 if(creator == null)
-                    return QinShihuangResult.getResult(ErrorCode.CREATOR_NOT_EXIST_1071);
+                    return QinShihuangResult.getResult(ErrorCode.CREATOR_NOT_EXIST_1088);
                 else
                     result.set("creator", UserInfoBasicFormatter.getMapper().valueToTree(creator));
                 if(chatgroup.getParticipants() != null && !chatgroup.getParticipants().isEmpty()) {
@@ -224,14 +224,14 @@ public class ChatgroupAPI {
 
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1072);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1089);
             }
             Query<Chatgroup> query = ds.createQuery(Chatgroup.class).field(Chatgroup.fd_chatGroupId).equal(chatgroupId).field(Chatgroup.fd_status).equal(Constant.CHATGROUP_NORMAL);
             UpdateOperations<Chatgroup> ops = ds.createUpdateOperations(Chatgroup.class).addToSet(Chatgroup.fd_participants, memberId);
             Chatgroup chatgroup = ds.findAndModify(query, ops, false);
             Set<Long> memberIds = new HashSet<Long>();
             if(chatgroup == null)
-                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1072);
+                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1089);
             else {
                 memberIds.add(chatgroup.getCreatorId());
                 if(chatgroup.getParticipants() != null && !chatgroup.getParticipants().isEmpty()) {
@@ -244,13 +244,13 @@ public class ChatgroupAPI {
             UserInfo userInfo;
             UserInfo member;
             if(userInfoMap == null || userInfoMap.isEmpty())
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1072);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1089);
             else {
                 userInfo = userInfoMap.get(userId);
                 member = userInfoMap.get(memberId);
             }
             if(userInfo == null || member == null)
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1072);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1089);
 
             // 发送一条tips消息
             List<String> clientIds = ImAPI.getClientIdsByUserIds(memberIds.stream().collect(Collectors.toList()));
@@ -280,7 +280,7 @@ public class ChatgroupAPI {
     public static String removeChatgroupMember(Long chatgroupId, Long memberId, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1073);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1090);
             }
             Query<Chatgroup> query = ds.createQuery(Chatgroup.class).field(Chatgroup.fd_chatGroupId).equal(chatgroupId).field(Chatgroup.fd_status).equal(Constant.CHATGROUP_NORMAL);
             UpdateOperations<Chatgroup> ops = ds.createUpdateOperations(Chatgroup.class).removeAll(Chatgroup.fd_participants, memberId);
@@ -302,7 +302,7 @@ public class ChatgroupAPI {
     public static String getUserChatgroups(Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1074);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1091);
             }
 
             List<CriteriaContainerImpl> criterias = new ArrayList<>();
@@ -335,15 +335,15 @@ public class ChatgroupAPI {
     public static String addChatgroupPost(Long chatgroupId, PostReq postReq, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1075);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1092);
             }
             UserInfo author = CommonAPI.getUserBasicById(userId);
             if(author == null)
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1075);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1092);
             Query<Chatgroup> query = ds.createQuery(Chatgroup.class).field(Chatgroup.fd_chatGroupId).equal(chatgroupId).field(Chatgroup.fd_status).equal(Constant.CHATGROUP_NORMAL);
             Chatgroup chatgroup = query.get();
             if(chatgroup == null)
-                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1075);
+                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1092);
             Post post = new Post(postReq.getTitle(), postReq.getCover(), postReq.getSummary(), postReq.getContent(), author, chatgroupId);
             if(postReq.getImages() != null && !postReq.getImages().isEmpty())
                 post.setImages(postReq.getImages());
@@ -386,7 +386,7 @@ public class ChatgroupAPI {
     public static String getChatgroupPosts(Long chatgroupId, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1076);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1093);
             }
             Query<Post> query = ds.createQuery(Post.class).field(Post.fd_chatgroupId).equal(chatgroupId).field(Post.fd_status).equal(Constant.POST_NORMAL);
             List<Post> posts = query.asList();
@@ -413,15 +413,15 @@ public class ChatgroupAPI {
     public static String updateChatgroupPost(Long chatgroupId, String postId, PostReq postReq, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1106);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1094);
             }
             UserInfo author = CommonAPI.getUserBasicById(userId);
             if(author == null)
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1106);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1094);
             Query<Chatgroup> query = ds.createQuery(Chatgroup.class).field(Chatgroup.fd_chatGroupId).equal(chatgroupId).field(Chatgroup.fd_status).equal(Constant.CHATGROUP_NORMAL);
             Chatgroup chatgroup = query.get();
             if(chatgroup == null)
-                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1106);
+                return QinShihuangResult.getResult(ErrorCode.CHATGROUP_NOT_EXIST_1094);
             Query<Post> queryPost = ds.createQuery(Post.class).field(Post.fd_id).equal(new ObjectId(postId)).field(Post.fd_authorId).equal(userId).field(Post.fd_status).equal(Constant.POST_NORMAL);
             UpdateOperations<Post> ops = ds.createUpdateOperations(Post.class).set(Post.fd_updateTime, System.currentTimeMillis());
             if(postReq.getContent() != null)
@@ -436,7 +436,7 @@ public class ChatgroupAPI {
                 ops.set(Post.fd_title, postReq.getTitle());
             Post post = ds.findAndModify(queryPost, ops, false);
             if(post == null)
-                return QinShihuangResult.getResult(ErrorCode.POST_NOT_EXIST_1106);
+                return QinShihuangResult.getResult(ErrorCode.POST_NOT_EXIST_1094);
 
             // 发一条群消息，提示发布帖子
             Set<Long> memberIds = new HashSet<Long>();
@@ -475,7 +475,7 @@ public class ChatgroupAPI {
     public static String removeChatgroupPost(String postId, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1107);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1095);
             }
 
             Query<Post> query = ds.createQuery(Post.class).field(Post.fd_id).equal(new ObjectId(postId)).field(Post.fd_status).equal(Constant.POST_NORMAL);
@@ -499,13 +499,13 @@ public class ChatgroupAPI {
     public static String getChatgroupPost(String postId, Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1108);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1096);
             }
 
             Query<Post> query = ds.createQuery(Post.class).field(Post.fd_id).equal(new ObjectId(postId)).field(Post.fd_status).equal(Constant.POST_NORMAL);
             Post post = query.get();
             if(post == null)
-                return QinShihuangResult.getResult(ErrorCode.POST_NOT_EXIST_1108);
+                return QinShihuangResult.getResult(ErrorCode.POST_NOT_EXIST_1096);
             else
                 return QinShihuangResult.ok(PostFormatter.getMapper().valueToTree(post));
         } catch (Exception e) {
@@ -524,7 +524,7 @@ public class ChatgroupAPI {
     public static String getUserPosts(Long userId, String key) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1109);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1097);
             }
 
             Query<Post> query = ds.createQuery(Post.class).field(Post.fd_authorId).equal(userId).field(Post.fd_status).equal(Constant.POST_NORMAL);

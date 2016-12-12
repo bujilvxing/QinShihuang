@@ -870,13 +870,13 @@ public class AccountAPI {
 	public static String bindEmail(String email, String token, Long userId, String key) throws Exception {
 		try {
 			if (!CommonAPI.checkKeyValid(userId, key)) {
-				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1103);
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1012);
 			}
 			if(!checkTokenValid(token)) {
-				return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1103);
+				return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1012);
 			}
 			if(checkUserExist(email, false)) {
-				return QinShihuangResult.getResult(ErrorCode.EMAIL_EXIST_1103);
+				return QinShihuangResult.getResult(ErrorCode.EMAIL_EXIST_1012);
 			}
 			Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
 			UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class).set(UserInfo.fd_email, email);

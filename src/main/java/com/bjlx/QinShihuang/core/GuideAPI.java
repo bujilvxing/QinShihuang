@@ -30,7 +30,7 @@ public class GuideAPI {
         try{
             Guide guide = query.get();
             if (guide==null){
-                return QinShihuangResult.getResult(ErrorCode.GUIDE_NOT_EXIST_1019);
+                return QinShihuangResult.getResult(ErrorCode.GUIDE_NOT_EXIST_1020);
             } else {
                 return QinShihuangResult.ok(GuideFormatter.getMapper().valueToTree(guide));
             }

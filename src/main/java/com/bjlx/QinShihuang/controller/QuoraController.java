@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class QuoraController {
 
     /**
-     * 添加问题1051
+     * 添加问题1063
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param questionReq 问题参数
@@ -25,9 +25,9 @@ public class QuoraController {
     @RequestMapping(value = "/app/questions", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String addQuestion(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody QuestionReq questionReq) {
         if(questionReq.getTitle() == null)
-            return QinShihuangResult.getResult(ErrorCode.TITLE_NULL_1051);
+            return QinShihuangResult.getResult(ErrorCode.TITLE_NULL_1063);
         if(questionReq.getContent() == null)
-            return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1051);
+            return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1063);
         try {
             return QuoraAPI.addQuestion(userId, key, questionReq.getTitle(), questionReq.getContent(), questionReq.getTags(), questionReq.getTopics(), questionReq.getSource());
         } catch (Exception e) {
@@ -36,7 +36,7 @@ public class QuoraController {
     }
 
     /**
-     * 取得问答信息1052
+     * 取得问答信息1064
      * @param questionId 问题id
      * @param offset 从第几条回答开始取
      * @param limit 取多少条回答
@@ -54,7 +54,7 @@ public class QuoraController {
     }
 
     /**
-     * 取得用户的问题列表1053
+     * 取得用户的问题列表1065
      * @param targetId 待查看的用户id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -74,7 +74,7 @@ public class QuoraController {
     }
 
     /**
-     * 取得问题列表1054
+     * 取得问题列表1066
      * @param offset 从第几个问题开始取
      * @param limit 取多少个问题
      * @return 问题列表
@@ -91,7 +91,7 @@ public class QuoraController {
     }
 
     /**
-     * 添加回答1081
+     * 添加回答1067
      * @param questionId 问题id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -101,9 +101,9 @@ public class QuoraController {
     @RequestMapping(value = "/app/questions/{questionId:\\[0-9a-f]{24}}/answers", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String addAnswer(@PathVariable("questionId") String questionId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody AnswerReq answerReq) {
         if(answerReq.getTitle() == null)
-            return QinShihuangResult.getResult(ErrorCode.TITLE_NULL_1081);
+            return QinShihuangResult.getResult(ErrorCode.TITLE_NULL_1067);
         if(answerReq.getContent() == null)
-            return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1081);
+            return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1067);
 
         try {
             return QuoraAPI.addAnswer(questionId, userId, key, answerReq.getTitle(), answerReq.getContent());
@@ -113,7 +113,7 @@ public class QuoraController {
     }
 
     /**
-     * 删除问题1082
+     * 删除问题1068
      * @param questionId 问题id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -129,7 +129,7 @@ public class QuoraController {
     }
     
     /**
-     * 删除问题1083
+     * 删除问题1069
      * @param questionId 问题id
      * @param answerId 回答id
      * @param userId 用户id
@@ -146,7 +146,7 @@ public class QuoraController {
     }
 
     /**
-     * 编辑问题
+     * 编辑问题1070
      * @param questionId 问题id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -163,7 +163,7 @@ public class QuoraController {
     }
 
     /**
-     * 编辑回答
+     * 编辑回答1071
      * @param questionId 问题id
      * @param answerId 回答id
      * @param userId 用户id

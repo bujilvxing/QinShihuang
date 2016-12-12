@@ -60,7 +60,7 @@ public class MiscController {
     }
 
     /**
-     * 取得游记列表1033
+     * 取得游记列表1043
      * @param offset 从第几个开始
      * @param limit 取多少个
      * @return 游记列表
@@ -75,7 +75,7 @@ public class MiscController {
     }
 
     /**
-     * 发布游记1034
+     * 发布游记1044
      * @param travelNoteReq 游记参数
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -91,7 +91,7 @@ public class MiscController {
     }
 
     /**
-     * 更新游记1035
+     * 更新游记1045
      * @param travelNoteId 游记id
      * @param travelNoteReq 游记参数
      * @param userId 用户id
@@ -108,7 +108,7 @@ public class MiscController {
     }
 
     /**
-     * 取得游记详情1036
+     * 取得游记详情1046
      * @param travelNoteId 游记id
      * @return 游记详情
      */
@@ -122,7 +122,7 @@ public class MiscController {
     }
 
     /**
-     * 删除游记1037
+     * 删除游记1047
      * @param travelNoteId 游记id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -138,7 +138,7 @@ public class MiscController {
     }
 
     /**
-     * 取得用户游记列表105
+     * 取得用户游记列表1048
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param offset 从第几个开始取
@@ -155,7 +155,7 @@ public class MiscController {
     }
 
     /**
-     * 添加收藏1077
+     * 添加收藏1098
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param favoriteReq 收藏参数
@@ -164,11 +164,11 @@ public class MiscController {
     @RequestMapping(value = "/app/favorites", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String addFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody FavoriteReq favoriteReq) {
         if(favoriteReq.getFavoriteType() == null)
-            return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_NULL_1077);
+            return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_NULL_1098);
         if(favoriteReq.getItemId() == null)
-            return QinShihuangResult.getResult(ErrorCode.ITEMID_NULL_1077);
+            return QinShihuangResult.getResult(ErrorCode.ITEMID_NULL_1098);
         if(favoriteReq.getTitle() == null)
-            return QinShihuangResult.getResult(ErrorCode.TITLE_NULL_1077);
+            return QinShihuangResult.getResult(ErrorCode.TITLE_NULL_1098);
         try {
             return MiscAPI.addFavorite(userId, key, favoriteReq.getFavoriteType(), favoriteReq.getItemId(), favoriteReq.getAuthorId(),
                     favoriteReq.getAuthorNickName(), favoriteReq.getAuthorAvatar(), favoriteReq.getCover(), favoriteReq.getTitle());
@@ -178,7 +178,7 @@ public class MiscController {
     }
 
     /**
-     * 取消收藏1078
+     * 取消收藏1099
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param itemId 取消收藏的对象id
@@ -187,9 +187,9 @@ public class MiscController {
     @RequestMapping(value = "/app/favorites/{itemId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String cancelFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId, Integer favoriteType) {
         if(favoriteType == null)
-            return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_NULL_1078);
+            return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_NULL_1099);
         if(!Constant.checkFavoriteType(favoriteType))
-            return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_INVALID_1078);
+            return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_INVALID_1099);
         try {
             return MiscAPI.cancelFavorite(userId, key, itemId, favoriteType);
         } catch (Exception e) {
@@ -198,7 +198,7 @@ public class MiscController {
     }
 
     /**
-     * 取得收藏列表1079
+     * 取得收藏列表1100
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 收藏列表
@@ -213,7 +213,7 @@ public class MiscController {
     }
 
     /**
-     * 点赞1094
+     * 点赞1101
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param voteReq 点赞参数
@@ -222,9 +222,9 @@ public class MiscController {
     @RequestMapping(value = "/app/votes", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String addVote(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody VoteReq voteReq) {
         if(voteReq.getVoteType() == null)
-            return QinShihuangResult.getResult(ErrorCode.VOTETYPE_NULL_1094);
+            return QinShihuangResult.getResult(ErrorCode.VOTETYPE_NULL_1101);
         if(voteReq.getItemId() == null)
-            return QinShihuangResult.getResult(ErrorCode.ITEMID_NULL_1094);
+            return QinShihuangResult.getResult(ErrorCode.ITEMID_NULL_1101);
         try {
             return MiscAPI.addVote(userId, key, voteReq.getVoteType(), voteReq.getItemId());
         } catch (Exception e) {
@@ -233,7 +233,7 @@ public class MiscController {
     }
 
     /**
-     * 取消点赞1095
+     * 取消点赞1102
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param itemId 取消点赞的对象id
@@ -243,9 +243,9 @@ public class MiscController {
     @RequestMapping(value = "/app/votes/{itemId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String cancelVote(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable("itemId") String itemId, Integer voteType) {
         if(voteType == null)
-            return QinShihuangResult.getResult(ErrorCode.VOTETYPE_NULL_1095);
+            return QinShihuangResult.getResult(ErrorCode.VOTETYPE_NULL_1102);
         if(!Constant.checkVoteType(voteType))
-            return QinShihuangResult.getResult(ErrorCode.VOTETYPE_INVALID_1095);
+            return QinShihuangResult.getResult(ErrorCode.VOTETYPE_INVALID_1102);
         try {
             return MiscAPI.cancelVote(userId, key, itemId, voteType);
         } catch (Exception e) {
@@ -254,7 +254,7 @@ public class MiscController {
     }
 
     /**
-     * 取得点赞列表1096
+     * 取得点赞列表1103
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 点赞列表
@@ -269,7 +269,7 @@ public class MiscController {
     }
 
     /**
-     * 搜索用户1100
+     * 搜索用户1107
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param query 搜索关键字
@@ -278,7 +278,7 @@ public class MiscController {
     @RequestMapping(value = "/app/users", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String searchUser(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, String query) {
         if(query == null)
-            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1100);
+            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1107);
         try {
             return MiscAPI.searchUser(userId, key, query);
         } catch (Exception e) {
@@ -287,7 +287,7 @@ public class MiscController {
     }
 
     /**
-     * 搜索群组1101
+     * 搜索群组1108
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param query 搜索关键字
@@ -296,7 +296,7 @@ public class MiscController {
     @RequestMapping(value = "/app/chatgroups", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String searchChatgroup(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, String query) {
         if(query == null)
-            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1101);
+            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1108);
         try {
             return MiscAPI.searchChatgroup(userId, key, query);
         } catch (Exception e) {
@@ -305,7 +305,7 @@ public class MiscController {
     }
 
     /**
-     * 全站搜索102
+     * 全站搜索1109
      * @param query 搜索关键词
      * @param all 是否搜索所有
      * @param momemt 是否搜索时间线
@@ -327,7 +327,7 @@ public class MiscController {
                                           Boolean trace, Boolean tripPlan, Boolean quora, Boolean activity, Boolean travelNote,
                                           Boolean restaurant, Boolean hotel, Boolean shopping) {
         if(query == null)
-            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1102);
+            return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1109);
         try {
             if(all == null) {
                 return MiscAPI.searchCondition(query, momemt == null ? false : momemt,

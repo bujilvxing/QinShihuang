@@ -18,7 +18,7 @@ public class ChatgroupController {
 
 
     /**
-     * 创建聊天组1068
+     * 创建聊天组1085
      * @param chatgroupReq 聊天组参数
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -35,7 +35,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 更新聊天组1069
+     * 更新聊天组1086
      * @param chatgroupId 聊天组id
      * @param chatgroupReq 聊天组参数
      * @param userId 用户id
@@ -53,7 +53,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 取得聊天组信息1070
+     * 取得聊天组信息1087
      * @param chatgroupId 聊天组id
      * @param key 不羁旅行令牌
      * @return 聊天组信息
@@ -69,7 +69,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 取得聊天组成员列表1071
+     * 取得聊天组成员列表1088
      * @param chatgroupId 聊天组id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -86,7 +86,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 添加聊天组成员1072
+     * 添加聊天组成员1089
      * @param chatgroupId 聊天组id
      * @param memberReq 成员参数
      * @param userId 用户id
@@ -104,7 +104,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 移除聊天组成员1073
+     * 移除聊天组成员1090
      * @param chatgroupId 聊天组id
      * @param memberReq 成员参数
      * @param userId 用户id
@@ -122,7 +122,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 取得用户聊天组列表1074
+     * 取得用户聊天组列表1091
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 聊天组列表
@@ -138,7 +138,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 发布聊天组帖子1075
+     * 发布聊天组帖子1092
      * @param chatgroupId 聊天组id
      * @param postReq 帖子参数
      * @param userId 用户id
@@ -156,7 +156,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 取得聊天组帖子列表1076
+     * 取得聊天组帖子列表1093
      * @param chatgroupId 聊天组id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -173,7 +173,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 更新聊天组帖子1106
+     * 更新聊天组帖子1094
      * @param chatgroupId 聊天组id
      * @param postId 帖子id
      * @param postReq 帖子参数
@@ -192,7 +192,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 删除聊天组帖子1107
+     * 删除聊天组帖子1095
      * @param postId 帖子id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -209,7 +209,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 取得聊天组帖子详情1108
+     * 取得聊天组帖子详情1096
      * @param postId 帖子id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -226,7 +226,7 @@ public class ChatgroupController {
     }
 
     /**
-     * 取得用户帖子列表1109
+     * 取得用户帖子列表1097
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 帖子列表

@@ -22,7 +22,7 @@ import java.util.List;
 public class ImController {
 
     /**
-     * 发送消息1064
+     * 发送消息1081
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param msgReq 消息实体
@@ -32,19 +32,19 @@ public class ImController {
     public @ResponseBody String sendMsg(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody MsgReq msgReq) {
         // 检查参数
         if(msgReq.getReceiverId() == null) {
-            return QinShihuangResult.getResult(ErrorCode.RECEIVERID_NULL_1064);
+            return QinShihuangResult.getResult(ErrorCode.RECEIVERID_NULL_1081);
         }
 
         if(msgReq.getContent() == null) {
-            return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1064);
+            return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1081);
         }
 
         if(msgReq.getMsgType() == null) {
-            return QinShihuangResult.getResult(ErrorCode.MSGTYPE_NULL_1064);
+            return QinShihuangResult.getResult(ErrorCode.MSGTYPE_NULL_1081);
         }
 
         if(msgReq.getChatType() == null) {
-            return QinShihuangResult.getResult(ErrorCode.CHATTYPE_NULL_1064);
+            return QinShihuangResult.getResult(ErrorCode.CHATTYPE_NULL_1081);
         }
 
         try {
@@ -55,7 +55,7 @@ public class ImController {
     }
 
     /**
-     * 拉取消息1065。对于没有送达的消息会重新发送
+     * 拉取消息1082。对于没有送达的消息会重新发送
      * 有两个阶段需要拉取消息
      * 1、用户登录时
      * 2、过一段时间，客户端自动发一个请求，拉取消息
@@ -75,7 +75,7 @@ public class ImController {
     }
 
     /**
-     * 更新回话1066
+     * 更新回话1083
      * @param userId 用户id
      * @param id 回话id
      * @param key 不羁旅行令牌
@@ -85,7 +85,7 @@ public class ImController {
     @RequestMapping(value = "/app/users/{userId:\\d+}/conversations/{id:\\[0-9a-f]{24}}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
     public @ResponseBody String updateConversation(@PathVariable("userId") Long userId, @PathVariable("id") String id, @RequestHeader("key") String key, @RequestBody ConversationReq conversationReq) {
         if(conversationReq.isMute() == null)
-            return QinShihuangResult.getResult(ErrorCode.MUTE_NULL_1066);
+            return QinShihuangResult.getResult(ErrorCode.MUTE_NULL_1083);
 
         try {
             return ImAPI.updateConversation(userId, id, key, conversationReq.isMute());
@@ -95,7 +95,7 @@ public class ImController {
     }
 
     /**
-     * 取得会话列表1067
+     * 取得会话列表1084
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param conversationReq 会话id列表
@@ -104,7 +104,7 @@ public class ImController {
     @RequestMapping(value = "/app/users/{userId:\\d+}/conversations", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
     public @ResponseBody String getConversationsByIds(@PathVariable("userId") Long userId, @RequestHeader("key") String key, @RequestBody ConversationReq conversationReq) {
         if(conversationReq.getIds() == null)
-            return QinShihuangResult.getResult(ErrorCode.IDLIST_NULL_1067);
+            return QinShihuangResult.getResult(ErrorCode.IDLIST_NULL_1084);
 
         try {
             List<ObjectId> ids = new ArrayList<ObjectId>();
@@ -112,7 +112,7 @@ public class ImController {
                 if(CommonAPI.isObjectId(id))
                     ids.add(new ObjectId(id));
                 else
-                    return QinShihuangResult.getResult(ErrorCode.ID_INVALID_1067);
+                    return QinShihuangResult.getResult(ErrorCode.ID_INVALID_1084);
             }
             return ImAPI.getConversationsByIds(userId, key, ids);
         } catch (Exception e) {

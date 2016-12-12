@@ -62,7 +62,7 @@ public class PoiAPI {
         try {
             Hotel hotel = query.get();
             if(hotel == null)
-                return QinShihuangResult.getResult(ErrorCode.HOTEL_NOT_EXIST_1021);
+                return QinShihuangResult.getResult(ErrorCode.HOTEL_NOT_EXIST_1022);
             else
                 return QinShihuangResult.ok(HotelFormatter.getMapper().valueToTree(hotel));
         } catch (Exception e) {
@@ -103,7 +103,7 @@ public class PoiAPI {
         try {
             Locality locality = query.get();
             if(locality == null)
-                return QinShihuangResult.getResult(ErrorCode.LOCALITY_NOT_EXIST_1023);
+                return QinShihuangResult.getResult(ErrorCode.LOCALITY_NOT_EXIST_1024);
             else
                 return QinShihuangResult.ok(LocalityFormatter.getMapper().valueToTree(locality));
         } catch (Exception e) {
@@ -144,7 +144,7 @@ public class PoiAPI {
         try {
             Viewspot viewspot = query.get();
             if(viewspot == null)
-                return QinShihuangResult.getResult(ErrorCode.VIEWSPOT_NOT_EXIST_1025);
+                return QinShihuangResult.getResult(ErrorCode.VIEWSPOT_NOT_EXIST_1026);
             else
                 return QinShihuangResult.ok(ViewspotFormatter.getMapper().valueToTree(viewspot));
         } catch (Exception e) {
@@ -185,7 +185,7 @@ public class PoiAPI {
         try {
             Restaurant restaurant = query.get();
             if(restaurant == null)
-                return QinShihuangResult.getResult(ErrorCode.RESTAURANT_NOT_EXIST_1027);
+                return QinShihuangResult.getResult(ErrorCode.RESTAURANT_NOT_EXIST_1028);
             else
                 return QinShihuangResult.ok(RestaurantFormatter.getMapper().valueToTree(restaurant));
         } catch (Exception e) {
@@ -226,7 +226,7 @@ public class PoiAPI {
         try {
             Shopping shopping = query.get();
             if(shopping == null)
-                return QinShihuangResult.getResult(ErrorCode.SHOPPING_NOT_EXIST_1029);
+                return QinShihuangResult.getResult(ErrorCode.SHOPPING_NOT_EXIST_1030);
             else
                 return QinShihuangResult.ok(ShoppingFormatter.getMapper().valueToTree(shopping));
         } catch (Exception e) {

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class TraceController {
 
     /**
-     * 发布足迹1040
+     * 发布足迹1052
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @param traceReq 足迹参数
@@ -33,7 +33,7 @@ public class TraceController {
     }
 
     /**
-     * 更新足迹1041
+     * 更新足迹1053
      * @param traceId 足迹id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -51,7 +51,7 @@ public class TraceController {
     }
 
     /**
-     * 删除足迹1042
+     * 删除足迹1054
      * @param traceId 足迹id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -68,7 +68,7 @@ public class TraceController {
     }
 
     /**
-     * 取得用户足迹列表1043
+     * 取得用户足迹列表1055
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 足迹列表
@@ -84,7 +84,7 @@ public class TraceController {
     }
 
     /**
-     * 取得足迹详情1044
+     * 取得足迹详情1056
      * @param traceId 足迹id
      * @return 足迹详情
      */

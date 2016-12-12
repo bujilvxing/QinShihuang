@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class TripPlanController {
 
     /**
-     * 发布行程规划1045
+     * 发布行程规划1057
      * @param tripPlanReq 行程规划参数
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -32,7 +32,7 @@ public class TripPlanController {
     }
 
     /**
-     * 复制行程规划1046
+     * 复制行程规划1058
      * @param tripPlanId 行程规划id
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -49,7 +49,7 @@ public class TripPlanController {
     }
 
     /**
-     * 取得用户行程规划列表1047
+     * 取得用户行程规划列表1059
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 行程规划列表
@@ -64,7 +64,7 @@ public class TripPlanController {
     }
 
     /**
-     * 更新行程规划1048
+     * 更新行程规划1060
      * @param tripPlanId 行程规划id
      * @param tripPlanReq 行程规划参数
      * @param userId 用户id
@@ -82,7 +82,7 @@ public class TripPlanController {
     }
 
     /**
-     * 取得行程规划详情1049
+     * 取得行程规划详情1061
      * @param tripPlanId 行程规划id
      * @return 行程规划信息
      */
@@ -97,7 +97,7 @@ public class TripPlanController {
     }
 
     /**
-     * 删除行程规划1050
+     * 删除行程规划1062
      * @param tripPlanId 行程规划id
      * @param userId 用户id
      * @param key 不羁旅行令牌

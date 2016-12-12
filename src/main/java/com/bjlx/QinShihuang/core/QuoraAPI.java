@@ -45,11 +45,11 @@ public class QuoraAPI {
     public static String addQuestion(Long userId, String key, String title, String content, List<String> tags, List<String> topics, String source) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1051);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1063);
             }
             UserInfo author = CommonAPI.getUserBasicById(userId);
             if(author == null)
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1051);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1063);
             Question question = new Question();
             question.setTitle(title);
             question.setContent(content);
@@ -82,7 +82,7 @@ public class QuoraAPI {
         try {
             Question question = queryQuestion.get();
             if (question == null)
-                return QinShihuangResult.getResult(ErrorCode.QUESTION_NOT_EXIST_1052);
+                return QinShihuangResult.getResult(ErrorCode.QUESTION_NOT_EXIST_1064);
             ObjectNode quora = CommonAPI.mapper.createObjectNode();
             quora.set("question", QuestionFormatter.getMapper().valueToTree(question));
             Query<Answer> queryAnswer = ds.createQuery(Answer.class).field(Answer.fd_questionId).equal(new ObjectId(questionId))
@@ -110,7 +110,7 @@ public class QuoraAPI {
     public static String getQuestionsByUserId(Long targetId, Long userId, String key, Integer offset, Integer limit) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1053);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1065);
             }
             Query<Question> queryQuestion = ds.createQuery(Question.class).field(Question.fd_authorId).equal(targetId)
                     .field(Question.fd_status).equal(Constant.QUESTION_NORMAL).order(String.format("-%s", Question.fd_publishTime)).offset(offset).limit(limit);
@@ -160,11 +160,11 @@ public class QuoraAPI {
     public static String addAnswer(String questionId, Long userId, String key, String title, String content) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1081);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1067);
             }
             UserInfo author = CommonAPI.getUserBasicById(userId);
             if(author == null)
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1081);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1067);
             Answer answer = new Answer(new ObjectId(questionId));
             answer.setTitle(title);
             answer.setContent(content);
@@ -189,7 +189,7 @@ public class QuoraAPI {
     public static String delQuestion(String questionId, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1082);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1068);
             }
             Query<Question> query = ds.createQuery(Question.class).field(Question.fd_id).equal(new ObjectId(questionId))
                     .field(Question.fd_authorId).equal(userId).field(Question.fd_status).equal(Constant.QUESTION_NORMAL);
@@ -214,7 +214,7 @@ public class QuoraAPI {
     public static String delAnswer(String questionId, String answerId, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1083);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1069);
             }
             // TODO 问题作者和回答作者均可删除
             Query<Answer> query = ds.createQuery(Answer.class).field(Answer.fd_id).equal(new ObjectId(answerId))
@@ -245,7 +245,7 @@ public class QuoraAPI {
     public static String editQuestion(String questionId, Long userId, String key, String title, String content, List<String> tags, List<String> topics, String source) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1084);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1070);
             }
             Query<Question> query = ds.createQuery(Question.class).field(Question.fd_id).equal(new ObjectId(questionId)).field(Question.fd_authorId).equal(userId)
                     .field(Question.fd_status).equal(Constant.QUESTION_NORMAL);
@@ -277,7 +277,7 @@ public class QuoraAPI {
     public static String editAnswer(String questionId, String answerId, Long userId, String key, String title, String content) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1085);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1071);
             }
             Query<Answer> query = ds.createQuery(Answer.class).field(Answer.fd_id).equal(new ObjectId(answerId)).field(Answer.fd_authorId).equal(userId)
                     .field(Answer.fd_questionId).equal(new ObjectId(questionId)).field(Answer.fd_status).equal(Constant.ANSWER_NORMAL);
