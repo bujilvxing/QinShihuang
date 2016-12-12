@@ -225,4 +225,28 @@ public class Constant {
      */
     public final static int TRACE_NORMAL = 1;
     public final static int TRACE_UNENABLE = 2;
+
+    /**
+     * 评论状态
+     */
+    public final static int COMMENT_NORMAL = 1;
+    public final static int COMMENT_UNENABLE = 2;
+
+    /**
+     * 评论类型
+     */
+    public final static int POST_COMMENT = 1;
+    public final static int ACTIVITY_COMMENT = 2;
+    public final static int COMMODITY_COMMENT = 3;
+    public final static int TRAVELNOTE_COMMENT = 4;
+    public final static int MOMENT_COMMENT = 5;
+    public final static int HOTEL_COMMENT = 6;
+    public final static int VIEWSPOT_COMMENT = 7;
+    public final static int RESTAURANT_COMMENT = 8;
+    public final static int SHOPPING_COMMENT = 9;
+    public final static int TRACE_COMMENT = 10;
+    public final static int TRIPPLAN_COMMENT = 11;
+    public static boolean checkCommentType(Integer commentType) {
+        return commentType >= POST_COMMENT && commentType <= TRIPPLAN_COMMENT;
+    }
 }

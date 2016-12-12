@@ -3,6 +3,7 @@ package com.bjlx.QinShihuang.requestmodel;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -20,11 +21,13 @@ public class CommentReq {
     /**
      * 评论类型
      */
+    @NotNull
     private Integer commentType;
 
     /**
      * 评论的对象id
      */
+    @NotNull
     private String itemId;
 
     /**

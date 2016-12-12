@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.CommentAPI;
+import com.bjlx.QinShihuang.core.CommonAPI;
 import com.bjlx.QinShihuang.requestmodel.CommentReq;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
@@ -48,14 +49,19 @@ public class CommentController {
 
     /**
      * 取得评论列表106
-     * @param commentType 评论类型
      * @param itemId 评论对象id
      * @return 评论列表
      */
     @RequestMapping(value = "/app/comments", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getComments(Integer commentType, String itemId) {
+    public @ResponseBody String getComments(String itemId, Integer offset, Integer limit) {
+        if(itemId == null)
+            return QinShihuangResult.getResult(ErrorCode.ITEMID_NULL_1106);
+        if(!CommonAPI.isObjectId(itemId))
+            return QinShihuangResult.getResult(ErrorCode.ITEMID_INVALID_1106);
+        int defaultOffset = offset == null ? 0 : offset;
+        int defaultLimit = limit == null ? 10 : limit;
         try {
-            return CommentAPI.getComments(commentType, itemId);
+            return CommentAPI.getComments(itemId, defaultOffset, defaultLimit);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
