@@ -36,7 +36,9 @@ public class Comment {
 	public final static String fd_itemId = "itemId";
 	@Transient
 	public final static String fd_images = "images";
-	
+	@Transient
+	public final static String fd_status = "status";
+
 	/**
 	 * 主键
 	 */
@@ -82,7 +84,6 @@ public class Comment {
 	/**
 	 * 评论修改时间
 	 */
-	@NotNull
 	private Long updateTime;
 
 	/**
@@ -99,6 +100,11 @@ public class Comment {
 	 * 评论中附带的照片
 	 */
 	private List<ImageItem> images;
+
+	/**
+	 * 评论状态
+	 */
+	private Integer status;
 
 	public Long getUpdateTime() {
 		return updateTime;
@@ -194,5 +200,29 @@ public class Comment {
 
 	public void setmTime(Long updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Comment() {
+
+	}
+
+	public Comment(Long userId, ImageItem avatar, String nickName, String contents, Integer commentType, ObjectId itemId) {
+		this.id = new ObjectId();
+		this.userId = userId;
+		this.avatar = avatar;
+		this.nickName = nickName;
+		this.contents = contents;
+		this.commentType = commentType;
+		this.itemId = itemId;
+		this.publishTime = System.currentTimeMillis();
+		this.status = 1;
 	}
 }
