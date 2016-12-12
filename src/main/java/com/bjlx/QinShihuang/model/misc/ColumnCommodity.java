@@ -79,4 +79,14 @@ public class ColumnCommodity {
     public void setCommodities(List<Commodity> commodities) {
         this.commodities = commodities;
     }
+
+    public ColumnCommodity(){
+
+    }
+
+    public ColumnCommodity(String category, List<ObjectId> commodityIds) {
+        this.id = new ObjectId();
+        this.category = category;
+        this.commodityIds = commodityIds;
+    }
 }

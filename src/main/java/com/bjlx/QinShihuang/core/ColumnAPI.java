@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.core;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bjlx.QinShihuang.core.formatter.guide.GuideBasicFormatter;
@@ -14,6 +15,7 @@ import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.MorphiaFactory;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
@@ -75,7 +77,7 @@ public class ColumnAPI {
      * @return 商品列表
      * @throws Exception 异常
      */
-    public static String getColumnCommoditys() throws Exception {
+    public static String getColumnCommodities() throws Exception {
         // 查询商品的id列表
 
         Query<ColumnCommodity> query = ds.createQuery(ColumnCommodity.class);
@@ -92,7 +94,7 @@ public class ColumnAPI {
                     else {
                         Query<Commodity> queryCommodity = ds.createQuery(Commodity.class).field(Commodity.fd_id).in(columnCommodity.getCommodityIds());
                         List<Commodity> commodities = queryCommodity.asList();
-                        if(commodities == null) {
+                        if(commodities == null || commodities.isEmpty()) {
                             return QinShihuangResult.getResult(ErrorCode.EMPTY_COLUMN_COMMODITY_MODULE_1017, String.format("%s模块数据为空", columnCommodity.getCategory()));
                         } else {
                             columnCommodity.setCommodities(commodities);
@@ -137,5 +139,28 @@ public class ColumnAPI {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    /**
+     * 测试数据
+     */
+    // 1015~1016
+    public static String column() {
+        for(int i = 1; i < 10; i++) {
+            Column column = new Column(i, "首页客栈" + i, "http://hotel" + i, AccountAPI.defaultUserAvatar, "描述" + i);
+            ds.save(column);
+        }
+        return "{\"msg\":\"success\"}";
+    }
+
+    // 1017
+    public static String commodities() {
+        List<ObjectId> commodityIds = new ArrayList<ObjectId>();
+        for(int i = 0; i < 10; i++)
+            commodityIds.add(new ObjectId());
+
+        ColumnCommodity columnCommodity = new ColumnCommodity("specifical", commodityIds);
+        ds.save(columnCommodity);
+        return "{\"msg\":\"success\"}";
     }
 }

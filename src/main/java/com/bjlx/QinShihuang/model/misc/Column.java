@@ -47,7 +47,7 @@ public class Column {
 	 */
 	@NotBlank
 	@Id
-	private ObjectId id = null;
+	private ObjectId id = new ObjectId();
 	
 	/**
 	 * 排名
@@ -179,6 +179,23 @@ public class Column {
 	}
 
 	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public Column() {
+
+	}
+
+	public Column(Integer rank, String title, String link, ImageItem cover, String desc) {
+		this.id = new ObjectId();
+		this.rank = rank;
+		this.itemType = "viewspot";
+		this.columnType = "special";
+		this.title = title;
+		this.link = link;
+		this.linkType = "app";
+		this.cover = cover;
+		this.status = "pub";
 		this.desc = desc;
 	}
 }

@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.ColumnAPI;
+import com.bjlx.QinShihuang.core.MiscAPI;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ public class ColumnController {
      * 取得专栏1015
      * @return 专栏列表
      */
-    @RequestMapping(value = "/app/misc/columns",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/columns",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
     public @ResponseBody String getColumns(){
         try {
             return ColumnAPI.getColumns();
@@ -32,7 +33,7 @@ public class ColumnController {
      * 取得首页1016
      * @return banner列表
      */
-    @RequestMapping(value = "/app/misc/banners",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/banners",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
     public @ResponseBody String getBanners(){
         try{
             return ColumnAPI.getBanners();
@@ -42,13 +43,13 @@ public class ColumnController {
     }
 
     /**
-     * 取得商品列表(特产等)1017
+     * 取得首页商品列表(特产等)1017
      * @return 取得商品列表(特产等)
      */
-    @RequestMapping(value = "/app/marketplace/commodities",method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/commodities",method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getColumnCommodities(){
         try {
-            return ColumnAPI.getColumnCommoditys();
+            return ColumnAPI.getColumnCommodities();
         } catch(Exception e){
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
@@ -65,5 +66,18 @@ public class ColumnController {
         }catch (Exception e){
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
+    }
+
+    /**
+     * 数据
+     */
+    @RequestMapping(value = "/app/addColumnCommodity", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addColumnCommodity() {
+        return ColumnAPI.commodities();
+    }
+
+    @RequestMapping(value = "/app/addColumn", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addColumn() {
+        return ColumnAPI.column();
     }
 }
