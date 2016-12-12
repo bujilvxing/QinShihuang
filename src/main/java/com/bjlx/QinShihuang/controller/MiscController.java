@@ -23,7 +23,7 @@ public class MiscController {
      * @param applySellerReq 申请参数
      * @return 结果
      */
-    @RequestMapping(value = "/app/misc/sellers", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/sellers", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String applySeller(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody ApplySellerReq applySellerReq) {
         if(applySellerReq.getTel() == null) {
             return QinShihuangResult.getResult(ErrorCode.TEL_NULL_1013);
@@ -46,7 +46,7 @@ public class MiscController {
      * @param feedbackReq 反馈参数信息
      * @return 结果
      */
-    @RequestMapping(value = "/app/misc/feedback", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/feedback", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String feedback(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody FeedbackReq feedbackReq) {
         if(feedbackReq.getContent() == null) {
             return QinShihuangResult.getResult(ErrorCode.CONTENT_NULL_1014);

@@ -75,10 +75,12 @@ public class MiscAPI {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1013);
             }
 
-            Query<Application> query = ds.createQuery(Application.class).field(Application.fd_number).equal(tel);
-            UpdateOperations<Application> ops = ds.createUpdateOperations(Application.class).set(Application.fd_id, new ObjectId())
-                    .set(Application.fd_tel, new PhoneNumber(86, tel)).set(Application.fd_userId, userId).set(Application.fd_createTime, System.currentTimeMillis());
-            ds.updateFirst(query, ops, true);
+            Query<Application> query = ds.createQuery(Application.class).field(Application.fd_userId).equal(userId).field(Application.fd_number).equal(tel);
+            Application application = query.get();
+            if(application == null) {
+                application = new Application(userId, new PhoneNumber(86, tel));
+                ds.save(application);
+            }
             return QinShihuangResult.ok();
         } catch (Exception e) {
             e.printStackTrace();
