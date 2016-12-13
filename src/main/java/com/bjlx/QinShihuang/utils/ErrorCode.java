@@ -154,7 +154,7 @@ public enum ErrorCode {
 	EMPTY_COLUMN_1016(101601, "banner数据为空"),
 
 	// 取得首页商品列表(特产等)
-	EMPTY_COLUMN_COMMODITY_1017(101701, "首页商品数据为空"),
+	EMPTY_COLUMN_COMMODITY_1017(101701, "首页运营商品数据为空"),
 	EMPTY_COLUMN_COMMODITY_MODULE_1017(101702, "首页商品数据为空"),
 
 	// 根据id取得商品详情

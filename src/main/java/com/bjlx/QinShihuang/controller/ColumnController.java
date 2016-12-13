@@ -1,7 +1,6 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.ColumnAPI;
-import com.bjlx.QinShihuang.core.MiscAPI;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.springframework.stereotype.Controller;
@@ -79,5 +78,10 @@ public class ColumnController {
     @RequestMapping(value = "/app/addColumn", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String addColumn() {
         return ColumnAPI.column();
+    }
+
+    @RequestMapping(value = "/app/addColumnGuide", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addColumnGuide() {
+        return ColumnAPI.addColumnGuide();
     }
 }

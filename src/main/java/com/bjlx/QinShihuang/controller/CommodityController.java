@@ -1,6 +1,5 @@
 package com.bjlx.QinShihuang.controller;
 
-import com.bjlx.QinShihuang.core.ColumnAPI;
 import com.bjlx.QinShihuang.core.CommodityAPI;
 import com.bjlx.QinShihuang.utils.ErrorCode;
 import com.bjlx.QinShihuang.utils.QinShihuangResult;
@@ -27,19 +26,6 @@ public class CommodityController {
         try{
             return CommodityAPI.getCommodityById(commodityId);
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
-        }
-    }
-
-    /**
-     * 取得首页1016
-     * @return banner列表
-     */
-    @RequestMapping(value = "/app/testC", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getBanners(){
-        try{
-            return ColumnAPI.getBanners();
-        }catch (Exception e){
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }

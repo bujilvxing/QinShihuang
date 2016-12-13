@@ -1,8 +1,5 @@
 package com.bjlx.QinShihuang.core.formatter.poi;
 
-import java.io.IOException;
-import java.util.List;
-
 import com.bjlx.QinShihuang.model.geo.Locality;
 import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.Contact;
@@ -12,6 +9,9 @@ import com.bjlx.QinShihuang.model.poi.Shopping;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 购物序列化
@@ -70,8 +70,8 @@ public class ShoppingSerializer extends JsonSerializer<Shopping> {
             gen.writeStringField(Shopping.fd_zhName, shopping.getZhName() == null ? "" : shopping.getZhName());
             gen.writeStringField(Shopping.fd_enName, shopping.getEnName() == null ? "" : shopping.getEnName());
             gen.writeStringField(Shopping.fd_url, shopping.getUrl() == null ? "" : shopping.getUrl());
-            gen.writeNumberField(Shopping.fd_marketPrice, shopping.getMarketPrice() == null ? 0.0 : shopping.getMarketPrice());
-            gen.writeNumberField(Shopping.fd_price, shopping.getPrice() == null ? 0.0 : shopping.getPrice());
+            gen.writeNumberField(Shopping.fd_marketPrice, shopping.getMarketPrice() == null ? 0 : shopping.getMarketPrice());
+            gen.writeNumberField(Shopping.fd_price, shopping.getPrice() == null ? 0 : shopping.getPrice());
             if(shopping.getPriceDesc() != null)
             	gen.writeStringField(Shopping.fd_priceDesc, shopping.getPriceDesc());
             

@@ -45,13 +45,13 @@ public class HotelReq {
      * 市场价
      */
     @Min(value = 0)
-    private Double marketPrice = 0.0;
+    private Integer marketPrice = 0;
 
     /**
      * POI价格
      */
     @Min(value = 0)
-    private Double price = 0.0;
+    private Integer price = 0;
 
     public String getId() {
         return id;
@@ -93,19 +93,19 @@ public class HotelReq {
         this.url = url;
     }
 
-    public Double getMarketPrice() {
+    public Integer getMarketPrice() {
         return marketPrice;
     }
 
-    public void setMarketPrice(Double marketPrice) {
+    public void setMarketPrice(Integer marketPrice) {
         this.marketPrice = marketPrice;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 }

@@ -469,4 +469,14 @@ public class Locality {
 	public void setTimeCost(Integer timeCost) {
 		this.timeCost = timeCost;
 	}
+
+	public Locality() {
+	}
+
+	public Locality(ObjectId id, String zhName, String enName, ImageItem cover) {
+		this.id = id;
+		this.zhName = zhName;
+		this.enName = enName;
+		this.cover = cover;
+	}
 }

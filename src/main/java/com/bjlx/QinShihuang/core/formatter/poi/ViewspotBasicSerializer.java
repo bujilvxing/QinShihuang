@@ -1,12 +1,13 @@
 package com.bjlx.QinShihuang.core.formatter.poi;
 
-import java.io.IOException;
 import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.poi.Viewspot;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
 
 public class ViewspotBasicSerializer extends JsonSerializer<Viewspot> {
 
@@ -35,8 +36,8 @@ public class ViewspotBasicSerializer extends JsonSerializer<Viewspot> {
             gen.writeStringField(Viewspot.fd_zhName, viewspot.getZhName() == null ? "" : viewspot.getZhName());
             gen.writeStringField(Viewspot.fd_enName, viewspot.getEnName() == null ? "" : viewspot.getEnName());
             gen.writeStringField(Viewspot.fd_url, viewspot.getUrl() == null ? "" : viewspot.getUrl());
-            gen.writeNumberField(Viewspot.fd_marketPrice, viewspot.getMarketPrice() == null ? 0.0 : viewspot.getMarketPrice());
-            gen.writeNumberField(Viewspot.fd_price, viewspot.getPrice() == null ? 0.0 : viewspot.getPrice());
+            gen.writeNumberField(Viewspot.fd_marketPrice, viewspot.getMarketPrice() == null ? 0 : viewspot.getMarketPrice());
+            gen.writeNumberField(Viewspot.fd_price, viewspot.getPrice() == null ? 0 : viewspot.getPrice());
             
             gen.writeNumberField(Viewspot.fd_saleVolume, viewspot.getSaleVolume() == null ? 0 : viewspot.getSaleVolume());
             if(viewspot.getDiscount() != null)

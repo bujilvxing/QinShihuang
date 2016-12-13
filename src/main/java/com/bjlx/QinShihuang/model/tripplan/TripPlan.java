@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.model.tripplan;
 
+import com.bjlx.QinShihuang.model.misc.ImageItem;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -7,12 +8,9 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
-import com.bjlx.QinShihuang.model.misc.ImageItem;
-
-import java.util.List;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by pengyt on 2016/7/24.
@@ -359,6 +357,20 @@ public class TripPlan {
 		this.userId = userId;
 		this.nickName = nickName;
 		this.avatar = avatar;
+		this.originId = originId;
+		this.originUserId = originUserId;
+		this.originNickName = originNickName;
+		this.originAvatar = originAvatar;
+	}
+
+	public TripPlan(Long userId, String nickName, ImageItem avatar, String title, ImageItem cover, String desc, ObjectId originId, Long originUserId, String originNickName, ImageItem originAvatar) {
+		this.id = new ObjectId();
+		this.userId = userId;
+		this.nickName = nickName;
+		this.avatar = avatar;
+		this.title = title;
+		this.cover = cover;
+		this.desc = desc;
 		this.originId = originId;
 		this.originUserId = originUserId;
 		this.originNickName = originNickName;

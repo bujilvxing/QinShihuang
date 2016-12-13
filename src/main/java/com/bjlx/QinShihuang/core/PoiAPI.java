@@ -234,4 +234,22 @@ public class PoiAPI {
             throw e;
         }
     }
+
+    /**
+     * 数据
+     */
+    public static String addHotel() {
+        //        Contact contact = new Contact(Arrays.asList("010-62737359"), Arrays.asList("13811111111"), "1234213123", "mofashi", "312413123", "010-62737358", "3813231231@qq.com", "www.bjlx.com");
+//        Description description = new Description("客栈描述", "客栈详情", "客栈提示", "到达客栈交通方式");
+//        Address address = new Address("江西省", "南昌市", "昌北区", "机场路16号", "333133");
+//        DetailsEntry detailsEntry = new DetailsEntry(AccountAPI.defaultUserAvatar, Arrays.asList(AccountAPI.defaultUserAvatar, AccountAPI.defaultGroupAvatar), "详情标题", "详情标题");
+//        Locality locality = new Locality(new ObjectId(), "南昌市", "NanChang", AccountAPI.defaultUserAvatar);
+//        RentCar rentCar = new RentCar(new ObjectId(), 100, true, 10, true);
+//        AvailableDay availableDay = new AvailableDay(System.currentTimeMillis(), true, 100);
+//        Hotel hotel = new Hotel(new ObjectId(), 160.0, 170.0, AccountAPI.defaultUserAvatar, Arrays.asList(AccountAPI.defaultUserAvatar, AccountAPI.defaultGroupAvatar), 1,
+//                0.98, 0.99, contact, "不羁客栈", "BuJiLvXing Hotel", "http://xxx", 400, 200, "双十二特惠", "9:00~21:00", description, Arrays.asList("不羁", "客栈"),
+//                Arrays.asList("不羁家"), Arrays.asList(""), "bjlx", "http://xxx", address, Arrays.asList(locality), 100, 0.98f, rentCar, locality, Arrays.asList(availableDay));
+//        ds.save(hotel);
+        return "{\"msg\":\"success\"}";
+    }
 }

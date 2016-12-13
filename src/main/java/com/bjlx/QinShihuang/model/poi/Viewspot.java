@@ -150,7 +150,7 @@ public class Viewspot {
 	 * POI价格
 	 */
 	@NotBlank
-	private Double price = 0.0;
+	private Integer price = 0;
 
 	/**
 	 * POI价格描述
@@ -224,7 +224,7 @@ public class Viewspot {
 	/**
 	 * 市场价
 	 */
-	private Double marketPrice = 0.0;
+	private Integer marketPrice = 0;
 
 	/**
 	 * 收藏次数
@@ -328,11 +328,11 @@ public class Viewspot {
 		this.url = url;
 	}
 
-	public Double getPrice() {
+	public Integer getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 
@@ -440,11 +440,11 @@ public class Viewspot {
 		this.discount = discount;
 	}
 
-	public Double getMarketPrice() {
+	public Integer getMarketPrice() {
 		return marketPrice;
 	}
 
-	public void setMarketPrice(Double marketPrice) {
+	public void setMarketPrice(Integer marketPrice) {
 		this.marketPrice = marketPrice;
 	}
 
@@ -460,7 +460,7 @@ public class Viewspot {
 
 	}
 
-	public Viewspot(String id, ImageItem cover, String zhName, String url, String enName, Double price, Double marketPrice) {
+	public Viewspot(String id, ImageItem cover, String zhName, String url, String enName, Integer price, Integer marketPrice) {
 		this.id = new ObjectId(id);
 		this.cover = cover;
 		this.zhName = zhName;

@@ -29,4 +29,16 @@ public class GuideController {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
+
+    /**
+     * 数据
+     */
+    @RequestMapping(value = "/app/addGuide",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    public @ResponseBody String addGuide(){
+        try{
+            return GuideAPI.addGuide();
+        }catch (Exception e){
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
+        }
+    }
 }

@@ -1,8 +1,5 @@
 package com.bjlx.QinShihuang.core.formatter.poi;
 
-import java.io.IOException;
-import java.util.List;
-
 import com.bjlx.QinShihuang.model.geo.Locality;
 import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.Contact;
@@ -12,6 +9,9 @@ import com.bjlx.QinShihuang.model.poi.Viewspot;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 景点序列化
@@ -71,8 +71,8 @@ public class ViewspotSerializer extends JsonSerializer<Viewspot> {
             gen.writeStringField(Viewspot.fd_zhName, viewspot.getZhName() == null ? "" : viewspot.getZhName());
             gen.writeStringField(Viewspot.fd_enName, viewspot.getEnName() == null ? "" : viewspot.getEnName());
             gen.writeStringField(Viewspot.fd_url, viewspot.getUrl() == null ? "" : viewspot.getUrl());
-            gen.writeNumberField(Viewspot.fd_marketPrice, viewspot.getMarketPrice() == null ? 0.0 : viewspot.getMarketPrice());
-            gen.writeNumberField(Viewspot.fd_price, viewspot.getPrice() == null ? 0.0 : viewspot.getPrice());
+            gen.writeNumberField(Viewspot.fd_marketPrice, viewspot.getMarketPrice() == null ? 0 : viewspot.getMarketPrice());
+            gen.writeNumberField(Viewspot.fd_price, viewspot.getPrice() == null ? 0 : viewspot.getPrice());
             if(viewspot.getPriceDesc() != null)
             	gen.writeStringField(Viewspot.fd_priceDesc, viewspot.getPriceDesc());
             

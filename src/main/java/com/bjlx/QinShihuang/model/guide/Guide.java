@@ -13,9 +13,8 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
-import java.util.List;
-
 import javax.validation.constraints.Min;
+import java.util.List;
 
 /**
  * 攻略
@@ -155,6 +154,8 @@ public class Guide {
      */
     @Min(value = 0)
     private Integer shareCnt = 0;
+
+	private Long createTime;
     
 	public String getDesc() {
 		return desc;
@@ -298,6 +299,38 @@ public class Guide {
 
 	public void setDetailUrl(String detailUrl) {
 		this.detailUrl = detailUrl;
+	}
+
+	public Long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
+	}
+
+	public Guide() {
+
+	}
+
+	public Guide(ImageItem cover, List<ImageItem> images, Long updateTime, String title, String desc, String bestTripTime, String tips, List<Hotel> hotels, List<Shopping> shoppings, List<Restaurant> restaurants, List<Viewspot> viewspots, List<TripPlan> tripPlans, List<Activity> activities, String summary, String detailUrl) {
+		this.id = new ObjectId();
+		this.cover = cover;
+		this.images = images;
+		this.updateTime = updateTime;
+		this.title = title;
+		this.desc = desc;
+		this.bestTripTime = bestTripTime;
+		this.tips = tips;
+		this.hotels = hotels;
+		this.shoppings = shoppings;
+		this.restaurants = restaurants;
+		this.viewspots = viewspots;
+		this.tripPlans = tripPlans;
+		this.activities = activities;
+		this.summary = summary;
+		this.detailUrl = detailUrl;
+		this.createTime = System.currentTimeMillis();
 	}
 }
 

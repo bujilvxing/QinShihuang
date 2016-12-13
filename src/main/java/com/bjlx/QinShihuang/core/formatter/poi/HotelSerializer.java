@@ -1,8 +1,5 @@
 package com.bjlx.QinShihuang.core.formatter.poi;
 
-import java.io.IOException;
-import java.util.List;
-
 import com.bjlx.QinShihuang.model.geo.Locality;
 import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.Contact;
@@ -14,6 +11,9 @@ import com.bjlx.QinShihuang.model.specialservice.RentCar;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 旅馆序列化
@@ -72,8 +72,8 @@ public class HotelSerializer extends JsonSerializer<Hotel> {
             gen.writeStringField(Hotel.fd_zhName, hotel.getZhName() == null ? "" : hotel.getZhName());
             gen.writeStringField(Hotel.fd_enName, hotel.getEnName() == null ? "" : hotel.getEnName());
             gen.writeStringField(Hotel.fd_url, hotel.getUrl() == null ? "" : hotel.getUrl());
-            gen.writeNumberField(Hotel.fd_marketPrice, hotel.getMarketPrice() == null ? 0.0 : hotel.getMarketPrice());
-            gen.writeNumberField(Hotel.fd_price, hotel.getPrice() == null ? 0.0 : hotel.getPrice());
+            gen.writeNumberField(Hotel.fd_marketPrice, hotel.getMarketPrice() == null ? 0 : hotel.getMarketPrice());
+            gen.writeNumberField(Hotel.fd_price, hotel.getPrice() == null ? 0 : hotel.getPrice());
             if(hotel.getPriceDesc() != null)
             	gen.writeStringField(Hotel.fd_priceDesc, hotel.getPriceDesc());
             

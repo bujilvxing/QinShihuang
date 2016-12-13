@@ -1,8 +1,5 @@
 package com.bjlx.QinShihuang.core.formatter.poi;
 
-import java.io.IOException;
-import java.util.List;
-
 import com.bjlx.QinShihuang.model.geo.Locality;
 import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.Contact;
@@ -12,6 +9,9 @@ import com.bjlx.QinShihuang.model.poi.Restaurant;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 餐馆序列化
@@ -69,8 +69,8 @@ public class RestaurantSerializer extends JsonSerializer<Restaurant> {
             gen.writeStringField(Restaurant.fd_zhName, restaurant.getZhName() == null ? "" : restaurant.getZhName());
             gen.writeStringField(Restaurant.fd_enName, restaurant.getEnName() == null ? "" : restaurant.getEnName());
             gen.writeStringField(Restaurant.fd_url, restaurant.getUrl() == null ? "" : restaurant.getUrl());
-            gen.writeNumberField(Restaurant.fd_marketPrice, restaurant.getMarketPrice() == null ? 0.0 : restaurant.getMarketPrice());
-            gen.writeNumberField(Restaurant.fd_price, restaurant.getPrice() == null ? 0.0 : restaurant.getPrice());
+            gen.writeNumberField(Restaurant.fd_marketPrice, restaurant.getMarketPrice() == null ? 0 : restaurant.getMarketPrice());
+            gen.writeNumberField(Restaurant.fd_price, restaurant.getPrice() == null ? 0 : restaurant.getPrice());
             if(restaurant.getPriceDesc() != null)
             	gen.writeStringField(Restaurant.fd_priceDesc, restaurant.getPriceDesc());
             

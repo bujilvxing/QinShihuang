@@ -154,13 +154,13 @@ public class Hotel {
 	/**
 	 * 市场价
 	 */
-	private Double marketPrice = 0.0;
+	private Integer marketPrice = 0;
 
 	/**
 	 * POI价格
 	 */
 	@NotBlank
-	private Double price = 0.0;
+	private Integer price = 0;
 	
 	/**
 	 * POI价格描述
@@ -247,11 +247,11 @@ public class Hotel {
 	@Min(value = 0)
 	private Integer favorCnt = 0;
 
-	public Double getMarketPrice() {
+	public Integer getMarketPrice() {
 		return marketPrice;
 	}
 
-	public void setMarketPrice(Double marketPrice) {
+	public void setMarketPrice(Integer marketPrice) {
 		this.marketPrice = marketPrice;
 	}
 
@@ -383,11 +383,11 @@ public class Hotel {
 		this.url = url;
 	}
 
-	public Double getPrice() {
+	public Integer getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 
@@ -491,7 +491,7 @@ public class Hotel {
 
 	}
 
-	public Hotel(String id, ImageItem cover, String zhName, String enName, Double marketPrice, String url, Double price) {
+	public Hotel(String id, ImageItem cover, String zhName, String enName, Integer marketPrice, String url, Integer price) {
 		this.id = new ObjectId(id);
 		this.cover = cover;
 		this.zhName = zhName;
@@ -499,5 +499,37 @@ public class Hotel {
 		this.marketPrice = marketPrice;
 		this.url = url;
 		this.price = price;
+	}
+
+	public Hotel(ObjectId id, Double lat, Double lng, ImageItem cover, List<ImageItem> images, Integer rank, Double hotness, Double rating, Contact contact, String zhName, String enName, String url, Integer marketPrice, Integer price, String priceDesc, String openTime, Description description, List<String> tags, List<String> alias, List<String> targets, String source, String guideUrl, Address address, List<Locality> locList, Integer saleVolume, Float discount, RentCar rentCar, Locality locality, List<AvailableDay> availableDays) {
+		this.id = id;
+		this.lat = lat;
+		this.lng = lng;
+		this.cover = cover;
+		this.images = images;
+		this.rank = rank;
+		this.hotness = hotness;
+		this.rating = rating;
+		this.contact = contact;
+		this.zhName = zhName;
+		this.enName = enName;
+		this.url = url;
+		this.marketPrice = marketPrice;
+		this.price = price;
+		this.priceDesc = priceDesc;
+		this.openTime = openTime;
+		this.description = description;
+		this.tags = tags;
+		this.alias = alias;
+		this.targets = targets;
+		this.source = source;
+		this.guideUrl = guideUrl;
+		this.address = address;
+		this.locList = locList;
+		this.saleVolume = saleVolume;
+		this.discount = discount;
+		this.rentCar = rentCar;
+		this.locality = locality;
+		this.availableDays = availableDays;
 	}
 }

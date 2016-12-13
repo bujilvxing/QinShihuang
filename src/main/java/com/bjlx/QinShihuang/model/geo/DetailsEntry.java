@@ -1,12 +1,11 @@
 package com.bjlx.QinShihuang.model.geo;
 
 import com.bjlx.QinShihuang.model.misc.ImageItem;
-
-import java.util.List;
-
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Transient;
+
+import java.util.List;
 
 /**
  * 详情介绍，包含标题、描述和图集
@@ -78,4 +77,14 @@ public class DetailsEntry {
 		this.desc = desc;
 	}
 
+	public DetailsEntry() {
+
+	}
+
+	public DetailsEntry(ImageItem cover, List<ImageItem> images, String title, String desc) {
+		this.cover = cover;
+		this.images = images;
+		this.title = title;
+		this.desc = desc;
+	}
 }

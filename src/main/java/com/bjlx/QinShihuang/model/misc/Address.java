@@ -91,4 +91,16 @@ public class Address {
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
+
+    public Address(){
+
+    }
+
+    public Address(String province, String city, String district, String detail, String zipCode) {
+        this.province = province;
+        this.city = city;
+        this.district = district;
+        this.detail = detail;
+        this.zipCode = zipCode;
+    }
 }

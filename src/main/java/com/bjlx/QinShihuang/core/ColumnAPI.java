@@ -175,4 +175,9 @@ public class ColumnAPI {
         ds.save(columnCommodity);
         return "{\"msg\":\"success\"}";
     }
+    public static String addColumnGuide() {
+        ColumnGuide columnGuide = new ColumnGuide(Arrays.asList(new ObjectId("584f91108edd1f202c8969d4")));
+        ds.save(columnGuide);
+        return "{\"msg\":\"success\"}";
+    }
 }

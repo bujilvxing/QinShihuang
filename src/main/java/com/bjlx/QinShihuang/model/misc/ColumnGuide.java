@@ -62,4 +62,13 @@ public class ColumnGuide {
     public void setGuides(List<Guide> guides) {
         this.guides = guides;
     }
+
+    public ColumnGuide() {
+
+    }
+
+    public ColumnGuide(List<ObjectId> guideIds) {
+        this.id = new ObjectId();
+        this.guideIds = guideIds;
+    }
 }
