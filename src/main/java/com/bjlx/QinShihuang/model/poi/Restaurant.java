@@ -455,4 +455,31 @@ public class Restaurant {
 		this.price = price;
 		this.marketPrice = marketPrice;
 	}
+
+	public Restaurant(ObjectId id, Double lat, Double lng, ImageItem cover, List<ImageItem> images, Integer rank, Double hotness, Double rating, Contact contact, String zhName, String enName, String url, Integer price, Integer marketPrice, String priceDesc, String openTime, Description description, List<String> tags, List<String> targets, String source, String guideUrl, Address address, List<Locality> locList, Locality locality) {
+		this.id = id;
+		this.lat = lat;
+		this.lng = lng;
+		this.cover = cover;
+		this.images = images;
+		this.rank = rank;
+		this.hotness = hotness;
+		this.rating = rating;
+		this.contact = contact;
+		this.zhName = zhName;
+		this.enName = enName;
+		this.url = url;
+		this.price = price;
+		this.marketPrice = marketPrice;
+		this.priceDesc = priceDesc;
+		this.openTime = openTime;
+		this.description = description;
+		this.tags = tags;
+		this.targets = targets;
+		this.source = source;
+		this.guideUrl = guideUrl;
+		this.address = address;
+		this.locList = locList;
+		this.locality = locality;
+	}
 }
