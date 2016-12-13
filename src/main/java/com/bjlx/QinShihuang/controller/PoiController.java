@@ -38,7 +38,7 @@ public class PoiController {
      * @param hotelId 宾馆id
      * @return 宾馆详情
      */
-    @RequestMapping(value = "/app/hotels/{hotelId:\\[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/hotels/{hotelId:[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getHotelById(@PathVariable("hotelId") String hotelId) {
         try {
             return PoiAPI.getHotelById(hotelId);
@@ -69,7 +69,7 @@ public class PoiController {
      * @param localityId 目的地id
      * @return 目的地详情
      */
-    @RequestMapping(value = "/app/localities/{localityId:\\[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/localities/{localityId:[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getLocalityById(@PathVariable("localityId") String localityId) {
         try {
             return PoiAPI.getLocalityById(localityId);
@@ -100,7 +100,7 @@ public class PoiController {
      * @param viewspotId 景点id
      * @return 景点详情
      */
-    @RequestMapping(value = "/app/viewspots/{viewspotId:\\[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/viewspots/{viewspotId:[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getViewspotById(@PathVariable("viewspotId") String viewspotId) {
         try {
             return PoiAPI.getViewspotById(viewspotId);
@@ -131,7 +131,7 @@ public class PoiController {
      * @param restaurantId 美食id
      * @return 美食详情
      */
-    @RequestMapping(value = "/app/restaurants/{restaurantId:\\[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/restaurants/{restaurantId:[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getRestaurantById(@PathVariable("restaurantId") String restaurantId) {
         try {
             return PoiAPI.getRestaurantById(restaurantId);
@@ -162,7 +162,7 @@ public class PoiController {
      * @param shoppingId 购物id
      * @return 购物详情
      */
-    @RequestMapping(value = "/app/shoppings/{shoppingId:\\[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/shoppings/{shoppingId:[0-9a-f]{24}}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getShoppingById(@PathVariable("shoppingId") String shoppingId) {
         try {
             return PoiAPI.getShoppingById(shoppingId);

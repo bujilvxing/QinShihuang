@@ -38,7 +38,7 @@ public class TripPlanController {
      * @param key 不羁旅行令牌
      * @return 行程规划
      */
-    @RequestMapping(value = "/app/tripplans/{tripPlanId:\\[0-9a-f]{24}}/fork", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/tripplans/{tripPlanId:[0-9a-f]{24}}/fork", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String forkTripPlan(@PathVariable("tripPlanId") String tripPlanId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
 
         try {
@@ -71,7 +71,7 @@ public class TripPlanController {
      * @param key 不羁旅行令牌
      * @return 行程规划信息
      */
-    @RequestMapping(value = "/app/tripplans/{tripPlanId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/tripplans/{tripPlanId:[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
     public @ResponseBody String updateTripPlan(@PathVariable("tripPlanId") String tripPlanId, @RequestBody TripPlanReq tripPlanReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
 
         try {
@@ -86,7 +86,7 @@ public class TripPlanController {
      * @param tripPlanId 行程规划id
      * @return 行程规划信息
      */
-    @RequestMapping(value = "/app/tripplans/{tripPlanId:\\[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/tripplans/{tripPlanId:[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getTripPlan(@PathVariable("tripPlanId") String tripPlanId) {
 
         try {
@@ -103,7 +103,7 @@ public class TripPlanController {
      * @param key 不羁旅行令牌
      * @return 结果
      */
-    @RequestMapping(value = "/app/tripplans/{tripPlanId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/tripplans/{tripPlanId:[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String removeTripPlan(@PathVariable("tripPlanId") String tripPlanId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
 
         try {

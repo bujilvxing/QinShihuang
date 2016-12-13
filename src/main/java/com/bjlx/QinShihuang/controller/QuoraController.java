@@ -42,7 +42,7 @@ public class QuoraController {
      * @param limit 取多少条回答
      * @return 问答详情信息
      */
-    @RequestMapping(value = "/app/quoras/{questionId:\\[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/quoras/{questionId:[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getQuora(@PathVariable("questionId") String questionId, Integer offset, Integer limit) {
         int defaultOffset = offset == null ? 0 : offset;
         int defaultLimit = limit == null ? 10 : limit;
@@ -98,7 +98,7 @@ public class QuoraController {
      * @param answerReq 回答参数
      * @return 结果
      */
-    @RequestMapping(value = "/app/questions/{questionId:\\[0-9a-f]{24}}/answers", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/questions/{questionId:[0-9a-f]{24}}/answers", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
     public @ResponseBody String addAnswer(@PathVariable("questionId") String questionId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody AnswerReq answerReq) {
         if(answerReq.getTitle() == null)
             return QinShihuangResult.getResult(ErrorCode.TITLE_NULL_1067);
@@ -119,7 +119,7 @@ public class QuoraController {
      * @param key 不羁旅行令牌
      * @return 结果
      */
-    @RequestMapping(value = "/app/questions/{questionId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/questions/{questionId:[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String delQuestion(@PathVariable("questionId") String questionId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return QuoraAPI.delQuestion(questionId, userId, key);
@@ -127,7 +127,7 @@ public class QuoraController {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
-    
+
     /**
      * 删除问题1069
      * @param questionId 问题id
@@ -136,7 +136,7 @@ public class QuoraController {
      * @param key 不羁旅行令牌
      * @return 结果
      */
-    @RequestMapping(value = "/app/questions/{questionId}/answers/{answerId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/questions/{questionId}/answers/{answerId:[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String delAnswer(@PathVariable("questionId") String questionId, @PathVariable("answerId") String answerId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return QuoraAPI.delAnswer(questionId, answerId, userId, key);
@@ -153,7 +153,7 @@ public class QuoraController {
      * @param questionReq 问题参数
      * @return 结果
      */
-    @RequestMapping(value = "/app/questions/{questionId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/questions/{questionId:[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
     public @ResponseBody String editQuestion(@PathVariable("questionId") String questionId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody QuestionReq questionReq) {
         try {
             return QuoraAPI.editQuestion(questionId, userId, key, questionReq.getTitle(), questionReq.getContent(), questionReq.getTags(), questionReq.getTopics(), questionReq.getSource());
@@ -171,7 +171,7 @@ public class QuoraController {
      * @param answerReq 回答参数
      * @return 结果
      */
-    @RequestMapping(value = "/app/questions/{questionId}/answers/{answerId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/questions/{questionId}/answers/{answerId:[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
     public @ResponseBody String editAnswer(@PathVariable("questionId") String questionId, @PathVariable("answerId") String answerId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody AnswerReq answerReq) {
         try {
             return QuoraAPI.editAnswer(questionId, answerId, userId, key, answerReq.getTitle(), answerReq.getContent());

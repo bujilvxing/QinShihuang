@@ -109,12 +109,12 @@ public class Commodity {
     /**
      * 售价
      */
-    private Double price;
+    private Integer price;
     
     /**
      * 市场价
      */
-    private Double marketPrice;
+    private Integer marketPrice;
 
     /**
      * 状态。1、审核中(待审核), 2、审核不通过  3、审核通过  4、下架 5、上架
@@ -234,19 +234,19 @@ public class Commodity {
         this.images = images;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public Double getMarketPrice() {
+    public Integer getMarketPrice() {
         return marketPrice;
     }
 
-    public void setMarketPrice(Double marketPrice) {
+    public void setMarketPrice(Integer marketPrice) {
         this.marketPrice = marketPrice;
     }
 
@@ -320,5 +320,26 @@ public class Commodity {
 
     public void setFavorCnt(Integer favorCnt) {
         this.favorCnt = favorCnt;
+    }
+
+    public Commodity() {
+
+    }
+
+    public Commodity(ObjectId id, String firstCategory, String secondCategory, String thirdCategory, String title, String desc, ImageItem cover, List<ImageItem> images, Integer price, Integer marketPrice, Integer status, List<CommodityPlan> plans, String commodityType) {
+        this.id = id;
+        this.firstCategory = firstCategory;
+        this.secondCategory = secondCategory;
+        this.thirdCategory = thirdCategory;
+        this.title = title;
+        this.desc = desc;
+        this.cover = cover;
+        this.images = images;
+        this.price = price;
+        this.marketPrice = marketPrice;
+        this.status = status;
+        this.plans = plans;
+        this.commodityType = commodityType;
+        this.createTime = System.currentTimeMillis();
     }
 }

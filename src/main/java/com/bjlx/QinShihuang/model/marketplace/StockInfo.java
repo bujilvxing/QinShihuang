@@ -35,14 +35,14 @@ public class StockInfo {
      * 库存量
      */
     @Min(value = 0)
-    Integer quantity = 0;
+    private Integer quantity = 0;
 
     /**
      * 该库存状态说明所对应的时间区间。格式：[start, end]
      */
     @NotNull
     @Size(min = 2, max = 2)
-    List<Long> timeRange;
+    private List<Long> timeRange;
 
     public String getStatus() {
         return status;
@@ -72,5 +72,9 @@ public class StockInfo {
         this.status = status;
         this.quantity = quantity;
         this.timeRange = timeRange;
+    }
+
+    public StockInfo(){
+
     }
 }

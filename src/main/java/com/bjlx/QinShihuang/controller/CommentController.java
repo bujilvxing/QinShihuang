@@ -38,7 +38,7 @@ public class CommentController {
      * @param key 不羁旅行令牌
      * @return 评论结果
      */
-    @RequestMapping(value = "/app/comments/{commentId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/comments/{commentId:[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String removeComment(@PathVariable ("commentId") String commentId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return CommentAPI.removeComment(commentId, userId, key);

@@ -1,15 +1,15 @@
 package com.bjlx.QinShihuang.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.bjlx.QinShihuang.core.formatter.guide.GuideBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.misc.ColumnCommodityFormatter;
 import com.bjlx.QinShihuang.core.formatter.misc.ColumnFormatter;
 import com.bjlx.QinShihuang.model.guide.Guide;
-import com.bjlx.QinShihuang.model.misc.ColumnCommodity;
 import com.bjlx.QinShihuang.model.marketplace.Commodity;
+import com.bjlx.QinShihuang.model.marketplace.CommodityPlan;
+import com.bjlx.QinShihuang.model.marketplace.Pricing;
+import com.bjlx.QinShihuang.model.marketplace.StockInfo;
 import com.bjlx.QinShihuang.model.misc.Column;
+import com.bjlx.QinShihuang.model.misc.ColumnCommodity;
 import com.bjlx.QinShihuang.model.misc.ColumnGuide;
 import com.bjlx.QinShihuang.utils.Constant;
 import com.bjlx.QinShihuang.utils.ErrorCode;
@@ -18,6 +18,10 @@ import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 专栏核心实现
@@ -156,9 +160,17 @@ public class ColumnAPI {
     // 1017
     public static String commodities() {
         List<ObjectId> commodityIds = new ArrayList<ObjectId>();
-        for(int i = 0; i < 10; i++)
-            commodityIds.add(new ObjectId());
-
+        for(int i = 0; i < 10; i++) {
+            Long currentTime = System.currentTimeMillis();
+            List<StockInfo> stockInfos = Arrays.asList(new StockInfo("plenty", 10000, Arrays.asList(currentTime, (currentTime + 7 * 24 * 60 * 60 * 1000L))));
+            List<Pricing> pricings = Arrays.asList(new Pricing(1000, Arrays.asList(currentTime, (currentTime + 7 * 24 * 60 * 60 * 1000L))));
+            List<CommodityPlan> commodityPlans = Arrays.asList(new CommodityPlan(true, stockInfos, 1000, 2000, pricings, "套餐描述" + i, "套餐" + i, new ObjectId().toString()));
+            ObjectId id = new ObjectId();
+            Commodity commodity = new Commodity(id, "一级分类", "二级分类", "三级分类", "商品" + i, "商品描述" + i, AccountAPI.defaultUserAvatar, Arrays.asList(AccountAPI.defaultUserAvatar, AccountAPI.defaultGroupAvatar),
+                    1000, 2000, 2, commodityPlans, "specical");
+            ds.save(commodity);
+            commodityIds.add(id);
+        }
         ColumnCommodity columnCommodity = new ColumnCommodity("specifical", commodityIds);
         ds.save(columnCommodity);
         return "{\"msg\":\"success\"}";

@@ -40,7 +40,7 @@ public class TraceController {
      * @param traceReq 足迹参数
      * @return 足迹信息
      */
-    @RequestMapping(value = "/app/traces/{traceId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/traces/{traceId:[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
     public @ResponseBody String updateTrace(@PathVariable("traceId") String traceId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key, @RequestBody TraceReq traceReq) {
 
         try {
@@ -57,7 +57,7 @@ public class TraceController {
      * @param key 不羁旅行令牌
      * @return 结果
      */
-    @RequestMapping(value = "/app/traces/{traceId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/traces/{traceId:[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String removeTrace(@PathVariable("traceId") String traceId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
 
         try {
@@ -88,7 +88,7 @@ public class TraceController {
      * @param traceId 足迹id
      * @return 足迹详情
      */
-    @RequestMapping(value = "/app/traces/{traceId:\\[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/traces/{traceId:[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getTrace(@PathVariable("traceId") String traceId) {
 
         try {

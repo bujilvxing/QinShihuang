@@ -82,7 +82,7 @@ public class ImController {
      * @param conversationReq 消息免打扰
      * @return 结果
      */
-    @RequestMapping(value = "/app/users/{userId:\\d+}/conversations/{id:\\[0-9a-f]{24}}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/users/{userId:\\d+}/conversations/{id:[0-9a-f]{24}}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
     public @ResponseBody String updateConversation(@PathVariable("userId") Long userId, @PathVariable("id") String id, @RequestHeader("key") String key, @RequestBody ConversationReq conversationReq) {
         if(conversationReq.isMute() == null)
             return QinShihuangResult.getResult(ErrorCode.MUTE_NULL_1083);

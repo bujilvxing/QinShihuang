@@ -1,8 +1,5 @@
 package com.bjlx.QinShihuang.core.formatter.marketplace;
 
-import java.io.IOException;
-import java.util.List;
-
 import com.bjlx.QinShihuang.model.geo.Locality;
 import com.bjlx.QinShihuang.model.marketplace.Commodity;
 import com.bjlx.QinShihuang.model.marketplace.CommodityPlan;
@@ -10,6 +7,9 @@ import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
+import java.util.List;
 
 public class CommoditySerializer extends JsonSerializer<Commodity> {
 
@@ -58,8 +58,8 @@ public class CommoditySerializer extends JsonSerializer<Commodity> {
                 gen.writeEndArray();
             }
             
-            gen.writeNumberField(Commodity.fd_price, commodity.getPrice() == null ? 0.0 : commodity.getPrice());
-            gen.writeNumberField(Commodity.fd_marketPrice, commodity.getMarketPrice() == null ? 0.0 : commodity.getMarketPrice());
+            gen.writeNumberField(Commodity.fd_price, commodity.getPrice() == null ? 0 : commodity.getPrice());
+            gen.writeNumberField(Commodity.fd_marketPrice, commodity.getMarketPrice() == null ? 0 : commodity.getMarketPrice());
             gen.writeNumberField(Commodity.fd_status, commodity.getStatus() == null ? 1 : commodity.getStatus());
             gen.writeNumberField(Commodity.fd_favorCnt, commodity.getFavorCnt() == null ? 0 : commodity.getFavorCnt());
             List<CommodityPlan> plans = commodity.getPlans();

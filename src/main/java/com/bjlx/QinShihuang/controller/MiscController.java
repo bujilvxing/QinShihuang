@@ -98,7 +98,7 @@ public class MiscController {
      * @param key 不羁旅行令牌
      * @return 结果
      */
-    @RequestMapping(value = "/app/travelnotes/{travelNoteId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/travelnotes/{travelNoteId:[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
     public @ResponseBody String updateTravelNote(@PathVariable ("travelNoteId") String travelNoteId, @RequestBody TravelNoteReq travelNoteReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return MiscAPI.updateTravelNote(travelNoteId, travelNoteReq, userId, key);
@@ -112,7 +112,7 @@ public class MiscController {
      * @param travelNoteId 游记id
      * @return 游记详情
      */
-    @RequestMapping(value = "/app/travelnotes/{travelNoteId:\\[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/travelnotes/{travelNoteId:[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getTravelNote(@PathVariable ("travelNoteId") String travelNoteId) {
         try {
             return MiscAPI.getTravelNote(travelNoteId);
@@ -128,7 +128,7 @@ public class MiscController {
      * @param key 不羁旅行令牌
      * @return 结果
      */
-    @RequestMapping(value = "/app/travelnotes/{travelNoteId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/travelnotes/{travelNoteId:[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String removeTravelNote(@PathVariable ("travelNoteId") String travelNoteId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return MiscAPI.removeTravelNote(travelNoteId, userId, key);
@@ -184,7 +184,7 @@ public class MiscController {
      * @param itemId 取消收藏的对象id
      * @return 结果
      */
-    @RequestMapping(value = "/app/favorites/{itemId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/favorites/{itemId:[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String cancelFavorite(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable (value = "itemId") String itemId, Integer favoriteType) {
         if(favoriteType == null)
             return QinShihuangResult.getResult(ErrorCode.FAVORITETYPE_NULL_1099);
@@ -240,7 +240,7 @@ public class MiscController {
      * @param voteType 点赞类型
      * @return 结果
      */
-    @RequestMapping(value = "/app/votes/{itemId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/votes/{itemId:[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String cancelVote(@RequestHeader("userId") Long userId, @RequestHeader("key") String key, @PathVariable("itemId") String itemId, Integer voteType) {
         if(voteType == null)
             return QinShihuangResult.getResult(ErrorCode.VOTETYPE_NULL_1102);
@@ -324,8 +324,8 @@ public class MiscController {
      */
     @RequestMapping(value = "/app/search", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String search(String query, Boolean all, Boolean momemt, Boolean commodity, Boolean guide, Boolean viewspot,
-                                          Boolean trace, Boolean tripPlan, Boolean quora, Boolean activity, Boolean travelNote,
-                                          Boolean restaurant, Boolean hotel, Boolean shopping) {
+                                       Boolean trace, Boolean tripPlan, Boolean quora, Boolean activity, Boolean travelNote,
+                                       Boolean restaurant, Boolean hotel, Boolean shopping) {
         if(query == null)
             return QinShihuangResult.getResult(ErrorCode.QUERY_NULL_1109);
         try {

@@ -181,7 +181,7 @@ public class ChatgroupController {
      * @param key 不羁旅行令牌
      * @return 帖子信息
      */
-    @RequestMapping(value = "/app/chatgroups/{chatgroupId:\\d+}/posts/{postId:\\[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/chatgroups/{chatgroupId:\\d+}/posts/{postId:[0-9a-f]{24}}", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
     public @ResponseBody String updateChatgroupPost(@PathVariable("chatgroupId") Long chatgroupId, @PathVariable("postId") String postId, @RequestBody PostReq postReq, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         // 参数校验
         try {
@@ -198,7 +198,7 @@ public class ChatgroupController {
      * @param key 不羁旅行令牌
      * @return 结果
      */
-    @RequestMapping(value = "/app/posts/{postId:\\[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/posts/{postId:[0-9a-f]{24}}", method= RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public @ResponseBody String removeChatgroupPost(@PathVariable("postId") String postId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         // 参数校验
         try {
@@ -215,7 +215,7 @@ public class ChatgroupController {
      * @param key 不羁旅行令牌
      * @return 帖子详情
      */
-    @RequestMapping(value = "/app/posts/{postId:\\[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/app/posts/{postId:[0-9a-f]{24}}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getChatgroupPost(@PathVariable("postId") String postId, @RequestHeader("userId") Long userId, @RequestHeader("key") String key) {
         // 参数校验
         try {
