@@ -3,9 +3,11 @@ package com.bjlx.QinShihuang.core;
 import com.bjlx.QinShihuang.core.formatter.activity.ActivityBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.activity.ActivityFormatter;
 import com.bjlx.QinShihuang.core.formatter.activity.TicketFormatter;
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.model.activity.Ticket;
+import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.requestmodel.ActivityReq;
 import com.bjlx.QinShihuang.requestmodel.ActivityUpdateReq;
 import com.bjlx.QinShihuang.requestmodel.TicketReq;
@@ -20,6 +22,7 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,12 +49,32 @@ public class ActivityAPI {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1031);
             }
+            UserInfo creator = CommonAPI.getUserBasicById(userId);
+            if(creator == null)
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1031);
             Activity activity = new Activity(activityReq.getTitle(), activityReq.getMaxNum(), activityReq.getStartTime(), activityReq.getEndTime(), activityReq.getAddress(),
                     activityReq.getCover(), activityReq.getTheme(), activityReq.getCategory(), activityReq.getVisiable(), activityReq.getDesc(), activityReq.isFree());
+            activity.setCreator(creator);
+            if (activityReq.getPosters() != null && !activityReq.getPosters().isEmpty())
+                activity.setPosters(activityReq.getPosters());
             if(activityReq.getTags() != null && !activityReq.getTags().isEmpty())
                 activity.setTags(activityReq.getTags());
-            if(activityReq.getApplicantInfos() != null && !activityReq.getApplicantInfos().isEmpty())
-                activity.setApplicantInfos(activityReq.getApplicantInfos());
+            if(activityReq.isCellphoneList() != null)
+                activity.setIsCellphoneList(activityReq.isCellphoneList());
+            if(activityReq.isEmail() != null)
+                activity.setIsEmail(activityReq.isEmail());
+            if(activityReq.isFax() != null)
+                activity.setIsFax(activityReq.isFax());
+            if(activityReq.isPhoneList() != null)
+                activity.setIsPhoneList(activityReq.isPhoneList());
+            if(activityReq.isQq() != null)
+                activity.setIsQq(activityReq.isQq());
+            if(activityReq.isSina() != null)
+                activity.setIsSina(activityReq.isSina());
+            if(activityReq.isWebsite() != null)
+                activity.setIsWebsite(activityReq.isWebsite());
+            if(activityReq.isWeixin() != null)
+                activity.setIsWeixin(activityReq.isWeixin());
             if(activityReq.getTicketIds() != null && !activityReq.getTicketIds().isEmpty()) {
                 List<ObjectId> ticketIds = new ArrayList<ObjectId>();
                 for(String ticketId : activityReq.getTicketIds()) {
@@ -485,4 +508,23 @@ public class ActivityAPI {
         }
     }
 
+    /**
+     * 数据
+     */
+    public static String addActivity() {
+        Ticket ticket = new Ticket(new ObjectId(), "门票1", 160.1, 150.1, false, 1, "退款到平台公共账号", "票种说明", 100, 100001L);
+        ds.save(ticket);
+        Long currentTime = System.currentTimeMillis();
+        Address address = new Address("江西省", "南昌市", "昌北区", "机场路16号", "333133");
+        Joiner joiner = new Joiner(100001L, Arrays.asList("010-62737359"), Arrays.asList("13811111111"), "1234213123", "mofashi", "312413123", "010-62737358", "3813231231@qq.com", "www.bjlx.com");
+        try {
+            UserInfo creator = CommonAPI.getUserBasicById(100001L);
+            Activity activity = new Activity("活动标题1", 100, 20, currentTime, currentTime + 24 * 60 * 1000L, address, AccountAPI.defaultUserAvatar, Arrays.asList(AccountAPI.defaultUserAvatar, AccountAPI.defaultGroupAvatar),
+                    "音乐", "摇滚", Arrays.asList("摇滚", "崔健"), Constant.ACTIVITY_VISIABLE, "", Arrays.asList(joiner), Arrays.asList(ticket.getId()), false, creator);
+            ds.save(activity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "{\"msg\":\"success\"}";
+    }
 }

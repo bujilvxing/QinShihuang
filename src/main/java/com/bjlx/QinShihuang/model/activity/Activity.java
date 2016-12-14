@@ -74,6 +74,22 @@ public class Activity {
     public final static String fd_status = "status";
     @Transient
     public final static String fd_participants = "participants";
+    @Transient
+    public final static String fd_isPhoneList = "isPhoneList";
+    @Transient
+    public final static String fd_isCellphoneList = "isCellphoneList";
+    @Transient
+    public final static String fd_isQq = "isQq";
+    @Transient
+    public final static String fd_isWeixin = "isWeixin";
+    @Transient
+    public final static String fd_isSina = "isSina";
+    @Transient
+    public final static String fd_isFax = "isFax";
+    @Transient
+    public final static String fd_isEmail = "isEmail";
+    @Transient
+    public final static String fd_isWebsite = "isWebsite";
 
     /**
      * 主键
@@ -207,6 +223,46 @@ public class Activity {
      * 发布者
      */
     private UserInfo creator;
+
+    /**
+     * 是否需要填电话列表
+     */
+    private Boolean isPhoneList = false;
+
+    /**
+     * 是否需要填手机号列表: 13811111111
+     */
+    private Boolean isCellphoneList = false;
+
+    /**
+     * 是否需要填qq号
+     */
+    private Boolean isQq = false;
+
+    /**
+     * 是否需要填微信号
+     */
+    private Boolean isWeixin = false;
+
+    /**
+     * 是否需要填新浪微博
+     */
+    private Boolean isSina = false;
+
+    /**
+     * 是否需要填传真
+     */
+    private Boolean isFax = false;
+
+    /**
+     * 是否需要填电子邮箱
+     */
+    private Boolean isEmail = false;
+
+    /**
+     * 是否需要填网址
+     */
+    private Boolean isWebsite = false;
 
     public ObjectId getId() {
         return id;
@@ -412,6 +468,70 @@ public class Activity {
         this.creator = creator;
     }
 
+    public Boolean isPhoneList() {
+        return isPhoneList;
+    }
+
+    public void setIsPhoneList(Boolean isPhoneList) {
+        this.isPhoneList = isPhoneList;
+    }
+
+    public Boolean isCellphoneList() {
+        return isCellphoneList;
+    }
+
+    public void setIsCellphoneList(Boolean isCellphoneList) {
+        this.isCellphoneList = isCellphoneList;
+    }
+
+    public Boolean isQq() {
+        return isQq;
+    }
+
+    public void setIsQq(Boolean isQq) {
+        this.isQq = isQq;
+    }
+
+    public Boolean isWeixin() {
+        return isWeixin;
+    }
+
+    public void setIsWeixin(Boolean isWeixin) {
+        this.isWeixin = isWeixin;
+    }
+
+    public Boolean isSina() {
+        return isSina;
+    }
+
+    public void setIsSina(Boolean isSina) {
+        this.isSina = isSina;
+    }
+
+    public Boolean isFax() {
+        return isFax;
+    }
+
+    public void setIsFax(Boolean isFax) {
+        this.isFax = isFax;
+    }
+
+    public Boolean isEmail() {
+        return isEmail;
+    }
+
+    public void setIsEmail(Boolean isEmail) {
+        this.isEmail = isEmail;
+    }
+
+    public Boolean isWebsite() {
+        return isWebsite;
+    }
+
+    public void setIsWebsite(Boolean isWebsite) {
+        this.isWebsite = isWebsite;
+    }
+
     public Activity() {
 
     }
@@ -451,5 +571,28 @@ public class Activity {
         this.desc = desc;
         this.isFree = isFree;
         this.publishTime = System.currentTimeMillis();
+    }
+
+    public Activity(String title, Integer maxNum, Integer joinNum, Long startTime, Long endTime, Address address, ImageItem cover, List<ImageItem> posters, String theme, String category, List<String> tags, Integer visiable, String desc, List<Joiner> applicantInfos, List<ObjectId> ticketIds, Boolean isFree, UserInfo creator) {
+        this.id = new ObjectId();
+        this.publishTime = System.currentTimeMillis();
+        this.status = 1;
+        this.title = title;
+        this.maxNum = maxNum;
+        this.joinNum = joinNum;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.address = address;
+        this.cover = cover;
+        this.posters = posters;
+        this.theme = theme;
+        this.category = category;
+        this.tags = tags;
+        this.visiable = visiable;
+        this.desc = desc;
+        this.applicantInfos = applicantInfos;
+        this.ticketIds = ticketIds;
+        this.isFree = isFree;
+        this.creator = creator;
     }
 }

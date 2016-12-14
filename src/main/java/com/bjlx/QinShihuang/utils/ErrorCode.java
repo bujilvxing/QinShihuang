@@ -191,7 +191,7 @@ public enum ErrorCode {
 	 */
 	// 发布活动
 	UNLOGIN_1031(103101, "用户未登录"),
-	PRICE_NULL_1031(103102, "收费门票价格不可为空"),
+	USER_NOT_EXIST_1031(103102, "用户不存在"),
 
 	// 取得活动详情
 	ACTIVITY_NOT_EXIST_1033(103301, "活动不存在"),

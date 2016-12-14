@@ -120,6 +120,16 @@ public class ActivitySerializer extends JsonSerializer<Activity> {
             }
             gen.writeBooleanField(Activity.fd_isFree, activity.getIsFree() == null ? true : activity.getIsFree());
             gen.writeNumberField(Activity.fd_publishTime, activity.getPublishTime() == null ? 0L : activity.getPublishTime());
+
+            gen.writeBooleanField(Activity.fd_isPhoneList, activity.isPhoneList() == null ? false : activity.isPhoneList());
+            gen.writeBooleanField(Activity.fd_isCellphoneList, activity.isCellphoneList() == null ? false : activity.isCellphoneList());
+            gen.writeBooleanField(Activity.fd_isQq, activity.isQq() == null ? false : activity.isQq());
+            gen.writeBooleanField(Activity.fd_isWeixin, activity.isWeixin() == null ? false : activity.isWeixin());
+            gen.writeBooleanField(Activity.fd_isSina, activity.isSina() == null ? false : activity.isSina());
+            gen.writeBooleanField(Activity.fd_isFax, activity.isFax() == null ? false : activity.isFax());
+            gen.writeBooleanField(Activity.fd_isEmail, activity.isEmail() == null ? false : activity.isEmail());
+            gen.writeBooleanField(Activity.fd_isWebsite, activity.isWebsite() == null ? false : activity.isWebsite());
+
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

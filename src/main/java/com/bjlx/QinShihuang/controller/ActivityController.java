@@ -212,4 +212,12 @@ public class ActivityController {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
+
+    /**
+     * 数据
+     */
+    @RequestMapping(value = "/app/addActivity", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody String addActivity() {
+        return ActivityAPI.addActivity();
+    }
 }

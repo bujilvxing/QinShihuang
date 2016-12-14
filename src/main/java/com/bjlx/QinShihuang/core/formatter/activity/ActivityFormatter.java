@@ -1,7 +1,9 @@
 package com.bjlx.QinShihuang.core.formatter.activity;
 
+import com.bjlx.QinShihuang.core.formatter.account.UserInfoBasicSerializer;
 import com.bjlx.QinShihuang.core.formatter.misc.AddressSerializer;
 import com.bjlx.QinShihuang.core.formatter.misc.ImageItemSerializer;
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.model.activity.Ticket;
@@ -24,6 +26,7 @@ public class ActivityFormatter {
         module.addSerializer(ImageItem.class, new ImageItemSerializer());
         module.addSerializer(Joiner.class, new JoinerSerializer());
         module.addSerializer(Ticket.class, new TicketSerializer());
+        module.addSerializer(UserInfo.class, new UserInfoBasicSerializer());
         mapper.registerModule(module);
         return mapper;
     }

@@ -1,6 +1,5 @@
 package com.bjlx.QinShihuang.requestmodel;
 
-import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 
@@ -88,9 +87,44 @@ public class ActivityReq {
     private String desc;
 
     /**
-     * 报名人信息
+     * 是否需要填电话列表
      */
-    private List<Joiner> applicantInfos;
+    private Boolean isPhoneList = false;
+
+    /**
+     * 是否需要填手机号列表: 13811111111
+     */
+    private Boolean isCellphoneList = false;
+
+    /**
+     * 是否需要填qq号
+     */
+    private Boolean isQq = false;
+
+    /**
+     * 是否需要填微信号
+     */
+    private Boolean isWeixin = false;
+
+    /**
+     * 是否需要填新浪微博
+     */
+    private Boolean isSina = false;
+
+    /**
+     * 是否需要填传真
+     */
+    private Boolean isFax = false;
+
+    /**
+     * 是否需要填电子邮箱
+     */
+    private Boolean isEmail = false;
+
+    /**
+     * 是否需要填网址
+     */
+    private Boolean isWebsite = false;
 
     /**
      * 门票
@@ -199,12 +233,68 @@ public class ActivityReq {
         this.desc = desc;
     }
 
-    public List<Joiner> getApplicantInfos() {
-        return applicantInfos;
+    public Boolean isPhoneList() {
+        return isPhoneList;
     }
 
-    public void setApplicantInfos(List<Joiner> applicantInfos) {
-        this.applicantInfos = applicantInfos;
+    public void setIsPhoneList(Boolean isPhoneList) {
+        this.isPhoneList = isPhoneList;
+    }
+
+    public Boolean isCellphoneList() {
+        return isCellphoneList;
+    }
+
+    public void setIsCellphoneList(Boolean isCellphoneList) {
+        this.isCellphoneList = isCellphoneList;
+    }
+
+    public Boolean isQq() {
+        return isQq;
+    }
+
+    public void setIsQq(Boolean isQq) {
+        this.isQq = isQq;
+    }
+
+    public Boolean isWeixin() {
+        return isWeixin;
+    }
+
+    public void setIsWeixin(Boolean isWeixin) {
+        this.isWeixin = isWeixin;
+    }
+
+    public Boolean isSina() {
+        return isSina;
+    }
+
+    public void setIsSina(Boolean isSina) {
+        this.isSina = isSina;
+    }
+
+    public Boolean isFax() {
+        return isFax;
+    }
+
+    public void setIsFax(Boolean isFax) {
+        this.isFax = isFax;
+    }
+
+    public Boolean isEmail() {
+        return isEmail;
+    }
+
+    public void setIsEmail(Boolean isEmail) {
+        this.isEmail = isEmail;
+    }
+
+    public Boolean isWebsite() {
+        return isWebsite;
+    }
+
+    public void setIsWebsite(Boolean isWebsite) {
+        this.isWebsite = isWebsite;
     }
 
     public List<String> getTicketIds() {

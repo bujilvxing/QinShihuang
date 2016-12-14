@@ -103,7 +103,7 @@ public class Ticket {
     /**
      * 门票状态。1表示正常，2表示已删除
      */
-    private Integer status;
+    private Integer status = 1;
 
     /**
      * 门票创建人
@@ -228,6 +228,21 @@ public class Ticket {
         this.id = new ObjectId(id);
         this.free = free;
         this.maxNum = maxNum;
+        this.createTime = System.currentTimeMillis();
+        this.updateTime = this.createTime;
+    }
+
+    public Ticket(ObjectId id, String title, Double price, Double marketPrice, Boolean free, Integer refundWay, String refundDesc, String desc, Integer maxNum, Long creatorId) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.marketPrice = marketPrice;
+        this.free = free;
+        this.refundWay = refundWay;
+        this.refundDesc = refundDesc;
+        this.desc = desc;
+        this.maxNum = maxNum;
+        this.creatorId = creatorId;
         this.createTime = System.currentTimeMillis();
         this.updateTime = this.createTime;
     }
