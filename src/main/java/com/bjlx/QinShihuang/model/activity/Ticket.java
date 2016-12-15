@@ -218,16 +218,23 @@ public class Ticket {
 
     }
 
-    public Ticket(Boolean free, Integer maxNum) {
+    public Ticket(String title, Integer maxNum, Long creatorId) {
         this.id = new ObjectId();
-        this.free = free;
+        this.title = title;
         this.maxNum = maxNum;
+        this.creatorId = creatorId;
+        this.status = 1;
+        this.createTime = System.currentTimeMillis();
+        this.updateTime = this.createTime;
     }
 
-    public Ticket(String id, Boolean free, Integer maxNum) {
+    public Ticket(String id, String title, Boolean free, Integer maxNum, Long creatorId) {
         this.id = new ObjectId(id);
+        this.title = title;
         this.free = free;
         this.maxNum = maxNum;
+        this.creatorId = creatorId;
+        this.status = 1;
         this.createTime = System.currentTimeMillis();
         this.updateTime = this.createTime;
     }
@@ -245,5 +252,6 @@ public class Ticket {
         this.creatorId = creatorId;
         this.createTime = System.currentTimeMillis();
         this.updateTime = this.createTime;
+        this.status = 1;
     }
 }

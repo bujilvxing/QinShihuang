@@ -59,6 +59,8 @@ public class Activity {
 	@Transient
     public final static String fd_applicantInfos = "applicantInfos";
     @Transient
+    public final static String fd_applicantInfos_userId = "applicantInfos.userId";
+    @Transient
     public final static String fd_ticketIds = "ticketIds";
 	@Transient
     public final static String fd_isFree = "isFree";
@@ -72,8 +74,6 @@ public class Activity {
     public final static String fd_creatorId = "creator.userId";
     @Transient
     public final static String fd_status = "status";
-    @Transient
-    public final static String fd_participants = "participants";
     @Transient
     public final static String fd_isPhoneList = "isPhoneList";
     @Transient
@@ -559,6 +559,7 @@ public class Activity {
 
     public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, ImageItem cover, String theme, String category, Integer visiable, String desc, Boolean isFree) {
         this.id = new ObjectId();
+        this.status = 1;
         this.title = title;
         this.maxNum = maxNum;
         this.startTime = startTime;

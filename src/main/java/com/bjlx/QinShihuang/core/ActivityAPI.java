@@ -8,6 +8,7 @@ import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.model.activity.Ticket;
 import com.bjlx.QinShihuang.model.misc.Address;
+import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.requestmodel.ActivityReq;
 import com.bjlx.QinShihuang.requestmodel.ActivityUpdateReq;
 import com.bjlx.QinShihuang.requestmodel.TicketReq;
@@ -190,7 +191,7 @@ public class ActivityAPI {
             // 用户发布的活动
             List<Activity> publishActivities = queryOwner.asList();
 
-            Query<Activity> queryJoin = ds.createQuery(Activity.class).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL).field(Activity.fd_participants).hasThisOne(userId)
+            Query<Activity> queryJoin = ds.createQuery(Activity.class).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL).field(Activity.fd_applicantInfos_userId).hasThisOne(userId)
                     .order(String.format("-%s", Activity.fd_publishTime));
             if(offset != null)
                 if(offset >= 0)
@@ -222,19 +223,19 @@ public class ActivityAPI {
     /**
      * 报名活动
      * @param activityId 活动id
-     * @param joiner 参与人联系方式
+     * @param contact 参与人联系方式
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 结果
      * @throws Exception 异常
      */
-    public static String joinActivity(String activityId, Joiner joiner, Long userId, String key) throws Exception {
+    public static String joinActivity(String activityId, Contact contact, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1035);
             }
-            Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_id).equal(new ObjectId(activityId)).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL);
-            joiner.setUserId(userId);
+            Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_id).equal(new ObjectId(activityId)).field(Activity.fd_creatorId).notEqual(userId).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL);
+            Joiner joiner = new Joiner(userId, contact.getPhoneList(), contact.getCellphoneList(), contact.getQq(), contact.getWeixin(), contact.getSina(), contact.getFax(), contact.getEmail(), contact.getWebsite());
             UpdateOperations<Activity> ops = ds.createUpdateOperations(Activity.class).addToSet(Activity.fd_applicantInfos, joiner);
             ds.updateFirst(query, ops);
             return QinShihuangResult.ok();
@@ -247,19 +248,19 @@ public class ActivityAPI {
     /**
      * 取消报名活动
      * @param activityId 活动id
-     * @param joiner 参与人联系方式
+     * @param contact 参与人联系方式
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 结果
      * @throws Exception 异常
      */
-    public static String quitActivity(String activityId, Joiner joiner, Long userId, String key) throws Exception {
+    public static String quitActivity(String activityId, Contact contact, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1036);
             }
             Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_id).equal(new ObjectId(activityId)).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL);
-            joiner.setUserId(userId);
+            Joiner joiner = new Joiner(userId, contact.getPhoneList(), contact.getCellphoneList(), contact.getQq(), contact.getWeixin(), contact.getSina(), contact.getFax(), contact.getEmail(), contact.getWebsite());
             UpdateOperations<Activity> ops = ds.createUpdateOperations(Activity.class).removeAll(Activity.fd_applicantInfos, joiner);
             ds.updateFirst(query, ops);
             return QinShihuangResult.ok();
@@ -336,6 +337,23 @@ public class ActivityAPI {
                 ops.set(Activity.fd_ticketIds, ticketIds);
             }
 
+            if(activityUpdateReq.isCellphoneList() != null)
+                ops.set(Activity.fd_isCellphoneList, activityUpdateReq.isCellphoneList());
+            if(activityUpdateReq.isEmail() != null)
+                ops.set(Activity.fd_isEmail, activityUpdateReq.isEmail());
+            if(activityUpdateReq.isFax() != null)
+                ops.set(Activity.fd_isFax, activityUpdateReq.isFax());
+            if(activityUpdateReq.isPhoneList() != null)
+                ops.set(Activity.fd_isPhoneList, activityUpdateReq.isPhoneList());
+            if(activityUpdateReq.isQq() != null)
+                ops.set(Activity.fd_isQq, activityUpdateReq.isQq());
+            if(activityUpdateReq.isSina() != null)
+                ops.set(Activity.fd_isSina, activityUpdateReq.isSina());
+            if(activityUpdateReq.isWebsite() != null)
+                ops.set(Activity.fd_isWebsite, activityUpdateReq.isWebsite());
+            if(activityUpdateReq.isWeixin() != null)
+                ops.set(Activity.fd_isWeixin, activityUpdateReq.isWeixin());
+
             ds.findAndModify(query, ops, false);
             return QinShihuangResult.ok();
         } catch (Exception e) {
@@ -358,7 +376,7 @@ public class ActivityAPI {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1038);
             }
 
-            Ticket ticket = new Ticket(ticketReq.getId(), ticketReq.isFree(), ticketReq.getMaxNum());
+            Ticket ticket = new Ticket(ticketReq.getTitle(), ticketReq.getMaxNum(), userId);
             if(ticketReq.getDesc() != null)
                 ticket.setDesc(ticketReq.getDesc());
             if(!ticketReq.isFree()) {

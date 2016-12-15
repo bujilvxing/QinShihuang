@@ -1,6 +1,7 @@
 package com.bjlx.QinShihuang.model.activity;
 
 import com.bjlx.QinShihuang.model.misc.Contact;
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Transient;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
  * 参与人
  * Created by xiaozhi on 2016/12/6.
  */
+@Embedded
 public class Joiner extends Contact {
 
     @Transient
