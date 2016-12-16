@@ -390,8 +390,9 @@ public class ActivityAPI {
                 if(ticketReq.getRefundDesc() != null)
                     ticket.setRefundDesc(ticketReq.getRefundDesc());
             }
+            ticket.setFree(ticketReq.isFree());
             ds.save(ticket);
-            return QinShihuangResult.ok();
+            return QinShihuangResult.ok(TicketFormatter.getMapper().valueToTree(ticket));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -418,7 +419,8 @@ public class ActivityAPI {
             if(activity != null)
                 return QinShihuangResult.getResult(ErrorCode.TICKET_USED_1039);
             // 删除门票
-            Query<Ticket> ticketQuery = ds.createQuery(Ticket.class).field(Ticket.fd_id).equal(new ObjectId(ticketId)).field(Ticket.fd_status).equal(Constant.TICKET_NORMAL);
+            Query<Ticket> ticketQuery = ds.createQuery(Ticket.class).field(Ticket.fd_id).equal(new ObjectId(ticketId)).field(Ticket.fd_creatorId).equal(userId)
+                    .field(Ticket.fd_status).equal(Constant.TICKET_NORMAL);
             UpdateOperations ops = ds.createUpdateOperations(Ticket.class).set(Ticket.fd_status, Constant.TICKET_UNENABLE);
             ds.updateFirst(ticketQuery, ops);
             return QinShihuangResult.ok();

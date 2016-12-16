@@ -36,7 +36,7 @@ public class TicketReq {
      * 是否免费
      */
     @NotNull
-    private Boolean free;
+    private Boolean free = false;
 
     /**
      * 退款方式，1表示退款到平台公共账号，2表示原路返回，3表示不接受退款
