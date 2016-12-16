@@ -187,7 +187,7 @@ public class MiscAPI {
             if(travelNote == null)
                 return QinShihuangResult.getResult(ErrorCode.TRAVELNOTE_NOT_EXIST_1046);
             else
-                return QinShihuangResult.ok(TravelNoteBasicFormatter.getMapper().valueToTree(travelNote));
+                return QinShihuangResult.ok(TravelNoteFormatter.getMapper().valueToTree(travelNote));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

@@ -147,8 +147,10 @@ public class MiscController {
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/travelnotes", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody String getUserTravelNotes(@PathVariable ("userId") Long userId, @RequestHeader("key") String key, Integer offset, Integer limit) {
+        Integer defaultOffset = offset == null ? 0 : offset;
+        Integer defaultLimit = limit == null ? 0 : limit;
         try {
-            return MiscAPI.getUserTravelNotes(userId, key, offset, limit);
+            return MiscAPI.getUserTravelNotes(userId, key, defaultOffset, defaultLimit);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

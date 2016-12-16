@@ -30,8 +30,8 @@ public class TravelNoteBasicSerializer extends JsonSerializer<TravelNote> {
             gen.writeFieldName(TravelNote.fd_author);
             UserInfo author = travelNote.getAuthor();
             if (author != null) {
-                JsonSerializer<Object> retCover = serializers.findValueSerializer(UserInfo.class, null);
-                retCover.serialize(cover, gen, serializers);
+                JsonSerializer<Object> retUserInfo = serializers.findValueSerializer(UserInfo.class, null);
+                retUserInfo.serialize(author, gen, serializers);
             } else {
                 gen.writeStartObject();
                 gen.writeEndObject();

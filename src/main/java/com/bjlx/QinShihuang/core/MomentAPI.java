@@ -69,10 +69,10 @@ public class MomentAPI {
             // 发表人为自己或者关注的人
             Query<Moment> queryMoment = ds.createQuery(Moment.class).field(Moment.fd_userId).in(followingIds);
             if(latestTime == null) {
-                query.field(Moment.fd_publishTime).lessThan(earliestTime).offset(offset).limit(limit)
+                queryMoment.field(Moment.fd_publishTime).lessThan(earliestTime).offset(offset).limit(limit)
                         .order(String.format("-%s", Moment.fd_publishTime));
             } else {
-                query.field(Moment.fd_publishTime).greaterThan(latestTime).offset(offset).limit(limit)
+                queryMoment.field(Moment.fd_publishTime).greaterThan(latestTime).offset(offset).limit(limit)
                         .order(String.format("-%s", Moment.fd_publishTime));
             }
             List<Moment> moments = queryMoment.asList();

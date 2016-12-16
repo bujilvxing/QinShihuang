@@ -511,6 +511,9 @@ public class AccountAPI {
 
 				ImageItem defaultAvatar = new ImageItem();
 				defaultAvatar.setUrl(avatar);
+				defaultAvatar.setWidth(100);
+				defaultAvatar.setHeight(100);
+				defaultAvatar.setFmt("jpg");
 				userInfo = new UserInfo(userId, nickName, defaultAvatar, defaultUserBackGround, promotionCode);
 				switch (provider) {
 					case UserInfo.fd_weixin:

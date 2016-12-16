@@ -328,6 +328,7 @@ public class TravelNote {
 		this.author = author;
 		this.travelTime = travelTime;
 		this.summary = summary;
+		this.status = 1;
 	}
 
 	public TravelNote(ObjectId id, ImageItem cover, List<ImageItem> images, Double hotness, String title,
@@ -346,6 +347,7 @@ public class TravelNote {
 		this.contents = contents;
 		this.source = source;
 		this.essence = essence;
+		this.status = 1;
 	}
 	
 }
