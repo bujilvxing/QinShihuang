@@ -49,7 +49,7 @@ public class TraceAPI {
             if(author == null)
                 return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1052);
 
-            Trace trace = new Trace(userId, author.getNickName(), author.getAvatar(), traceReq.getTraceTime(), traceReq.getTitle(),
+            Trace trace = new Trace(userId, author.getNickName(), author.getAvatar(), traceReq.getTraceTime() == null ? System.currentTimeMillis() : traceReq.getTraceTime(), traceReq.getTitle(),
                     traceReq.getLat() == null ? 0.0 : traceReq.getLat(), traceReq.getLng() == null ? 0.0 : traceReq.getLng());
             if(traceReq.getDesc() != null)
                 trace.setDesc(traceReq.getDesc());
