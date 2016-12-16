@@ -1,7 +1,7 @@
 package com.bjlx.QinShihuang.model.activity;
 
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.misc.Address;
-import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
@@ -58,10 +58,38 @@ public class Activity {
     public final static String fd_desc = "desc";
 	@Transient
     public final static String fd_applicantInfos = "applicantInfos";
-	@Transient
-    public final static String fd_tickets = "tickets";
+    @Transient
+    public final static String fd_applicantInfos_userId = "applicantInfos.userId";
+    @Transient
+    public final static String fd_ticketIds = "ticketIds";
 	@Transient
     public final static String fd_isFree = "isFree";
+    @Transient
+    public final static String fd_voteCnt = "voteCnt";
+    @Transient
+    public final static String fd_publishTime = "publishTime";
+    @Transient
+    public final static String fd_creator = "creator";
+    @Transient
+    public final static String fd_creatorId = "creator.userId";
+    @Transient
+    public final static String fd_status = "status";
+    @Transient
+    public final static String fd_isPhoneList = "isPhoneList";
+    @Transient
+    public final static String fd_isCellphoneList = "isCellphoneList";
+    @Transient
+    public final static String fd_isQq = "isQq";
+    @Transient
+    public final static String fd_isWeixin = "isWeixin";
+    @Transient
+    public final static String fd_isSina = "isSina";
+    @Transient
+    public final static String fd_isFax = "isFax";
+    @Transient
+    public final static String fd_isEmail = "isEmail";
+    @Transient
+    public final static String fd_isWebsite = "isWebsite";
 
     /**
      * 主键
@@ -106,6 +134,12 @@ public class Activity {
      */
     @Min(value = 0)
     private Integer favorCnt = 0;
+
+    /**
+     * 点赞数
+     */
+    @Min(value = 0)
+    private Integer voteCnt = 0;
 
     /**
      * 评论次数
@@ -163,17 +197,72 @@ public class Activity {
     /**
      * 报名人信息
      */
-    private List<Contact> applicantInfos;
+    private List<Joiner> applicantInfos;
 
     /**
      * 门票
      */
-    private List<Ticket> tickets;
+    private List<ObjectId> ticketIds;
     
     /**
      * 是否免费
      */
     private Boolean isFree = true;
+
+    /**
+     * 活动发布时间
+     */
+    private Long publishTime = 0L;
+
+    /**
+     * 活动的状态。1表示正常，2表示已删除
+     */
+    private Integer status;
+
+    /**
+     * 发布者
+     */
+    private UserInfo creator;
+
+    /**
+     * 是否需要填电话列表
+     */
+    private Boolean isPhoneList = false;
+
+    /**
+     * 是否需要填手机号列表: 13811111111
+     */
+    private Boolean isCellphoneList = false;
+
+    /**
+     * 是否需要填qq号
+     */
+    private Boolean isQq = false;
+
+    /**
+     * 是否需要填微信号
+     */
+    private Boolean isWeixin = false;
+
+    /**
+     * 是否需要填新浪微博
+     */
+    private Boolean isSina = false;
+
+    /**
+     * 是否需要填传真
+     */
+    private Boolean isFax = false;
+
+    /**
+     * 是否需要填电子邮箱
+     */
+    private Boolean isEmail = false;
+
+    /**
+     * 是否需要填网址
+     */
+    private Boolean isWebsite = false;
 
     public ObjectId getId() {
         return id;
@@ -319,22 +408,22 @@ public class Activity {
         this.desc = desc;
     }
 
-    public List<Contact> getApplicantInfos() {
+    public List<Joiner> getApplicantInfos() {
         return applicantInfos;
     }
 
-    public void setApplicantInfos(List<Contact> applicantInfos) {
+    public void setApplicantInfos(List<Joiner> applicantInfos) {
         this.applicantInfos = applicantInfos;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
+    public List<ObjectId> getTicketIds() {
+        return ticketIds;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public void setTicketIds(List<ObjectId> ticketIds) {
+        this.ticketIds = ticketIds;
     }
-    
+
     public Boolean getIsFree() {
 		return isFree;
 	}
@@ -343,7 +432,121 @@ public class Activity {
 		this.isFree = isFree;
 	}
 
-	public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
+    public Integer getVoteCnt() {
+        return voteCnt;
+    }
+
+    public void setVoteCnt(Integer voteCnt) {
+        this.voteCnt = voteCnt;
+    }
+
+    public Boolean isFree() {
+        return isFree;
+    }
+
+    public Long getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(Long publishTime) {
+        this.publishTime = publishTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public UserInfo getCreator() {
+        return creator;
+    }
+
+    public void setCreator(UserInfo creator) {
+        this.creator = creator;
+    }
+
+    public Boolean isPhoneList() {
+        return isPhoneList;
+    }
+
+    public void setIsPhoneList(Boolean isPhoneList) {
+        this.isPhoneList = isPhoneList;
+    }
+
+    public Boolean isCellphoneList() {
+        return isCellphoneList;
+    }
+
+    public void setIsCellphoneList(Boolean isCellphoneList) {
+        this.isCellphoneList = isCellphoneList;
+    }
+
+    public Boolean isQq() {
+        return isQq;
+    }
+
+    public void setIsQq(Boolean isQq) {
+        this.isQq = isQq;
+    }
+
+    public Boolean isWeixin() {
+        return isWeixin;
+    }
+
+    public void setIsWeixin(Boolean isWeixin) {
+        this.isWeixin = isWeixin;
+    }
+
+    public Boolean isSina() {
+        return isSina;
+    }
+
+    public void setIsSina(Boolean isSina) {
+        this.isSina = isSina;
+    }
+
+    public Boolean isFax() {
+        return isFax;
+    }
+
+    public void setIsFax(Boolean isFax) {
+        this.isFax = isFax;
+    }
+
+    public Boolean isEmail() {
+        return isEmail;
+    }
+
+    public void setIsEmail(Boolean isEmail) {
+        this.isEmail = isEmail;
+    }
+
+    public Boolean isWebsite() {
+        return isWebsite;
+    }
+
+    public void setIsWebsite(Boolean isWebsite) {
+        this.isWebsite = isWebsite;
+    }
+
+    public Activity() {
+
+    }
+
+    public Activity(String id, String title, String theme, String category, Integer visiable, ImageItem cover, Boolean isFree) {
+        this.id = new ObjectId(id);
+        this.title = title;
+        this.theme = theme;
+        this.category = category;
+        this.visiable = visiable;
+        this.cover = cover;
+        this.isFree = isFree;
+    }
+
+    public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, String theme, String category) {
         this.id = new ObjectId();
         this.title = title;
         this.maxNum = maxNum;
@@ -352,5 +555,45 @@ public class Activity {
         this.address = address;
         this.theme = theme;
         this.category = category;
+    }
+
+    public Activity(String title, Integer maxNum, Long startTime, Long endTime, Address address, ImageItem cover, String theme, String category, Integer visiable, String desc, Boolean isFree) {
+        this.id = new ObjectId();
+        this.status = 1;
+        this.title = title;
+        this.maxNum = maxNum;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.address = address;
+        this.cover = cover;
+        this.theme = theme;
+        this.category = category;
+        this.visiable = visiable;
+        this.desc = desc;
+        this.isFree = isFree;
+        this.publishTime = System.currentTimeMillis();
+    }
+
+    public Activity(String title, Integer maxNum, Integer joinNum, Long startTime, Long endTime, Address address, ImageItem cover, List<ImageItem> posters, String theme, String category, List<String> tags, Integer visiable, String desc, List<Joiner> applicantInfos, List<ObjectId> ticketIds, Boolean isFree, UserInfo creator) {
+        this.id = new ObjectId();
+        this.publishTime = System.currentTimeMillis();
+        this.status = 1;
+        this.title = title;
+        this.maxNum = maxNum;
+        this.joinNum = joinNum;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.address = address;
+        this.cover = cover;
+        this.posters = posters;
+        this.theme = theme;
+        this.category = category;
+        this.tags = tags;
+        this.visiable = visiable;
+        this.desc = desc;
+        this.applicantInfos = applicantInfos;
+        this.ticketIds = ticketIds;
+        this.isFree = isFree;
+        this.creator = creator;
     }
 }

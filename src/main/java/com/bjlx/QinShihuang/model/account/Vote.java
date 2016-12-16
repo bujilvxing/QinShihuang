@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 /**
  * 点赞
@@ -13,6 +14,17 @@ import org.mongodb.morphia.annotations.Id;
 @Entity
 public class Vote {
 
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_userId = "userId";
+	@Transient
+	public final static String fd_voteType = "voteType";
+	@Transient
+	public final static String fd_itemId = "itemId";
+	@Transient
+	public final static String fd_voteTime = "voteTime";
+	
 	/**
 	 * 主键
 	 */
@@ -33,7 +45,7 @@ public class Vote {
 	/**
 	 * 点赞对象的id
 	 */
-	private ObjectId targetId;
+	private ObjectId itemId;
 	
 	/**
 	 * 点赞时间
@@ -64,12 +76,12 @@ public class Vote {
 		this.voteType = voteType;
 	}
 
-	public ObjectId getTargetId() {
-		return targetId;
+	public ObjectId getItemId() {
+		return itemId;
 	}
 
-	public void setTargetId(ObjectId targetId) {
-		this.targetId = targetId;
+	public void setItemId(ObjectId itemId) {
+		this.itemId = itemId;
 	}
 
 	public Long getVoteTime() {

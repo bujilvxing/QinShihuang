@@ -18,6 +18,7 @@ public class ColumnSerializer extends JsonSerializer<Column> {
             gen.writeStringField(Column.fd_itemType, column.getItemType() == null ? "" : column.getItemType());
             gen.writeStringField(Column.fd_columnType, column.getColumnType() == null ? "special" : column.getColumnType());
             gen.writeStringField(Column.fd_title, column.getTitle() == null ? "" : column.getTitle());
+            gen.writeStringField(Column.fd_desc, column.getDesc() == null ? "" : column.getDesc());
             gen.writeStringField(Column.fd_link, column.getLink() == null ? "" : column.getLink());
             gen.writeStringField(Column.fd_linkType, column.getLinkType() == null ? "app" : column.getLinkType());
             ImageItem cover = column.getCover();

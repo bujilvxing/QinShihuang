@@ -71,7 +71,9 @@ public class Viewspot {
 	public final static String fd_discount = "discount";
 	@Transient
 	public final static String fd_locality = "locality";
-	
+	@Transient
+	public final static String fd_favorCnt = "favorCnt";
+
 	/**
 	 * 主键
 	 */
@@ -148,7 +150,7 @@ public class Viewspot {
 	 * POI价格
 	 */
 	@NotBlank
-	private Double price = 0.0;
+	private Integer price = 0;
 
 	/**
 	 * POI价格描述
@@ -222,8 +224,14 @@ public class Viewspot {
 	/**
 	 * 市场价
 	 */
-	private Double marketPrice = 0.0;
-	
+	private Integer marketPrice = 0;
+
+	/**
+	 * 收藏次数
+	 */
+	@Min(value = 0)
+	private Integer favorCnt = 0;
+
 	public ObjectId getId() {
 		return id;
 	}
@@ -320,11 +328,11 @@ public class Viewspot {
 		this.url = url;
 	}
 
-	public Double getPrice() {
+	public Integer getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 
@@ -432,11 +440,61 @@ public class Viewspot {
 		this.discount = discount;
 	}
 
-	public Double getMarketPrice() {
+	public Integer getMarketPrice() {
 		return marketPrice;
 	}
 
-	public void setMarketPrice(Double marketPrice) {
+	public void setMarketPrice(Integer marketPrice) {
+		this.marketPrice = marketPrice;
+	}
+
+	public Integer getFavorCnt() {
+		return favorCnt;
+	}
+
+	public void setFavorCnt(Integer favorCnt) {
+		this.favorCnt = favorCnt;
+	}
+
+	public Viewspot() {
+
+	}
+
+	public Viewspot(String id, ImageItem cover, String zhName, String url, String enName, Integer price, Integer marketPrice) {
+		this.id = new ObjectId(id);
+		this.cover = cover;
+		this.zhName = zhName;
+		this.url = url;
+		this.enName = enName;
+		this.price = price;
+		this.marketPrice = marketPrice;
+	}
+
+	public Viewspot(ObjectId id, Double lat, Double lng, ImageItem cover, List<ImageItem> images, Integer rank, Double hotness, Double rating, Contact contact, String zhName, String enName, String url, Integer price, String priceDesc, String openTime, Description description, List<String> tags, List<String> targets, String source, String guideUrl, Address address, List<Locality> locList, Locality locality, Float discount, Integer marketPrice) {
+		this.id = id;
+		this.lat = lat;
+		this.lng = lng;
+		this.cover = cover;
+		this.images = images;
+		this.rank = rank;
+		this.hotness = hotness;
+		this.rating = rating;
+		this.contact = contact;
+		this.zhName = zhName;
+		this.enName = enName;
+		this.url = url;
+		this.price = price;
+		this.priceDesc = priceDesc;
+		this.openTime = openTime;
+		this.description = description;
+		this.tags = tags;
+		this.targets = targets;
+		this.source = source;
+		this.guideUrl = guideUrl;
+		this.address = address;
+		this.locList = locList;
+		this.locality = locality;
+		this.discount = discount;
 		this.marketPrice = marketPrice;
 	}
 }

@@ -3,6 +3,8 @@ package com.bjlx.QinShihuang.model.misc;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Transient;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 联系地址序列化
  * Created by pengyt on 2016/7/22.
@@ -24,21 +26,25 @@ public class Address {
     /**
      * 省份
      */
+    @NotNull
     private String province;
 
     /**
      * 城市
      */
+    @NotNull
     private String city;
 
     /**
      * 区，县
      */
+    @NotNull
     private String district;
 
     /**
      * 详细地址
      */
+    @NotNull
     private String detail;
 
     /**
@@ -83,6 +89,18 @@ public class Address {
     }
 
     public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public Address(){
+
+    }
+
+    public Address(String province, String city, String district, String detail, String zipCode) {
+        this.province = province;
+        this.city = city;
+        this.district = district;
+        this.detail = detail;
         this.zipCode = zipCode;
     }
 }

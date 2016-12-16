@@ -469,4 +469,41 @@ public class Locality {
 	public void setTimeCost(Integer timeCost) {
 		this.timeCost = timeCost;
 	}
+
+	public Locality() {
+	}
+
+	public Locality(ObjectId id, String zhName, String enName, ImageItem cover) {
+		this.id = id;
+		this.zhName = zhName;
+		this.enName = enName;
+		this.cover = cover;
+	}
+
+	public Locality(ObjectId id, String zhName, String enName, ImageItem cover, List<ImageItem> images, Double lat, Double lng, Integer rank, List<DetailsEntry> remoteTraffic, List<DetailsEntry> localTraffic, String shoppingIntro, String diningIntro, List<DetailsEntry> cuisines, List<Activity> activities, List<DetailsEntry> tips, List<DetailsEntry> geoHistory, List<DetailsEntry> specials, Double hotness, Double rating, Set<String> tags, String desc, String travelMonth, String timeCostDesc, Integer timeCost) {
+		this.id = id;
+		this.zhName = zhName;
+		this.enName = enName;
+		this.cover = cover;
+		this.images = images;
+		this.lat = lat;
+		this.lng = lng;
+		this.rank = rank;
+		this.remoteTraffic = remoteTraffic;
+		this.localTraffic = localTraffic;
+		this.shoppingIntro = shoppingIntro;
+		this.diningIntro = diningIntro;
+		this.cuisines = cuisines;
+		this.activities = activities;
+		this.tips = tips;
+		this.geoHistory = geoHistory;
+		this.specials = specials;
+		this.hotness = hotness;
+		this.rating = rating;
+		this.tags = tags;
+		this.desc = desc;
+		this.travelMonth = travelMonth;
+		this.timeCostDesc = timeCostDesc;
+		this.timeCost = timeCost;
+	}
 }

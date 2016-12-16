@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.model.im;
 
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
@@ -49,12 +50,16 @@ public class Post {
 	@Transient
 	public final static String fd_rating = "rating";
 	@Transient
-	public final static String fd_authorId = "authorId";
+	public final static String fd_authorId = "author.userId";
 	@Transient
-	public final static String fd_authorNickName = "authorNickName";
+	public final static String fd_author = "author";
 	@Transient
-	public final static String fd_authorAvatar = "authorAvatar";
-	
+    public final static String fd_voteCnt = "voteCnt";
+    @Transient
+    public final static String fd_chatgroupId = "chatgroupId";
+    @Transient
+    public final static String fd_status = "status";
+
 	/**
 	 * 主键
 	 */
@@ -90,12 +95,6 @@ public class Post {
     private Long updateTime;
 
     /**
-     * 收藏次数
-     */
-    @Min(value = 0)
-    private Integer favorCnt = 0;
-
-    /**
      * 评论次数
      */
     @Min(value = 0)
@@ -112,7 +111,19 @@ public class Post {
      */
     @Min(value = 0)
     private Integer shareCnt = 0;
-    
+
+    /**
+     * 收藏次数
+     */
+    @Min(value = 0)
+    private Integer favorCnt = 0;
+
+    /**
+     * 点赞数
+     */
+    @Min(value = 0)
+    private Integer voteCnt = 0;
+
     /**
      * 帖子摘要
      */
@@ -145,17 +156,17 @@ public class Post {
     /**
      * 作者的用户id
      */
-    private Long authorId;
-    
-    /**
-     * 作者昵称
-     */
-    private String authorNickName;
+    private UserInfo author;
 
     /**
-     * 作者头像
+     * 群组id
      */
-    private ImageItem authorAvatar;
+    private Long chatgroupId;
+
+    /**
+     * 帖子状态
+     */
+    private Integer status;
 
     public ObjectId getId() {
         return id;
@@ -277,27 +288,53 @@ public class Post {
         this.rating = rating;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public UserInfo getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthor(UserInfo author) {
+        this.author = author;
     }
 
-    public String getAuthorNickName() {
-        return authorNickName;
+    public Integer getVoteCnt() {
+        return voteCnt;
     }
 
-    public void setAuthorNickName(String authorNickName) {
-        this.authorNickName = authorNickName;
+    public void setVoteCnt(Integer voteCnt) {
+        this.voteCnt = voteCnt;
     }
 
-    public ImageItem getAuthorAvatar() {
-        return authorAvatar;
+    public Long getChatgroupId() {
+        return chatgroupId;
     }
 
-    public void setAuthorAvatar(ImageItem authorAvatar) {
-        this.authorAvatar = authorAvatar;
+    public void setChatgroupId(Long chatgroupId) {
+        this.chatgroupId = chatgroupId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Post() {
+
+    }
+
+    public Post(String title, ImageItem cover, String summary, String content, UserInfo author, Long chatgroupId) {
+        this.id = new ObjectId();
+        Long currentTime = System.currentTimeMillis();
+        this.publishTime = currentTime;
+        this.updateTime = currentTime;
+        this.status = 1;
+        this.title = title;
+        this.cover = cover;
+        this.summary = summary;
+        this.content = content;
+        this.author = author;
+        this.chatgroupId = chatgroupId;
     }
 }

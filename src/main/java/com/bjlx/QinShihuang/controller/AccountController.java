@@ -59,7 +59,7 @@ public class AccountController {
 	        		return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
 	        	}
         	} catch(Exception e1) {
-    			return QinShihuangResult.getResult(ErrorCode.ServerException);
+    			return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
     		}
         }
 
@@ -73,7 +73,7 @@ public class AccountController {
 	                return QinShihuangResult.getResult(ErrorCode.TIME_LIMIT_1001);
 	            }
         	} catch (Exception e1) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1001);
@@ -108,7 +108,7 @@ public class AccountController {
             try {
                 return AccountAPI.checkValidationCode(validationCodeReq.getAccount(), validationCodeReq.getCode(), true);
             } catch(Exception e1) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         }
 
@@ -116,7 +116,7 @@ public class AccountController {
             try {
                 return AccountAPI.checkValidationCode(validationCodeReq.getAccount(), validationCodeReq.getCode(), false);
             } catch(Exception e1) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1002);
@@ -147,7 +147,7 @@ public class AccountController {
                 return AccountAPI.signup(userInfoReq.getAccount(), userInfoReq.getToken(), userInfoReq.getPassword(), true, promotionCodeSize);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         }
 
@@ -156,7 +156,7 @@ public class AccountController {
                 return AccountAPI.signup(userInfoReq.getAccount(), userInfoReq.getToken(), userInfoReq.getPassword(), false, promotionCodeSize);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1003);
@@ -185,7 +185,7 @@ public class AccountController {
                 return AccountAPI.login(loginReq.getAccount(), loginReq.getPassword(), loginReq.getClientId(), true);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         }
 
@@ -194,7 +194,7 @@ public class AccountController {
                 return AccountAPI.login(loginReq.getAccount(), loginReq.getPassword(), loginReq.getClientId(), false);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1004);
@@ -225,7 +225,7 @@ public class AccountController {
         try {
             return AccountAPI.oauthlogin(oauthUserInfoReq.getProvider(), oauthUserInfoReq.getOauthId(), oauthUserInfoReq.getNickName(), oauthUserInfoReq.getAvatar(), oauthUserInfoReq.getToken(), oauthUserInfoReq.getClientId());
         } catch (Exception e) {
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -242,9 +242,10 @@ public class AccountController {
             return AccountAPI.logout(userId, key);
         } catch (Exception e) {
             e.printStackTrace();
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
+
     /**
      * 重置密码, 接口编码1007
      * @param resetPwdReq 参数信息
@@ -267,7 +268,7 @@ public class AccountController {
                 return AccountAPI.resetPwd(resetPwdReq.getAccount(), resetPwdReq.getNewPassword(), resetPwdReq.getToken(), true);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         }
 
@@ -276,7 +277,7 @@ public class AccountController {
                 return AccountAPI.resetPwd(resetPwdReq.getAccount(), resetPwdReq.getNewPassword(), resetPwdReq.getToken(), false);
             } catch(Exception e) {
                 e.printStackTrace();
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.ACCOUNT_FORMAT_1007);
@@ -291,7 +292,7 @@ public class AccountController {
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/password", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updatePwd(@RequestBody UpdatePwdReq updatePwd, @PathVariable Long userId, @RequestHeader("key") String key) {
+    public @ResponseBody String updatePwd(@RequestBody UpdatePwdReq updatePwd, @PathVariable("userId") Long userId, @RequestHeader("key") String key) {
     	// 检验参数
     	if(updatePwd.getOldPassword() == null) {
             return QinShihuangResult.getResult(ErrorCode.OLD_PWD_NULL_1008);
@@ -304,7 +305,7 @@ public class AccountController {
             return AccountAPI.updatePwd(updatePwd.getOldPassword(), updatePwd.getNewPassword(), userId, key);
         } catch(Exception e) {
             e.printStackTrace();
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -315,12 +316,12 @@ public class AccountController {
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody String getUserInfo(@PathVariable Long userId, @RequestHeader("key") String key) {
+    public @ResponseBody String getUserInfo(@PathVariable("userId") Long userId, @RequestHeader("key") String key) {
         try {
             return AccountAPI.getUserInfoById(userId, key);
         } catch (Exception e) {
             e.printStackTrace();
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -332,12 +333,12 @@ public class AccountController {
      * @return 用户信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}", method= RequestMethod.PATCH, produces = "application/json;charset=utf-8")
-    public @ResponseBody String updateUserInfo(@PathVariable(value="userId") Long userId, @RequestHeader("key") String key, @RequestBody UpdateUserInfoReq updateUserInfoReq) {
+    public @ResponseBody String updateUserInfo(@PathVariable("userId") Long userId, @RequestHeader("key") String key, @RequestBody UpdateUserInfoReq updateUserInfoReq) {
         try {
             return AccountAPI.updateUserInfo(userId, key, updateUserInfoReq);
         } catch (Exception e) {
             e.printStackTrace();
-            return QinShihuangResult.getResult(ErrorCode.ServerException);
+            return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
     }
 
@@ -349,7 +350,7 @@ public class AccountController {
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/tel", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String bindTel(@RequestBody BindTelReq bindTelReq, @PathVariable Long userId, @RequestHeader("key") String key) {
+    public @ResponseBody String bindTel(@RequestBody BindTelReq bindTelReq, @PathVariable("userId") Long userId, @RequestHeader("key") String key) {
         // 检验参数
         if(bindTelReq.getTel() == null) {
             return QinShihuangResult.getResult(ErrorCode.TEL_NULL_1011);
@@ -362,7 +363,7 @@ public class AccountController {
             try {
                 return AccountAPI.bindTel(bindTelReq.getTel(), bindTelReq.getToken(), userId, key);
             } catch (Exception e) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
             return QinShihuangResult.getResult(ErrorCode.TEL_FORMAT_1011);
@@ -370,30 +371,30 @@ public class AccountController {
     }
 
     /**
-     * 绑定手机号, 接口编码1011
+     * 绑定邮箱, 接口编码1012
      * @param bindEmailReq 参数信息
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 结果信息
      */
     @RequestMapping(value = "/app/users/{userId:\\d+}/email", method= RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    public @ResponseBody String bindEmail(@RequestBody BindEmailReq bindEmailReq, @PathVariable Long userId, @RequestHeader("key") String key) {
+    public @ResponseBody String bindEmail(@RequestBody BindEmailReq bindEmailReq, @PathVariable("userId") Long userId, @RequestHeader("key") String key) {
         // 检验参数
         if(bindEmailReq.getEmail() == null) {
-            return QinShihuangResult.getResult(ErrorCode.EMAIL_NULL_1103);
+            return QinShihuangResult.getResult(ErrorCode.EMAIL_NULL_1012);
         }
 
         if(bindEmailReq.getToken() == null) {
-            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1103);
+            return QinShihuangResult.getResult(ErrorCode.TOKEN_NULL_1012);
         }
         if(CommonUtil.isEmail(bindEmailReq.getEmail())) {
             try {
                 return AccountAPI.bindEmail(bindEmailReq.getEmail(), bindEmailReq.getToken(), userId, key);
             } catch (Exception e) {
-                return QinShihuangResult.getResult(ErrorCode.ServerException);
+                return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
             }
         } else {
-            return QinShihuangResult.getResult(ErrorCode.EMAIL_FORMAT_1103);
+            return QinShihuangResult.getResult(ErrorCode.EMAIL_FORMAT_1012);
         }
     }
 }

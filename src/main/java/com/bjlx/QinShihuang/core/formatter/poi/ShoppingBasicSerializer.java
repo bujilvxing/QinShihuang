@@ -1,12 +1,13 @@
 package com.bjlx.QinShihuang.core.formatter.poi;
 
-import java.io.IOException;
 import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.poi.Shopping;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
 
 public class ShoppingBasicSerializer extends JsonSerializer<Shopping> {
 
@@ -15,11 +16,6 @@ public class ShoppingBasicSerializer extends JsonSerializer<Shopping> {
 	    try {
 	        gen.writeStartObject();
 	        gen.writeStringField(Shopping.fd_id, shopping.getId() == null ? "" : shopping.getId().toString());
-	        if(shopping.getLat() != null)
-	        	gen.writeNumberField(Shopping.fd_lat, shopping.getLat());
-	        if(shopping.getLng() != null)
-	        	gen.writeNumberField(Shopping.fd_lng, shopping.getLng());
-
 	        gen.writeFieldName(Shopping.fd_cover);
             ImageItem cover = shopping.getCover();
             if (cover != null) {
@@ -40,8 +36,8 @@ public class ShoppingBasicSerializer extends JsonSerializer<Shopping> {
             gen.writeStringField(Shopping.fd_zhName, shopping.getZhName() == null ? "" : shopping.getZhName());
             gen.writeStringField(Shopping.fd_enName, shopping.getEnName() == null ? "" : shopping.getEnName());
             gen.writeStringField(Shopping.fd_url, shopping.getUrl() == null ? "" : shopping.getUrl());
-            gen.writeNumberField(Shopping.fd_marketPrice, shopping.getMarketPrice() == null ? 0.0 : shopping.getMarketPrice());
-            gen.writeNumberField(Shopping.fd_price, shopping.getPrice() == null ? 0.0 : shopping.getPrice());
+            gen.writeNumberField(Shopping.fd_marketPrice, shopping.getMarketPrice() == null ? 0 : shopping.getMarketPrice());
+            gen.writeNumberField(Shopping.fd_price, shopping.getPrice() == null ? 0 : shopping.getPrice());
             
             gen.writeNumberField(Shopping.fd_saleVolume, shopping.getSaleVolume() == null ? 0 : shopping.getSaleVolume());
             if(shopping.getDiscount() != null)

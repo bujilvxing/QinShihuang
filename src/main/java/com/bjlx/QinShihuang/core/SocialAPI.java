@@ -14,8 +14,6 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * 社交核心实现
@@ -39,7 +37,7 @@ public class SocialAPI {
     public static String following(Long userId, String key, Long followingId) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1055);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1072);
             // 校验用户是否存在
             if(CommonAPI.checkUserExistById(followingId)) {
                 Long userA = userId < followingId ? userId : followingId;
@@ -53,9 +51,10 @@ public class SocialAPI {
                 else
                     ops.set(Relationship.fd_followingA, true);
                 ds.updateFirst(query, ops, true);
+                // TODO 发送一条消息
                 return QinShihuangResult.ok();
             } else {
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1055);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1072);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,7 +73,7 @@ public class SocialAPI {
     public static String cancelFollowing(Long userId, String key, Long followingId) throws Exception {
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1056);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1073);
             Long userA = userId < followingId ? userId : followingId;
             Long userB = userId >= followingId ? userId : followingId;
             Query<Relationship> query = ds.createQuery(Relationship.class).field(Relationship.fd_userA).equal(userA)
@@ -94,44 +93,6 @@ public class SocialAPI {
     }
 
     /**
-     * 根据用户id列表取得用户信息列表
-     * @param userIds 用户id列表
-     * @param retrievedFieldsSet 返回字段列表
-     * @return 用户id与用户信息映射
-     * @throws Exception 异常
-     */
-    public static Map<Long, UserInfo> getUsersByIdList(Set<Long> userIds, Set<String> retrievedFieldsSet) throws Exception {
-        if (userIds == null || userIds.isEmpty()) {
-            return new HashMap<Long, UserInfo>();
-        } else {
-            Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
-            int size = userIds.size();
-            switch (size) {
-                case 1 : query.field(UserInfo.fd_userId).equal(userIds.iterator().next()); break;
-                default: query.field(UserInfo.fd_userId).in(userIds);
-            }
-
-            /**
-             * 返回字段必须含有id和userId
-             */
-            retrievedFieldsSet.add(UserInfo.fd_id);
-            retrievedFieldsSet.add(UserInfo.fd_userId);
-            String[] retrievedFields = retrievedFieldsSet.toArray(new String[retrievedFieldsSet.size()]);
-            query.retrievedFields(true, retrievedFields);
-            try {
-                List<UserInfo> userInfos = query.asList();
-                if (userInfos == null)
-                    return new HashMap<Long, UserInfo>();
-                else
-                    return userInfos.stream().collect(Collectors.toMap(UserInfo::getUserId, Function.identity()));
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw e;
-            }
-        }
-    }
-
-    /**
      * 取得好友列表1057
      * @param userId 用户id
      * @param key 不羁旅行令牌
@@ -144,7 +105,7 @@ public class SocialAPI {
         // 校验用户登录
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1057);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1074);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -179,7 +140,7 @@ public class SocialAPI {
         retrievedFieldsSet.add(UserInfo.fd_avatar);
         Map<Long, UserInfo> userInfoMap = null;
         try {
-            userInfoMap = getUsersByIdList(contactIds, retrievedFieldsSet);
+            userInfoMap = CommonAPI.getUsersMapByIdList(contactIds, retrievedFieldsSet);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -213,11 +174,11 @@ public class SocialAPI {
         try {
             // 校验用户登录
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1058);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1075);
             Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
             UserInfo userInfo = query.get();
             if(userInfo == null) {
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1058);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1075);
             } else {
                 // 备注
                 Long userA = userId < contactId ? userId : contactId;
@@ -251,11 +212,11 @@ public class SocialAPI {
         try {
             // 校验用户登录
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1059);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1076);
             Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId).field(UserInfo.fd_status).equal(Constant.USER_NORMAL);
             UserInfo userInfo = query.get();
             if(userInfo == null) {
-                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1059);
+                return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1076);
             } else {
                 // 备注
                 Long userA = userId < contactId ? userId : contactId;
@@ -288,16 +249,16 @@ public class SocialAPI {
             // 校验用户登录
             if(!CommonAPI.checkKeyValid(userId, key)) {
                 if(isAdd)
-                    return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1060);
+                    return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1077);
                 else
-                    return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1061);
+                    return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1078);
             }
 
             if(!CommonAPI.checkUserExistById(blockId)) {
                 if(isAdd)
-                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1060);
+                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1077);
                 else
-                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1061);
+                    return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1078);
             }
             // 更新黑名单
             Long userA = userId < blockId ? userId : blockId;
@@ -327,7 +288,7 @@ public class SocialAPI {
         // 校验用户登录
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1062);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1079);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -363,7 +324,7 @@ public class SocialAPI {
         retrievedFieldsSet.add(UserInfo.fd_avatar);
         Map<Long, UserInfo> userInfoMap = null;
         try {
-            userInfoMap = getUsersByIdList(contactIds, retrievedFieldsSet);
+            userInfoMap = CommonAPI.getUsersMapByIdList(contactIds, retrievedFieldsSet);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -399,7 +360,7 @@ public class SocialAPI {
         // 校验用户登录
         try {
             if(!CommonAPI.checkKeyValid(userId, key))
-                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1063);
+                return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1080);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -435,7 +396,7 @@ public class SocialAPI {
         retrievedFieldsSet.add(UserInfo.fd_avatar);
         Map<Long, UserInfo> userInfoMap = null;
         try {
-            userInfoMap = getUsersByIdList(contactIds, retrievedFieldsSet);
+            userInfoMap = CommonAPI.getUsersMapByIdList(contactIds, retrievedFieldsSet);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

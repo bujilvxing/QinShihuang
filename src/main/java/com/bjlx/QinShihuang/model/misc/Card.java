@@ -105,4 +105,16 @@ public class Card {
     public void setThumb(ImageItem thumb) {
         this.thumb = thumb;
     }
+
+    public Card(){
+
+    }
+    public Card(ObjectId id, String title, String summary, ImageItem cover, ImageItem thumb, String detailUrl) {
+        this.id = id;
+        this.title = title;
+        this.summary = summary;
+        this.cover = cover;
+        this.thumb = thumb;
+        this.detailUrl = detailUrl;
+    }
 }

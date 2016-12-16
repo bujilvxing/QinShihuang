@@ -511,6 +511,9 @@ public class AccountAPI {
 
 				ImageItem defaultAvatar = new ImageItem();
 				defaultAvatar.setUrl(avatar);
+				defaultAvatar.setWidth(100);
+				defaultAvatar.setHeight(100);
+				defaultAvatar.setFmt("jpg");
 				userInfo = new UserInfo(userId, nickName, defaultAvatar, defaultUserBackGround, promotionCode);
 				switch (provider) {
 					case UserInfo.fd_weixin:
@@ -676,7 +679,7 @@ public class AccountAPI {
     			return QinShihuangResult.getResult(ErrorCode.USER_NOT_EXIST_1008);
     		} else {
     			// 用户是否登录
-    			if(!credential.getSecretKey().getKey().equals(key))
+    			if(credential.getSecretKey() == null || credential.getSecretKey().getKey() == null || !credential.getSecretKey().getKey().equals(key))
     				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1008);
     			String salt = credential.getSalt();
     			byte[] bytes = MessageDigest.getInstance("SHA-256").digest((salt + oldPwd).getBytes());
@@ -870,13 +873,13 @@ public class AccountAPI {
 	public static String bindEmail(String email, String token, Long userId, String key) throws Exception {
 		try {
 			if (!CommonAPI.checkKeyValid(userId, key)) {
-				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1103);
+				return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1012);
 			}
 			if(!checkTokenValid(token)) {
-				return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1103);
+				return QinShihuangResult.getResult(ErrorCode.TOKEN_INVALID_1012);
 			}
 			if(checkUserExist(email, false)) {
-				return QinShihuangResult.getResult(ErrorCode.EMAIL_EXIST_1103);
+				return QinShihuangResult.getResult(ErrorCode.EMAIL_EXIST_1012);
 			}
 			Query<UserInfo> query = ds.createQuery(UserInfo.class).field(UserInfo.fd_userId).equal(userId);
 			UpdateOperations<UserInfo> ops = ds.createUpdateOperations(UserInfo.class).set(UserInfo.fd_email, email);

@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.core.formatter.misc;
 
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.TravelNote;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -32,6 +33,16 @@ public class TravelNoteSerializer extends JsonSerializer<TravelNote> {
                 gen.writeEndObject();
             }
 
+            gen.writeFieldName(TravelNote.fd_author);
+            UserInfo author = travelNote.getAuthor();
+            if (author != null) {
+                JsonSerializer<Object> retUserInfo = serializers.findValueSerializer(UserInfo.class, null);
+                retUserInfo.serialize(author, gen, serializers);
+            } else {
+                gen.writeStartObject();
+                gen.writeEndObject();
+            }
+
             List<ImageItem> images = travelNote.getImages();
             gen.writeFieldName(TravelNote.fd_images);
             gen.writeStartArray();
@@ -55,6 +66,9 @@ public class TravelNoteSerializer extends JsonSerializer<TravelNote> {
 
             if(travelNote.getFavorCnt() != null)
                 gen.writeNumberField(TravelNote.fd_favorCnt, travelNote.getFavorCnt());
+
+            if(travelNote.getVoteCnt() != null)
+                gen.writeNumberField(TravelNote.fd_voteCnt, travelNote.getVoteCnt());
 
             if(travelNote.getCommentCnt() != null)
                 gen.writeNumberField(TravelNote.fd_commentCnt, travelNote.getCommentCnt());

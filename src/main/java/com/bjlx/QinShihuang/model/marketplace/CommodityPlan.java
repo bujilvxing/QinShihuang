@@ -144,4 +144,19 @@ public class CommodityPlan {
     public void setTimeRequired(Boolean timeRequired) {
         this.timeRequired = timeRequired;
     }
+
+    public CommodityPlan() {
+
+    }
+
+    public CommodityPlan(Boolean timeRequired, List<StockInfo> stockInfos, Integer price, Integer marketPrice, List<Pricing> pricings, String desc, String title, String planId) {
+        this.timeRequired = timeRequired;
+        this.stockInfos = stockInfos;
+        this.price = price;
+        this.marketPrice = marketPrice;
+        this.pricings = pricings;
+        this.desc = desc;
+        this.title = title;
+        this.planId = planId;
+    }
 }

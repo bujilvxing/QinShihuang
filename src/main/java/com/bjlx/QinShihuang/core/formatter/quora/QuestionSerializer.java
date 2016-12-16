@@ -39,7 +39,8 @@ public class QuestionSerializer extends JsonSerializer<Question> {
             gen.writeNumberField(Question.fd_viewCnt, question.getViewCnt() == null ? 0 : question.getViewCnt());
             gen.writeNumberField(Question.fd_answerCnt, question.getAnswerCnt() == null ? 0 : question.getAnswerCnt());
             gen.writeNumberField(Question.fd_maxVoteCnt, question.getMaxVoteCnt() == null ? 0 : question.getMaxVoteCnt());
-
+            gen.writeNumberField(Question.fd_favorCnt, question.getFavorCnt() == null ? 0 : question.getFavorCnt());
+            gen.writeNumberField(Question.fd_voteCnt, question.getVoteCnt() == null ? 0 : question.getVoteCnt());
             gen.writeFieldName(Question.fd_author);
             UserInfo author = question.getAuthor();
             if (author != null) {
@@ -52,7 +53,7 @@ public class QuestionSerializer extends JsonSerializer<Question> {
             gen.writeNumberField(Question.fd_publishTime, question.getPublishTime() == null ? 0L : question.getPublishTime());
 
             gen.writeStringField(Question.fd_title, question.getTitle() == null ? "" : question.getTitle());
-            gen.writeStringField(Question.fd_contents, question.getContents() == null ? "" : question.getContents());
+            gen.writeStringField(Question.fd_content, question.getContent() == null ? "" : question.getContent());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

@@ -6,6 +6,7 @@ import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 @Embedded
@@ -51,6 +52,7 @@ public class ImageItem {
     /**
      * 图像的url
      */
+	@NotNull
     private String url;
     
     /**

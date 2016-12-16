@@ -65,4 +65,15 @@ public class Description {
 	public void setTraffic(String traffic) {
 		this.traffic = traffic;
 	}
+
+	public Description() {
+
+	}
+
+	public Description(String desc, String details, String tips, String traffic) {
+		this.desc = desc;
+		this.details = details;
+		this.tips = tips;
+		this.traffic = traffic;
+	}
 }

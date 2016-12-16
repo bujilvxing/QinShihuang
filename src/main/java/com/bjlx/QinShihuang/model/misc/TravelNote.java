@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.model.misc;
 
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
@@ -32,6 +33,8 @@ public class TravelNote {
 	@Transient
 	public final static String fd_favorCnt = "favorCnt";
 	@Transient
+	public final static String fd_voteCnt = "voteCnt";
+	@Transient
 	public final static String fd_commentCnt = "commentCnt";
 	@Transient
 	public final static String fd_viewCnt = "viewCnt";
@@ -47,7 +50,12 @@ public class TravelNote {
 	public final static String fd_source = "source";
 	@Transient
 	public final static String fd_essence = "essence";
-
+	@Transient
+	public final static String fd_status = "status";
+	@Transient
+	public final static String fd_author = "author";
+	@Transient
+	public final static String fd_authorId = "author.userId";
 
 	/**
 	 * 主键
@@ -89,10 +97,21 @@ public class TravelNote {
 	private Long publishTime;
 
 	/**
+	 * 游记作者
+	 */
+	private UserInfo author;
+
+	/**
 	 * 收藏次数
 	 */
 	@Min(value = 0)
 	private Integer favorCnt = 0;
+
+	/**
+	 * 被赞的次数
+	 */
+	@Min(value = 0)
+	private Integer voteCnt = 0;
 
 	/**
 	 * 评论次数
@@ -132,12 +151,17 @@ public class TravelNote {
 	/**
 	 * 游记来源
 	 */
-	private String source;
+	private String source = "bjlx";
 
 	/**
 	 * 是否为精华游记
 	 */
 	private Boolean essence = false;
+
+	/**
+	 * 游记状态
+	 */
+	private Integer status;
 
 	public ObjectId getId() {
 		return id;
@@ -267,6 +291,46 @@ public class TravelNote {
 		this.essence = essence;
 	}
 
+	public Integer getVoteCnt() {
+		return voteCnt;
+	}
+
+	public void setVoteCnt(Integer voteCnt) {
+		this.voteCnt = voteCnt;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public UserInfo getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(UserInfo author) {
+		this.author = author;
+	}
+
+	public TravelNote() {
+
+	}
+
+	public TravelNote(ImageItem cover, List<ImageItem> images, String title, UserInfo author, Long travelTime, String summary) {
+		this.id = new ObjectId();
+		this.publishTime = System.currentTimeMillis();
+		this.cover = cover;
+		this.images = images;
+		this.title = title;
+		this.author = author;
+		this.travelTime = travelTime;
+		this.summary = summary;
+		this.status = 1;
+	}
+
 	public TravelNote(ObjectId id, ImageItem cover, List<ImageItem> images, Double hotness, String title,
 					  Long publishTime, Integer commentCnt, Long travelTime, String summary, List<Map<String, String>> contents,
 					  String source, Boolean essence) {
@@ -283,6 +347,7 @@ public class TravelNote {
 		this.contents = contents;
 		this.source = source;
 		this.essence = essence;
+		this.status = 1;
 	}
 	
 }

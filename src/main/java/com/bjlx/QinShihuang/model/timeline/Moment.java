@@ -44,6 +44,10 @@ public class Moment {
     public final static String fd_comment = "comment";
 	@Transient
     public final static String fd_card = "card";
+    @Transient
+    public final static String fd_voteCnt = "voteCnt";
+    @Transient
+    public final static String fd_favorCnt = "favorCnt";
 
     /**
      * 主键
@@ -113,6 +117,16 @@ public class Moment {
      * HTML卡片信息
      */
     private Card card;
+
+    /**
+     * 被点赞的次数
+     */
+    private Integer voteCnt;
+
+    /**
+     * 被收藏的次数
+     */
+    private Integer favorCnt;
 
     public ObjectId getId() {
         return id;
@@ -216,5 +230,33 @@ public class Moment {
 
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    public Integer getVoteCnt() {
+        return voteCnt;
+    }
+
+    public void setVoteCnt(Integer voteCnt) {
+        this.voteCnt = voteCnt;
+    }
+
+    public Integer getFavorCnt() {
+        return favorCnt;
+    }
+
+    public void setFavorCnt(Integer favorCnt) {
+        this.favorCnt = favorCnt;
+    }
+
+    public Moment(){
+
+    }
+
+    public Moment(Long userId, String nickName, ImageItem avatar) {
+        this.id = new ObjectId();
+        this.publishTime = System.currentTimeMillis();
+        this.userId = userId;
+        this.nickName = nickName;
+        this.avatar = avatar;
     }
 }

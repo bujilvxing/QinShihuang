@@ -30,7 +30,7 @@ public class AvailableDay {
     /**
      * 价格
      */
-    private Double price;
+    private Integer price;
 
     public Long getBookTime() {
         return bookTime;
@@ -48,11 +48,21 @@ public class AvailableDay {
 		this.available = available;
 	}
 
-	public Double getPrice() {
+	public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public AvailableDay() {
+
+    }
+
+    public AvailableDay(Long bookTime, Boolean available, Integer price) {
+        this.bookTime = bookTime;
+        this.available = available;
         this.price = price;
     }
 }

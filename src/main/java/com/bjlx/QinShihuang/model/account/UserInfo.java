@@ -1,11 +1,12 @@
 package com.bjlx.QinShihuang.model.account;
 
 import com.bjlx.QinShihuang.model.activity.Activity;
+import com.bjlx.QinShihuang.model.im.Conversation;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.misc.TravelNote;
 import com.bjlx.QinShihuang.model.trace.Trace;
 import com.bjlx.QinShihuang.model.tripplan.TripPlan;
-
+import com.bjlx.QinShihuang.utils.Constant;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -14,6 +15,8 @@ import org.mongodb.morphia.annotations.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -110,6 +113,8 @@ public class UserInfo {
 	public final static String fd_clientId = "clientId";
 	@Transient
 	public final static String fd_key = "key";
+	@Transient
+	public final static String fd_moment = "moment";
 
 	/**
 	 * 授权码
@@ -182,7 +187,6 @@ public class UserInfo {
 	 * 邀请码。每个人有全局唯一的一个邀请码，用于分享平台内容时奖励
 	 */
 	@NotBlank
-	@Indexed(options = @IndexOptions(unique = true))
 	private String promotionCode;
 
 	/**
@@ -305,7 +309,12 @@ public class UserInfo {
 	 * 个推的clientId
 	 */
 	private String clientId;
-	
+
+	/**
+	 * 朋友圈会话
+	 */
+	private Conversation moment;
+
 	public Integer getLevel() {
 		return level;
 	}
@@ -606,10 +615,25 @@ public class UserInfo {
 		this.key = key;
 	}
 
+	public Conversation getMoment() {
+		return moment;
+	}
+
+	public void setMoment(Conversation moment) {
+		this.moment = moment;
+	}
+
 	public UserInfo() {
 		this.id = new ObjectId();
 	}
-	
+
+	public UserInfo(Long userId, String nickName, ImageItem avatar) {
+		super();
+		this.userId = userId;
+		this.nickName = nickName;
+		this.avatar = avatar;
+	}
+
 	public UserInfo(Long userId, PhoneNumber tel, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
 		super();
 		this.id = new ObjectId();
@@ -622,6 +646,8 @@ public class UserInfo {
 		Long currentTime = System.currentTimeMillis();
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
+		this.moment = new Conversation(id, id.toString(), Constant.GROUP_CHAT);
+		this.roles = Arrays.asList(1);
 	}
 	
 	public UserInfo(Long userId, String email, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
@@ -636,6 +662,8 @@ public class UserInfo {
 		Long currentTime = System.currentTimeMillis();
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
+		this.moment = new Conversation(id, id.toString(), Constant.GROUP_CHAT);
+		this.roles = Arrays.asList(1);
 	}
 
 	public UserInfo(Long userId, String nickName, ImageItem avatar, ImageItem backGround, String promotionCode) {
@@ -649,5 +677,7 @@ public class UserInfo {
 		Long currentTime = System.currentTimeMillis();
 		this.createTime = currentTime;
 		this.updateTime = currentTime;
+		this.moment = new Conversation(id, id.toString(), Constant.GROUP_CHAT);
+		this.roles = Arrays.asList(1);
 	}
 }

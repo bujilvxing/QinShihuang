@@ -18,6 +18,7 @@ public class TripPlanBasicSerializer extends JsonSerializer<TripPlan> {
             gen.writeNumberField(TripPlan.fd_userId, tripPlan.getUserId() == null ? 0 : tripPlan.getUserId());
             gen.writeStringField(TripPlan.fd_nickName, tripPlan.getNickName() == null ? "" : tripPlan.getNickName());
 
+            gen.writeFieldName(TripPlan.fd_avatar);
             ImageItem avatar = tripPlan.getAvatar();
             if (avatar != null) {
                 JsonSerializer<Object> retAvatar = serializers.findValueSerializer(ImageItem.class, null);

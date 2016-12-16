@@ -8,6 +8,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -20,7 +21,11 @@ public class Commodity {
 	@Transient
 	public final static String fd_id = "id";
 	@Transient
-	public final static String fd_category = "category";
+	public final static String fd_firstCategory = "firstCategory";
+    @Transient
+    public final static String fd_secondCategory = "secondCategory";
+    @Transient
+    public final static String fd_thirdCategory = "thirdCategory";
 	@Transient
 	public final static String fd_title = "title";
 	@Transient
@@ -51,6 +56,8 @@ public class Commodity {
     public final static String fd_version = "version";
 	@Transient
     public final static String fd_commodityType = "commodityType";
+    @Transient
+    public final static String fd_favorCnt = "favorCnt";
     
     /**
      * 主键
@@ -60,9 +67,19 @@ public class Commodity {
     private ObjectId id;
 
     /**
-     * 商品分类
+     * 商品一级分类
      */
-    private List<String> category;
+    private String firstCategory;
+
+    /**
+     * 商品二级分类
+     */
+    private String secondCategory;
+
+    /**
+     * 商品三级分类
+     */
+    private String thirdCategory;
 
     /**
      * 标题
@@ -92,12 +109,12 @@ public class Commodity {
     /**
      * 售价
      */
-    private Double price;
+    private Integer price;
     
     /**
      * 市场价
      */
-    private Double marketPrice;
+    private Integer marketPrice;
 
     /**
      * 状态。1、审核中(待审核), 2、审核不通过  3、审核通过  4、下架 5、上架
@@ -139,6 +156,12 @@ public class Commodity {
      */
     private String commodityType;
 
+    /**
+     * 收藏次数
+     */
+    @Min(value = 0)
+    private Integer favorCnt = 0;
+
     public ObjectId getId() {
         return id;
     }
@@ -147,12 +170,28 @@ public class Commodity {
         this.id = id;
     }
 
-    public List<String> getCategory() {
-        return category;
+    public String getFirstCategory() {
+        return firstCategory;
     }
 
-    public void setCategory(List<String> category) {
-        this.category = category;
+    public void setFirstCategory(String firstCategory) {
+        this.firstCategory = firstCategory;
+    }
+
+    public String getSecondCategory() {
+        return secondCategory;
+    }
+
+    public void setSecondCategory(String secondCategory) {
+        this.secondCategory = secondCategory;
+    }
+
+    public String getThirdCategory() {
+        return thirdCategory;
+    }
+
+    public void setThirdCategory(String thirdCategory) {
+        this.thirdCategory = thirdCategory;
     }
 
     public String getTitle() {
@@ -195,19 +234,19 @@ public class Commodity {
         this.images = images;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public Double getMarketPrice() {
+    public Integer getMarketPrice() {
         return marketPrice;
     }
 
-    public void setMarketPrice(Double marketPrice) {
+    public void setMarketPrice(Integer marketPrice) {
         this.marketPrice = marketPrice;
     }
 
@@ -273,5 +312,34 @@ public class Commodity {
 
     public void setCommodityType(String commodityType) {
         this.commodityType = commodityType;
+    }
+
+    public Integer getFavorCnt() {
+        return favorCnt;
+    }
+
+    public void setFavorCnt(Integer favorCnt) {
+        this.favorCnt = favorCnt;
+    }
+
+    public Commodity() {
+
+    }
+
+    public Commodity(ObjectId id, String firstCategory, String secondCategory, String thirdCategory, String title, String desc, ImageItem cover, List<ImageItem> images, Integer price, Integer marketPrice, Integer status, List<CommodityPlan> plans, String commodityType) {
+        this.id = id;
+        this.firstCategory = firstCategory;
+        this.secondCategory = secondCategory;
+        this.thirdCategory = thirdCategory;
+        this.title = title;
+        this.desc = desc;
+        this.cover = cover;
+        this.images = images;
+        this.price = price;
+        this.marketPrice = marketPrice;
+        this.status = status;
+        this.plans = plans;
+        this.commodityType = commodityType;
+        this.createTime = System.currentTimeMillis();
     }
 }

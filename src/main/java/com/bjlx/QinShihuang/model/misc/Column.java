@@ -39,13 +39,15 @@ public class Column {
 	public final static String fd_cover = "cover";
 	@Transient
 	public final static String fd_status = "status";
-	
+	@Transient
+	public final static String fd_desc = "desc";
+
 	/**
 	 * 主键
 	 */
 	@NotBlank
 	@Id
-	private ObjectId id = null;
+	private ObjectId id = new ObjectId();
 	
 	/**
 	 * 排名
@@ -94,6 +96,11 @@ public class Column {
 	 */
 	@Pattern(regexp = "(review|pub|disabled)")
 	private String status;
+
+	/**
+	 * 描述
+	 */
+	private String desc;
 
 	public ObjectId getId() {
 		return id;
@@ -165,5 +172,30 @@ public class Column {
 
 	public void setItemType(String itemType) {
 		this.itemType = itemType;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public Column() {
+
+	}
+
+	public Column(Integer rank, String title, String link, ImageItem cover, String desc) {
+		this.id = new ObjectId();
+		this.rank = rank;
+		this.itemType = "viewspot";
+		this.columnType = "special";
+		this.title = title;
+		this.link = link;
+		this.linkType = "app";
+		this.cover = cover;
+		this.status = "pub";
+		this.desc = desc;
 	}
 }

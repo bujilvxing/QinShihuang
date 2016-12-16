@@ -32,7 +32,8 @@ public class TicketSerializer extends JsonSerializer<Ticket> {
             gen.writeStringField(Ticket.fd_desc, ticket.getDesc() == null ? "" : ticket.getDesc());
             if(ticket.getMaxNum() != null)
                 gen.writeNumberField(Ticket.fd_maxNum, ticket.getMaxNum());
-
+            gen.writeStringField(Ticket.fd_title, ticket.getTitle() == null ? "" : ticket.getTitle());
+            gen.writeNumberField(Ticket.fd_creatorId, ticket.getCreatorId() == null ? 0L : ticket.getCreatorId());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

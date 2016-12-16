@@ -6,6 +6,9 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by pengyt on 2016/7/22.
  * 门票
@@ -29,6 +32,14 @@ public class Ticket {
     public final static String fd_desc = "desc";
 	@Transient
     public final static String fd_maxNum = "maxNum";
+    @Transient
+    public final static String fd_title = "title";
+    @Transient
+    public final static String fd_status = "status";
+    @Transient
+    public final static String fd_creatorId = "creatorId";
+    @Transient
+    public final static String fd_updateTime = "updateTime";
 
     /**
      * 主键
@@ -36,6 +47,12 @@ public class Ticket {
     @NotBlank
     @Id
     private ObjectId id;
+
+    /**
+     * 门票标题
+     */
+    @NotNull
+    private String title;
 
     /**
      * 门票价格
@@ -70,7 +87,28 @@ public class Ticket {
     /**
      * 最大数量
      */
+    @Min(value = 1)
     private Integer maxNum;
+
+    /**
+     * 创建时间
+     */
+    private Long createTime;
+
+    /**
+     * 更新时间
+     */
+    private Long updateTime;
+
+    /**
+     * 门票状态。1表示正常，2表示已删除
+     */
+    private Integer status = 1;
+
+    /**
+     * 门票创建人
+     */
+    private Long creatorId;
 
     public ObjectId getId() {
         return id;
@@ -136,9 +174,84 @@ public class Ticket {
         this.marketPrice = marketPrice;
     }
 
-    public Ticket(Boolean free, Integer maxNum) {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public Ticket() {
+
+    }
+
+    public Ticket(String title, Integer maxNum, Long creatorId) {
         this.id = new ObjectId();
+        this.title = title;
+        this.maxNum = maxNum;
+        this.creatorId = creatorId;
+        this.status = 1;
+        this.createTime = System.currentTimeMillis();
+        this.updateTime = this.createTime;
+    }
+
+    public Ticket(String id, String title, Boolean free, Integer maxNum, Long creatorId) {
+        this.id = new ObjectId(id);
+        this.title = title;
         this.free = free;
         this.maxNum = maxNum;
+        this.creatorId = creatorId;
+        this.status = 1;
+        this.createTime = System.currentTimeMillis();
+        this.updateTime = this.createTime;
+    }
+
+    public Ticket(ObjectId id, String title, Double price, Double marketPrice, Boolean free, Integer refundWay, String refundDesc, String desc, Integer maxNum, Long creatorId) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.marketPrice = marketPrice;
+        this.free = free;
+        this.refundWay = refundWay;
+        this.refundDesc = refundDesc;
+        this.desc = desc;
+        this.maxNum = maxNum;
+        this.creatorId = creatorId;
+        this.createTime = System.currentTimeMillis();
+        this.updateTime = this.createTime;
+        this.status = 1;
     }
 }

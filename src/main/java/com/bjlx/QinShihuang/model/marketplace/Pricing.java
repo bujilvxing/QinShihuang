@@ -54,4 +54,7 @@ public class Pricing {
         this.price = price;
         this.timeRange = timeRange;
     }
+    public Pricing() {
+
+    }
 }

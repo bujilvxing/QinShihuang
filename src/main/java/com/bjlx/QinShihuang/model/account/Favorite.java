@@ -1,23 +1,14 @@
 package com.bjlx.QinShihuang.model.account;
 
-import com.bjlx.QinShihuang.model.activity.Activity;
-import com.bjlx.QinShihuang.model.im.Post;
-import com.bjlx.QinShihuang.model.marketplace.Commodity;
-import com.bjlx.QinShihuang.model.misc.TravelNote;
-import com.bjlx.QinShihuang.model.poi.Hotel;
-import com.bjlx.QinShihuang.model.poi.Restaurant;
-import com.bjlx.QinShihuang.model.poi.Viewspot;
-import com.bjlx.QinShihuang.model.quora.Question;
-import com.bjlx.QinShihuang.model.trace.Trace;
-import com.bjlx.QinShihuang.model.tripplan.TripPlan;
+import com.bjlx.QinShihuang.model.misc.ImageItem;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * 用户收藏
@@ -26,7 +17,27 @@ import java.util.List;
  */
 @Entity
 public class Favorite {
-	
+
+	@Transient
+	public final static String fd_id = "id";
+	@Transient
+	public final static String fd_userId = "userId";
+	@Transient
+	public final static String fd_favoriteType = "favoriteType";
+	@Transient
+	public final static String fd_itemId = "itemId";
+	@Transient
+	public final static String fd_authorId = "authorId";
+	@Transient
+	public final static String fd_authorNickName = "authorNickName";
+	@Transient
+	public final static String fd_authorAvatar = "authorAvatar";
+	@Transient
+	public final static String fd_cover = "cover";
+	@Transient
+	public final static String fd_title = "title";
+	@Transient
+	public final static String fd_favoriteTime = "favoriteTime";
 	/**
 	 * 主键
 	 */
@@ -42,55 +53,44 @@ public class Favorite {
 	private Long userId;
 
 	/**
-	 * 用户收藏的帖子
+	 * 收藏的类型。1表示帖子，2表示足迹，3表示形成规划，4表示活动，5表示问答，6表示美食，7表示客栈，8表示游记，9表示景点，10表示购物，11表示商品
 	 */
-	private List<Post> posts;
-	
-	/**
-	 * 用户收藏的足迹
-	 */
-	private List<Trace> traces;
-	
-	/**
-	 * 用户收藏的形成规划
-	 */
-	private List<TripPlan> tripPlans;
-	
-	/**
-	 * 用户收藏的活动
-	 */
-	private List<Activity>  activities;
-	
-	/**
-	 * 用户收藏的问答
-	 */
-	private List<Question>  quoras;
-	
-	/**
-	 * 用户收藏的美食
-	 */
-	private List<Restaurant>  restaurants;
-	
-	/**
-	 * 用户收藏的客栈
-	 */
-	private List<Hotel>  hotels;
-	
-	/**
-	 * 用户收藏的游记
-	 */
-	private List<TravelNote>  travelNotes;
-	
-	/**
-	 * 用户收藏的商品
-	 */
-	private List<Commodity>  commodities;
-	
-	/**
-	 * 用户收藏的景点
-	 */
-	private List<Viewspot>  viewspots;
+	private Integer favoriteType;
 
+	/**
+	 * 收藏的对象id
+	 */
+	private ObjectId itemId;
+
+	/**
+	 * 作者id
+	 */
+	private Long authorId;
+
+	/**
+	 * 作者昵称
+	 */
+	private String authorNickName;
+
+	/**
+	 * 作者头像
+	 */
+	private ImageItem authorAvatar;
+
+	/**
+	 * 封面
+	 */
+	private ImageItem cover;
+
+	/**
+	 * 标题
+	 */
+	private String title;
+
+	/**
+	 * 收藏时间
+	 */
+	private Long favoriteTime;
 
 	public ObjectId getId() {
 		return id;
@@ -108,84 +108,80 @@ public class Favorite {
 		this.userId = userId;
 	}
 
-	public List<Trace> getTraces() {
-		return traces;
+	public Integer getFavoriteType() {
+		return favoriteType;
 	}
 
-	public void setTraces(List<Trace> traces) {
-		this.traces = traces;
+	public void setFavoriteType(Integer favoriteType) {
+		this.favoriteType = favoriteType;
 	}
 
-	public List<TripPlan> getTripPlans() {
-		return tripPlans;
+	public ObjectId getItemId() {
+		return itemId;
 	}
 
-	public void setTripPlans(List<TripPlan> tripPlans) {
-		this.tripPlans = tripPlans;
+	public void setItemId(ObjectId itemId) {
+		this.itemId = itemId;
 	}
 
-	public List<Activity> getActivities() {
-		return activities;
+	public Long getAuthorId() {
+		return authorId;
 	}
 
-	public void setActivities(List<Activity> activities) {
-		this.activities = activities;
+	public void setAuthorId(Long authorId) {
+		this.authorId = authorId;
 	}
 
-	public List<Question> getQuoras() {
-		return quoras;
+	public String getAuthorNickName() {
+		return authorNickName;
 	}
 
-	public void setQuoras(List<Question> quoras) {
-		this.quoras = quoras;
+	public void setAuthorNickName(String authorNickName) {
+		this.authorNickName = authorNickName;
 	}
 
-	public List<Restaurant> getRestaurants() {
-		return restaurants;
+	public ImageItem getAuthorAvatar() {
+		return authorAvatar;
 	}
 
-	public void setRestaurants(List<Restaurant> restaurants) {
-		this.restaurants = restaurants;
+	public void setAuthorAvatar(ImageItem authorAvatar) {
+		this.authorAvatar = authorAvatar;
 	}
 
-	public List<Hotel> getHotels() {
-		return hotels;
+	public ImageItem getCover() {
+		return cover;
 	}
 
-	public void setHotels(List<Hotel> hotels) {
-		this.hotels = hotels;
+	public void setCover(ImageItem cover) {
+		this.cover = cover;
 	}
 
-	public List<TravelNote> getTravelNotes() {
-		return travelNotes;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTravelNotes(List<TravelNote> travelNotes) {
-		this.travelNotes = travelNotes;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public List<Commodity> getCommodities() {
-		return commodities;
+	public Long getFavoriteTime() {
+		return favoriteTime;
 	}
 
-	public void setCommodities(List<Commodity> commodities) {
-		this.commodities = commodities;
+	public void setFavoriteTime(Long favoriteTime) {
+		this.favoriteTime = favoriteTime;
 	}
 
-	public List<Viewspot> getViewspots() {
-		return viewspots;
+	public Favorite() {
+
 	}
 
-	public void setViewspots(List<Viewspot> viewspots) {
-		this.viewspots = viewspots;
+	public Favorite(Long userId, Integer favoriteType, ObjectId itemId, String title) {
+		this.id = new ObjectId();
+		this.userId = userId;
+		this.favoriteType = favoriteType;
+		this.itemId = itemId;
+		this.title = title;
+		this.favoriteTime = System.currentTimeMillis();
 	}
-
-	public List<Post> getPosts() {
-		return posts;
-	}
-
-	public void setPosts(List<Post> posts) {
-		this.posts = posts;
-	}
-	
 }

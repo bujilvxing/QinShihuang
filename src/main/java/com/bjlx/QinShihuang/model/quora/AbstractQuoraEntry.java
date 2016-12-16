@@ -20,7 +20,7 @@ public abstract class AbstractQuoraEntry {
 	@Transient
 	public final static String fd_title = "title";
 	@Transient
-	public final static String fd_contents = "contents";
+	public final static String fd_content = "content";
 
 	/**
 	 * 作者信息
@@ -38,13 +38,13 @@ public abstract class AbstractQuoraEntry {
 	 * 标题
 	 */
 	@NotBlank
-	String title;
+	private String title;
 	
 	/**
 	 * 具体描述
 	 */
 	@NotNull
-	String contents;
+	private String content;
 
 	public UserInfo getAuthor() {
 		return author;
@@ -70,11 +70,11 @@ public abstract class AbstractQuoraEntry {
 		this.title = title;
 	}
 
-	public String getContents() {
-		return contents;
+	public String getContent() {
+		return content;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setContent(String content) {
+		this.content = content;
 	}
 }

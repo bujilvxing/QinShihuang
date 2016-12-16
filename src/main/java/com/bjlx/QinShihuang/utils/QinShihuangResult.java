@@ -47,6 +47,10 @@ public class QinShihuangResult {
 		return getResult(errorCode, data, null);
 	}
 
+	public static String getResult(ErrorCode errorCode, String errorMsg) {
+		return getResult(errorCode, null, errorMsg);
+	}
+
 	public static String getResult(ErrorCode errorCode) {
 		return getResult(errorCode, null, null);
 	}
@@ -84,6 +88,6 @@ public class QinShihuangResult {
 	}
 	
 	public static String serverException(String errorMsg) {
-		return getResult(ErrorCode.ServerException, null, errorMsg);
+		return getResult(ErrorCode.SERVER_EXCEPTION, null, errorMsg);
 	}
 }

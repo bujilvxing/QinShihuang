@@ -83,6 +83,8 @@ public class Trace {
 	public final static String fd_lat = "lat";
 	@Transient
 	public final static String fd_lng = "lng";
+	@Transient
+	public final static String fd_voteCnt = "voteCnt";
 
 	/**
 	 * 主键
@@ -185,6 +187,12 @@ public class Trace {
 	 */
 	@Min(value = 0)
 	private Integer favorCnt = 0;
+
+	/**
+	 * 点赞数
+	 */
+	@Min(value = 0)
+	private Integer voteCnt = 0;
 
 	/**
 	 * 评论次数
@@ -462,6 +470,17 @@ public class Trace {
 		this.title = title;
 	}
 
+	public Integer getVoteCnt() {
+		return voteCnt;
+	}
+
+	public void setVoteCnt(Integer voteCnt) {
+		this.voteCnt = voteCnt;
+	}
+
+	public Trace() {
+	}
+
 	public Trace(Long userId, String nickName, ImageItem avatar) {
 		super();
 		this.id = new ObjectId();
@@ -482,6 +501,18 @@ public class Trace {
 		this.originNickName = originNickName;
 		this.originAvatar = originAvatar;
 	}
-	
-	
+
+	public Trace(Long userId, String nickName, ImageItem avatar, Long traceTime, String title, Double lat, Double lng) {
+		this.id = new ObjectId();
+		this.userId = userId;
+		this.nickName = nickName;
+		this.avatar = avatar;
+		this.traceTime = traceTime;
+		this.title = title;
+		this.lat = lat;
+		this.lng = lng;
+		this.createTime = System.currentTimeMillis();
+		this.status = 1;
+		this.updateTime = this.createTime;
+	}
 }

@@ -1,5 +1,6 @@
 package com.bjlx.QinShihuang.model.tripplan;
 
+import com.bjlx.QinShihuang.model.misc.ImageItem;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -7,12 +8,9 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
-import com.bjlx.QinShihuang.model.misc.ImageItem;
-
-import java.util.List;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by pengyt on 2016/7/24.
@@ -27,6 +25,8 @@ public class TripPlan {
 	public final static String fd_userId = "userId";
 	@Transient
 	public final static String fd_nickName = "nickName";
+	@Transient
+	public final static String fd_avatar = "avatar";
 	@Transient
 	public final static String fd_createTime = "createTime";
 	@Transient
@@ -57,6 +57,10 @@ public class TripPlan {
 	public final static String fd_originAvatar = "originAvatar";
 	@Transient
 	public final static String fd_hotness = "hotness";
+	@Transient
+	public final static String fd_voteCnt = "voteCnt";
+	@Transient
+	public final static String fd_status = "status";
 
 	/**
      * 主键
@@ -121,6 +125,12 @@ public class TripPlan {
 	private Integer favorCnt = 0;
 
 	/**
+	 * 点赞数
+	 */
+	@Min(value = 0)
+	private Integer voteCnt = 0;
+
+	/**
 	 * 评论次数
 	 */
 	@Min(value = 0)
@@ -162,6 +172,11 @@ public class TripPlan {
      * 热度
      */
     private Double hotness;
+
+	/**
+	 * 行程规划状态
+	 */
+	private Integer status;
 
     public ObjectId getId() {
         return id;
@@ -315,6 +330,18 @@ public class TripPlan {
 		this.cover = cover;
 	}
 
+	public Integer getVoteCnt() {
+		return voteCnt;
+	}
+
+	public void setVoteCnt(Integer voteCnt) {
+		this.voteCnt = voteCnt;
+	}
+
+	public TripPlan() {
+
+	}
+
 	public TripPlan(Long userId, String nickName, ImageItem avatar) {
 		super();
 		this.id = new ObjectId();
@@ -330,6 +357,20 @@ public class TripPlan {
 		this.userId = userId;
 		this.nickName = nickName;
 		this.avatar = avatar;
+		this.originId = originId;
+		this.originUserId = originUserId;
+		this.originNickName = originNickName;
+		this.originAvatar = originAvatar;
+	}
+
+	public TripPlan(Long userId, String nickName, ImageItem avatar, String title, ImageItem cover, String desc, ObjectId originId, Long originUserId, String originNickName, ImageItem originAvatar) {
+		this.id = new ObjectId();
+		this.userId = userId;
+		this.nickName = nickName;
+		this.avatar = avatar;
+		this.title = title;
+		this.cover = cover;
+		this.desc = desc;
 		this.originId = originId;
 		this.originUserId = originUserId;
 		this.originNickName = originNickName;

@@ -135,4 +135,14 @@ public class TripItem {
     public void setShopping(Shopping shopping) {
         this.shopping = shopping;
     }
+
+    public TripItem() {
+
+    }
+
+    public TripItem(Long tripTime, String desc) {
+        this.createTime = System.currentTimeMillis();
+        this.tripTime = tripTime;
+        this.desc = desc;
+    }
 }

@@ -92,9 +92,9 @@ public class Message {
     private ImageItem senderAvatar;
 
     /**
-     * 消息类型
+     * 消息类型。1表示普通消息；2表示关注消息；3表示群组提示消息；4表示通知消息；
      */
-    private Integer msgType;
+    private Integer msgType = 1;
 
     /**
      * 消息摘要
@@ -113,7 +113,7 @@ public class Message {
     private List<Long> receiverIdList;
 
     /**
-     * 聊天类型
+     * 聊天类型。1表示单聊；2表示群聊
      */
     private Integer chatType;
 
@@ -219,5 +219,36 @@ public class Message {
 
     public void setChatType(Integer chatType) {
         this.chatType = chatType;
+    }
+
+    public Message() {
+
+    }
+
+    /**
+     * 消息
+     * @param convId 会话id
+     * @param msgId 消息id
+     * @param content 消息内容
+     * @param senderId 发送者id
+     * @param receiverId 接收者id
+     * @param senderNickName 发送者昵称
+     * @param senderAvatar 发送者头像
+     * @param msgType 消息类型
+     * @param abbrev 消息摘要
+     * @param chatType 聊天类型
+     */
+    public Message(ObjectId convId, Long msgId, Content content, Long senderId, Long receiverId, String senderNickName, ImageItem senderAvatar, Integer msgType, String abbrev, Integer chatType) {
+        this.convId = convId;
+        this.msgId = msgId;
+        this.content = content;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.senderNickName = senderNickName;
+        this.senderAvatar = senderAvatar;
+        this.msgType = msgType;
+        this.abbrev = abbrev;
+        this.chatType = chatType;
+        this.timestamp = System.currentTimeMillis();
     }
 }

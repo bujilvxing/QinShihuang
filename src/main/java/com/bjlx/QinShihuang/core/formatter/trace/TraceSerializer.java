@@ -136,7 +136,7 @@ public class TraceSerializer extends JsonSerializer<Trace> {
             	gen.writeNumberField(Trace.fd_lat, trace.getLat());
             if(trace.getLng() != null)
             	gen.writeNumberField(Trace.fd_lng, trace.getLng());
-
+            gen.writeNumberField(Trace.fd_voteCnt, trace.getVoteCnt() == null ? 0 : trace.getVoteCnt());
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

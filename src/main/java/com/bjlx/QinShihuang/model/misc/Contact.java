@@ -130,5 +130,19 @@ public class Contact {
 	public void setSina(String sina) {
 		this.sina = sina;
 	}
-	
+
+	public Contact() {
+
+	}
+
+	public Contact(List<String> phoneList, List<String> cellphoneList, String qq, String weixin, String sina, String fax, String email, String website) {
+		this.phoneList = phoneList;
+		this.cellphoneList = cellphoneList;
+		this.qq = qq;
+		this.weixin = weixin;
+		this.sina = sina;
+		this.fax = fax;
+		this.email = email;
+		this.website = website;
+	}
 }

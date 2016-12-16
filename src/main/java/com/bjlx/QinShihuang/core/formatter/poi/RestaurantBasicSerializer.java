@@ -1,12 +1,13 @@
 package com.bjlx.QinShihuang.core.formatter.poi;
 
-import java.io.IOException;
 import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.poi.Restaurant;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
 
 public class RestaurantBasicSerializer extends JsonSerializer<Restaurant> {
 
@@ -15,11 +16,6 @@ public class RestaurantBasicSerializer extends JsonSerializer<Restaurant> {
 	    try {
 	        gen.writeStartObject();
 	        gen.writeStringField(Restaurant.fd_id, restaurant.getId() == null ? "" : restaurant.getId().toString());
-	        if(restaurant.getLat() != null)
-	        	gen.writeNumberField(Restaurant.fd_lat, restaurant.getLat());
-	        if(restaurant.getLng() != null)
-	        	gen.writeNumberField(Restaurant.fd_lng, restaurant.getLng());
-
 	        gen.writeFieldName(Restaurant.fd_cover);
             ImageItem cover = restaurant.getCover();
             if (cover != null) {
@@ -36,12 +32,14 @@ public class RestaurantBasicSerializer extends JsonSerializer<Restaurant> {
                 JsonSerializer<Object> retContact = serializers.findValueSerializer(Contact.class, null);
                 retContact.serialize(contact, gen, serializers);
             }
-            
+            if(restaurant.getFavorCnt() != null)
+                gen.writeNumberField(Restaurant.fd_favorCnt, restaurant.getFavorCnt());
+
             gen.writeStringField(Restaurant.fd_zhName, restaurant.getZhName() == null ? "" : restaurant.getZhName());
             gen.writeStringField(Restaurant.fd_enName, restaurant.getEnName() == null ? "" : restaurant.getEnName());
             gen.writeStringField(Restaurant.fd_url, restaurant.getUrl() == null ? "" : restaurant.getUrl());
-            gen.writeNumberField(Restaurant.fd_marketPrice, restaurant.getMarketPrice() == null ? 0.0 : restaurant.getMarketPrice());
-            gen.writeNumberField(Restaurant.fd_price, restaurant.getPrice() == null ? 0.0 : restaurant.getPrice());
+            gen.writeNumberField(Restaurant.fd_marketPrice, restaurant.getMarketPrice() == null ? 0 : restaurant.getMarketPrice());
+            gen.writeNumberField(Restaurant.fd_price, restaurant.getPrice() == null ? 0 : restaurant.getPrice());
             
 
             gen.writeNumberField(Restaurant.fd_saleVolume, restaurant.getSaleVolume() == null ? 0 : restaurant.getSaleVolume());

@@ -29,6 +29,8 @@ public class ActivityBasicSerializer extends JsonSerializer<Activity> {
 
             gen.writeNumberField(Activity.fd_shareCnt, activity.getShareCnt() == null ? 0 : activity.getShareCnt());
 
+            gen.writeNumberField(Activity.fd_voteCnt, activity.getVoteCnt() == null ? 0 : activity.getVoteCnt());
+
             gen.writeFieldName(Activity.fd_cover);
             ImageItem cover = activity.getCover();
             if (cover != null) {

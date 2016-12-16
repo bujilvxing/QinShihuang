@@ -2,15 +2,14 @@ package com.bjlx.QinShihuang.model.specialservice;
 
 import com.bjlx.QinShihuang.model.misc.Address;
 import com.bjlx.QinShihuang.model.misc.Contact;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * 租车
@@ -182,6 +181,18 @@ public class RentCar {
 	}
 
 	public void setPickup(Boolean pickup) {
+		this.pickup = pickup;
+	}
+
+	public RentCar(){
+
+	}
+
+	public RentCar(ObjectId id, Integer price, Boolean autoInsurance, Integer autoInsurancePrice, Boolean pickup) {
+		this.id = id;
+		this.price = price;
+		this.autoInsurance = autoInsurance;
+		this.autoInsurancePrice = autoInsurancePrice;
 		this.pickup = pickup;
 	}
 }

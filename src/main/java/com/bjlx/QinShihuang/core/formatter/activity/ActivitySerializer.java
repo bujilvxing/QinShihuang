@@ -1,13 +1,14 @@
 package com.bjlx.QinShihuang.core.formatter.activity;
 
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.activity.Activity;
-import com.bjlx.QinShihuang.model.activity.Ticket;
+import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.model.misc.Address;
-import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,7 +51,7 @@ public class ActivitySerializer extends JsonSerializer<Activity> {
             gen.writeNumberField(Activity.fd_viewCnt, activity.getViewCnt() == null ? 0 : activity.getViewCnt());
 
             gen.writeNumberField(Activity.fd_shareCnt, activity.getShareCnt() == null ? 0 : activity.getShareCnt());
-
+            gen.writeNumberField(Activity.fd_voteCnt, activity.getVoteCnt() == null ? 0 : activity.getVoteCnt());
             gen.writeFieldName(Activity.fd_cover);
             ImageItem cover = activity.getCover();
             if (cover != null) {
@@ -89,26 +90,46 @@ public class ActivitySerializer extends JsonSerializer<Activity> {
             if(activity.getDesc() != null)
                 gen.writeStringField(Activity.fd_desc, activity.getDesc());
 
-            List<Contact> applicantInfos = activity.getApplicantInfos();
+            List<Joiner> applicantInfos = activity.getApplicantInfos();
             if (applicantInfos != null && !applicantInfos.isEmpty()) {
             	gen.writeFieldName(Activity.fd_applicantInfos);
                 gen.writeStartArray();
-                JsonSerializer<Object> ret = serializers.findValueSerializer(Contact.class, null);
-                for (Contact applicantInfo : applicantInfos)
+                JsonSerializer<Object> ret = serializers.findValueSerializer(Joiner.class, null);
+                for (Joiner applicantInfo : applicantInfos)
                     ret.serialize(applicantInfo, gen, serializers);
                 gen.writeEndArray();
             }
+
+            UserInfo userInfo = activity.getCreator();
+            gen.writeFieldName(Activity.fd_creator);
+            if (userInfo != null) {
+                JsonSerializer<Object> ret = serializers.findValueSerializer(UserInfo.class, null);
+                ret.serialize(userInfo, gen, serializers);
+            } else {
+                gen.writeStartObject();
+                gen.writeEndObject();
+            }
             
-            List<Ticket> tickets = activity.getTickets();
-            if (tickets != null && !tickets.isEmpty()) {
-            	gen.writeFieldName(Activity.fd_tickets);
+            List<ObjectId> ticketIds = activity.getTicketIds();
+            if (ticketIds != null && !ticketIds.isEmpty()) {
+            	gen.writeFieldName(Activity.fd_ticketIds);
                 gen.writeStartArray();
-                JsonSerializer<Object> ret = serializers.findValueSerializer(Ticket.class, null);
-                for (Ticket ticket : tickets)
-                    ret.serialize(ticket, gen, serializers);
+                for (ObjectId ticketId : ticketIds)
+                    gen.writeString(ticketId == null ? "" : ticketId.toString());
                 gen.writeEndArray();
             }
             gen.writeBooleanField(Activity.fd_isFree, activity.getIsFree() == null ? true : activity.getIsFree());
+            gen.writeNumberField(Activity.fd_publishTime, activity.getPublishTime() == null ? 0L : activity.getPublishTime());
+
+            gen.writeBooleanField(Activity.fd_isPhoneList, activity.isPhoneList() == null ? false : activity.isPhoneList());
+            gen.writeBooleanField(Activity.fd_isCellphoneList, activity.isCellphoneList() == null ? false : activity.isCellphoneList());
+            gen.writeBooleanField(Activity.fd_isQq, activity.isQq() == null ? false : activity.isQq());
+            gen.writeBooleanField(Activity.fd_isWeixin, activity.isWeixin() == null ? false : activity.isWeixin());
+            gen.writeBooleanField(Activity.fd_isSina, activity.isSina() == null ? false : activity.isSina());
+            gen.writeBooleanField(Activity.fd_isFax, activity.isFax() == null ? false : activity.isFax());
+            gen.writeBooleanField(Activity.fd_isEmail, activity.isEmail() == null ? false : activity.isEmail());
+            gen.writeBooleanField(Activity.fd_isWebsite, activity.isWebsite() == null ? false : activity.isWebsite());
+
             gen.writeEndObject();
         } catch (IOException e) {
             e.printStackTrace();

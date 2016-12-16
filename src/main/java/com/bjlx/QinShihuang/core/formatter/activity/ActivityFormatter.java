@@ -1,12 +1,13 @@
 package com.bjlx.QinShihuang.core.formatter.activity;
 
+import com.bjlx.QinShihuang.core.formatter.account.UserInfoBasicSerializer;
 import com.bjlx.QinShihuang.core.formatter.misc.AddressSerializer;
-import com.bjlx.QinShihuang.core.formatter.misc.ContactSerializer;
 import com.bjlx.QinShihuang.core.formatter.misc.ImageItemSerializer;
+import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.activity.Activity;
+import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.model.activity.Ticket;
 import com.bjlx.QinShihuang.model.misc.Address;
-import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -23,8 +24,9 @@ public class ActivityFormatter {
         module.addSerializer(Activity.class, new ActivitySerializer());
         module.addSerializer(Address.class, new AddressSerializer());
         module.addSerializer(ImageItem.class, new ImageItemSerializer());
-        module.addSerializer(Contact.class, new ContactSerializer());
+        module.addSerializer(Joiner.class, new JoinerSerializer());
         module.addSerializer(Ticket.class, new TicketSerializer());
+        module.addSerializer(UserInfo.class, new UserInfoBasicSerializer());
         mapper.registerModule(module);
         return mapper;
     }
