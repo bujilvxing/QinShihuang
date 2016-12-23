@@ -1,12 +1,13 @@
 package com.bjlx.QinShihuang.core.formatter.trace;
 
-import java.io.IOException;
 import com.bjlx.QinShihuang.model.misc.Audio;
 import com.bjlx.QinShihuang.model.misc.ImageItem;
 import com.bjlx.QinShihuang.model.trace.Trace;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
+import java.io.IOException;
 
 public class TraceBasicSerializer extends JsonSerializer<Trace> {
 
@@ -38,7 +39,7 @@ public class TraceBasicSerializer extends JsonSerializer<Trace> {
             }
 
             Audio audio = trace.getAudio();
-            if (avatar != null) {
+            if (audio != null) {
             	gen.writeFieldName(Trace.fd_audio);
                 JsonSerializer<Object> retAudio = serializers.findValueSerializer(Audio.class, null);
                 retAudio.serialize(audio, gen, serializers);

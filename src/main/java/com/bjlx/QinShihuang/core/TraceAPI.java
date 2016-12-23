@@ -2,7 +2,6 @@ package com.bjlx.QinShihuang.core;
 
 import com.bjlx.QinShihuang.core.formatter.trace.TraceBasicFormatter;
 import com.bjlx.QinShihuang.core.formatter.trace.TraceFormatter;
-import com.bjlx.QinShihuang.core.formatter.tripplan.TripPlanFormatter;
 import com.bjlx.QinShihuang.model.account.UserInfo;
 import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.poi.Hotel;
@@ -12,7 +11,10 @@ import com.bjlx.QinShihuang.model.poi.Viewspot;
 import com.bjlx.QinShihuang.model.trace.Trace;
 import com.bjlx.QinShihuang.model.tripplan.TripPlan;
 import com.bjlx.QinShihuang.requestmodel.TraceReq;
-import com.bjlx.QinShihuang.utils.*;
+import com.bjlx.QinShihuang.utils.Constant;
+import com.bjlx.QinShihuang.utils.ErrorCode;
+import com.bjlx.QinShihuang.utils.MorphiaFactory;
+import com.bjlx.QinShihuang.utils.QinShihuangResult;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
@@ -143,7 +145,7 @@ public class TraceAPI {
                 ops.set(Trace.fd_desc, traceReq.getDesc());
             if(traceReq.getTraceTime() != null)
                 ops.set(Trace.fd_traceTime, traceReq.getTraceTime());
-            if(traceReq.getImages() != null || !traceReq.getImages().isEmpty())
+            if(traceReq.getImages() != null && !traceReq.getImages().isEmpty())
                 ops.set(Trace.fd_images, traceReq.getImages());
             if(traceReq.getAudio() != null)
                 ops.set(Trace.fd_audio, traceReq.getAudio());
@@ -184,8 +186,7 @@ public class TraceAPI {
             }
 
             Trace result = ds.findAndModify(query, ops, false);
-
-            return QinShihuangResult.ok(TripPlanFormatter.getMapper().valueToTree(result));
+            return QinShihuangResult.ok(TraceFormatter.getMapper().valueToTree(result));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
