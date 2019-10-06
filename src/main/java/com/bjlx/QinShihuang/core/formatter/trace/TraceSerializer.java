@@ -64,7 +64,7 @@ public class TraceSerializer extends JsonSerializer<Trace> {
             gen.writeEndArray();
 
             Audio audio = trace.getAudio();
-            if (avatar != null) {
+            if (audio != null) {
             	gen.writeFieldName(Trace.fd_audio);
                 JsonSerializer<Object> retAudio = serializers.findValueSerializer(Audio.class, null);
                 retAudio.serialize(audio, gen, serializers);

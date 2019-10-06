@@ -1,7 +1,7 @@
 package com.bjlx.QinShihuang.controller;
 
 import com.bjlx.QinShihuang.core.ActivityAPI;
-import com.bjlx.QinShihuang.model.misc.Contact;
+import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.requestmodel.ActivityReq;
 import com.bjlx.QinShihuang.requestmodel.ActivityUpdateReq;
 import com.bjlx.QinShihuang.requestmodel.TicketReq;
@@ -87,15 +87,15 @@ public class ActivityController {
     /**
      * 报名活动1035
      * @param activityId 活动id
-     * @param contact 参与人联系方式
+     * @param joiner 参与人联系方式
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 结果
      */
     @RequestMapping(value = "/app/activities/{activityId:[0-9a-f]{24}}/join", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String joinActivity(@PathVariable ("activityId") String activityId, @RequestBody Contact contact, @RequestHeader ("userId") Long userId, @RequestHeader ("key") String key) {
+    public @ResponseBody String joinActivity(@PathVariable ("activityId") String activityId, @RequestBody Joiner joiner, @RequestHeader ("userId") Long userId, @RequestHeader ("key") String key) {
         try {
-            return ActivityAPI.joinActivity(activityId, contact, userId, key);
+            return ActivityAPI.joinActivity(activityId, joiner, userId, key);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }
@@ -104,15 +104,15 @@ public class ActivityController {
     /**
      * 退出报名1036
      * @param activityId 活动id
-     * @param contact 参与人联系方式
+     * @param joiner 参与人联系方式
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 结果
      */
     @RequestMapping(value = "/app/activities/{activityId:[0-9a-f]{24}}/quit", method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public @ResponseBody String quitActivity(@PathVariable ("activityId") String activityId, @RequestBody Contact contact, @RequestHeader ("userId") Long userId, @RequestHeader ("key") String key) {
+    public @ResponseBody String quitActivity(@PathVariable ("activityId") String activityId, @RequestBody Joiner joiner, @RequestHeader ("userId") Long userId, @RequestHeader ("key") String key) {
         try {
-            return ActivityAPI.quitActivity(activityId, contact, userId, key);
+            return ActivityAPI.quitActivity(activityId, joiner, userId, key);
         } catch (Exception e) {
             return QinShihuangResult.getResult(ErrorCode.SERVER_EXCEPTION);
         }

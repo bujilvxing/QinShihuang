@@ -8,7 +8,6 @@ import com.bjlx.QinShihuang.model.activity.Activity;
 import com.bjlx.QinShihuang.model.activity.Joiner;
 import com.bjlx.QinShihuang.model.activity.Ticket;
 import com.bjlx.QinShihuang.model.misc.Address;
-import com.bjlx.QinShihuang.model.misc.Contact;
 import com.bjlx.QinShihuang.requestmodel.ActivityReq;
 import com.bjlx.QinShihuang.requestmodel.ActivityUpdateReq;
 import com.bjlx.QinShihuang.requestmodel.TicketReq;
@@ -223,19 +222,19 @@ public class ActivityAPI {
     /**
      * 报名活动
      * @param activityId 活动id
-     * @param contact 参与人联系方式
+     * @param joiner 参与人联系方式
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 结果
      * @throws Exception 异常
      */
-    public static String joinActivity(String activityId, Contact contact, Long userId, String key) throws Exception {
+    public static String joinActivity(String activityId, Joiner joiner, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1035);
             }
             Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_id).equal(new ObjectId(activityId)).field(Activity.fd_creatorId).notEqual(userId).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL);
-            Joiner joiner = new Joiner(userId, contact.getPhoneList(), contact.getCellphoneList(), contact.getQq(), contact.getWeixin(), contact.getSina(), contact.getFax(), contact.getEmail(), contact.getWebsite());
+            joiner.setUserId(userId);
             UpdateOperations<Activity> ops = ds.createUpdateOperations(Activity.class).addToSet(Activity.fd_applicantInfos, joiner);
             ds.updateFirst(query, ops);
             return QinShihuangResult.ok();
@@ -248,19 +247,19 @@ public class ActivityAPI {
     /**
      * 取消报名活动
      * @param activityId 活动id
-     * @param contact 参与人联系方式
+     * @param joiner 参与人联系方式
      * @param userId 用户id
      * @param key 不羁旅行令牌
      * @return 结果
      * @throws Exception 异常
      */
-    public static String quitActivity(String activityId, Contact contact, Long userId, String key) throws Exception {
+    public static String quitActivity(String activityId, Joiner joiner, Long userId, String key) throws Exception {
         try {
             if (!CommonAPI.checkKeyValid(userId, key)) {
                 return QinShihuangResult.getResult(ErrorCode.UNLOGIN_1036);
             }
             Query<Activity> query = ds.createQuery(Activity.class).field(Activity.fd_id).equal(new ObjectId(activityId)).field(Activity.fd_status).equal(Constant.ACTIVITY_NORMAL);
-            Joiner joiner = new Joiner(userId, contact.getPhoneList(), contact.getCellphoneList(), contact.getQq(), contact.getWeixin(), contact.getSina(), contact.getFax(), contact.getEmail(), contact.getWebsite());
+            joiner.setUserId(userId);
             UpdateOperations<Activity> ops = ds.createUpdateOperations(Activity.class).removeAll(Activity.fd_applicantInfos, joiner);
             ds.updateFirst(query, ops);
             return QinShihuangResult.ok();
@@ -536,7 +535,7 @@ public class ActivityAPI {
         ds.save(ticket);
         Long currentTime = System.currentTimeMillis();
         Address address = new Address("江西省", "南昌市", "昌北区", "机场路16号", "333133");
-        Joiner joiner = new Joiner(100001L, Arrays.asList("010-62737359"), Arrays.asList("13811111111"), "1234213123", "mofashi", "312413123", "010-62737358", "3813231231@qq.com", "www.bjlx.com");
+        Joiner joiner = new Joiner(100001L, "刘德华", Arrays.asList("010-62737359"), Arrays.asList("13811111111"), "1234213123", "mofashi", "312413123", "010-62737358", "3813231231@qq.com", "www.bjlx.com");
         try {
             UserInfo creator = CommonAPI.getUserBasicById(100001L);
             Activity activity = new Activity("活动标题1", 100, 20, currentTime, currentTime + 24 * 60 * 1000L, address, AccountAPI.defaultUserAvatar, Arrays.asList(AccountAPI.defaultUserAvatar, AccountAPI.defaultGroupAvatar),

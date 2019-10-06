@@ -19,6 +19,10 @@ public class JoinerSerializer extends JsonSerializer<Joiner> {
         try {
             gen.writeStartObject();
             gen.writeNumberField(Joiner.fd_userId, joiner.getUserId() == null ? 0 : joiner.getUserId());
+            if(joiner.getName() != null) {
+                gen.writeStringField(Joiner.fd_name, joiner.getName());
+            }
+
             List<String> phoneList = joiner.getPhoneList();
             if (phoneList != null && (!phoneList.isEmpty())) {
                 gen.writeFieldName(Joiner.fd_phoneList);
